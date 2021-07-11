@@ -1,0 +1,1019 @@
+---
+title: "preparacion"
+author: "Kevin Carrasco"
+date: "08-07-2021"
+output: html_document
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = T, warning = F, message = F)
+```
+# Cargar paquetes
+```{r}
+pacman::p_load(dplyr, car, summarytools, webshot)
+```
+
+# Cargar base elsoc longitudinal (2016-2019)
+```{r}
+data <- get(load("../input/data/ELSOC_Wide_2016_2019_v1.00_R.RData"))
+```
+
+# Recodificacion indicadores cohesion social
+
+## Confianza en instituciones
+
+### El gobierno
+```{r}
+data$c05_01_w01 <- recode(data$c05_01_w01, "c(-888,-999)=NA")
+data$c05_01_w02 <- recode(data$c05_01_w02, "c(-888,-999)=NA")
+data$c05_01_w03 <- recode(data$c05_01_w03, "c(-888,-999)=NA")
+data$c05_01_w04 <- recode(data$c05_01_w04, "c(-888,-999)=NA")
+
+summary(data$c05_01_w01)
+summary(data$c05_01_w02)
+summary(data$c05_01_w03)
+summary(data$c05_01_w04)
+
+```
+
+### Los partidos politicos
+```{r}
+data$c05_02_w01 <- recode(data$c05_02_w01, "c(-888,-999)=NA")
+data$c05_02_w02 <- recode(data$c05_02_w02, "c(-888,-999)=NA")
+data$c05_02_w03 <- recode(data$c05_02_w03, "c(-888,-999)=NA")
+data$c05_02_w04 <- recode(data$c05_02_w04, "c(-888,-999)=NA")
+
+summary(data$c05_02_w01)
+summary(data$c05_02_w02)
+summary(data$c05_02_w03)
+summary(data$c05_02_w04)
+```
+
+### Carabineros
+```{r}
+data$c05_03_w01 <- recode(data$c05_03_w01, "c(-888,-999)=NA")
+data$c05_03_w02 <- recode(data$c05_03_w02, "c(-888,-999)=NA")
+data$c05_03_w03 <- recode(data$c05_03_w03, "c(-888,-999)=NA")
+data$c05_03_w04 <- recode(data$c05_03_w04, "c(-888,-999)=NA")
+
+summary(data$c05_03_w01)
+summary(data$c05_03_w02)
+summary(data$c05_03_w03)
+summary(data$c05_03_w04)
+```
+
+### Los sindicatos
+```{r}
+data$c05_04_w01 <- recode(data$c05_04_w01, "c(-888,-999)=NA")
+data$c05_04_w02 <- recode(data$c05_04_w02, "c(-888,-999)=NA")
+data$c05_04_w03 <- recode(data$c05_04_w03, "c(-888,-999)=NA")
+data$c05_04_w04 <- recode(data$c05_04_w04, "c(-888,-999)=NA")
+
+summary(data$c05_04_w01)
+summary(data$c05_04_w02)
+summary(data$c05_04_w03)
+summary(data$c05_04_w04)
+```
+
+### El poder judicial
+```{r}
+data$c05_05_w01 <- recode(data$c05_05_w01, "c(-888,-999)=NA")
+data$c05_05_w02 <- recode(data$c05_05_w02, "c(-888,-999)=NA")
+data$c05_05_w03 <- recode(data$c05_05_w03, "c(-888,-999)=NA")
+data$c05_05_w04 <- recode(data$c05_05_w04, "c(-888,-999)=NA")
+
+summary(data$c05_05_w01)
+summary(data$c05_05_w02)
+summary(data$c05_05_w03)
+summary(data$c05_05_w04)
+```
+
+### Las empresas privadas
+```{r}
+data$c05_06_w01 <- recode(data$c05_06_w01, "c(-888,-999)=NA")
+data$c05_06_w02 <- recode(data$c05_06_w02, "c(-888,-999)=NA")
+data$c05_06_w03 <- recode(data$c05_06_w03, "c(-888,-999)=NA")
+data$c05_06_w04 <- recode(data$c05_06_w04, "c(-888,-999)=NA")
+
+summary(data$c05_06_w01)
+summary(data$c05_06_w02)
+summary(data$c05_06_w03)
+summary(data$c05_06_w04)
+```
+
+### El congreso nacional
+```{r}
+data$c05_07_w01 <- recode(data$c05_07_w01, "c(-888,-999)=NA")
+data$c05_07_w02 <- recode(data$c05_07_w02, "c(-888,-999)=NA")
+data$c05_07_w03 <- recode(data$c05_07_w03, "c(-888,-999)=NA")
+data$c05_07_w04 <- recode(data$c05_07_w04, "c(-888,-999)=NA")
+
+summary(data$c05_07_w01)
+summary(data$c05_07_w02)
+summary(data$c05_07_w03)
+summary(data$c05_07_w04)
+```
+
+### El presidente(a) de la republica
+```{r}
+data$c05_08_w01 <- recode(data$c05_08_w01, "c(-888,-999)=NA")
+data$c05_08_w02 <- recode(data$c05_08_w02, "c(-888,-999)=NA")
+data$c05_08_w03 <- recode(data$c05_08_w03, "c(-888,-999)=NA")
+data$c05_08_w04 <- recode(data$c05_08_w04, "c(-888,-999)=NA")
+
+summary(data$c05_08_w01)
+summary(data$c05_08_w02)
+summary(data$c05_08_w03)
+summary(data$c05_08_w04)
+```
+
+## Satisfaccion con la democracia
+```{r}
+data$c01_w01 <- recode(data$c01_w01, "c(-888,-999)=NA")
+data$c01_w02 <- recode(data$c01_w02, "c(-888,-999)=NA")
+data$c01_w03 <- recode(data$c01_w03, "c(-888,-999)=NA")
+data$c01_w04 <- recode(data$c01_w04, "c(-888,-999)=NA")
+
+summary(data$c01_w01)
+summary(data$c01_w02)
+summary(data$c01_w03)
+summary(data$c01_w04)
+```
+
+## Participacion ciudadana
+
+### Firmar carta o peticion
+```{r}
+data$c08_01_w01 <- recode(data$c08_01_w01, "c(-888,-999)=NA")
+data$c08_01_w02 <- recode(data$c08_01_w02, "c(-888,-999)=NA")
+data$c08_01_w03 <- recode(data$c08_01_w03, "c(-888,-999)=NA")
+data$c08_01_w04 <- recode(data$c08_01_w04, "c(-888,-999)=NA")
+
+summary(data$c08_01_w01)
+summary(data$c08_01_w02)
+summary(data$c08_01_w03)
+summary(data$c08_01_w04)
+```
+
+### Asistir a marcha o manifestacion
+```{r}
+data$c08_02_w01 <- recode(data$c08_02_w01, "c(-888,-999)=NA")
+data$c08_02_w02 <- recode(data$c08_02_w02, "c(-888,-999)=NA")
+data$c08_02_w03 <- recode(data$c08_02_w03, "c(-888,-999)=NA")
+data$c08_02_w04 <- recode(data$c08_02_w04, "c(-888,-999)=NA")
+
+summary(data$c08_02_w01)
+summary(data$c08_02_w02)
+summary(data$c08_02_w03)
+summary(data$c08_02_w04)
+```
+
+### Participacion en huelga
+```{r}
+data$c08_03_w01 <- recode(data$c08_03_w01, "c(-888,-999)=NA")
+data$c08_03_w02 <- recode(data$c08_03_w02, "c(-888,-999)=NA")
+data$c08_03_w03 <- recode(data$c08_03_w03, "c(-888,-999)=NA")
+data$c08_03_w04 <- recode(data$c08_03_w04, "c(-888,-999)=NA")
+
+summary(data$c08_03_w01)
+summary(data$c08_03_w02)
+summary(data$c08_03_w03)
+summary(data$c08_03_w04)
+```
+
+### expresar opinion por rrss
+```{r}
+data$c08_04_w01 <- recode(data$c08_04_w01, "c(-888,-999)=NA")
+data$c08_04_w02 <- recode(data$c08_04_w02, "c(-888,-999)=NA")
+data$c08_04_w03 <- recode(data$c08_04_w03, "c(-888,-999)=NA")
+data$c08_04_w04 <- recode(data$c08_04_w04, "c(-888,-999)=NA")
+
+summary(data$c08_04_w01)
+summary(data$c08_04_w02)
+summary(data$c08_04_w03)
+summary(data$c08_04_w04)
+```
+
+## Interes politico
+
+### Interes general en politica
+```{r}
+data$c13_w01 <- recode(data$c13_w01, "c(-888,-999)=NA")
+data$c13_w02 <- recode(data$c13_w02, "c(-888,-999)=NA")
+data$c13_w03 <- recode(data$c13_w03, "c(-888,-999)=NA")
+data$c13_w04 <- recode(data$c13_w04, "c(-888,-999)=NA")
+
+summary(data$c13_w01)
+summary(data$c13_w02)
+summary(data$c13_w03)
+summary(data$c13_w04)
+```
+
+### Frecuencia con que se habla de politica con familia o amigos
+```{r}
+data$c14_01_w01 <- recode(data$c14_01_w01, "c(-888,-999)=NA")
+data$c14_01_w02 <- recode(data$c14_01_w02, "c(-888,-999)=NA")
+data$c14_01_w03 <- recode(data$c14_01_w03, "c(-888,-999)=NA")
+data$c14_01_w04 <- recode(data$c14_01_w04, "c(-888,-999)=NA")
+
+summary(data$c14_01_w01)
+summary(data$c14_01_w02)
+summary(data$c14_01_w03)
+summary(data$c14_01_w04)
+```
+
+### Frecuencia con que se informa sobre politica en medios de comunicacion
+```{r}
+data$c14_02_w01 <- recode(data$c14_02_w01, "c(-888,-999)=NA")
+data$c14_02_w02 <- recode(data$c14_02_w02, "c(-888,-999)=NA")
+data$c14_02_w03 <- recode(data$c14_02_w03, "c(-888,-999)=NA")
+data$c14_02_w04 <- recode(data$c14_02_w04, "c(-888,-999)=NA")
+
+summary(data$c14_02_w01)
+summary(data$c14_02_w02)
+summary(data$c14_02_w03)
+summary(data$c14_02_w04)
+```
+
+## Justicia distributiva y meritocracia
+
+### En chile las personas son recompensadas por sus esfuerzos
+```{r}
+data$c18_09_w01 <- recode(data$c18_09_w01, "c(-888,-999)=NA")
+data$c18_09_w02 <- recode(data$c18_09_w02, "c(-888,-999)=NA")
+data$c18_09_w03 <- recode(data$c18_09_w03, "c(-888,-999)=NA")
+data$c18_09_w04 <- recode(data$c18_09_w04, "c(-888,-999)=NA")
+
+summary(data$c18_09_w01)
+summary(data$c18_09_w02)
+summary(data$c18_09_w03)
+summary(data$c18_09_w04)
+```
+
+### En chile las personas son recompensadas por su inteligencia
+```{r}
+data$c18_10_w01 <- recode(data$c18_10_w01, "c(-888,-999)=NA")
+data$c18_10_w02 <- recode(data$c18_10_w02, "c(-888,-999)=NA")
+data$c18_10_w03 <- recode(data$c18_10_w03, "c(-888,-999)=NA")
+data$c18_10_w04 <- recode(data$c18_10_w04, "c(-888,-999)=NA")
+
+summary(data$c18_10_w01)
+summary(data$c18_10_w02)
+summary(data$c18_10_w03)
+summary(data$c18_10_w04)
+```
+
+## Surgir en la vida
+### Importancia de provenir de una familia rica o con recursos
+```{r}
+data$d05_01_w01 <- recode(data$d05_01_w01, "c(-888,-999)=NA")
+data$d05_01_w02 <- recode(data$d05_01_w02, "c(-888,-999)=NA")
+data$d05_01_w03 <- recode(data$d05_01_w03, "c(-888,-999)=NA")
+data$d05_01_w04 <- recode(data$d05_01_w04, "c(-888,-999)=NA")
+
+summary(data$d05_01_w01)
+summary(data$d05_01_w02)
+summary(data$d05_01_w03)
+summary(data$d05_01_w04)
+```
+
+### Importancia de tener un buen nivel de educacion
+```{r}
+data$d05_02_w01 <- recode(data$d05_02_w01, "c(-888,-999)=NA")
+data$d05_02_w02 <- recode(data$d05_02_w02, "c(-888,-999)=NA")
+data$d05_02_w03 <- recode(data$d05_02_w03, "c(-888,-999)=NA")
+data$d05_02_w04 <- recode(data$d05_02_w04, "c(-888,-999)=NA")
+
+summary(data$d05_02_w01)
+summary(data$d05_02_w02)
+summary(data$d05_02_w03)
+summary(data$d05_02_w04)
+```
+
+### Importancia de tener ambicion
+```{r}
+data$d05_03_w01 <- recode(data$d05_03_w01, "c(-888,-999)=NA")
+data$d05_03_w02 <- recode(data$d05_03_w02, "c(-888,-999)=NA")
+data$d05_03_w03 <- recode(data$d05_03_w03, "c(-888,-999)=NA")
+data$d05_03_w04 <- recode(data$d05_03_w04, "c(-888,-999)=NA")
+
+summary(data$d05_03_w01)
+summary(data$d05_03_w02)
+summary(data$d05_03_w03)
+summary(data$d05_03_w04)
+```
+
+### Importancia del trabajo duro
+```{r}
+data$d05_04_w01 <- recode(data$d05_04_w01, "c(-888,-999)=NA")
+data$d05_04_w02 <- recode(data$d05_04_w02, "c(-888,-999)=NA")
+data$d05_04_w03 <- recode(data$d05_04_w03, "c(-888,-999)=NA")
+data$d05_04_w04 <- recode(data$d05_04_w04, "c(-888,-999)=NA")
+
+summary(data$d05_04_w01)
+summary(data$d05_04_w02)
+summary(data$d05_04_w03)
+summary(data$d05_04_w04)
+```
+
+## Identificacion nacional
+```{r}
+data$c32_02_w01 <- recode(data$c32_02_w01, "c(-888,-999)=NA")
+data$c32_02_w02 <- recode(data$c32_02_w02, "c(-888,-999)=NA")
+data$c32_02_w03 <- recode(data$c32_02_w03, "c(-888,-999)=NA")
+data$c32_02_w04 <- recode(data$c32_02_w04, "c(-888,-999)=NA")
+
+summary(data$c32_02_w01)
+summary(data$c32_02_w02)
+summary(data$c32_02_w03)
+summary(data$c32_02_w04)
+```
+
+## Orgullo por el pais
+```{r}
+data$c32_01_w01 <- recode(data$c32_01_w01, "c(-888,-999)=NA")
+data$c32_01_w02 <- recode(data$c32_01_w02, "c(-888,-999)=NA")
+data$c32_01_w03 <- recode(data$c32_01_w03, "c(-888,-999)=NA")
+data$c32_01_w04 <- recode(data$c32_01_w04, "c(-888,-999)=NA")
+
+summary(data$c32_01_w01)
+summary(data$c32_01_w02)
+summary(data$c32_01_w03)
+summary(data$c32_01_w04)
+```
+
+## Confianza en vecinos
+```{r}
+data$t01_w01 <- recode(data$t01_w01, "c(-888,-999)=NA")
+data$t01_w02 <- recode(data$t01_w02, "c(-888,-999)=NA")
+data$t01_w03 <- recode(data$t01_w03, "c(-888,-999)=NA")
+data$t01_w04 <- recode(data$t01_w04, "c(-888,-999)=NA")
+
+summary(data$t01_w01)
+summary(data$t01_w02)
+summary(data$t01_w03)
+summary(data$t01_w04)
+```
+
+## Cohesion barrial
+### Este es el barrio ideal para mi
+```{r}
+data$t02_01_w01 <- recode(data$t02_01_w01, "c(-888,-999)=NA")
+data$t02_01_w02 <- recode(data$t02_01_w02, "c(-888,-999)=NA")
+data$t02_01_w03 <- recode(data$t02_01_w03, "c(-888,-999)=NA")
+data$t02_01_w04 <- recode(data$t02_01_w04, "c(-888,-999)=NA")
+
+summary(data$t02_01_w01)
+summary(data$t02_01_w02)
+summary(data$t02_01_w03)
+summary(data$t02_01_w04)
+```
+
+### Me siento integrado/a en este barrio
+```{r}
+data$t02_02_w01 <- recode(data$t02_02_w01, "c(-888,-999)=NA")
+data$t02_02_w02 <- recode(data$t02_02_w02, "c(-888,-999)=NA")
+data$t02_02_w03 <- recode(data$t02_02_w03, "c(-888,-999)=NA")
+data$t02_02_w04 <- recode(data$t02_02_w04, "c(-888,-999)=NA")
+
+summary(data$t02_02_w01)
+summary(data$t02_02_w02)
+summary(data$t02_02_w03)
+summary(data$t02_02_w04)
+```
+
+### Me identifico con la gente de este barrio
+```{r}
+data$t02_03_w01 <- recode(data$t02_03_w01, "c(-888,-999)=NA")
+data$t02_03_w02 <- recode(data$t02_03_w02, "c(-888,-999)=NA")
+data$t02_03_w03 <- recode(data$t02_03_w03, "c(-888,-999)=NA")
+data$t02_03_w04 <- recode(data$t02_03_w04, "c(-888,-999)=NA")
+
+summary(data$t02_03_w01)
+summary(data$t02_03_w02)
+summary(data$t02_03_w03)
+summary(data$t02_03_w04)
+```
+
+### Este barrio es parte de mi
+```{r}
+data$t02_04_w01 <- recode(data$t02_04_w01, "c(-888,-999)=NA")
+data$t02_04_w02 <- recode(data$t02_04_w02, "c(-888,-999)=NA")
+data$t02_04_w03 <- recode(data$t02_04_w03, "c(-888,-999)=NA")
+data$t02_04_w04 <- recode(data$t02_04_w04, "c(-888,-999)=NA")
+
+summary(data$t02_04_w01)
+summary(data$t02_04_w02)
+summary(data$t02_04_w03)
+summary(data$t02_04_w04)
+```
+
+## Sociabilidad barrial
+### En este barrio es facil hacer amigos
+```{r}
+data$t03_01_w01 <- recode(data$t03_01_w01, "c(-888,-999)=NA")
+data$t03_01_w02 <- recode(data$t03_01_w02, "c(-888,-999)=NA")
+data$t03_01_w03 <- recode(data$t03_01_w03, "c(-888,-999)=NA")
+data$t03_01_w04 <- recode(data$t03_01_w04, "c(-888,-999)=NA")
+
+summary(data$t03_01_w01)
+summary(data$t03_01_w02)
+summary(data$t03_01_w03)
+summary(data$t03_01_w04)
+```
+
+### La gente en este barrio es sociable
+```{r}
+data$t03_02_w01 <- recode(data$t03_02_w01, "c(-888,-999)=NA")
+data$t03_02_w02 <- recode(data$t03_02_w02, "c(-888,-999)=NA")
+data$t03_02_w03 <- recode(data$t03_02_w03, "c(-888,-999)=NA")
+data$t03_02_w04 <- recode(data$t03_02_w04, "c(-888,-999)=NA")
+
+summary(data$t03_02_w01)
+summary(data$t03_02_w02)
+summary(data$t03_02_w03)
+summary(data$t03_02_w04)
+```
+
+### La gente en este barrio es cordial
+```{r}
+data$t03_03_w01 <- recode(data$t03_03_w01, "c(-888,-999)=NA")
+data$t03_03_w02 <- recode(data$t03_03_w02, "c(-888,-999)=NA")
+data$t03_03_w03 <- recode(data$t03_03_w03, "c(-888,-999)=NA")
+data$t03_03_w04 <- recode(data$t03_03_w04, "c(-888,-999)=NA")
+
+summary(data$t03_03_w01)
+summary(data$t03_03_w02)
+summary(data$t03_03_w03)
+summary(data$t03_03_w04)
+```
+
+### La gente en este barrio es colaboradora
+```{r}
+data$t03_04_w01 <- recode(data$t03_04_w01, "c(-888,-999)=NA")
+data$t03_04_w02 <- recode(data$t03_04_w02, "c(-888,-999)=NA")
+data$t03_04_w03 <- recode(data$t03_04_w03, "c(-888,-999)=NA")
+data$t03_04_w04 <- recode(data$t03_04_w04, "c(-888,-999)=NA")
+
+summary(data$t03_04_w01)
+summary(data$t03_04_w02)
+summary(data$t03_04_w03)
+summary(data$t03_04_w04)
+```
+
+## Satisfaccion residencial
+### Seguridad del barrio
+```{r}
+data$t06_01_w01 <- recode(data$t06_01_w01, "c(-888,-999)=NA")
+data$t06_01_w02 <- recode(data$t06_01_w02, "c(-888,-999)=NA")
+data$t06_01_w03 <- recode(data$t06_01_w03, "c(-888,-999)=NA")
+data$t06_01_w04 <- recode(data$t06_01_w04, "c(-888,-999)=NA")
+
+summary(data$t06_01_w01)
+summary(data$t06_01_w02)
+summary(data$t06_01_w03)
+summary(data$t06_01_w04)
+```
+
+### Conectividad
+```{r}
+data$t06_02_w01 <- recode(data$t06_02_w01, "c(-888,-999)=NA")
+data$t06_02_w02 <- recode(data$t06_02_w02, "c(-888,-999)=NA")
+data$t06_02_w03 <- recode(data$t06_02_w03, "c(-888,-999)=NA")
+data$t06_02_w04 <- recode(data$t06_02_w04, "c(-888,-999)=NA")
+
+summary(data$t06_02_w01)
+summary(data$t06_02_w02)
+summary(data$t06_02_w03)
+summary(data$t06_02_w04)
+```
+
+### Areas verdes y recreacion disponible
+```{r}
+data$t06_03_w01 <- recode(data$t06_03_w01, "c(-888,-999)=NA")
+data$t06_03_w02 <- recode(data$t06_03_w02, "c(-888,-999)=NA")
+data$t06_03_w03 <- recode(data$t06_03_w03, "c(-888,-999)=NA")
+data$t06_03_w04 <- recode(data$t06_03_w04, "c(-888,-999)=NA")
+
+summary(data$t06_03_w01)
+summary(data$t06_03_w02)
+summary(data$t06_03_w03)
+summary(data$t06_03_w04)
+```
+
+### Limpieza y belleza del barrio
+```{r}
+data$t06_04_w01 <- recode(data$t06_04_w01, "c(-888,-999)=NA")
+data$t06_04_w02 <- recode(data$t06_04_w02, "c(-888,-999)=NA")
+data$t06_04_w03 <- recode(data$t06_04_w03, "c(-888,-999)=NA")
+data$t06_04_w04 <- recode(data$t06_04_w04, "c(-888,-999)=NA")
+
+summary(data$t06_04_w01)
+summary(data$t06_04_w02)
+summary(data$t06_04_w03)
+summary(data$t06_04_w04)
+```
+
+### Proximidad al lugar donde realiza su principal actividad
+```{r}
+data$t06_05_w01 <- recode(data$t06_05_w01, "c(-888,-999)=NA")
+data$t06_05_w02 <- recode(data$t06_05_w02, "c(-888,-999)=NA")
+data$t06_05_w03 <- recode(data$t06_05_w03, "c(-888,-999)=NA")
+data$t06_05_w04 <- recode(data$t06_05_w04, "c(-888,-999)=NA")
+
+summary(data$t06_05_w01)
+summary(data$t06_05_w02)
+summary(data$t06_05_w03)
+summary(data$t06_05_w04)
+```
+
+### Proximidad a colegios, escuelas o liceos de buena calidad
+```{r}
+data$t06_06_w01 <- recode(data$t06_06_w01, "c(-888,-999)=NA")
+data$t06_06_w02 <- recode(data$t06_06_w02, "c(-888,-999)=NA")
+data$t06_06_w03 <- recode(data$t06_06_w03, "c(-888,-999)=NA")
+data$t06_06_w04 <- recode(data$t06_06_w04, "c(-888,-999)=NA")
+
+summary(data$t06_06_w01)
+summary(data$t06_06_w02)
+summary(data$t06_06_w03)
+summary(data$t06_06_w04)
+```
+
+### Proximidad a areas de comercio
+```{r}
+data$t06_07_w01 <- recode(data$t06_07_w01, "c(-888,-999)=NA")
+data$t06_07_w02 <- recode(data$t06_07_w02, "c(-888,-999)=NA")
+data$t06_07_w03 <- recode(data$t06_07_w03, "c(-888,-999)=NA")
+data$t06_07_w04 <- recode(data$t06_07_w04, "c(-888,-999)=NA")
+
+summary(data$t06_07_w01)
+summary(data$t06_07_w02)
+summary(data$t06_07_w03)
+summary(data$t06_07_w04)
+```
+
+### Proximidad con familiares y/o amigos cercanos
+```{r}
+data$t06_08_w01 <- recode(data$t06_08_w01, "c(-888,-999)=NA")
+data$t06_08_w02 <- recode(data$t06_08_w02, "c(-888,-999)=NA")
+data$t06_08_w03 <- recode(data$t06_08_w03, "c(-888,-999)=NA")
+data$t06_08_w04 <- recode(data$t06_08_w04, "c(-888,-999)=NA")
+
+summary(data$t06_08_w01)
+summary(data$t06_08_w02)
+summary(data$t06_08_w03)
+summary(data$t06_08_w04)
+```
+
+### Tamaño de la vivienda
+```{r}
+data$t07_01_w01 <- recode(data$t07_01_w01, "c(-888,-999)=NA")
+data$t07_01_w02 <- recode(data$t07_01_w02, "c(-888,-999)=NA")
+data$t07_01_w03 <- recode(data$t07_01_w03, "c(-888,-999)=NA")
+data$t07_01_w04 <- recode(data$t07_01_w04, "c(-888,-999)=NA")
+
+summary(data$t07_01_w01)
+summary(data$t07_01_w02)
+summary(data$t07_01_w03)
+summary(data$t07_01_w04)
+```
+
+### Calidad de la vivienda
+```{r}
+data$t07_02_w01 <- recode(data$t07_02_w01, "c(-888,-999)=NA")
+data$t07_02_w02 <- recode(data$t07_02_w02, "c(-888,-999)=NA")
+data$t07_02_w03 <- recode(data$t07_02_w03, "c(-888,-999)=NA")
+data$t07_02_w04 <- recode(data$t07_02_w04, "c(-888,-999)=NA")
+
+summary(data$t07_02_w01)
+summary(data$t07_02_w02)
+summary(data$t07_02_w03)
+summary(data$t07_02_w04)
+```
+
+## Confianza interpersonal
+### Se puede confiar en las personas o hay que tener cuidado de ellas
+```{r}
+data$c02_w01 <- recode(data$c02_w01, "c(-888,-999)=NA")
+data$c02_w02 <- recode(data$c02_w02, "c(-888,-999)=NA")
+data$c02_w03 <- recode(data$c02_w03, "c(-888,-999)=NA")
+data$c02_w04 <- recode(data$c02_w04, "c(-888,-999)=NA")
+
+summary(data$c02_w01)
+summary(data$c02_w02)
+summary(data$c02_w03)
+summary(data$c02_w04)
+```
+
+### Las personas tratan de ayudar a los demas o piensan en si mismas
+```{r}
+data$c03_w01 <- recode(data$c03_w01, "c(-888,-999)=NA")
+data$c03_w02 <- recode(data$c03_w02, "c(-888,-999)=NA")
+data$c03_w03 <- recode(data$c03_w03, "c(-888,-999)=NA")
+data$c03_w04 <- recode(data$c03_w04, "c(-888,-999)=NA")
+
+summary(data$c03_w01)
+summary(data$c03_w02)
+summary(data$c03_w03)
+summary(data$c03_w04)
+```
+
+### La gente intenta aprovecharse o trata de ser justa
+```{r}
+data$c04_w01 <- recode(data$c04_w01, "c(-888,-999)=NA")
+data$c04_w02 <- recode(data$c04_w02, "c(-888,-999)=NA")
+data$c04_w03 <- recode(data$c04_w03, "c(-888,-999)=NA")
+data$c04_w04 <- recode(data$c04_w04, "c(-888,-999)=NA")
+
+summary(data$c04_w01)
+summary(data$c04_w02)
+summary(data$c04_w03)
+summary(data$c04_w04)
+```
+
+## Comportamiento prosocial
+### Ha visitado la casa de algun vecino
+```{r}
+data$c07_01_w01 <- recode(data$c07_01_w01, "c(-888,-999)=NA")
+data$c07_01_w02 <- recode(data$c07_01_w02, "c(-888,-999)=NA")
+data$c07_01_w03 <- recode(data$c07_01_w03, "c(-888,-999)=NA")
+data$c07_01_w04 <- recode(data$c07_01_w04, "c(-888,-999)=NA")
+
+summary(data$c07_01_w01)
+summary(data$c07_01_w02)
+summary(data$c07_01_w03)
+summary(data$c07_01_w04)
+```
+
+### Ha asistido a alguna reunion donde se traten temas de interes publico
+```{r}
+data$c07_02_w01 <- recode(data$c07_02_w01, "c(-888,-999)=NA")
+data$c07_02_w02 <- recode(data$c07_02_w02, "c(-888,-999)=NA")
+data$c07_02_w03 <- recode(data$c07_02_w03, "c(-888,-999)=NA")
+data$c07_02_w04 <- recode(data$c07_02_w04, "c(-888,-999)=NA")
+
+summary(data$c07_02_w01)
+summary(data$c07_02_w02)
+summary(data$c07_02_w03)
+summary(data$c07_02_w04)
+```
+
+### Han venido amigos a visitarlo a su casa
+```{r}
+data$c07_03_w01 <- recode(data$c07_03_w01, "c(-888,-999)=NA")
+data$c07_03_w02 <- recode(data$c07_03_w02, "c(-888,-999)=NA")
+data$c07_03_w03 <- recode(data$c07_03_w03, "c(-888,-999)=NA")
+data$c07_03_w04 <- recode(data$c07_03_w04, "c(-888,-999)=NA")
+
+summary(data$c07_03_w01)
+summary(data$c07_03_w02)
+summary(data$c07_03_w03)
+summary(data$c07_03_w04)
+```
+
+### Ha hecho voluntariado
+```{r}
+data$c07_04_w01 <- recode(data$c07_04_w01, "c(-888,-999)=NA")
+data$c07_04_w02 <- recode(data$c07_04_w02, "c(-888,-999)=NA")
+data$c07_04_w03 <- recode(data$c07_04_w03, "c(-888,-999)=NA")
+data$c07_04_w04 <- recode(data$c07_04_w04, "c(-888,-999)=NA")
+
+summary(data$c07_04_w01)
+summary(data$c07_04_w02)
+summary(data$c07_04_w03)
+summary(data$c07_04_w04)
+```
+
+### Ha donado dinero a una obra social o de caridad
+```{r}
+data$c07_05_w01 <- recode(data$c07_05_w01, "c(-888,-999)=NA")
+data$c07_05_w02 <- recode(data$c07_05_w02, "c(-888,-999)=NA")
+data$c07_05_w03 <- recode(data$c07_05_w03, "c(-888,-999)=NA")
+data$c07_05_w04 <- recode(data$c07_05_w04, "c(-888,-999)=NA")
+
+summary(data$c07_05_w01)
+summary(data$c07_05_w02)
+summary(data$c07_05_w03)
+summary(data$c07_05_w04)
+```
+
+### Ha prestado una suma de dinero de 10mil o mas
+```{r}
+data$c07_06_w01 <- recode(data$c07_06_w01, "c(-888,-999)=NA")
+data$c07_06_w02 <- recode(data$c07_06_w02, "c(-888,-999)=NA")
+data$c07_06_w03 <- recode(data$c07_06_w03, "c(-888,-999)=NA")
+data$c07_06_w04 <- recode(data$c07_06_w04, "c(-888,-999)=NA")
+
+summary(data$c07_06_w01)
+summary(data$c07_06_w02)
+summary(data$c07_06_w03)
+summary(data$c07_06_w04)
+```
+
+### Ha convesado con una persona en problemas o deprimida
+```{r}
+data$c07_07_w01 <- recode(data$c07_07_w01, "c(-888,-999)=NA")
+data$c07_07_w02 <- recode(data$c07_07_w02, "c(-888,-999)=NA")
+data$c07_07_w03 <- recode(data$c07_07_w03, "c(-888,-999)=NA")
+data$c07_07_w04 <- recode(data$c07_07_w04, "c(-888,-999)=NA")
+
+summary(data$c07_07_w01)
+summary(data$c07_07_w02)
+summary(data$c07_07_w03)
+summary(data$c07_07_w04)
+```
+
+### Ha ayudado a alguien a conseguir trabajo
+```{r}
+data$c07_08_w01 <- recode(data$c07_08_w01, "c(-888,-999)=NA")
+data$c07_08_w02 <- recode(data$c07_08_w02, "c(-888,-999)=NA")
+data$c07_08_w03 <- recode(data$c07_08_w03, "c(-888,-999)=NA")
+data$c07_08_w04 <- recode(data$c07_08_w04, "c(-888,-999)=NA")
+
+summary(data$c07_08_w01)
+summary(data$c07_08_w02)
+summary(data$c07_08_w03)
+summary(data$c07_08_w04)
+```
+
+# Indicadores CEPAL no considerados en informe COES
+
+## Participacion en organizaciones
+
+### Junta de vecinos
+```{r}
+data$c12_01_w01 <- recode(data$c12_01_w01, "c(-888,-999)=NA")
+
+data$c12_01_w03 <- recode(data$c12_01_w03, "c(-888,-999)=NA")
+
+
+summary(data$c12_01_w01)
+
+summary(data$c12_01_w03)
+
+```
+
+### Organizacion religiosa
+```{r}
+data$c12_02_w01 <- recode(data$c12_02_w01, "c(-888,-999)=NA")
+
+data$c12_02_w03 <- recode(data$c12_02_w03, "c(-888,-999)=NA")
+
+
+summary(data$c12_02_w01)
+
+summary(data$c12_02_w03)
+
+```
+
+### Partido o movimiento politico
+```{r}
+data$c12_03_w01 <- recode(data$c12_03_w01, "c(-888,-999)=NA")
+
+data$c12_03_w03 <- recode(data$c12_03_w03, "c(-888,-999)=NA")
+
+
+summary(data$c12_03_w01)
+
+summary(data$c12_03_w03)
+
+```
+
+### Sindicato
+```{r}
+data$c12_04_w01 <- recode(data$c12_04_w01, "c(-888,-999)=NA")
+
+data$c12_04_w03 <- recode(data$c12_04_w03, "c(-888,-999)=NA")
+
+
+summary(data$c12_04_w01)
+
+summary(data$c12_04_w03)
+
+```
+
+### Asociacion profesional o gremial
+```{r}
+data$c12_05_w01 <- recode(data$c12_05_w01, "c(-888,-999)=NA")
+
+data$c12_05_w03 <- recode(data$c12_05_w03, "c(-888,-999)=NA")
+
+
+summary(data$c12_05_w01)
+
+summary(data$c12_05_w03)
+
+```
+
+### Organizacion deportiva
+```{r}
+data$c12_06_w01 <- recode(data$c12_06_w01, "c(-888,-999)=NA")
+
+data$c12_06_w03 <- recode(data$c12_06_w03, "c(-888,-999)=NA")
+
+
+summary(data$c12_06_w01)
+
+summary(data$c12_06_w03)
+
+```
+
+### Organizacion ecologica
+```{r}
+data$c12_07_w01 <- recode(data$c12_07_w01, "c(-888,-999)=NA")
+
+data$c12_07_w03 <- recode(data$c12_07_w03, "c(-888,-999)=NA")
+
+
+summary(data$c12_07_w01)
+
+summary(data$c12_07_w03)
+
+```
+
+### Asociaciones o centro de estudiantes
+```{r}
+data$c12_08_w01 <- recode(data$c12_08_w01, "c(-888,-999)=NA")
+
+data$c12_08_w03 <- recode(data$c12_08_w03, "c(-888,-999)=NA")
+
+
+summary(data$c12_08_w01)
+
+summary(data$c12_08_w03)
+
+```
+
+## Reconocimiento y respeto de la diversidad
+### adopcion homoparental
+```{r}
+
+data$c37_01_w03 <- recode(data$c37_01_w03, "c(-888,-999)=NA")
+data$c37_01_w04 <- recode(data$c37_01_w04, "c(-888,-999)=NA")
+
+
+summary(data$c37_01_w03)
+summary(data$c37_01_w04)
+```
+
+### Hombres no tienen prioridad sobre mujer a la hora de acceder a trabajo
+```{r}
+
+data$g01_05_w04 <- recode(data$g01_05_w04, "c(-888,-999)=NA")
+
+summary(data$g01_05_w04)
+```
+
+### Voto en elecciones 2013 y 2017
+```{r}
+data$c11_w01 <- recode(data$c11_w01, "c(-888,-999)=NA")
+
+data$c11_w03 <- recode(data$c11_w03, "c(-888,-999)=NA")
+
+
+summary(data$c11_w01)
+
+summary(data$c11_w03)
+```
+
+
+# Indicadores informe clases medias no consideradas en informe COES
+
+## Percepcion trato justo
+### En los servicios de salud
+```{r}
+data$c35_01_w01 <- recode(data$c35_01_w01, "c(-888,-999)=NA")
+
+data$c35_01_w03 <- recode(data$c35_01_w03, "c(-888,-999)=NA")
+data$c35_01_w04 <- recode(data$c35_01_w04, "c(-888,-999)=NA")
+
+
+summary(data$c35_01_w01)
+
+summary(data$c35_01_w03)
+summary(data$c35_01_w04)
+```
+
+### En el trabajo
+```{r}
+data$c35_02_w01 <- recode(data$c35_02_w01, "c(-888,-999)=NA")
+
+data$c35_02_w03 <- recode(data$c35_02_w03, "c(-888,-999)=NA")
+data$c35_02_w04 <- recode(data$c35_02_w04, "c(-888,-999)=NA")
+
+
+summary(data$c35_02_w01)
+
+summary(data$c35_02_w03)
+summary(data$c35_02_w04)
+```
+
+### Por carabineros
+```{r}
+data$c35_03_w01 <- recode(data$c35_03_w01, "c(-888,-999)=NA")
+
+data$c35_03_w03 <- recode(data$c35_03_w03, "c(-888,-999)=NA")
+data$c35_03_w04 <- recode(data$c35_03_w04, "c(-888,-999)=NA")
+
+
+summary(data$c35_03_w01)
+
+summary(data$c35_03_w03)
+summary(data$c35_03_w04)
+```
+
+###  Por personas de clase alta
+```{r}
+data$c35_04_w01 <- recode(data$c35_04_w01, "c(-888,-999)=NA")
+
+data$c35_04_w03 <- recode(data$c35_04_w03, "c(-888,-999)=NA")
+data$c35_04_w04 <- recode(data$c35_04_w04, "c(-888,-999)=NA")
+
+
+summary(data$c35_04_w01)
+
+summary(data$c35_04_w03)
+summary(data$c35_04_w04)
+```
+
+## Actitudes hacia la diversidad
+### Con la llegada de tantos inmigrantes (peruanos) Chile está perdiendo su identidad
+```{r}
+data$r12_06_w01 <- recode(data$r12_06_w01, "c(-888,-999)=NA")
+data$r12_06_w02 <- recode(data$r12_06_w02, "c(-888,-999)=NA")
+data$r12_06_w03 <- recode(data$r12_06_w03, "c(-888,-999)=NA")
+data$r12_06_w04 <- recode(data$r12_06_w04, "c(-888,-999)=NA")
+
+summary(data$r12_06_w01)
+summary(data$r12_06_w02)
+summary(data$r12_06_w03)
+summary(data$r12_06_w04)
+```
+
+### Con la llegada de tantos inmigrantes (peruanos) está aumentando el desempleo
+```{r}
+data$r12_07_w01 <- recode(data$r12_07_w01, "c(-888,-999)=NA")
+data$r12_07_w02 <- recode(data$r12_07_w02, "c(-888,-999)=NA")
+data$r12_07_w03 <- recode(data$r12_07_w03, "c(-888,-999)=NA")
+data$r12_07_w04 <- recode(data$r12_07_w04, "c(-888,-999)=NA")
+
+summary(data$r12_07_w01)
+summary(data$r12_07_w02)
+summary(data$r12_07_w03)
+summary(data$r12_07_w04)
+```
+
+### adopcion homoparental
+```{r}
+
+data$c37_01_w03 <- recode(data$c37_01_w03, "c(-888,-999)=NA")
+data$c37_01_w04 <- recode(data$c37_01_w04, "c(-888,-999)=NA")
+
+
+summary(data$c37_01_w03)
+summary(data$c37_01_w04)
+```
+
+### Grado de confianza: homosexuales (gays y lesbianas)
+```{r}
+data$c06_04_w01 <- recode(data$c06_04_w01, "c(-888,-999)=NA")
+
+data$c06_04_w03 <- recode(data$c06_04_w03, "c(-888,-999)=NA")
+
+
+
+summary(data$c06_04_w01)
+
+summary(data$c06_04_w03)
+```
+
+### Grado de confianza: mapuche
+```{r}
+data$c06_05_w01 <- recode(data$c06_05_w01, "c(-888,-999)=NA")
+
+data$c06_05_w03 <- recode(data$c06_05_w03, "c(-888,-999)=NA")
+
+
+
+summary(data$c06_05_w01)
+
+summary(data$c06_05_w03)
+```
+
+### Grado de confianza: inmigrantes peruanos
+```{r}
+data$c06_06_w01 <- recode(data$c06_06_w01, "c(-888,-999)=NA")
+
+data$c06_06_w03 <- recode(data$c06_06_w03, "c(-888,-999)=NA")
+
+
+
+summary(data$c06_06_w01)
+
+summary(data$c06_06_w03)
+```
+
+# Guardar base
+```{r}
+save(data,file = "../input/data/data.RData")
+```
