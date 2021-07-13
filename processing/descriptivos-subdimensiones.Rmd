@@ -1,0 +1,560 @@
+---
+title: "Descriptivos y correlaciones"
+author: "Kevin Carrasco"
+date: "10-07-2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning=F, message=F)
+```
+
+# Cargar paquetes
+```{r}
+pacman::p_load(dplyr, car, summarytools, webshot, knitr, kableExtra, corrplot)
+```
+
+# Cargar base elsoc longitudinal (2016-2019)
+```{r}
+load("../input/data/data.RData")
+```
+
+# Resumen dimensiones
+```{r message=FALSE, warning=FALSE, include=FALSE, echo=FALSE}
+pacman::p_load(knitr, kableExtra, dplyr)
+```
+```{r echo=FALSE}
+table_format = if(is_latex_output()) {
+  "latex"
+} else if(is_html_output()) {
+  "html"
+}
+```
+```{r echo=FALSE}
+tab <- read.csv(file = "../input/table1.csv",
+                header = 1,sep = ";",encoding = "UTF-8")
+
+kable(tab,
+      format = table_format,
+      booktabs = T, 
+      row.names=FALSE,
+      linesep = "",
+      col.names =  c("Dimensión","Subdimensión","Cantidad de indicadores")) %>%
+  kable_styling(
+    full_width = T,
+    latex_options = c("hold_position"),
+    position = "center",
+    font_size = 12,
+    bootstrap_options=c("striped", "bordered")) %>%
+  column_spec(column = 1,width = "2 cm", ) %>%
+  column_spec(column = 2,width = "2 cm") %>%
+  column_spec(column = 3,width = "2 cm") %>%
+  collapse_rows(columns = 1)
+```
+
+# Confianza en instituciones y democracia
+
+## Confianza en instituciones
+
+### Descriptivos
+
+```{r}
+view(dfSummary(select(data, c05_01_w01, c05_02_w01, c05_03_w01, c05_04_w01, c05_05_w01, c05_06_w01, c05_07_w01, c05_08_w01),
+               plain.ascii = FALSE,
+               style = "grid",
+               #tmp.img.dir = "/tmp",
+               graph.magnif = 1.0,
+               headings = F,  # encabezado
+               varnumbers = F, # num variable
+               labels.col = T, # etiquetas
+               na.col = T,    # missing
+               graph.col = T, # plot
+               valid.col = T, # n valido
+               # col.widths = c(5,5,10,10,10,10)
+               ), file = "../output/tables/table1.html")
+webshot(url ="../output/tables/table1.html" ,file ="../output/tables/table1.png")
+```
+
+### Correlación
+
+```{r}
+corrplot.mixed(cor(dplyr::select(data, c05_01_w01, 
+                                 c05_02_w01, 
+                                 c05_03_w01, 
+                                 c05_04_w01, 
+                                 c05_05_w01, 
+                                 c05_06_w01, 
+                                 c05_07_w01, 
+                                 c05_08_w01),
+                            use = "na.or.complete"))
+```
+
+
+## Satisfaccion con la democracia
+
+```{r}
+view(dfSummary(select(data, c01_w01),
+               plain.ascii = FALSE,
+               style = "grid",
+               #tmp.img.dir = "/tmp",
+               graph.magnif = 0.9,
+               headings = F,  # encabezado
+               varnumbers = F, # num variable
+               labels.col = T, # etiquetas
+               na.col = T,    # missing
+               graph.col = T, # plot
+               valid.col = T, # n valido
+               # col.widths = c(5,5,10,10,10,10)
+               ), file = "../output/tables/table2.html")
+webshot(url ="../output/tables/table2.html" ,file ="../output/tables/table2.png")
+```
+
+# Participación política
+
+## Participacion ciudadana
+
+### Descriptivos
+
+```{r}
+view(dfSummary(select(data, c08_01_w01, c08_02_w01, c08_03_w01, c08_04_w01),
+               plain.ascii = FALSE,
+               style = "grid",
+               #tmp.img.dir = "/tmp",
+               graph.magnif = 0.9,
+               headings = F,  # encabezado
+               varnumbers = F, # num variable
+               labels.col = T, # etiquetas
+               na.col = T,    # missing
+               graph.col = T, # plot
+               valid.col = T, # n valido
+               # col.widths = c(5,5,10,10,10,10)
+               ), file = "../output/tables/table3.html")
+webshot(url ="../output/tables/table3.html" ,file ="../output/tables/table3.png")
+```
+
+### Correlacion
+
+```{r}
+corrplot.mixed(cor(dplyr::select(data, c08_01_w01, c08_02_w01, c08_03_w01, c08_04_w01),
+                            use = "na.or.complete"))
+```
+
+## Interes politico
+
+### Descriptivos
+
+```{r}
+view(dfSummary(select(data, c13_w01, c14_01_w01, c14_02_w01),
+               plain.ascii = FALSE,
+               style = "grid",
+               #tmp.img.dir = "/tmp",
+               graph.magnif = 0.9,
+               headings = F,  # encabezado
+               varnumbers = F, # num variable
+               labels.col = T, # etiquetas
+               na.col = T,    # missing
+               graph.col = T, # plot
+               valid.col = T, # n valido
+               # col.widths = c(5,5,10,10,10,10)
+               ), file = "../output/tables/table4.html")
+webshot(url ="../output/tables/table4.html" ,file ="../output/tables/table4.png")
+```
+
+### Correlacion
+
+```{r}
+corrplot.mixed(cor(dplyr::select(data, c13_w01, c14_01_w01, c14_02_w01),
+                            use = "na.or.complete"))
+```
+
+# Percepcion de justicia
+
+## Justicia distributiva y meritocracia
+
+### Descriptivos
+
+```{r}
+view(dfSummary(select(data, c18_09_w01, c18_10_w01),
+               plain.ascii = FALSE,
+               style = "grid",
+               #tmp.img.dir = "/tmp",
+               graph.magnif = 0.9,
+               headings = F,  # encabezado
+               varnumbers = F, # num variable
+               labels.col = T, # etiquetas
+               na.col = T,    # missing
+               graph.col = T, # plot
+               valid.col = T, # n valido
+               # col.widths = c(5,5,10,10,10,10)
+               ), file = "../output/tables/table5.html")
+webshot(url ="../output/tables/table5.html" ,file ="../output/tables/table5.png")
+```
+
+### Correlacion
+```{r}
+corrplot.mixed(cor(dplyr::select(data, c18_09_w01, c18_10_w01),
+                            use = "na.or.complete"))
+```
+
+## Surgir en la vida
+
+### Descriptivos
+
+```{r}
+view(dfSummary(select(data, d05_01_w01, d05_02_w01, d05_03_w01, d05_04_w01),
+               plain.ascii = FALSE,
+               style = "grid",
+               #tmp.img.dir = "/tmp",
+               graph.magnif = 0.9,
+               headings = F,  # encabezado
+               varnumbers = F, # num variable
+               labels.col = T, # etiquetas
+               na.col = T,    # missing
+               graph.col = T, # plot
+               valid.col = T, # n valido
+               # col.widths = c(5,5,10,10,10,10)
+               ), file = "../output/tables/table6.html")
+webshot(url ="../output/tables/table6.html" ,file ="../output/tables/table6.png")
+```
+
+### Correlacion
+```{r}
+corrplot.mixed(cor(dplyr::select(data, d05_01_w01, d05_02_w01, d05_03_w01, d05_04_w01),
+                            use = "na.or.complete"))
+```
+
+# Sentido de pertenencia
+
+## Identificacion y orgullo por el pais
+
+### Descriptivos
+```{r}
+view(dfSummary(select(data, c32_01_w01, c32_02_w01),
+               plain.ascii = FALSE,
+               style = "grid",
+               #tmp.img.dir = "/tmp",
+               graph.magnif = 0.9,
+               headings = F,  # encabezado
+               varnumbers = F, # num variable
+               labels.col = T, # etiquetas
+               na.col = T,    # missing
+               graph.col = T, # plot
+               valid.col = T, # n valido
+               # col.widths = c(5,5,10,10,10,10)
+               ), file = "../output/tables/table7.html")
+webshot(url ="../output/tables/table7.html" ,file ="../output/tables/table7.png")
+```
+
+### Correlacion
+```{r}
+corrplot.mixed(cor(dplyr::select(data, c32_01_w01, c32_02_w01),
+                            use = "na.or.complete"))
+```
+
+# Calidad de la vida en el vecindario
+
+## Confianza en vecinos
+```{r}
+view(dfSummary(select(data, t01_w01),
+               plain.ascii = FALSE,
+               style = "grid",
+               #tmp.img.dir = "/tmp",
+               graph.magnif = 0.9,
+               headings = F,  # encabezado
+               varnumbers = F, # num variable
+               labels.col = T, # etiquetas
+               na.col = T,    # missing
+               graph.col = T, # plot
+               valid.col = T, # n valido
+               # col.widths = c(5,5,10,10,10,10)
+               ), file = "../output/tables/table8.html")
+webshot(url ="../output/tables/table8.html" ,file ="../output/tables/table8.png")
+```
+
+## Cohesion barrial
+### Descriptivos
+```{r}
+view(dfSummary(select(data, t02_01_w01, t02_02_w01, t02_03_w01, t02_04_w01),
+               plain.ascii = FALSE,
+               style = "grid",
+               #tmp.img.dir = "/tmp",
+               graph.magnif = 0.9,
+               headings = F,  # encabezado
+               varnumbers = F, # num variable
+               labels.col = T, # etiquetas
+               na.col = T,    # missing
+               graph.col = T, # plot
+               valid.col = T, # n valido
+               # col.widths = c(5,5,10,10,10,10)
+               ), file = "../output/tables/table9.html")
+webshot(url ="../output/tables/table9.html" ,file ="../output/tables/table9.png")
+```
+
+### Correlacion
+```{r}
+corrplot.mixed(cor(dplyr::select(data, t02_01_w01, t02_02_w01, t02_03_w01, t02_04_w01),
+                            use = "na.or.complete"))
+```
+
+## Sociabilidad barrial
+
+### Descriptivos
+```{r}
+view(dfSummary(select(data, t03_01_w01, t03_02_w01, t03_03_w01, t03_04_w01),
+               plain.ascii = FALSE,
+               style = "grid",
+               #tmp.img.dir = "/tmp",
+               graph.magnif = 0.9,
+               headings = F,  # encabezado
+               varnumbers = F, # num variable
+               labels.col = T, # etiquetas
+               na.col = T,    # missing
+               graph.col = T, # plot
+               valid.col = T, # n valido
+               # col.widths = c(5,5,10,10,10,10)
+               ), file = "../output/tables/table10.html")
+webshot(url ="../output/tables/table10.html" ,file ="../output/tables/table10.png")
+```
+
+### Correlacion
+```{r}
+corrplot.mixed(cor(dplyr::select(data, t03_01_w01, t03_02_w01, t03_03_w01, t03_04_w01),
+                            use = "na.or.complete"))
+```
+
+## Satisfaccion residencial
+
+### Descriptivos
+```{r}
+view(dfSummary(select(data, t06_01_w01, t06_02_w01, t06_03_w01, t06_04_w01, t06_05_w01, t06_06_w01, t06_07_w01, t06_08_w01, t07_01_w01, t07_02_w01),
+               plain.ascii = FALSE,
+               style = "grid",
+               #tmp.img.dir = "/tmp",
+               graph.magnif = 0.9,
+               headings = F,  # encabezado
+               varnumbers = F, # num variable
+               labels.col = T, # etiquetas
+               na.col = T,    # missing
+               graph.col = T, # plot
+               valid.col = T, # n valido
+               # col.widths = c(5,5,10,10,10,10)
+               ), file = "../output/tables/table11.html")
+webshot(url ="../output/tables/table11.html" ,file ="../output/tables/table11.png")
+```
+
+### Correlacion
+```{r}
+corrplot.mixed(cor(dplyr::select(data, t06_01_w01, 
+                                 t06_02_w01, 
+                                 t06_03_w01, 
+                                 t06_04_w01, 
+                                 t06_05_w01, 
+                                 t06_06_w01, 
+                                 t06_07_w01, 
+                                 t06_08_w01, 
+                                 t07_01_w01, 
+                                 t07_02_w01),
+                            use = "na.or.complete"))
+```
+
+# Redes sociales
+
+## Confianza interpersonal
+
+### Descriptivos
+```{r}
+view(dfSummary(select(data, c02_w01, c03_w01, c04_w01),
+               plain.ascii = FALSE,
+               style = "grid",
+               #tmp.img.dir = "/tmp",
+               graph.magnif = 0.9,
+               headings = F,  # encabezado
+               varnumbers = F, # num variable
+               labels.col = T, # etiquetas
+               na.col = T,    # missing
+               graph.col = T, # plot
+               valid.col = T, # n valido
+               # col.widths = c(5,5,10,10,10,10)
+               ), file = "../output/tables/table12.html")
+webshot(url ="../output/tables/table12.html" ,file ="../output/tables/table12.png")
+```
+
+### Correlacion
+```{r}
+corrplot.mixed(cor(dplyr::select(data, c02_w01, c03_w01, c04_w01),
+                            use = "na.or.complete"))
+```
+
+## Comportamiento prosocial
+
+### Descriptivos
+```{r}
+view(dfSummary(select(data, c07_01_w01, c07_02_w01, c07_03_w01, c07_04_w01, c07_05_w01, c07_06_w01, c07_07_w01, c07_08_w01),
+               plain.ascii = FALSE,
+               style = "grid",
+               #tmp.img.dir = "/tmp",
+               graph.magnif = 0.9,
+               headings = F,  # encabezado
+               varnumbers = F, # num variable
+               labels.col = T, # etiquetas
+               na.col = T,    # missing
+               graph.col = T, # plot
+               valid.col = T, # n valido
+               # col.widths = c(5,5,10,10,10,10)
+               ), file = "../output/tables/table13.html")
+webshot(url ="../output/tables/table13.html" ,file ="../output/tables/table13.png")
+```
+
+### Correlacion
+```{r}
+corrplot.mixed(cor(dplyr::select(data, c07_01_w01, 
+                                 c07_02_w01, 
+                                 c07_03_w01, 
+                                 c07_04_w01, 
+                                 c07_05_w01,
+                                 c07_06_w01, 
+                                 c07_07_w01, 
+                                 c07_08_w01),
+                            use = "na.or.complete"))
+```
+
+# Descriptivos subdimensiones CEPAL no consideradas en informe COES
+
+## Participacion en organizaciones
+
+### Descriptivos
+```{r}
+view(dfSummary(select(data, c12_01_w01, c12_02_w01, c12_03_w01, c12_04_w01, c12_05_w01, c12_06_w01, c12_07_w01, c12_08_w01),
+               plain.ascii = FALSE,
+               style = "grid",
+               #tmp.img.dir = "/tmp",
+               graph.magnif = 0.9,
+               headings = F,  # encabezado
+               varnumbers = F, # num variable
+               labels.col = T, # etiquetas
+               na.col = T,    # missing
+               graph.col = T, # plot
+               valid.col = T, # n valido
+               # col.widths = c(5,5,10,10,10,10)
+               ), file = "../output/tables/table14.html")
+webshot(url ="../output/tables/table14.html" ,file ="../output/tables/table14.png")
+```
+
+### Correlacion
+```{r}
+corrplot.mixed(cor(dplyr::select(data, c12_01_w01, 
+                                 c12_02_w01, 
+                                 c12_03_w01, 
+                                 c12_04_w01, 
+                                 c12_05_w01, 
+                                 c12_06_w01, 
+                                 c12_07_w01, 
+                                 c12_08_w01),
+                            use = "na.or.complete"))
+```
+
+## Reconocimiento y respeto de la diversidad
+
+### Descriptivos
+```{r}
+view(dfSummary(select(data, c37_01_w03, g01_05_w04),
+               plain.ascii = FALSE,
+               style = "grid",
+               #tmp.img.dir = "/tmp",
+               graph.magnif = 0.9,
+               headings = F,  # encabezado
+               varnumbers = F, # num variable
+               labels.col = T, # etiquetas
+               na.col = T,    # missing
+               graph.col = T, # plot
+               valid.col = T, # n valido
+               # col.widths = c(5,5,10,10,10,10)
+               ), file = "../output/tables/table15.html")
+webshot(url ="../output/tables/table15.html" ,file ="../output/tables/table15.png")
+```
+
+### Correlacion
+```{r}
+corrplot.mixed(cor(dplyr::select(data, c37_01_w03, g01_05_w04),
+                            use = "na.or.complete"))
+```
+
+## Voto en elecciones 2013 y 2017
+
+### Descriptivos
+```{r}
+view(dfSummary(select(data, c11_w01, c11_w03),
+               plain.ascii = FALSE,
+               style = "grid",
+               #tmp.img.dir = "/tmp",
+               graph.magnif = 0.9,
+               headings = F,  # encabezado
+               varnumbers = F, # num variable
+               labels.col = T, # etiquetas
+               na.col = T,    # missing
+               graph.col = T, # plot
+               valid.col = T, # n valido
+               # col.widths = c(5,5,10,10,10,10)
+               ), file = "../output/tables/table16.html")
+webshot(url ="../output/tables/table16.html" ,file ="../output/tables/table16.png")
+```
+
+### Correlacion
+```{r}
+corrplot.mixed(cor(dplyr::select(data, c11_w01, c11_w03),
+                            use = "na.or.complete"))
+```
+
+# Descriptivos subdimensiones Informe clases medias no consideradas en informe COES
+
+## Percepcion trato justo
+
+### Descriptivos
+```{r}
+view(dfSummary(select(data, c35_01_w01, c35_02_w01, c35_03_w01, c35_04_w01),
+               plain.ascii = FALSE,
+               style = "grid",
+               #tmp.img.dir = "/tmp",
+               graph.magnif = 0.9,
+               headings = F,  # encabezado
+               varnumbers = F, # num variable
+               labels.col = T, # etiquetas
+               na.col = T,    # missing
+               graph.col = T, # plot
+               valid.col = T, # n valido
+               # col.widths = c(5,5,10,10,10,10)
+               ), file = "../output/tables/table17.html")
+webshot(url ="../output/tables/table17.html" ,file ="../output/tables/table17.png")
+```
+
+### Correlacion
+```{r}
+corrplot.mixed(cor(dplyr::select(data, c35_01_w01, c35_02_w01, c35_03_w01, c35_04_w01),
+                            use = "na.or.complete"))
+```
+
+## Actitudes hacia la diversidad
+
+### Descriptivos
+```{r}
+view(dfSummary(select(data, r12_06_w01, r12_07_w01, c37_01_w03, c06_04_w01, c06_05_w01, c06_06_w01),
+               plain.ascii = FALSE,
+               style = "grid",
+               #tmp.img.dir = "/tmp",
+               graph.magnif = 0.9,
+               headings = F,  # encabezado
+               varnumbers = F, # num variable
+               labels.col = T, # etiquetas
+               na.col = T,    # missing
+               graph.col = T, # plot
+               valid.col = T, # n valido
+               # col.widths = c(5,5,10,10,10,10)
+               ), file = "../output/tables/table18.html")
+webshot(url ="../output/tables/table18.html" ,file ="../output/tables/table18.png")
+```
+
+### Correlacion
+```{r}
+corrplot.mixed(cor(dplyr::select(data, r12_06_w01, r12_07_w01, c37_01_w03, c06_04_w01, c06_05_w01, c06_06_w01),
+                            use = "na.or.complete"))
+```
