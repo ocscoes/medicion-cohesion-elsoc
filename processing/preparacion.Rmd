@@ -738,6 +738,21 @@ summary(data$c07_08_w04)
 
 # Indicadores CEPAL no considerados en informe COES
 
+## Lazos
+### Cantidad de amigos
+```{r}
+
+data$r15_w02 <- recode(data$r15_w02, "c(-888,-999)=NA")
+
+data$r15_w04 <- recode(data$r15_w04, "c(-888,-999)=NA")
+
+summary(data$r15_w02)
+
+summary(data$r15_w04)
+
+```
+
+
 ## Participacion en organizaciones
 
 ### Junta de vecinos
@@ -939,28 +954,28 @@ summary(data$c35_04_w04)
 ## Actitudes hacia la diversidad
 ### Con la llegada de tantos inmigrantes (peruanos) Chile está perdiendo su identidad
 ```{r}
-data$r12_06_w01 <- recode(data$r12_06_w01, "c(-888,-999)=NA")
-data$r12_06_w02 <- recode(data$r12_06_w02, "c(-888,-999)=NA")
-data$r12_06_w03 <- recode(data$r12_06_w03, "c(-888,-999)=NA")
-data$r12_06_w04 <- recode(data$r12_06_w04, "c(-888,-999)=NA")
+data$r12_03_w01 <- recode(data$r12_03_w01, "c(-888,-999)=NA")
+data$r12_03_w02 <- recode(data$r12_03_w02, "c(-888,-999)=NA")
+data$r12_03_w03 <- recode(data$r12_03_w03, "c(-888,-999)=NA")
+data$r12_03_w04 <- recode(data$r12_03_w04, "c(-888,-999)=NA")
 
-summary(data$r12_06_w01)
-summary(data$r12_06_w02)
-summary(data$r12_06_w03)
-summary(data$r12_06_w04)
+summary(data$r12_03_w01)
+summary(data$r12_03_w02)
+summary(data$r12_03_w03)
+summary(data$r12_03_w04)
 ```
 
 ### Con la llegada de tantos inmigrantes (peruanos) está aumentando el desempleo
 ```{r}
-data$r12_07_w01 <- recode(data$r12_07_w01, "c(-888,-999)=NA")
-data$r12_07_w02 <- recode(data$r12_07_w02, "c(-888,-999)=NA")
-data$r12_07_w03 <- recode(data$r12_07_w03, "c(-888,-999)=NA")
-data$r12_07_w04 <- recode(data$r12_07_w04, "c(-888,-999)=NA")
+data$r12_04_w01 <- recode(data$r12_04_w01, "c(-888,-999)=NA")
+data$r12_04_w02 <- recode(data$r12_04_w02, "c(-888,-999)=NA")
+data$r12_04_w03 <- recode(data$r12_04_w03, "c(-888,-999)=NA")
+data$r12_04_w04 <- recode(data$r12_04_w04, "c(-888,-999)=NA")
 
-summary(data$r12_07_w01)
-summary(data$r12_07_w02)
-summary(data$r12_07_w03)
-summary(data$r12_07_w04)
+summary(data$r12_04_w01)
+summary(data$r12_04_w02)
+summary(data$r12_04_w03)
+summary(data$r12_04_w04)
 ```
 
 ### adopcion homoparental

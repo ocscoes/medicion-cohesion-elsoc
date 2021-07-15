@@ -1,69 +1,440 @@
 ---
-title: "Descriptivos y correlaciones"
+title: "Capitulo I: Medición de cohesión social con ELSOC según modelo CEPAL"
 author: "Kevin Carrasco"
 date: "10-07-2021"
-output: html_document
+output: 
+  html_document:
+    number_sections: TRUE
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, warning=F, message=F)
 ```
 
+
+```{r include=FALSE}
 # Cargar paquetes
-```{r}
-pacman::p_load(dplyr, car, summarytools, webshot, knitr, kableExtra, corrplot)
+pacman::p_load(dplyr, car, summarytools, webshot, knitr, kableExtra, corrplot, ggplot2, sjPlot, sjmisc, ggthemes, ggpubr)
 ```
 
+
+```{r include=FALSE}
 # Cargar base elsoc longitudinal (2016-2019)
-```{r}
 load("../input/data/data.RData")
 ```
+<div style="text-align: justify">
+# Medición
 
-# Resumen dimensiones
-```{r message=FALSE, warning=FALSE, include=FALSE, echo=FALSE}
-pacman::p_load(knitr, kableExtra, dplyr)
+El objetivo de esta consultoría es desarrollar un estudio sobre el estado de la cohesión social en Chile partiendo desde la noción y medición desarrollada en la nota conceptual "Cohesión social y desarrollo social inclusivo en América Latina" [...] “Este servirá de punto de partida en las diferentes dimensiones, salvo cuando otras fuentes nacionales permitan un análisis más profundo y atingente. Este esquema de medición se presenta en la figura 1.
+```{r echo=FALSE, fig.cap="Figura 1: Resumen dimensiones CEPAL.", fig.align = 'center', out.width = '70%',out.height='70%'}
+knitr::include_graphics(path = "../input/images/dimensiones-cepal.jpg")
 ```
+# Elementos constitutivos de la cohesión social
+
+## Relaciones sociales de igualdad
+
+### Lazos
+El indicador utilizado en el informe de CEPAL es "importancia de amigos en la vida". Al trabajar con ELSOC se utilizará "Cantidad de amigos" (Ola 2 y 4) 
+
 ```{r echo=FALSE}
-table_format = if(is_latex_output()) {
-  "latex"
-} else if(is_html_output()) {
-  "html"
-}
+tabla1 = data %>% select(r15_w02) %>% na_if("") %>% na.omit
+tabla1 = droplevels(tabla1)
+tabla1$r15_w02 <- factor(tabla1$r15_w02, levels = c(1, 2, 3, 4, 5), labels = c("No tiene amigos ni amigas", "De 1 a 2",
+"De 3 a 5", "De 6 a 10", "Más de 10"))
+label(tabla1$r15_w02) <- "Cantidad de amigos (2017)"
+
+graf1<-  plot_stackfrq(tabla1, title = "Lazos") + 
+  theme(axis.text.y = element_text(colour = "black", size = 8),
+        axis.text.x = element_text(colour = "black", size = 8),
+        legend.text = element_text(size = 8),
+        legend.position="bottom")
+graf1
+ggsave(graf1, file = "../output/graphs/graf1.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
 ```
+
+### Confianza interpersonal
+En el informe de CEPAL se utilizan los indicadores "Confianza en la gente de su comunidad" y "Confianza en la gente que se conoce por primera vez". Al trabajar con ELSOC se utilizará "Se puede confiar en la mayoría de las personas", "La mayoría de las personas tratar de ayudar a los demás" y "la mayoría de la gente trata de ser justa", presentes en las cuatro olas.
+
 ```{r echo=FALSE}
-tab <- read.csv(file = "../input/table1.csv",
-                header = 1,sep = ";",encoding = "UTF-8")
+tabla2 = data %>% select(c02_w01, c03_w01, c04_w01)
+tabla2 = droplevels(tabla2)
+tabla2$c02_w01 <- recode(tabla2$c02_w01, "1=3; 2=1; 3=2")
+tabla2$c03_w01 <- recode(tabla2$c03_w01, "1=3; 2=1; 3=2")
+tabla2$c04_w01 <- recode(tabla2$c04_w01, "1=1; 2=3; 3=2")
+tabla2$c02_w01<- factor(tabla2$c02_w01, levels = c(1, 2, 3), labels = c("No", "Depende", "Si"))
+tabla2$c03_w01<- factor(tabla2$c03_w01, levels = c(1, 2, 3), labels = c("No", "Depende", "Si"))
+tabla2$c04_w01<- factor(tabla2$c04_w01, levels = c(1, 2, 3), labels = c("No", "Depende", "Si"))
+label(tabla2$c02_w01) <- "Se puede confiar en la mayoría de las personas (2016)."
+label(tabla2$c03_w01) <- "La mayoría de las personas tratar de ayudar a los demás (2016)."
+label(tabla2$c04_w01) <- "La mayoría de las personas trata de ser justa (2016)."
 
-kable(tab,
-      format = table_format,
-      booktabs = T, 
-      row.names=FALSE,
-      linesep = "",
-      col.names =  c("Dimensión","Subdimensión","Cantidad de indicadores")) %>%
-  kable_styling(
-    full_width = T,
-    latex_options = c("hold_position"),
-    position = "center",
-    font_size = 12,
-    bootstrap_options=c("striped", "bordered")) %>%
-  column_spec(column = 1,width = "2 cm", ) %>%
-  column_spec(column = 2,width = "2 cm") %>%
-  column_spec(column = 3,width = "2 cm") %>%
-  collapse_rows(columns = 1)
+graf2 <- plot_stackfrq(tabla2, title = "Confianza interpersonal", geom.colors = "RdBu") + 
+  theme(axis.text.y = element_text(colour = "black", size = 8),
+        axis.text.x = element_text(colour = "black", size = 8), 
+        legend.text = element_text(size = 8),
+        legend.position="bottom")
+graf2
+
+ggsave(graf2, file = "../output/graphs/graf2.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
 ```
 
-# Confianza en instituciones y democracia
+```{r echo=FALSE}
+corrplot.mixed(cor(dplyr::select(data, c02_w01, c03_w01, c04_w01),
+                   method="spearman",
+                   use = "na.or.complete"))
+```
 
-## Confianza en instituciones
+### Reconocimiento y respeto de la diversidad
+En el informe de CEPAL se utilizan dos indicadores "aprueba el derecho a contraer matrimonio de parejas del mismo sexo" y "Los hombres no tienen prioridad sobre la mujer, a la hora acceder a un trabajo" y se deja como pendiente la construcción de un indicador sobre tolerancia a personas de distinta raza y etnia, así como de percepción de discriminación. En este sentido, ante la falta de indicadores de ELSOC, se utilizarán los propuestos en [informe clases medias] como Actitudes hacia la diversidad: Los dos primeros en las cuatro olas, adopción homoparental en olas 3 y 4 y el resto en ola 2 y 4.
 
-### Descriptivos
+```{r echo=FALSE}
+tabla3 = data %>% select(r12_03_w01, r12_04_w01, c37_01_w03)
+tabla3 = droplevels(tabla3)
+tabla3$r12_03_w01<- factor(tabla3$r12_03_w01, levels = c(1, 2, 3, 4, 5), labels = c("Totalmente en desacuerdo", "En desacuerdo", "Ni en desacuerdo ni de acuerdo", "De acuerdo", "Totalmente de acuerdo"))
+tabla3$r12_04_w01<- factor(tabla3$r12_04_w01, levels = c(1, 2, 3, 4, 5), labels = c("Totalmente en desacuerdo", "En desacuerdo", "Ni en desacuerdo ni de acuerdo", "De acuerdo", "Totalmente de acuerdo"))
+tabla3$c37_01_w03<- factor(tabla3$c37_01_w03, levels = c(1, 2, 3, 4, 5), labels = c("Totalmente en desacuerdo", "En desacuerdo", "Ni en desacuerdo ni de acuerdo", "De acuerdo", "Totalmente de acuerdo"))
+label(tabla3$r12_03_w01) <- "Chile pierde su identidad con la llegada de inmigrantes (2016)."
+label(tabla3$r12_04_w01) <- "Con la llegada de inmigrantes aumenta el desempleo (2016)."
+label(tabla3$c37_01_w03) <- "Grado de acuerdo con adopción homoparental (2018)."
 
-```{r}
-view(dfSummary(select(data, c05_01_w01, c05_02_w01, c05_03_w01, c05_04_w01, c05_05_w01, c05_06_w01, c05_07_w01, c05_08_w01),
+graf3<- plot_stackfrq(tabla3, title = "Actitudes hacia la diversidad", geom.colors = "RdBu") +
+  theme(axis.text.y = element_text(colour = "black", size = 8),
+        axis.text.x = element_text(colour = "black", size = 8), 
+        legend.text = element_text(size = 8),
+        legend.position="bottom")
+
+graf3
+ggsave(graf3, file = "../output/graphs/graf3.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
+```
+
+```{r echo=FALSE}
+tabla4 = data %>% select(c06_04_w01, c06_05_w01, c06_06_w01)
+tabla4 = droplevels(tabla4)
+tabla4$c06_04_w01<- factor(tabla4$c06_04_w01, levels = c(1, 2, 3, 4, 5), labels = c("Nada de confianza", "Poca confianza", "Algo de confianza", "Bastante confianza", "Mucha confianza"))
+tabla4$c06_05_w01<- factor(tabla4$c06_05_w01, levels = c(1, 2, 3, 4, 5), labels = c("Nada de confianza", "Poca confianza", "Algo de confianza", "Bastante confianza", "Mucha confianza"))
+tabla4$c06_06_w01<- factor(tabla4$c06_06_w01, levels = c(1, 2, 3, 4, 5), labels = c("Nada de confianza", "Poca confianza", "Algo de confianza", "Bastante confianza", "Mucha confianza"))
+label(tabla4$c06_04_w01) <- "Grado de confianza con personas homosexuales (2016)."
+label(tabla4$c06_05_w01) <- "Grado de confianza con personas mapuche (2016)."
+label(tabla4$c06_06_w01) <- "Grado de confianza con personas inmigrantes (2016)."
+
+graf4<- plot_stackfrq(tabla4, title = "Actitudes hacia la diversidad") + 
+  theme(axis.text.y = element_text(colour = "black", size = 8),
+        axis.text.x = element_text(colour = "black", size = 8), 
+        legend.text = element_text(size = 8),
+        legend.position="bottom")
+
+graf4
+ggsave(graf4, file = "../output/graphs/graf4.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
+```
+
+```{r echo=FALSE}
+corrplot.mixed(cor(dplyr::select(data, r12_03_w01, r12_04_w01, c37_01_w03, c06_04_w01, c06_05_w01, c06_06_w01),
+                   use = "na.or.complete",
+                   method = "spearman"))
+```
+
+## Sentido de pertenencia
+
+### Identificación con el país
+En el informe CEPAL se incluyen los indicadores "Orgullo por el sistema político" y "Orgullo por su nacionalidad". Al trabajar con ELSOC se utilizará "Orgullo de ser chileno" e "Identificación con Chile" que están presentes en las cuatro olas.
+
+```{r echo=FALSE}
+tabla5 = data %>% select(c32_01_w01,c32_02_w01)
+tabla5 = droplevels(tabla5)
+tabla5$c32_01_w01<- factor(tabla5$c32_01_w01, levels = c(1, 2, 3, 4, 5), labels = c("Totalmente en desacuerdo", "En desacuerdo", "Ni en desacuerdo ni de acuerdo", "De acuerdo", "Totalmente de acuerdo"))
+tabla5$c32_02_w01<- factor(tabla5$c32_02_w01, levels = c(1, 2, 3, 4, 5), labels = c("Totalmente en desacuerdo", "En desacuerdo", "Ni en desacuerdo ni de acuerdo", "De acuerdo", "Totalmente de acuerdo"))
+label(tabla5$c32_01_w01) <- "Me siento orgulloso de ser chileno (2016)."
+label(tabla5$c32_02_w01) <- "Me identifico con Chile (2016)."
+
+graf5<-plot_stackfrq(tabla5, title = "Identificación con el país", geom.colors = "RdBu") + 
+  theme(axis.text.y = element_text(colour = "black", size = 8),
+        axis.text.x = element_text(colour = "black", size = 8), 
+        legend.text = element_text(size = 8),
+        legend.position="bottom")
+
+graf5
+ggsave(graf5, file = "../output/graphs/graf5.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
+```
+
+```{r echo=FALSE}
+corrplot.mixed(cor(dplyr::select(data, c32_01_w01, c32_02_w01),
+                            use = "na.or.complete"))
+```
+
+### Percepción de justicia
+En informe CEPAL se utilizan "Se deben equiparar los sueldos, no mantener desigualdad para incentivar el esfuerzo personal", "El trabajo a largo plazo da beneficios, no las conexiones o suerte", "El Estado debe implementar políticas para reducir la desigualdad de ingreso". Al trabajar con ELSOC se utilizan "En Chile las personas son recompensadas por su esfuerzo" y "En Chile las personas son recompensadas por su inteligencia", presentes en todas las olas
+
+```{r echo=FALSE}
+tabla6 = data %>% select(c18_09_w01,c18_10_w01)
+tabla6 = droplevels(tabla6)
+tabla6$c18_09_w01<- factor(tabla6$c18_09_w01, levels = c(1, 2, 3, 4, 5), labels = c("Totalmente en desacuerdo", "En desacuerdo", "Ni en desacuerdo ni de acuerdo", "De acuerdo", "Totalmente de acuerdo"))
+tabla6$c18_10_w01<- factor(tabla6$c18_10_w01, levels = c(1, 2, 3, 4, 5), labels = c("Totalmente en desacuerdo", "En desacuerdo", "Ni en desacuerdo ni de acuerdo", "De acuerdo", "Totalmente de acuerdo"))
+label(tabla6$c18_09_w01) <- "En Chile las personas son recompensadas por sus esfuerzos (2016)."
+label(tabla6$c18_10_w01) <- "En Chile las personas son recompensadas por su inteligencia (2016)."
+
+graf6<-plot_stackfrq(tabla6, title = "Percepción de justicia", geom.colors = "RdBu") + 
+  theme(axis.text.y = element_text(colour = "black", size = 8),
+        axis.text.x = element_text(colour = "black", size = 8), 
+        legend.text = element_text(size = 8),
+        legend.position="bottom")
+
+graf6
+ggsave(graf6, file = "../output/graphs/graf6.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
+```
+
+```{r echo=FALSE}
+corrplot.mixed(cor(dplyr::select(data, c18_09_w01, c18_10_w01),
+                   method = "spearman",
+                   use = "na.or.complete"))
+```
+
+### Confianza institucional
+En informe CEPAL utilizan grado de confianza en (a) las cortes, (b) el Congreso Nacional, (c) la Policía Nacional, (d) los partidos políticos, (e) el ejecutivo y (f) las elecciones. Al trabajar con ELSOC se utilizan los siguientes ocho indicadores que están presentes en las cuatro olas
+
+```{r echo=FALSE}
+tabla7 = data %>% select(c05_01_w01,
+                         c05_02_w01, 
+                         c05_03_w01, 
+                         c05_04_w01, 
+                         c05_05_w01, 
+                         c05_06_w01, 
+                         c05_07_w01, 
+                         c05_08_w01)
+tabla7 = droplevels(tabla7)
+tabla7$c05_01_w01<- factor(tabla7$c05_01_w01, levels = c(1, 2, 3, 4, 5), labels = c("Nada de confianza", "Poca confianza", "Algo de confianza", "Bastante confianza", "Mucha confianza"))
+tabla7$c05_02_w01<- factor(tabla7$c05_02_w01, levels = c(1, 2, 3, 4, 5), labels = c("Nada de confianza", "Poca confianza", "Algo de confianza", "Bastante confianza", "Mucha confianza"))
+tabla7$c05_03_w01<- factor(tabla7$c05_03_w01, levels = c(1, 2, 3, 4, 5), labels = c("Nada de confianza", "Poca confianza", "Algo de confianza", "Bastante confianza", "Mucha confianza"))
+tabla7$c05_04_w01<- factor(tabla7$c05_04_w01, levels = c(1, 2, 3, 4, 5), labels = c("Nada de confianza", "Poca confianza", "Algo de confianza", "Bastante confianza", "Mucha confianza"))
+tabla7$c05_05_w01<- factor(tabla7$c05_05_w01, levels = c(1, 2, 3, 4, 5), labels = c("Nada de confianza", "Poca confianza", "Algo de confianza", "Bastante confianza", "Mucha confianza"))
+tabla7$c05_06_w01<- factor(tabla7$c05_06_w01, levels = c(1, 2, 3, 4, 5), labels = c("Nada de confianza", "Poca confianza", "Algo de confianza", "Bastante confianza", "Mucha confianza"))
+tabla7$c05_07_w01<- factor(tabla7$c05_07_w01, levels = c(1, 2, 3, 4, 5), labels = c("Nada de confianza", "Poca confianza", "Algo de confianza", "Bastante confianza", "Mucha confianza"))
+tabla7$c05_08_w01<- factor(tabla7$c05_08_w01, levels = c(1, 2, 3, 4, 5), labels = c("Nada de confianza", "Poca confianza", "Algo de confianza", "Bastante confianza", "Mucha confianza"))
+label(tabla7$c05_01_w01) <- "Confianza en el gobierno (2016)."
+label(tabla7$c05_02_w01) <- "Confianza en los partidos políticos (2016)."
+label(tabla7$c05_03_w01) <- "Confianza en Carabineros (2016)."
+label(tabla7$c05_04_w01) <- "Confianza en los sindicatos (2016)."
+label(tabla7$c05_05_w01) <- "Confianza en el poder judicial (2016)."
+label(tabla7$c05_06_w01) <- "Confianza en las empresas privadas (2016)."
+label(tabla7$c05_07_w01) <- "Confianza en el congreso nacional (2016)."
+label(tabla7$c05_08_w01) <- "Confianza en el presidente/a de la república (2016)."
+
+graf7 <- plot_stackfrq(tabla7, title = "Confianza institucional") +
+  theme(axis.text.y = element_text(colour = "black", size = 9),
+        axis.text.x = element_text(colour = "black", size = 9), 
+        legend.text = element_text(size = 8),
+        legend.position="bottom")
+  
+graf7
+ggsave(graf7, file = "../output/graphs/graf7.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
+```
+
+```{r echo=FALSE}
+corrplot.mixed(cor(dplyr::select(data, c05_01_w01, 
+                                 c05_02_w01, 
+                                 c05_03_w01, 
+                                 c05_04_w01, 
+                                 c05_05_w01, 
+                                 c05_06_w01, 
+                                 c05_07_w01, 
+                                 c05_08_w01),
+                   method = "spearman",
+                   use = "na.or.complete"))
+```
+
+## Orientación hacia el bien común
+### Solidaridad
+
+En informe CEPAL utilizan el indicador "Asistencia a reuniones de un grupo de mejoras para la comunidad". Al trabajar con ELSOC se utilizará este indicador y otros siete que abordan un comportamiento prosocial y que están presentes en las cuatro olas.
+
+```{r echo=FALSE}
+tabla8 = data %>% select(c07_01_w01,
+                         c07_02_w01, 
+                         c07_03_w01, 
+                         c07_04_w01, 
+                         c07_05_w01,
+                         c07_06_w01, 
+                         c07_07_w01, 
+                         c07_08_w01)
+tabla8 = droplevels(tabla8)
+tabla8$c07_01_w01<- factor(tabla8$c07_01_w01, levels = c(1, 2, 3), labels = c("Nunca lo hizo", "Lo hizo una o dos veces", "Lo hizo más de dos veces"))
+tabla8$c07_02_w01<- factor(tabla8$c07_02_w01, levels = c(1, 2, 3), labels = c("Nunca lo hizo", "Lo hizo una o dos veces", "Lo hizo más de dos veces"))
+tabla8$c07_03_w01<- factor(tabla8$c07_03_w01, levels = c(1, 2, 3), labels = c("Nunca lo hizo", "Lo hizo una o dos veces", "Lo hizo más de dos veces"))
+tabla8$c07_04_w01<- factor(tabla8$c07_04_w01, levels = c(1, 2, 3), labels = c("Nunca lo hizo", "Lo hizo una o dos veces", "Lo hizo más de dos veces"))
+tabla8$c07_05_w01<- factor(tabla8$c07_05_w01, levels = c(1, 2, 3), labels = c("Nunca lo hizo", "Lo hizo una o dos veces", "Lo hizo más de dos veces"))
+tabla8$c07_06_w01<- factor(tabla8$c07_06_w01, levels = c(1, 2, 3), labels = c("Nunca lo hizo", "Lo hizo una o dos veces", "Lo hizo más de dos veces"))
+tabla8$c07_07_w01<- factor(tabla8$c07_07_w01, levels = c(1, 2, 3), labels = c("Nunca lo hizo", "Lo hizo una o dos veces", "Lo hizo más de dos veces"))
+tabla8$c07_08_w01<- factor(tabla8$c07_08_w01, levels = c(1, 2, 3), labels = c("Nunca lo hizo", "Lo hizo una o dos veces", "Lo hizo más de dos veces"))
+label(tabla8$c07_01_w01) <- "Ha visitado la casa de algún vecino (2016)."
+label(tabla8$c07_02_w01) <- "Ha asistido a alguna reunión donde se traten temas de interés publico o comunitario (2016)."
+label(tabla8$c07_03_w01) <- "Han venido amigos a visitarlo a su casa (2016)."
+label(tabla8$c07_04_w01) <- "Ha hecho voluntariado (2016)."
+label(tabla8$c07_05_w01) <- "Ha donado dinero a una obra social o de caridad (2016)."
+label(tabla8$c07_06_w01) <- "Ha prestado una suma de dinero de $10.000.- o más (2016)."
+label(tabla8$c07_07_w01) <- "Ha conversado con una persona en problemas o deprimida (2016)."
+label(tabla8$c07_08_w01) <- "Ha ayudado a alguien a conseguir trabajo (2016)."
+
+graf8 <- plot_stackfrq(tabla8, title = "Solidaridad") +
+  theme(axis.text.y = element_text(colour = "black", size = 9),
+        axis.text.x = element_text(colour = "black", size = 9), 
+        legend.text = element_text(size = 8),
+        legend.position="bottom")
+  
+graf8
+ggsave(graf8, file = "../output/graphs/graf8.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
+```
+
+```{r echo=FALSE}
+corrplot.mixed(cor(dplyr::select(data, c07_01_w01, 
+                                 c07_02_w01, 
+                                 c07_03_w01, 
+                                 c07_04_w01, 
+                                 c07_05_w01,
+                                 c07_06_w01, 
+                                 c07_07_w01, 
+                                 c07_08_w01),
+                   method = "spearman",
+                   use = "na.or.complete"))
+```
+
+### Participación cívica
+En informe CEPAL se utilizaron los indicadores "Tiene actividad política (firma peticiones, boicot, va a manifestaciones pacíficas, huelgas)", "Participación en organizaciones" y "Voto en elecciones presidenciales". Al trabajar con ELSOC se utilizan cuatro indicadores de actividad política presentes en las cuatro olas, ocho indicadores de participación en organizaciones presentes en ola 1 y 3 y voto en elecciones 2013 y 2017 (ola 1 y 3)
+
+```{r echo=FALSE}
+tabla9 = data %>% select(c08_01_w01, 
+                         c08_02_w01, 
+                         c08_03_w01, 
+                         c08_04_w01)
+tabla9 = droplevels(tabla9)
+tabla9$c08_01_w01<- factor(tabla9$c08_01_w01, levels = c(1, 2, 3, 4, 5), labels = c("Nunca", "Casi nunca", "A veces", "Frecuentemente", "Muy frecuentemente"))
+tabla9$c08_02_w01<- factor(tabla9$c08_02_w01, levels = c(1, 2, 3, 4, 5), labels = c("Nunca", "Casi nunca", "A veces", "Frecuentemente", "Muy frecuentemente"))
+tabla9$c08_03_w01<- factor(tabla9$c08_03_w01, levels = c(1, 2, 3, 4, 5), labels = c("Nunca", "Casi nunca", "A veces", "Frecuentemente", "Muy frecuentemente"))
+tabla9$c08_04_w01<- factor(tabla9$c08_04_w01, levels = c(1, 2, 3, 4, 5), labels = c("Nunca", "Casi nunca", "A veces", "Frecuentemente", "Muy frecuentemente"))
+label(tabla9$c08_01_w01) <- "Firmado una carta o petición apoyando una causa (2016)."
+label(tabla9$c08_02_w01) <- "Asistido a una marcha o manifestación política (2016)."
+label(tabla9$c08_03_w01) <- "Participado en una huelga (2016)."
+label(tabla9$c08_04_w01) <- "Usado las redes sociales para expresar su opinión en temas públicos (2016)."
+
+
+graf9 <- plot_stackfrq(tabla9, title = "Participación cívica") +
+  theme(axis.text.y = element_text(colour = "black", size = 9),
+        axis.text.x = element_text(colour = "black", size = 9), 
+        legend.text = element_text(size = 8),
+        legend.position="bottom")
+  
+graf9
+ggsave(graf9, file = "../output/graphs/graf9.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
+```
+
+
+```{r echo=FALSE}
+corrplot.mixed(cor(dplyr::select(data, c08_01_w01, c08_02_w01, c08_03_w01, c08_04_w01),
+                            use = "na.or.complete"))
+```
+
+```{r echo=FALSE}
+tabla10 = data %>% select(c12_01_w01, 
+                         c12_02_w01, 
+                         c12_03_w01, 
+                         c12_04_w01, 
+                         c12_05_w01, 
+                         c12_06_w01, 
+                         c12_07_w01, 
+                         c12_08_w01)
+tabla10 = droplevels(tabla10)
+tabla10$c12_01_w01<- factor(tabla10$c12_01_w01, levels = c(1, 2, 3), labels = c("No", "Si", "No tenía edad para hacerlo"))
+tabla10$c12_02_w01<- factor(tabla10$c12_02_w01, levels = c(1, 2, 3), labels = c("No", "Si", "No tenía edad para hacerlo"))
+tabla10$c12_03_w01<- factor(tabla10$c12_03_w01, levels = c(1, 2, 3), labels = c("No", "Si", "No tenía edad para hacerlo"))
+tabla10$c12_04_w01<- factor(tabla10$c12_04_w01, levels = c(1, 2, 3), labels = c("No", "Si", "No tenía edad para hacerlo"))
+tabla10$c12_05_w01<- factor(tabla10$c12_05_w01, levels = c(1, 2, 3), labels = c("No", "Si", "No tenía edad para hacerlo"))
+tabla10$c12_06_w01<- factor(tabla10$c12_06_w01, levels = c(1, 2, 3), labels = c("No", "Si", "No tenía edad para hacerlo"))
+tabla10$c12_07_w01<- factor(tabla10$c12_07_w01, levels = c(1, 2, 3), labels = c("No", "Si", "No tenía edad para hacerlo"))
+tabla10$c12_08_w01<- factor(tabla10$c12_08_w01, levels = c(1, 2, 3), labels = c("No", "Si", "No tenía edad para hacerlo"))
+label(tabla10$c12_01_w01) <- "Junta de vecinos u otra organización (2016)."
+label(tabla10$c12_02_w01) <- "Organización religiosa o Iglesia (2016)."
+label(tabla10$c12_03_w01) <- "Partido o movimiento político (2016)."
+label(tabla10$c12_04_w01) <- "Sindicato (2016)."
+label(tabla10$c12_05_w01) <- "Asociación profesional o gremial (2016)."
+label(tabla10$c12_06_w01) <- "Organización deportiva (2016)."
+label(tabla10$c12_07_w01) <- "Organización ecológica o medioambiental (2016)."
+label(tabla10$c12_08_w01) <- "Asociaciones o centros de estudiantes (2016)."
+
+
+graf10 <- plot_stackfrq(tabla10, title = "Participación en organizaciones") +
+  theme(axis.text.y = element_text(colour = "black", size = 9),
+        axis.text.x = element_text(colour = "black", size = 9), 
+        legend.text = element_text(size = 8),
+        legend.position="bottom")
+  
+graf10
+ggsave(graf10, file = "../output/graphs/graf10.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
+```
+
+Para estimar esta correlación la categoría "No tenía edad para hacerlo" fue contabilizada como "No"
+```{r echo=FALSE}
+cor = data %>% select(c12_01_w01, 
+                         c12_02_w01, 
+                         c12_03_w01, 
+                         c12_04_w01, 
+                         c12_05_w01, 
+                         c12_06_w01, 
+                         c12_07_w01, 
+                         c12_08_w01)
+cor$c12_01_w01 <- recode(cor$c12_01_w01, "3=1")
+cor$c12_02_w01 <- recode(cor$c12_02_w01, "3=1")
+cor$c12_03_w01 <- recode(cor$c12_03_w01, "3=1")
+cor$c12_04_w01 <- recode(cor$c12_04_w01, "3=1")
+cor$c12_05_w01 <- recode(cor$c12_05_w01, "3=1")
+cor$c12_06_w01 <- recode(cor$c12_06_w01, "3=1")
+cor$c12_07_w01 <- recode(cor$c12_07_w01, "3=1")
+cor$c12_08_w01 <- recode(cor$c12_08_w01, "3=1")
+
+corrplot.mixed(cor(cor,
+                   method ="spearman",
+                   use = "na.or.complete"))
+```
+
+```{r echo=FALSE}
+tabla11 = data %>% select(c11_w01, c11_w03)
+tabla11 = droplevels(tabla11)
+tabla11$c11_w01<- factor(tabla11$c11_w01, levels = c(1, 2, 3), labels = c("No", "Si", "No tenía edad para hacerlo"))
+tabla11$c11_w03<- factor(tabla11$c11_w03, levels = c(1, 2, 3), labels = c("No", "Si", "No tenía edad para hacerlo"))
+label(tabla11$c11_w01) <- "Voto en elecciones (2016)."
+label(tabla11$c11_w03) <- "Voto en elecciones (2018)."
+
+graf11 <- plot_stackfrq(tabla11, title = "Voto en elecciones") +
+  theme(axis.text.y = element_text(colour = "black", size = 9),
+        axis.text.x = element_text(colour = "black", size = 9), 
+        legend.text = element_text(size = 8),
+        legend.position="bottom")
+  
+graf11
+ggsave(graf11, file = "../output/graphs/graf11.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
+```
+
+Para estimar esta correlación la categoría "No tenía edad para hacerlo" fue contabilizada como "No".
+```{r echo=FALSE}
+cor = data %>% select(c11_w01, c11_w03)
+cor$c11_w01 <- recode(cor$c11_w01, "3=1")
+cor$c11_w03 <- recode(cor$c11_w03, "3=1")
+
+corrplot.mixed(cor(cor,
+                   method="spearman",
+                   use = "na.or.complete"))
+```
+
+#### No se incluye subdimensión respeto por reglas sociales de informe CEPAL que posee un indicador de respeto por las instituciones inexistente en ELSOC
+
+# Anexos
+
+## Tablas descriptivas por subdimensión
+### Lazos
+
+```{r echo=FALSE}
+view(dfSummary(select(data, r15_w02),
                plain.ascii = FALSE,
                style = "grid",
                #tmp.img.dir = "/tmp",
-               graph.magnif = 1.0,
+               graph.magnif = 0.9,
                headings = F,  # encabezado
                varnumbers = F, # num variable
                labels.col = T, # etiquetas
@@ -75,25 +446,9 @@ view(dfSummary(select(data, c05_01_w01, c05_02_w01, c05_03_w01, c05_04_w01, c05_
 webshot(url ="../output/tables/table1.html" ,file ="../output/tables/table1.png")
 ```
 
-### Correlación
-
-```{r}
-corrplot.mixed(cor(dplyr::select(data, c05_01_w01, 
-                                 c05_02_w01, 
-                                 c05_03_w01, 
-                                 c05_04_w01, 
-                                 c05_05_w01, 
-                                 c05_06_w01, 
-                                 c05_07_w01, 
-                                 c05_08_w01),
-                            use = "na.or.complete"))
-```
-
-
-## Satisfaccion con la democracia
-
-```{r}
-view(dfSummary(select(data, c01_w01),
+### Confianza interpersonal
+```{r echo=FALSE}
+view(dfSummary(select(data, c02_w01, c03_w01, c04_w01),
                plain.ascii = FALSE,
                style = "grid",
                #tmp.img.dir = "/tmp",
@@ -109,14 +464,9 @@ view(dfSummary(select(data, c01_w01),
 webshot(url ="../output/tables/table2.html" ,file ="../output/tables/table2.png")
 ```
 
-# Participación política
-
-## Participacion ciudadana
-
-### Descriptivos
-
-```{r}
-view(dfSummary(select(data, c08_01_w01, c08_02_w01, c08_03_w01, c08_04_w01),
+### Reconocimiento y respeto de la diversidad
+```{r echo=FALSE}
+view(dfSummary(select(data, r12_03_w01, r12_04_w01, c37_01_w03, c06_04_w01, c06_05_w01, c06_06_w01),
                plain.ascii = FALSE,
                style = "grid",
                #tmp.img.dir = "/tmp",
@@ -132,19 +482,10 @@ view(dfSummary(select(data, c08_01_w01, c08_02_w01, c08_03_w01, c08_04_w01),
 webshot(url ="../output/tables/table3.html" ,file ="../output/tables/table3.png")
 ```
 
-### Correlacion
+### Identificación con el país
 
-```{r}
-corrplot.mixed(cor(dplyr::select(data, c08_01_w01, c08_02_w01, c08_03_w01, c08_04_w01),
-                            use = "na.or.complete"))
-```
-
-## Interes politico
-
-### Descriptivos
-
-```{r}
-view(dfSummary(select(data, c13_w01, c14_01_w01, c14_02_w01),
+```{r echo=FALSE}
+view(dfSummary(select(data, c32_01_w01, c32_02_w01),
                plain.ascii = FALSE,
                style = "grid",
                #tmp.img.dir = "/tmp",
@@ -160,20 +501,8 @@ view(dfSummary(select(data, c13_w01, c14_01_w01, c14_02_w01),
 webshot(url ="../output/tables/table4.html" ,file ="../output/tables/table4.png")
 ```
 
-### Correlacion
-
-```{r}
-corrplot.mixed(cor(dplyr::select(data, c13_w01, c14_01_w01, c14_02_w01),
-                            use = "na.or.complete"))
-```
-
-# Percepcion de justicia
-
-## Justicia distributiva y meritocracia
-
-### Descriptivos
-
-```{r}
+### Percepción de justicia
+```{r echo=FALSE}
 view(dfSummary(select(data, c18_09_w01, c18_10_w01),
                plain.ascii = FALSE,
                style = "grid",
@@ -190,22 +519,13 @@ view(dfSummary(select(data, c18_09_w01, c18_10_w01),
 webshot(url ="../output/tables/table5.html" ,file ="../output/tables/table5.png")
 ```
 
-### Correlacion
-```{r}
-corrplot.mixed(cor(dplyr::select(data, c18_09_w01, c18_10_w01),
-                            use = "na.or.complete"))
-```
-
-## Surgir en la vida
-
-### Descriptivos
-
-```{r}
-view(dfSummary(select(data, d05_01_w01, d05_02_w01, d05_03_w01, d05_04_w01),
+### Confianza institucional
+```{r echo=FALSE}
+view(dfSummary(select(data, c05_01_w01, c05_02_w01, c05_03_w01, c05_04_w01, c05_05_w01, c05_06_w01, c05_07_w01, c05_08_w01),
                plain.ascii = FALSE,
                style = "grid",
                #tmp.img.dir = "/tmp",
-               graph.magnif = 0.9,
+               graph.magnif = 1.0,
                headings = F,  # encabezado
                varnumbers = F, # num variable
                labels.col = T, # etiquetas
@@ -217,19 +537,9 @@ view(dfSummary(select(data, d05_01_w01, d05_02_w01, d05_03_w01, d05_04_w01),
 webshot(url ="../output/tables/table6.html" ,file ="../output/tables/table6.png")
 ```
 
-### Correlacion
-```{r}
-corrplot.mixed(cor(dplyr::select(data, d05_01_w01, d05_02_w01, d05_03_w01, d05_04_w01),
-                            use = "na.or.complete"))
-```
-
-# Sentido de pertenencia
-
-## Identificacion y orgullo por el pais
-
-### Descriptivos
-```{r}
-view(dfSummary(select(data, c32_01_w01, c32_02_w01),
+### Solidaridad
+```{r echo=FALSE}
+view(dfSummary(select(data, c07_01_w01, c07_02_w01, c07_03_w01, c07_04_w01, c07_05_w01, c07_06_w01, c07_07_w01, c07_08_w01),
                plain.ascii = FALSE,
                style = "grid",
                #tmp.img.dir = "/tmp",
@@ -245,17 +555,9 @@ view(dfSummary(select(data, c32_01_w01, c32_02_w01),
 webshot(url ="../output/tables/table7.html" ,file ="../output/tables/table7.png")
 ```
 
-### Correlacion
-```{r}
-corrplot.mixed(cor(dplyr::select(data, c32_01_w01, c32_02_w01),
-                            use = "na.or.complete"))
-```
-
-# Calidad de la vida en el vecindario
-
-## Confianza en vecinos
-```{r}
-view(dfSummary(select(data, t01_w01),
+### Participación cívica
+```{r echo=FALSE}
+view(dfSummary(select(data, c08_01_w01, c08_02_w01, c08_03_w01, c08_04_w01),
                plain.ascii = FALSE,
                style = "grid",
                #tmp.img.dir = "/tmp",
@@ -271,10 +573,8 @@ view(dfSummary(select(data, t01_w01),
 webshot(url ="../output/tables/table8.html" ,file ="../output/tables/table8.png")
 ```
 
-## Cohesion barrial
-### Descriptivos
-```{r}
-view(dfSummary(select(data, t02_01_w01, t02_02_w01, t02_03_w01, t02_04_w01),
+```{r echo=FALSE}
+view(dfSummary(select(data, c12_01_w01, c12_02_w01, c12_03_w01, c12_04_w01, c12_05_w01, c12_06_w01, c12_07_w01, c12_08_w01),
                plain.ascii = FALSE,
                style = "grid",
                #tmp.img.dir = "/tmp",
@@ -290,17 +590,8 @@ view(dfSummary(select(data, t02_01_w01, t02_02_w01, t02_03_w01, t02_04_w01),
 webshot(url ="../output/tables/table9.html" ,file ="../output/tables/table9.png")
 ```
 
-### Correlacion
-```{r}
-corrplot.mixed(cor(dplyr::select(data, t02_01_w01, t02_02_w01, t02_03_w01, t02_04_w01),
-                            use = "na.or.complete"))
-```
-
-## Sociabilidad barrial
-
-### Descriptivos
-```{r}
-view(dfSummary(select(data, t03_01_w01, t03_02_w01, t03_03_w01, t03_04_w01),
+```{r echo=FALSE}
+view(dfSummary(select(data, c11_w01, c11_w03),
                plain.ascii = FALSE,
                style = "grid",
                #tmp.img.dir = "/tmp",
@@ -316,245 +607,5 @@ view(dfSummary(select(data, t03_01_w01, t03_02_w01, t03_03_w01, t03_04_w01),
 webshot(url ="../output/tables/table10.html" ,file ="../output/tables/table10.png")
 ```
 
-### Correlacion
-```{r}
-corrplot.mixed(cor(dplyr::select(data, t03_01_w01, t03_02_w01, t03_03_w01, t03_04_w01),
-                            use = "na.or.complete"))
-```
 
-## Satisfaccion residencial
-
-### Descriptivos
-```{r}
-view(dfSummary(select(data, t06_01_w01, t06_02_w01, t06_03_w01, t06_04_w01, t06_05_w01, t06_06_w01, t06_07_w01, t06_08_w01, t07_01_w01, t07_02_w01),
-               plain.ascii = FALSE,
-               style = "grid",
-               #tmp.img.dir = "/tmp",
-               graph.magnif = 0.9,
-               headings = F,  # encabezado
-               varnumbers = F, # num variable
-               labels.col = T, # etiquetas
-               na.col = T,    # missing
-               graph.col = T, # plot
-               valid.col = T, # n valido
-               # col.widths = c(5,5,10,10,10,10)
-               ), file = "../output/tables/table11.html")
-webshot(url ="../output/tables/table11.html" ,file ="../output/tables/table11.png")
-```
-
-### Correlacion
-```{r}
-corrplot.mixed(cor(dplyr::select(data, t06_01_w01, 
-                                 t06_02_w01, 
-                                 t06_03_w01, 
-                                 t06_04_w01, 
-                                 t06_05_w01, 
-                                 t06_06_w01, 
-                                 t06_07_w01, 
-                                 t06_08_w01, 
-                                 t07_01_w01, 
-                                 t07_02_w01),
-                            use = "na.or.complete"))
-```
-
-# Redes sociales
-
-## Confianza interpersonal
-
-### Descriptivos
-```{r}
-view(dfSummary(select(data, c02_w01, c03_w01, c04_w01),
-               plain.ascii = FALSE,
-               style = "grid",
-               #tmp.img.dir = "/tmp",
-               graph.magnif = 0.9,
-               headings = F,  # encabezado
-               varnumbers = F, # num variable
-               labels.col = T, # etiquetas
-               na.col = T,    # missing
-               graph.col = T, # plot
-               valid.col = T, # n valido
-               # col.widths = c(5,5,10,10,10,10)
-               ), file = "../output/tables/table12.html")
-webshot(url ="../output/tables/table12.html" ,file ="../output/tables/table12.png")
-```
-
-### Correlacion
-```{r}
-corrplot.mixed(cor(dplyr::select(data, c02_w01, c03_w01, c04_w01),
-                            use = "na.or.complete"))
-```
-
-## Comportamiento prosocial
-
-### Descriptivos
-```{r}
-view(dfSummary(select(data, c07_01_w01, c07_02_w01, c07_03_w01, c07_04_w01, c07_05_w01, c07_06_w01, c07_07_w01, c07_08_w01),
-               plain.ascii = FALSE,
-               style = "grid",
-               #tmp.img.dir = "/tmp",
-               graph.magnif = 0.9,
-               headings = F,  # encabezado
-               varnumbers = F, # num variable
-               labels.col = T, # etiquetas
-               na.col = T,    # missing
-               graph.col = T, # plot
-               valid.col = T, # n valido
-               # col.widths = c(5,5,10,10,10,10)
-               ), file = "../output/tables/table13.html")
-webshot(url ="../output/tables/table13.html" ,file ="../output/tables/table13.png")
-```
-
-### Correlacion
-```{r}
-corrplot.mixed(cor(dplyr::select(data, c07_01_w01, 
-                                 c07_02_w01, 
-                                 c07_03_w01, 
-                                 c07_04_w01, 
-                                 c07_05_w01,
-                                 c07_06_w01, 
-                                 c07_07_w01, 
-                                 c07_08_w01),
-                            use = "na.or.complete"))
-```
-
-# Descriptivos subdimensiones CEPAL no consideradas en informe COES
-
-## Participacion en organizaciones
-
-### Descriptivos
-```{r}
-view(dfSummary(select(data, c12_01_w01, c12_02_w01, c12_03_w01, c12_04_w01, c12_05_w01, c12_06_w01, c12_07_w01, c12_08_w01),
-               plain.ascii = FALSE,
-               style = "grid",
-               #tmp.img.dir = "/tmp",
-               graph.magnif = 0.9,
-               headings = F,  # encabezado
-               varnumbers = F, # num variable
-               labels.col = T, # etiquetas
-               na.col = T,    # missing
-               graph.col = T, # plot
-               valid.col = T, # n valido
-               # col.widths = c(5,5,10,10,10,10)
-               ), file = "../output/tables/table14.html")
-webshot(url ="../output/tables/table14.html" ,file ="../output/tables/table14.png")
-```
-
-### Correlacion
-```{r}
-corrplot.mixed(cor(dplyr::select(data, c12_01_w01, 
-                                 c12_02_w01, 
-                                 c12_03_w01, 
-                                 c12_04_w01, 
-                                 c12_05_w01, 
-                                 c12_06_w01, 
-                                 c12_07_w01, 
-                                 c12_08_w01),
-                            use = "na.or.complete"))
-```
-
-## Reconocimiento y respeto de la diversidad
-
-### Descriptivos
-```{r}
-view(dfSummary(select(data, c37_01_w03, g01_05_w04),
-               plain.ascii = FALSE,
-               style = "grid",
-               #tmp.img.dir = "/tmp",
-               graph.magnif = 0.9,
-               headings = F,  # encabezado
-               varnumbers = F, # num variable
-               labels.col = T, # etiquetas
-               na.col = T,    # missing
-               graph.col = T, # plot
-               valid.col = T, # n valido
-               # col.widths = c(5,5,10,10,10,10)
-               ), file = "../output/tables/table15.html")
-webshot(url ="../output/tables/table15.html" ,file ="../output/tables/table15.png")
-```
-
-### Correlacion
-```{r}
-corrplot.mixed(cor(dplyr::select(data, c37_01_w03, g01_05_w04),
-                            use = "na.or.complete"))
-```
-
-## Voto en elecciones 2013 y 2017
-
-### Descriptivos
-```{r}
-view(dfSummary(select(data, c11_w01, c11_w03),
-               plain.ascii = FALSE,
-               style = "grid",
-               #tmp.img.dir = "/tmp",
-               graph.magnif = 0.9,
-               headings = F,  # encabezado
-               varnumbers = F, # num variable
-               labels.col = T, # etiquetas
-               na.col = T,    # missing
-               graph.col = T, # plot
-               valid.col = T, # n valido
-               # col.widths = c(5,5,10,10,10,10)
-               ), file = "../output/tables/table16.html")
-webshot(url ="../output/tables/table16.html" ,file ="../output/tables/table16.png")
-```
-
-### Correlacion
-```{r}
-corrplot.mixed(cor(dplyr::select(data, c11_w01, c11_w03),
-                            use = "na.or.complete"))
-```
-
-# Descriptivos subdimensiones Informe clases medias no consideradas en informe COES
-
-## Percepcion trato justo
-
-### Descriptivos
-```{r}
-view(dfSummary(select(data, c35_01_w01, c35_02_w01, c35_03_w01, c35_04_w01),
-               plain.ascii = FALSE,
-               style = "grid",
-               #tmp.img.dir = "/tmp",
-               graph.magnif = 0.9,
-               headings = F,  # encabezado
-               varnumbers = F, # num variable
-               labels.col = T, # etiquetas
-               na.col = T,    # missing
-               graph.col = T, # plot
-               valid.col = T, # n valido
-               # col.widths = c(5,5,10,10,10,10)
-               ), file = "../output/tables/table17.html")
-webshot(url ="../output/tables/table17.html" ,file ="../output/tables/table17.png")
-```
-
-### Correlacion
-```{r}
-corrplot.mixed(cor(dplyr::select(data, c35_01_w01, c35_02_w01, c35_03_w01, c35_04_w01),
-                            use = "na.or.complete"))
-```
-
-## Actitudes hacia la diversidad
-
-### Descriptivos
-```{r}
-view(dfSummary(select(data, r12_06_w01, r12_07_w01, c37_01_w03, c06_04_w01, c06_05_w01, c06_06_w01),
-               plain.ascii = FALSE,
-               style = "grid",
-               #tmp.img.dir = "/tmp",
-               graph.magnif = 0.9,
-               headings = F,  # encabezado
-               varnumbers = F, # num variable
-               labels.col = T, # etiquetas
-               na.col = T,    # missing
-               graph.col = T, # plot
-               valid.col = T, # n valido
-               # col.widths = c(5,5,10,10,10,10)
-               ), file = "../output/tables/table18.html")
-webshot(url ="../output/tables/table18.html" ,file ="../output/tables/table18.png")
-```
-
-### Correlacion
-```{r}
-corrplot.mixed(cor(dplyr::select(data, r12_06_w01, r12_07_w01, c37_01_w03, c06_04_w01, c06_05_w01, c06_06_w01),
-                            use = "na.or.complete"))
-```
+<div style="text-align: justify">

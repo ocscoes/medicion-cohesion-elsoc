@@ -1478,6 +1478,22 @@ summary(data$c07_08_w01)</code></pre>
 </div>
 <div id="indicadores-cepal-no-considerados-en-informe-coes" class="section level1">
 <h1>Indicadores CEPAL no considerados en informe COES</h1>
+<div id="lazos" class="section level2">
+<h2>Lazos</h2>
+<div id="cantidad-de-amigos" class="section level3">
+<h3>Cantidad de amigos</h3>
+<pre class="r"><code>data$r15_w02 &lt;- recode(data$r15_w02, &quot;c(-888,-999)=NA&quot;)
+
+data$r15_w04 &lt;- recode(data$r15_w04, &quot;c(-888,-999)=NA&quot;)
+
+summary(data$r15_w02)</code></pre>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
+##   1.000   2.000   3.000   2.631   3.000   5.000    1974</code></pre>
+<pre class="r"><code>summary(data$r15_w04)</code></pre>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
+##   1.000   2.000   3.000   2.672   3.000   5.000    1040</code></pre>
+</div>
+</div>
 <div id="participacion-en-organizaciones" class="section level2">
 <h2>Participacion en organizaciones</h2>
 <div id="junta-de-vecinos" class="section level3">
@@ -1713,43 +1729,43 @@ summary(data$c35_04_w01)</code></pre>
 <h2>Actitudes hacia la diversidad</h2>
 <div id="con-la-llegada-de-tantos-inmigrantes-peruanos-chile-está-perdiendo-su-identidad" class="section level3">
 <h3>Con la llegada de tantos inmigrantes (peruanos) Chile está perdiendo su identidad</h3>
-<pre class="r"><code>data$r12_06_w01 &lt;- recode(data$r12_06_w01, &quot;c(-888,-999)=NA&quot;)
-data$r12_06_w02 &lt;- recode(data$r12_06_w02, &quot;c(-888,-999)=NA&quot;)
-data$r12_06_w03 &lt;- recode(data$r12_06_w03, &quot;c(-888,-999)=NA&quot;)
-data$r12_06_w04 &lt;- recode(data$r12_06_w04, &quot;c(-888,-999)=NA&quot;)
+<pre class="r"><code>data$r12_03_w01 &lt;- recode(data$r12_03_w01, &quot;c(-888,-999)=NA&quot;)
+data$r12_03_w02 &lt;- recode(data$r12_03_w02, &quot;c(-888,-999)=NA&quot;)
+data$r12_03_w03 &lt;- recode(data$r12_03_w03, &quot;c(-888,-999)=NA&quot;)
+data$r12_03_w04 &lt;- recode(data$r12_03_w04, &quot;c(-888,-999)=NA&quot;)
 
-summary(data$r12_06_w01)</code></pre>
+summary(data$r12_03_w01)</code></pre>
 <pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
-##   1.000   3.000   4.000   3.623   4.000   5.000    1556</code></pre>
-<pre class="r"><code>summary(data$r12_06_w02)</code></pre>
+##   1.000   2.000   3.000   2.951   4.000   5.000    1569</code></pre>
+<pre class="r"><code>summary(data$r12_03_w02)</code></pre>
 <pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
-##   1.000   3.000   4.000   3.728   4.000   5.000    2002</code></pre>
-<pre class="r"><code>summary(data$r12_06_w03)</code></pre>
+##   1.000   2.000   3.000   2.893   4.000   5.000    2024</code></pre>
+<pre class="r"><code>summary(data$r12_03_w03)</code></pre>
 <pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
-##   1.000   4.000   4.000   3.829   4.000   5.000     785</code></pre>
-<pre class="r"><code>summary(data$r12_06_w04)</code></pre>
+##    1.00    2.00    3.00    2.89    4.00    5.00     807</code></pre>
+<pre class="r"><code>summary(data$r12_03_w04)</code></pre>
 <pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
-##   1.000   4.000   4.000   3.868   4.000   5.000    1049</code></pre>
+##   1.000   2.000   3.000   2.846   4.000   5.000    1079</code></pre>
 </div>
 <div id="con-la-llegada-de-tantos-inmigrantes-peruanos-está-aumentando-el-desempleo" class="section level3">
 <h3>Con la llegada de tantos inmigrantes (peruanos) está aumentando el desempleo</h3>
-<pre class="r"><code>data$r12_07_w01 &lt;- recode(data$r12_07_w01, &quot;c(-888,-999)=NA&quot;)
-data$r12_07_w02 &lt;- recode(data$r12_07_w02, &quot;c(-888,-999)=NA&quot;)
-data$r12_07_w03 &lt;- recode(data$r12_07_w03, &quot;c(-888,-999)=NA&quot;)
-data$r12_07_w04 &lt;- recode(data$r12_07_w04, &quot;c(-888,-999)=NA&quot;)
+<pre class="r"><code>data$r12_04_w01 &lt;- recode(data$r12_04_w01, &quot;c(-888,-999)=NA&quot;)
+data$r12_04_w02 &lt;- recode(data$r12_04_w02, &quot;c(-888,-999)=NA&quot;)
+data$r12_04_w03 &lt;- recode(data$r12_04_w03, &quot;c(-888,-999)=NA&quot;)
+data$r12_04_w04 &lt;- recode(data$r12_04_w04, &quot;c(-888,-999)=NA&quot;)
 
-summary(data$r12_07_w01)</code></pre>
+summary(data$r12_04_w01)</code></pre>
 <pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
-##   1.000   4.000   4.000   3.917   4.000   5.000    1556</code></pre>
-<pre class="r"><code>summary(data$r12_07_w02)</code></pre>
+##   1.000   2.000   4.000   3.351   4.000   5.000    1572</code></pre>
+<pre class="r"><code>summary(data$r12_04_w02)</code></pre>
 <pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
-##   1.000   4.000   4.000   3.978   4.000   5.000    2001</code></pre>
-<pre class="r"><code>summary(data$r12_07_w03)</code></pre>
+##   1.000   2.000   4.000   3.206   4.000   5.000    2017</code></pre>
+<pre class="r"><code>summary(data$r12_04_w03)</code></pre>
 <pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
-##   1.000   4.000   4.000   4.058   4.000   5.000     781</code></pre>
-<pre class="r"><code>summary(data$r12_07_w04)</code></pre>
+##   1.000   2.000   4.000   3.191   4.000   5.000     799</code></pre>
+<pre class="r"><code>summary(data$r12_04_w04)</code></pre>
 <pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
-##   1.000   4.000   4.000   4.085   4.000   5.000    1056</code></pre>
+##   1.000   2.000   4.000   3.209   4.000   5.000    1058</code></pre>
 </div>
 <div id="adopcion-homoparental-1" class="section level3">
 <h3>adopcion homoparental</h3>
