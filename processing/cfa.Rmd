@@ -1,0 +1,376 @@
+---
+title: "cfa"
+author: "Kevin Carrasco"
+date: "20-07-2021"
+output: 
+  html_document:
+    df_print: paged
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(warning = FALSE, 
+                      message = FALSE,
+                      error = TRUE)
+options(scipen=999)
+```
+
+
+```{r, include=FALSE}
+# Librerías
+pacman::p_load(lavaan, # pacman para instalar / cargar 
+               psych, # para funcion lowerMat
+               Hmisc, # rcorr
+               stargazer,
+               xtable,
+               semPlot,
+               semTools,
+               remedy,
+               haven,
+               h2o,
+               polycor,
+               car,
+               sjlabelled,
+               sjmisc,
+               misty,
+               SciViews,
+               summarytools,
+               dplyr)
+```
+
+
+```{r include=FALSE}
+# Base
+# Cargar base elsoc longitudinal (2016-2019)
+load("../input/data/data.RData")
+# Filtramos base para dejar casos completos de 2016 al 2019 sin inconsistencias
+data <- data %>% dplyr::filter(tipo_atricion==1 & tipo_caso !=2)
+```
+
+# CFA por dimensiones
+
+## Relaciones sociales de igualdad
+
+
+```{r include=FALSE}
+# crear una base de datos con menos variables para estimar los AFC
+relaciones_sociales = data %>% 
+  dplyr::select(r15_w02, c02_w01, c03_w01, c04_w01, r12_03_w01, r12_04_w01, c06_04_w01, c06_05_w01, c06_06_w01) %>% 
+  as.data.frame() %>%
+  na.omit()
+```
+
+### Análisis de supuestos
+#### Correlaciones
+```{r echo=FALSE}
+corMat  <- cor(relaciones_sociales, use="na.or.complete", method="spearman")  # estimar matriz correlacion
+stargazer(corMat, title="correlaciones", type = "text") #Latex table
+```
+#### Factorizabilidad
+```{r echo=FALSE}
+KMO(corMat)
+```
+
+#### Esfericidad
+```{r echo=FALSE}
+cortest.bartlett(corMat, n = 1648)
+```
+
+#### Normalidad (univariada)
+```{r echo=FALSE}
+shapiro.test(relaciones_sociales$r15_w02)
+shapiro.test(relaciones_sociales$c02_w01)
+shapiro.test(relaciones_sociales$c03_w01)
+shapiro.test(relaciones_sociales$c04_w01)
+shapiro.test(relaciones_sociales$r12_03_w01)
+shapiro.test(relaciones_sociales$r12_04_w01)
+shapiro.test(relaciones_sociales$c06_04_w01)
+shapiro.test(relaciones_sociales$c06_05_w01)
+shapiro.test(relaciones_sociales$c06_06_w01)
+
+```
+
+### Estimación de los modelos
+
+#### Modelo con tres dimensiones
+```{r include=FALSE}
+cfa_1a <- '
+lazos =~ r15_w02
+confianza =~ c02_w01 + c03_w01 + c04_w01
+diversidad =~ r12_03_w01 + r12_04_w01 + c06_04_w01 + c06_05_w01 + c06_06_w01
+'
+fit_1a <- cfa(cfa_1a,data=relaciones_sociales,missing="ML",estimator="MLR")
+show(fit_1a) # Resumen ajuste general
+summary(fit_1a, fit.measures=T, standardized=T)
+```
+
+```{r echo=FALSE}
+fitMeasures(fit_1a, c("chisq", "df", "pvalue", "cfi", "tli", "rmsea"))
+```
+
+```{r echo=FALSE}
+semPaths(fit_1a, intercepts = FALSE,edge.label.cex=1.5, optimizeLatRes = TRUE, groups = "lat",pastel = TRUE, exoVar = FALSE, sizeInt=5,edge.color ="black",esize = 6, label.prop=2,sizeLat = 6,"std", layout="circle2")
+```
+
+#### Reestimacion modelo con cuatro dimensiones
+
+```{r include=FALSE}
+cfa_1b <- '
+lazos =~ r15_w02
+confianza =~ c02_w01 + c03_w01 + c04_w01
+prejuicios =~ r12_03_w01 + r12_04_w01
+diversidad =~ c06_04_w01 + c06_05_w01 + c06_06_w01
+'
+fit_1b <- cfa(cfa_1b,data=relaciones_sociales,missing="ML",estimator="MLR")
+show(fit_1b) # Resumen ajuste general
+summary(fit_1b, fit.measures=T, standardized=T)
+```
+
+```{r echo=FALSE}
+fitMeasures(fit_1b, c("chisq", "df", "pvalue", "cfi", "tli", "rmsea"))
+```
+
+```{r echo=FALSE}
+semPaths(fit_1b, intercepts = FALSE,edge.label.cex=1.5, optimizeLatRes = TRUE, groups = "lat",pastel = TRUE, exoVar = FALSE, sizeInt=5,edge.color ="black",esize = 6, label.prop=2,sizeLat = 6,"std", layout="circle2")
+```
+
+```{r echo=FALSE}
+mod=modificationindices(fit_1b)
+subset(mod, mi>3.84, select=lhs:mi)
+```
+
+#### Reestimacion
+```{r include=FALSE}
+cfa_1c <- '
+lazos =~ r15_w02
+confianza =~ c02_w01 + c03_w01 + c04_w01
+prejuicios =~ r12_03_w01 + r12_04_w01
+diversidad =~ c06_04_w01 + c06_05_w01
+'
+fit_1c <- cfa(cfa_1c,data=relaciones_sociales,missing="ML",estimator="MLR")
+show(fit_1c) # Resumen ajuste general
+summary(fit_1c, fit.measures=T, standardized=T)
+```
+
+```{r echo=FALSE}
+fitMeasures(fit_1c, c("chisq", "df", "pvalue", "cfi", "tli", "rmsea"))
+```
+
+```{r echo=FALSE}
+semPaths(fit_1c, intercepts = FALSE,edge.label.cex=1.5, optimizeLatRes = TRUE, groups = "lat",pastel = TRUE, exoVar = FALSE, sizeInt=5,edge.color ="black",esize = 6, label.prop=2,sizeLat = 6,"std", layout="circle2")
+```
+
+## Sentido de pertenencia
+
+```{r include=FALSE}
+# crear una base de datos con menos variables para estimar los AFC
+pertenencia = data %>% 
+  dplyr::select(c32_01_w01, c32_02_w01, c18_09_w01, c18_10_w01, c05_01_w01, c05_02_w01, c05_03_w01, c05_04_w01, c05_05_w01, c05_06_w01, c05_07_w01, c05_08_w01) %>% 
+  as.data.frame() %>%
+  na.omit()
+```
+
+### Análisis de supuestos
+#### Correlaciones
+```{r echo=FALSE}
+corMat  <- cor(pertenencia, use="na.or.complete", method="spearman")  # estimar matriz correlacion
+stargazer(corMat, title="correlaciones", type = "text") #Latex table
+```
+#### Factorizabilidad
+```{r echo=FALSE}
+KMO(corMat)
+```
+
+#### Esfericidad
+```{r echo=FALSE}
+cortest.bartlett(corMat, n = 1809)
+```
+
+#### Normalidad (univariada)
+```{r echo=FALSE}
+shapiro.test(pertenencia$c32_01_w01)
+shapiro.test(pertenencia$c32_02_w01)
+shapiro.test(pertenencia$c18_09_w01)
+shapiro.test(pertenencia$c18_10_w01)
+shapiro.test(pertenencia$c05_01_w01)
+shapiro.test(pertenencia$c05_02_w01)
+shapiro.test(pertenencia$c05_05_w01)
+shapiro.test(pertenencia$c05_07_w01)
+shapiro.test(pertenencia$c05_08_w01)
+```
+
+### Estimación de los modelos
+
+#### Modelo con tres dimensiones
+
+```{r include=FALSE}
+cfa_2a <- '
+identificacion =~ c32_01_w01 + c32_02_w01
+justicia =~ c18_09_w01 + c18_10_w01
+instituciones =~ c05_01_w01 + c05_02_w01 + c05_03_w01 + c05_04_w01 + c05_05_w01 + c05_06_w01 + c05_07_w01 + c05_08_w01
+'
+fit_2a <- cfa(cfa_2a,data=pertenencia,missing="ML",estimator="MLR")
+show(fit_2a) # Resumen ajuste general
+summary(fit_2a, fit.measures=T, standardized=T)
+```
+
+```{r echo=FALSE}
+fitMeasures(fit_2a, c("chisq", "df", "pvalue", "cfi", "tli", "rmsea"))
+```
+
+```{r echo=FALSE}
+semPaths(fit_2a, intercepts = FALSE,edge.label.cex=1.5, optimizeLatRes = TRUE, groups = "lat",pastel = TRUE, exoVar = FALSE, sizeInt=5,edge.color ="black",esize = 6, label.prop=2,sizeLat = 6,"std", layout="circle2")
+```
+
+```{r echo=FALSE}
+mod=modificationindices(fit_2a)
+subset(mod, mi>3.84, select=lhs:mi)
+```
+
+#### Reestimacion
+
+```{r include=FALSE}
+# Quedan fuera de instituciones c05_08 por "mi" alto
+cfa_2b <- '
+identificacion =~ c32_01_w01 + c32_02_w01
+justicia =~ c18_09_w01 + c18_10_w01
+instituciones =~ c05_01_w01 + c05_02_w01 + c05_03_w01 + c05_04_w01 + c05_05_w01 + c05_06_w01 + c05_07_w01
+'
+fit_2b <- cfa(cfa_2b,data=pertenencia,missing="ML",estimator="MLR")
+show(fit_2b) # Resumen ajuste general
+summary(fit_2b, fit.measures=T, standardized=T)
+```
+
+```{r echo=FALSE}
+fitMeasures(fit_2b, c("chisq", "df", "pvalue", "cfi", "tli", "rmsea"))
+```
+
+```{r echo=FALSE}
+semPaths(fit_2b, intercepts = FALSE,edge.label.cex=1.5, optimizeLatRes = TRUE, groups = "lat",pastel = TRUE, exoVar = FALSE, sizeInt=5,edge.color ="black",esize = 6, label.prop=2,sizeLat = 6,"std", layout="circle2")
+```
+
+```{r echo=FALSE}
+mod=modificationindices(fit_2b)
+subset(mod, mi>3.84, select=lhs:mi)
+```
+
+#### Reestimacion
+```{r include=FALSE}
+# Quedan fuera de instituciones c05_02 por "mi" alto
+cfa_2c <- '
+identificacion =~ c32_01_w01 + c32_02_w01
+justicia =~ c18_09_w01 + c18_10_w01
+instituciones =~ c05_01_w01 + c05_03_w01 + c05_04_w01 + c05_05_w01 + c05_06_w01 + c05_07_w01
+'
+fit_2c <- cfa(cfa_2c,data=pertenencia,missing="ML",estimator="MLR")
+show(fit_2c) # Resumen ajuste general
+summary(fit_2c, fit.measures=T, standardized=T)
+```
+
+```{r echo=FALSE}
+fitMeasures(fit_2c, c("chisq", "df", "pvalue", "cfi", "tli", "rmsea"))
+```
+
+
+```{r echo=FALSE}
+semPaths(fit_2c, intercepts = FALSE,edge.label.cex=1.5, optimizeLatRes = TRUE, groups = "lat",pastel = TRUE, exoVar = FALSE, sizeInt=5,edge.color ="black",esize = 6, label.prop=2,sizeLat = 6,"std", layout="circle2")
+```
+
+
+## Orientacion hacia el bien comun
+
+```{r include=FALSE}
+# crear una base de datos con menos variables para estimar los AFC
+bien_comun = data %>% 
+  dplyr::select(c07_03_w01, c07_05_w01, c07_06_w01, c07_07_w01, c07_08_w01, c08_01_w01, c08_02_w01, c08_03_w01, c08_04_w01, c12_03_w01, c12_04_w01, c12_05_w01, c12_06_w01, c12_07_w01, c12_08_w01, c11_w01) %>% 
+  as.data.frame() %>%
+  na.omit()
+## Pasar "no tenia edad" a "no"
+bien_comun$c12_03_w01 <- car::recode(bien_comun$c12_03_w01, "3=1")
+bien_comun$c12_04_w01 <- car::recode(bien_comun$c12_04_w01, "3=1")
+bien_comun$c12_05_w01 <- car::recode(bien_comun$c12_05_w01, "3=1")
+bien_comun$c12_06_w01 <- car::recode(bien_comun$c12_06_w01, "3=1")
+bien_comun$c12_07_w01 <- car::recode(bien_comun$c12_07_w01, "3=1")
+bien_comun$c12_08_w01 <- car::recode(bien_comun$c12_08_w01, "3=1")
+bien_comun$c11_w01 <- car::recode(bien_comun$c11_w01, "3=1")
+```
+
+### Análisis de supuestos
+#### Correlaciones
+```{r echo=FALSE}
+corMat  <- cor(bien_comun, use="na.or.complete", method="spearman")  # estimar matriz correlacion
+stargazer(corMat, title="correlaciones", type = "text") #Latex table
+```
+
+#### Factorizabilidad
+```{r echo=FALSE}
+KMO(corMat)
+```
+
+#### Esfericidad
+```{r echo=FALSE}
+cortest.bartlett(corMat, n = 1833)
+```
+
+#### Normalidad (univariada)
+```{r echo=FALSE}
+shapiro.test(bien_comun$c12_03_w01)
+shapiro.test(bien_comun$c12_03_w01)
+shapiro.test(bien_comun$c12_03_w01)
+shapiro.test(bien_comun$c12_03_w01)
+shapiro.test(bien_comun$c12_03_w01)
+
+```
+### Estimación de los modelos
+
+#### Modelo con cuatro dimensiones
+```{r include=FALSE}
+cfa_3a <- '
+solidaridad =~ c07_03_w01 + c07_05_w01 + c07_06_w01 + c07_07_w01 + c07_08_w01
+participacion =~ c08_01_w01 + c08_02_w01 + c08_03_w01 + c08_04_w01
+organizaciones =~ c12_03_w01 + c12_04_w01 + c12_05_w01 + c12_06_w01 + c12_07_w01 + c12_08_w01
+voto =~ c11_w01
+'
+fit_3a <- cfa(cfa_3a,data=bien_comun,missing="ML",estimator="MLR")
+show(fit_3a) # Resumen ajuste general
+summary(fit_3a, fit.measures=T, standardized=T)
+```
+
+```{r echo=FALSE}
+fitMeasures(fit_3a, c("chisq", "df", "pvalue", "cfi", "tli", "rmsea"))
+```
+
+```{r echo=FALSE}
+semPaths(fit_3a, intercepts = FALSE,edge.label.cex=1.5, optimizeLatRes = TRUE, groups = "lat",pastel = TRUE, exoVar = FALSE, sizeInt=5,edge.color ="black",esize = 6, label.prop=2,sizeLat = 6,"std", layout="circle2")
+```
+
+```{r echo=FALSE}
+mod=modificationindices(fit_3a)
+subset(mod, mi>3.84, select=lhs:mi)
+```
+
+### Reestimacion
+```{r include=FALSE}
+# Queda fuera c08_03 por "mi" alto
+cfa_3b <- '
+solidaridad =~ c07_03_w01 + c07_05_w01 + c07_06_w01 + c07_07_w01 + c07_08_w01
+participacion =~ c08_01_w01 + c08_02_w01 + c08_04_w01
+organizaciones =~ c12_03_w01 + c12_04_w01 + c12_05_w01 + c12_06_w01 + c12_07_w01 + c12_08_w01
+voto =~ c11_w01
+'
+fit_3b <- cfa(cfa_3b,data=bien_comun,missing="ML",estimator="MLR")
+show(fit_3b) # Resumen ajuste general
+summary(fit_3b, fit.measures=T, standardized=T)
+```
+
+```{r echo=FALSE}
+fitMeasures(fit_3b, c("chisq", "df", "pvalue", "cfi", "tli", "rmsea"))
+```
+
+```{r echo=FALSE}
+semPaths(fit_1b, intercepts = FALSE,edge.label.cex=1.5, optimizeLatRes = TRUE, groups = "lat",pastel = TRUE, exoVar = FALSE, sizeInt=5,edge.color ="black",esize = 6, label.prop=2,sizeLat = 6,"std", layout="circle2")
+```
+
+```{r echo=FALSE}
+mod=modificationindices(fit_3b)
+subset(mod, mi>3.84, select=lhs:mi)
+```
