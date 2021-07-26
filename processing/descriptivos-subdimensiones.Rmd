@@ -14,13 +14,14 @@ knitr::opts_chunk$set(echo = TRUE, warning=F, message=F)
 
 ```{r include=FALSE}
 # Cargar paquetes
-pacman::p_load(dplyr, car, summarytools, webshot, knitr, kableExtra, corrplot, ggplot2, sjPlot, sjmisc, ggthemes, ggpubr)
+pacman::p_load(dplyr, car, summarytools, webshot, knitr, kableExtra, corrplot, ggplot2, sjPlot, sjmisc, semPlot, semTools)
 ```
 
 
 ```{r include=FALSE}
 # Cargar base elsoc longitudinal (2016-2019)
 load("../input/data/data.RData")
+data <- data %>% dplyr::filter(tipo_atricion==1 & tipo_caso !=2)
 ```
 <div style="text-align: justify">
 # Medición
@@ -133,6 +134,36 @@ corrplot.mixed(cor(dplyr::select(data, r12_03_w01, r12_04_w01, c37_01_w03, c06_0
                    method = "spearman"))
 ```
 
+El ajuste de la dimensión Relaciones sociales de igualdad se estimó a través de un AFC. Esta dimensión logra su mejor ajuste al separarla en cuatro subdimensiones: a) Lazos; b) confianza interpersonal; c) Reconocimiento y respeto hacia la diversidad; y d) prejuicios hacia inmigrantes.
+Además, se excluye el indicador de "Grado de confianza en inmigrantes" de la subdimensión Reconocimiento y respeto hacia la diversidad.
+
+```{r include=FALSE}
+# crear una base de datos con menos variables para estimar los AFC
+relaciones_sociales = data %>% 
+  dplyr::select(r15_w02, c02_w01, c03_w01, c04_w01, r12_03_w01, r12_04_w01, c06_04_w01, c06_05_w01, c06_06_w01) %>% 
+  as.data.frame() %>%
+  na.omit()
+```
+```{r include=FALSE}
+## c06_06_w01 (Grado de confianza en inmigrantes) queda fuera por Mi alto (99.731)
+cfa_1c <- '
+lazos =~ r15_w02
+confianza =~ c02_w01 + c03_w01 + c04_w01
+prejuicios =~ r12_03_w01 + r12_04_w01
+diversidad =~ c06_04_w01 + c06_05_w01
+'
+fit_1c <- cfa(cfa_1c,data=relaciones_sociales,missing="ML",estimator="MLR")
+show(fit_1c) # Resumen ajuste general
+summary(fit_1c, fit.measures=T, standardized=T)
+```
+```{r echo=FALSE}
+fitMeasures(fit_1c, c("chisq", "df", "pvalue", "cfi", "tli", "rmsea"))
+# Buen ajuste
+```
+```{r echo=FALSE}
+semPaths(fit_1c, intercepts = FALSE,edge.label.cex=1.5, optimizeLatRes = TRUE, groups = "lat",pastel = TRUE, exoVar = FALSE, sizeInt=5,edge.color ="black",esize = 6, label.prop=2,sizeLat = 6,"std", layout="circle2")
+```
+
 ## Sentido de pertenencia
 
 ### Identificación con el país
@@ -162,7 +193,7 @@ corrplot.mixed(cor(dplyr::select(data, c32_01_w01, c32_02_w01),
 ```
 
 ### Percepción de justicia
-En informe CEPAL se utilizan "Se deben equiparar los sueldos, no mantener desigualdad para incentivar el esfuerzo personal", "El trabajo a largo plazo da beneficios, no las conexiones o suerte", "El Estado debe implementar políticas para reducir la desigualdad de ingreso". Al trabajar con ELSOC se utilizan "En Chile las personas son recompensadas por su esfuerzo" y "En Chile las personas son recompensadas por su inteligencia", presentes en todas las olas
+En informe CEPAL se utilizan los indicadores "Se deben equiparar los sueldos, no mantener desigualdad para incentivar el esfuerzo personal", "El trabajo a largo plazo da beneficios, no las conexiones o suerte", "El Estado debe implementar políticas para reducir la desigualdad de ingreso". Al trabajar con ELSOC se utilizan "En Chile las personas son recompensadas por su esfuerzo" y "En Chile las personas son recompensadas por su inteligencia", presentes en todas las olas
 
 ```{r echo=FALSE}
 tabla6 = data %>% select(c18_09_w01,c18_10_w01)
@@ -239,6 +270,35 @@ corrplot.mixed(cor(dplyr::select(data, c05_01_w01,
                                  c05_08_w01),
                    method = "spearman",
                    use = "na.or.complete"))
+```
+
+El ajuste de la dimensión Sentido de pertenencia se estimó a través de un AFC. Esta dimensión logra su mejor ajuste al ser separada en las tres subdimensiones propuestas por CEPAL: a) Identificación con el país; b) Percepción de justicia; y c) Confianza institucional.
+Además, se excluyen los indicadores "Confianza en el presidente/a" y "Confianza en los partidos políticos" de la subdimensión Confianza institucional.
+```{r include=FALSE}
+# crear una base de datos con menos variables para estimar los AFC
+pertenencia = data %>% 
+  dplyr::select(c32_01_w01, c32_02_w01, c18_09_w01, c18_10_w01, c05_01_w01, c05_02_w01, c05_03_w01, c05_04_w01, c05_05_w01, c05_06_w01, c05_07_w01, c05_08_w01) %>% 
+  as.data.frame() %>%
+  na.omit()
+```
+```{r include=FALSE}
+# Quedan fuera de instituciones c05_02_w01 (confianza en partidos politicos) por "mi" alto
+# al estimarse con c05_01_w01 (confianza en el gobierno). (mi=94.961)
+cfa_2c <- '
+identificacion =~ c32_01_w01 + c32_02_w01
+justicia =~ c18_09_w01 + c18_10_w01
+instituciones =~ c05_01_w01 + c05_03_w01 + c05_04_w01 + c05_05_w01 + c05_06_w01 + c05_07_w01
+'
+fit_2c <- cfa(cfa_2c,data=pertenencia,missing="ML",estimator="MLR")
+show(fit_2c) # Resumen ajuste general
+summary(fit_2c, fit.measures=T, standardized=T)
+```
+```{r echo=FALSE}
+fitMeasures(fit_2c, c("chisq", "df", "pvalue", "cfi", "tli", "rmsea"))
+# Buen ajuste
+```
+```{r echo=FALSE}
+semPaths(fit_2c, intercepts = FALSE,edge.label.cex=1.5, optimizeLatRes = TRUE, groups = "lat",pastel = TRUE, exoVar = FALSE, sizeInt=5,edge.color ="black",esize = 6, label.prop=2,sizeLat = 6,"std", layout="circle2")
 ```
 
 ## Orientación hacia el bien común
@@ -422,7 +482,211 @@ corrplot.mixed(cor(cor,
                    use = "na.or.complete"))
 ```
 
-#### No se incluye subdimensión respeto por reglas sociales de informe CEPAL que posee un indicador de respeto por las instituciones inexistente en ELSOC
+#### No se incluye subdimensión respeto por reglas sociales de la dimensión Orientación hacia el bien comun de informe CEPAL, que posee un indicador de respeto por las instituciones inexistente en ELSOC
+
+El ajuste de la dimensión Orientación hacia el bien común se estimó a través de un AFC. Esta dimensión logra su mejor ajuste al ser separada en cuatro subdimensiones: a) Solidaridad; b) Participación cívica; c) Participación en organizaciones y d) Participación electoral.
+Además, se excluyen los indicadores "Han venido amigos a visitarlo a su casa", "Asiste a reuniones sobre temas de interés público", "Ha hecho voluntariado" y "Ha ayudado a alguien a conseguir trabajo" de la subdimensión Solidaridad. El indicador "Participación en huelgas" de la subdimensión Participación cívica y el indicador "Organización religiosa" de la subdimensión Participación en organizaciones.
+
+```{r include=FALSE}
+# crear una base de datos con menos variables para estimar los AFC
+bien_comun = data %>%
+  dplyr::select(c07_01_w01, c07_02_w01, c07_03_w01, c07_04_w01, c07_05_w01, c07_06_w01, c07_07_w01, c07_08_w01, c08_01_w01, c08_02_w01, c08_03_w01, c08_04_w01, c12_01_w01, c12_02_w01, c12_03_w01, c12_04_w01, c12_05_w01, c12_06_w01, c12_07_w01, c12_08_w01, c11_w01) %>% 
+  as.data.frame() %>%
+  na.omit()
+## Pasar "no tenia edad" a "no"
+bien_comun$c12_01_w01 <- car::recode(bien_comun$c12_01_w01, "3=1")
+bien_comun$c12_02_w01 <- car::recode(bien_comun$c12_02_w01, "3=1")
+bien_comun$c12_03_w01 <- car::recode(bien_comun$c12_03_w01, "3=1")
+bien_comun$c12_04_w01 <- car::recode(bien_comun$c12_04_w01, "3=1")
+bien_comun$c12_05_w01 <- car::recode(bien_comun$c12_05_w01, "3=1")
+bien_comun$c12_06_w01 <- car::recode(bien_comun$c12_06_w01, "3=1")
+bien_comun$c12_07_w01 <- car::recode(bien_comun$c12_07_w01, "3=1")
+bien_comun$c12_08_w01 <- car::recode(bien_comun$c12_08_w01, "3=1")
+bien_comun$c11_w01 <- car::recode(bien_comun$c11_w01, "3=1")
+```
+
+
+```{r include=FALSE}
+# Queda fuera c07_04_w01 (Hizo voluntariado) por "mi" alto (33.027) al estimarse con participacion.
+# Y c07_08_w01 (ayudar a conseguir trabajo) por "mi" alto (26.542) al estimarse con c07_05_w01 (dono dinero)
+cfa_3d <- '
+solidaridad =~ c07_01_w01 + c07_05_w01 + c07_06_w01 + c07_07_w01
+participacion =~ c08_01_w01 + c08_02_w01 + c08_04_w01
+organizaciones =~ c12_01_w01 + c12_03_w01 + c12_04_w01 + c12_05_w01 + c12_06_w01 + c12_07_w01 + c12_08_w01
+voto =~ c11_w01
+'
+fit_3d <- cfa(cfa_3d,data=bien_comun,missing="ML",estimator="MLR")
+show(fit_3d) # Resumen ajuste general
+summary(fit_3d, fit.measures=T, standardized=T)
+```
+
+```{r echo=FALSE}
+fitMeasures(fit_3d, c("chisq", "df", "pvalue", "cfi", "tli", "rmsea"))
+# Buen ajuste
+```
+
+```{r echo=FALSE}
+semPaths(fit_3d, intercepts = FALSE,edge.label.cex=1.5, optimizeLatRes = TRUE, groups = "lat",pastel = TRUE, exoVar = FALSE, sizeInt=5,edge.color ="black",esize = 6, label.prop=2,sizeLat = 6,"std", layout="circle2")
+```
+
+## Calidad de vida en el vecindario
+De manera adicional, se incorpora una dimensión sobre calidad de vida en el vecindario presente en ELSOC. Todos estos indicadores se encuentran presentes en las cuatro olas.
+```{r echo=FALSE}
+tabla12 = data %>% select(t01_w01)
+tabla12 = droplevels(tabla12)
+tabla12$t01_w01<- factor(tabla12$t01_w01, levels = c(1, 2, 3, 4, 5), labels = c("Muy poco", "Poco", "Algo", "Bastante", "Mucho"))
+
+label(tabla12$t01_w01) <- "Confianza en vecinos (2016)."
+
+
+graf12 <- plot_stackfrq(tabla12, title = "Confianza en vecinos") +
+  theme(axis.text.y = element_text(colour = "black", size = 9),
+        axis.text.x = element_text(colour = "black", size = 9), 
+        legend.text = element_text(size = 8),
+        legend.position="bottom")
+  
+graf12
+ggsave(graf12, file = "../output/graphs/graf12.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
+
+```
+
+```{r echo=FALSE}
+tabla13 = data %>% select(t02_01_w01, t02_02_w01, t02_03_w01, t02_04_w01)
+tabla13 = droplevels(tabla13)
+
+tabla13$t02_01_w01<- factor(tabla13$t02_01_w01, levels = c(1, 2, 3, 4, 5), labels = c("Totalmente en desacuerdo", "En desacuerdo", "Ni en desacuerdo ni de acuerdo", "De acuerdo", "Totalmente de acuerdo"))
+tabla13$t02_02_w01<- factor(tabla13$t02_02_w01, levels = c(1, 2, 3, 4, 5), labels = c("Totalmente en desacuerdo", "En desacuerdo", "Ni en desacuerdo ni de acuerdo", "De acuerdo", "Totalmente de acuerdo"))
+tabla13$t02_03_w01<- factor(tabla13$t02_03_w01, levels = c(1, 2, 3, 4, 5), labels = c("Totalmente en desacuerdo", "En desacuerdo", "Ni en desacuerdo ni de acuerdo", "De acuerdo", "Totalmente de acuerdo"))
+tabla13$t02_04_w01<- factor(tabla13$t02_04_w01, levels = c(1, 2, 3, 4, 5), labels = c("Totalmente en desacuerdo", "En desacuerdo", "Ni en desacuerdo ni de acuerdo", "De acuerdo", "Totalmente de acuerdo"))
+
+label(tabla13$t02_01_w01) <- "Este barrio es ideal para mi (2016)."
+label(tabla13$t02_02_w01) <- "Me siento integrado/a en este barrio (2016)."
+label(tabla13$t02_03_w01) <- "Me identifico con la gente de este barrio (2016)."
+label(tabla13$t02_04_w01) <- "Este barrio es parte de mi (2016)."
+
+graf13<-plot_stackfrq(tabla13, title = "Cohesion barrial", geom.colors = "RdBu") + 
+  theme(axis.text.y = element_text(colour = "black", size = 8),
+        axis.text.x = element_text(colour = "black", size = 8), 
+        legend.text = element_text(size = 8),
+        legend.position="bottom")
+
+graf13
+ggsave(graf13, file = "../output/graphs/graf13.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
+
+
+```
+
+```{r echo=FALSE}
+corrplot.mixed(cor(dplyr::select(data, t02_01_w01, t02_02_w01, t02_03_w01, t02_04_w01),
+                            use = "na.or.complete"))
+```
+
+```{r echo=FALSE}
+tabla14 = data %>% select(t03_01_w01, t03_02_w01, t03_03_w01, t03_04_w01)
+tabla14 = droplevels(tabla14)
+
+tabla14$t03_01_w01<- factor(tabla14$t03_01_w01, levels = c(1, 2, 3, 4, 5), labels = c("Totalmente en desacuerdo", "En desacuerdo", "Ni en desacuerdo ni de acuerdo", "De acuerdo", "Totalmente de acuerdo"))
+tabla14$t03_02_w01<- factor(tabla14$t03_02_w01, levels = c(1, 2, 3, 4, 5), labels = c("Totalmente en desacuerdo", "En desacuerdo", "Ni en desacuerdo ni de acuerdo", "De acuerdo", "Totalmente de acuerdo"))
+tabla14$t03_03_w01<- factor(tabla14$t03_03_w01, levels = c(1, 2, 3, 4, 5), labels = c("Totalmente en desacuerdo", "En desacuerdo", "Ni en desacuerdo ni de acuerdo", "De acuerdo", "Totalmente de acuerdo"))
+tabla14$t03_04_w01<- factor(tabla14$t03_04_w01, levels = c(1, 2, 3, 4, 5), labels = c("Totalmente en desacuerdo", "En desacuerdo", "Ni en desacuerdo ni de acuerdo", "De acuerdo", "Totalmente de acuerdo"))
+
+label(tabla14$t03_01_w01) <- "En este barrio es fácil hacer amigos (2016)."
+label(tabla14$t03_02_w01) <- "La gente en este barrio es sociable (2016)."
+label(tabla14$t03_03_w01) <- "La gente en este barrio es cordial (2016)."
+label(tabla14$t03_04_w01) <- "La gente en este barrio es colaboradora (2016)."
+
+graf14<-plot_stackfrq(tabla14, title = "Sociabilidad barrial", geom.colors = "RdBu") + 
+  theme(axis.text.y = element_text(colour = "black", size = 8),
+        axis.text.x = element_text(colour = "black", size = 8), 
+        legend.text = element_text(size = 8),
+        legend.position="bottom")
+
+graf14
+ggsave(graf14, file = "../output/graphs/graf14.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
+
+
+```
+
+```{r echo=FALSE}
+corrplot.mixed(cor(dplyr::select(data, t03_01_w01, t03_02_w01, t03_03_w01, t03_04_w01),
+                            use = "na.or.complete"))
+```
+
+```{r echo=FALSE}
+tabla15 = data %>% select(t06_01_w01, t06_02_w01, t06_03_w01, t06_04_w01, t06_05_w01, t06_06_w01, t06_07_w01, t06_08_w01)
+tabla15 = droplevels(tabla15)
+
+tabla15$t06_01_w01<- factor(tabla15$t06_01_w01, levels = c(1, 2, 3, 4, 5), labels = c("Totalmente insatisfecho", "Insatisfecho", "Ni satisfecho ni insatisfecho", "Satisfecho", "Totalmente satisfecho"))
+tabla15$t06_02_w01<- factor(tabla15$t06_02_w01, levels = c(1, 2, 3, 4, 5), labels = c("Totalmente insatisfecho", "Insatisfecho", "Ni satisfecho ni insatisfecho", "Satisfecho", "Totalmente satisfecho"))
+tabla15$t06_03_w01<- factor(tabla15$t06_03_w01, levels = c(1, 2, 3, 4, 5), labels = c("Totalmente insatisfecho", "Insatisfecho", "Ni satisfecho ni insatisfecho", "Satisfecho", "Totalmente satisfecho"))
+tabla15$t06_04_w01<- factor(tabla15$t06_04_w01, levels = c(1, 2, 3, 4, 5), labels = c("Totalmente insatisfecho", "Insatisfecho", "Ni satisfecho ni insatisfecho", "Satisfecho", "Totalmente satisfecho"))
+tabla15$t06_05_w01<- factor(tabla15$t06_05_w01, levels = c(1, 2, 3, 4, 5), labels = c("Totalmente insatisfecho", "Insatisfecho", "Ni satisfecho ni insatisfecho", "Satisfecho", "Totalmente satisfecho"))
+tabla15$t06_06_w01<- factor(tabla15$t06_06_w01, levels = c(1, 2, 3, 4, 5), labels = c("Totalmente insatisfecho", "Insatisfecho", "Ni satisfecho ni insatisfecho", "Satisfecho", "Totalmente satisfecho"))
+tabla15$t06_07_w01<- factor(tabla15$t06_07_w01, levels = c(1, 2, 3, 4, 5), labels = c("Totalmente insatisfecho", "Insatisfecho", "Ni satisfecho ni insatisfecho", "Satisfecho", "Totalmente satisfecho"))
+tabla15$t06_08_w01<- factor(tabla15$t06_08_w01, levels = c(1, 2, 3, 4, 5), labels = c("Totalmente insatisfecho", "Insatisfecho", "Ni satisfecho ni insatisfecho", "Satisfecho", "Totalmente satisfecho"))
+
+label(tabla15$t06_01_w01) <- "Seguridad del barrio (2016)."
+label(tabla15$t06_02_w01) <- "Conectividad (2016)."
+label(tabla15$t06_03_w01) <- "Areas verdes y de recreacion disponibles (2016)."
+label(tabla15$t06_04_w01) <- "Limpieza y belleza del barrio (2016)."
+label(tabla15$t06_05_w01) <- "Proximidad al lugar de actividad principal (2016)."
+label(tabla15$t06_06_w01) <- "Proximidad a colegios de buena calidad (2016)."
+label(tabla15$t06_07_w01) <- "Proximidad a areas de comercio (2016)."
+label(tabla15$t06_08_w01) <- "Proximidad con familiares y/o amigos cercanos (2016)."
+
+graf15<-plot_stackfrq(tabla15, title = "Satisfaccion residencial", geom.colors = "RdBu") + 
+  theme(axis.text.y = element_text(colour = "black", size = 8),
+        axis.text.x = element_text(colour = "black", size = 8), 
+        legend.text = element_text(size = 8),
+        legend.position="bottom")
+
+graf15
+ggsave(graf15, file = "../output/graphs/graf15.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
+
+```
+
+```{r echo=FALSE}
+corrplot.mixed(cor(dplyr::select(data, t06_01_w01, 
+                                 t06_02_w01, 
+                                 t06_03_w01, 
+                                 t06_04_w01, 
+                                 t06_05_w01, 
+                                 t06_06_w01, 
+                                 t06_07_w01, 
+                                 t06_08_w01),
+                            use = "na.or.complete"))
+```
+
+El ajuste de la dimensión Calidad de vida en el vecindario se estimó a través de un AFC. Esta dimensión logra su mejor ajuste al ser separada en cuatro subdimensiones: a) Confianza en vecinos; b) Cohesión barrial; c) Sociabilidad barrial y d) Satisfacción residencial.
+Además, se excluyen los indicadores "Seguridad en el vecindario" y "Limpieza y belleza del barrio" de la subdimensión Satisfacción residencial y el indicador "La gente del barrio es cordial" de la subdimensión Sociabilidad barrial 
+
+```{r include=FALSE}
+# crear una base de datos con menos variables para estimar los AFC
+vecindario = data %>% 
+  dplyr::select(t01_w01, t02_01_w01, t02_02_w01, t02_03_w01, t02_04_w01, t03_01_w01, t03_02_w01, t03_03_w01, t03_04_w01, t06_01_w01, t06_02_w01, t06_03_w01, t06_04_w01, t06_05_w01, t06_06_w01, t06_07_w01, t06_08_w01) %>% 
+  as.data.frame() %>%
+  na.omit()
+```
+```{r include=FALSE}
+# Queda fuera t03_03_w01 (La gente del barrio es cordial) por "mi" alto al estimarse con t03_01_w01 (En barrio es facil hacer amigos) (mi=91.609)
+cfa_4c <- '
+confianza =~ t01_w01
+cohesion =~ t02_01_w01 + t02_02_w01 + t02_03_w01 + t02_04_w01
+sociabilidad =~ t03_01_w01 + t03_02_w01 + t03_04_w01
+satisfaccion =~ t06_02_w01 + t06_03_w01 + t06_05_w01 + t06_06_w01 + t06_07_w01 + t06_08_w01
+'
+fit_4c <- cfa(cfa_4c,data=vecindario,missing="ML",estimator="MLR")
+show(fit_4c) # Resumen ajuste general
+summary(fit_4c, fit.measures=T, standardized=T)
+```
+
+```{r echo=FALSE}
+fitMeasures(fit_4c, c("chisq", "df", "pvalue", "cfi", "tli", "rmsea"))
+# Buen ajuste
+```
+```{r echo=FALSE}
+semPaths(fit_4c, intercepts = FALSE,edge.label.cex=1.5, optimizeLatRes = TRUE, groups = "lat",pastel = TRUE, exoVar = FALSE, sizeInt=5,edge.color ="black",esize = 6, label.prop=2,sizeLat = 6,"std", layout="circle2")
+```
 
 # Anexos
 
@@ -573,6 +837,7 @@ view(dfSummary(select(data, c08_01_w01, c08_02_w01, c08_03_w01, c08_04_w01),
 webshot(url ="../output/tables/table8.html" ,file ="../output/tables/table8.png")
 ```
 
+### Participacion en organizaciones
 ```{r echo=FALSE}
 view(dfSummary(select(data, c12_01_w01, c12_02_w01, c12_03_w01, c12_04_w01, c12_05_w01, c12_06_w01, c12_07_w01, c12_08_w01),
                plain.ascii = FALSE,
@@ -590,6 +855,7 @@ view(dfSummary(select(data, c12_01_w01, c12_02_w01, c12_03_w01, c12_04_w01, c12_
 webshot(url ="../output/tables/table9.html" ,file ="../output/tables/table9.png")
 ```
 
+### Participacion electoral 
 ```{r echo=FALSE}
 view(dfSummary(select(data, c11_w01, c11_w03),
                plain.ascii = FALSE,
@@ -605,6 +871,79 @@ view(dfSummary(select(data, c11_w01, c11_w03),
                # col.widths = c(5,5,10,10,10,10)
                ), file = "../output/tables/table10.html")
 webshot(url ="../output/tables/table10.html" ,file ="../output/tables/table10.png")
+```
+
+### Confianza en vecinos
+```{r echo=FALSE}
+view(dfSummary(select(data, t01_w01),
+               plain.ascii = FALSE,
+               style = "grid",
+               #tmp.img.dir = "/tmp",
+               graph.magnif = 0.9,
+               headings = F,  # encabezado
+               varnumbers = F, # num variable
+               labels.col = T, # etiquetas
+               na.col = T,    # missing
+               graph.col = T, # plot
+               valid.col = T, # n valido
+               # col.widths = c(5,5,10,10,10,10)
+               ), file = "../output/tables/table11.html")
+webshot(url ="../output/tables/table11.html" ,file ="../output/tables/table11.png")
+```
+
+### Cohesion barrial
+```{r echo=FALSE}
+
+view(dfSummary(select(data, t02_01_w01, t02_02_w01, t02_03_w01, t02_04_w01),
+               plain.ascii = FALSE,
+               style = "grid",
+               #tmp.img.dir = "/tmp",
+               graph.magnif = 0.9,
+               headings = F,  # encabezado
+               varnumbers = F, # num variable
+               labels.col = T, # etiquetas
+               na.col = T,    # missing
+               graph.col = T, # plot
+               valid.col = T, # n valido
+               # col.widths = c(5,5,10,10,10,10)
+               ), file = "../output/tables/table12.html")
+webshot(url ="../output/tables/table12.html" ,file ="../output/tables/table12.png")
+```
+
+### Sociabilidad barrial
+```{r echo=FALSE}
+view(dfSummary(select(data, t03_01_w01, t03_02_w01, t03_03_w01, t03_04_w01),
+               plain.ascii = FALSE,
+               style = "grid",
+               #tmp.img.dir = "/tmp",
+               graph.magnif = 0.9,
+               headings = F,  # encabezado
+               varnumbers = F, # num variable
+               labels.col = T, # etiquetas
+               na.col = T,    # missing
+               graph.col = T, # plot
+               valid.col = T, # n valido
+               # col.widths = c(5,5,10,10,10,10)
+               ), file = "../output/tables/table13.html")
+webshot(url ="../output/tables/table13.html" ,file ="../output/tables/table13.png")
+```
+
+### Satisfaccion residencial
+```{r echo=FALSE}
+view(dfSummary(select(data, t06_01_w01, t06_02_w01, t06_03_w01, t06_04_w01, t06_05_w01, t06_06_w01, t06_07_w01, t06_08_w01),
+               plain.ascii = FALSE,
+               style = "grid",
+               #tmp.img.dir = "/tmp",
+               graph.magnif = 0.9,
+               headings = F,  # encabezado
+               varnumbers = F, # num variable
+               labels.col = T, # etiquetas
+               na.col = T,    # missing
+               graph.col = T, # plot
+               valid.col = T, # n valido
+               # col.widths = c(5,5,10,10,10,10)
+               ), file = "../output/tables/table14.html")
+webshot(url ="../output/tables/table14.html" ,file ="../output/tables/table14.png")
 ```
 
 

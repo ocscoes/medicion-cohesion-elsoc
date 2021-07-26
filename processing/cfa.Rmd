@@ -50,7 +50,6 @@ data <- data %>% dplyr::filter(tipo_atricion==1 & tipo_caso !=2)
 
 ## Relaciones sociales de igualdad
 
-
 ```{r include=FALSE}
 # crear una base de datos con menos variables para estimar los AFC
 relaciones_sociales = data %>% 
@@ -72,7 +71,7 @@ KMO(corMat)
 
 #### Esfericidad
 ```{r echo=FALSE}
-cortest.bartlett(corMat, n = 1648)
+cortest.bartlett(corMat, n = 1611)
 ```
 
 #### Normalidad (univariada)
@@ -93,6 +92,7 @@ shapiro.test(relaciones_sociales$c06_06_w01)
 
 #### Modelo con tres dimensiones
 ```{r include=FALSE}
+# Primer modelo con todos los indicadores disposnibles
 cfa_1a <- '
 lazos =~ r15_w02
 confianza =~ c02_w01 + c03_w01 + c04_w01
@@ -105,6 +105,7 @@ summary(fit_1a, fit.measures=T, standardized=T)
 
 ```{r echo=FALSE}
 fitMeasures(fit_1a, c("chisq", "df", "pvalue", "cfi", "tli", "rmsea"))
+# No hay buen ajuste
 ```
 
 ```{r echo=FALSE}
@@ -114,6 +115,7 @@ semPaths(fit_1a, intercepts = FALSE,edge.label.cex=1.5, optimizeLatRes = TRUE, g
 #### Reestimacion modelo con cuatro dimensiones
 
 ```{r include=FALSE}
+# Prejuicios hacia inmigrantes (amenaza material y simbolica) se separan en otra dimension
 cfa_1b <- '
 lazos =~ r15_w02
 confianza =~ c02_w01 + c03_w01 + c04_w01
@@ -127,6 +129,7 @@ summary(fit_1b, fit.measures=T, standardized=T)
 
 ```{r echo=FALSE}
 fitMeasures(fit_1b, c("chisq", "df", "pvalue", "cfi", "tli", "rmsea"))
+# Se logra mejor ajuste, pero tli menor a 0.95.
 ```
 
 ```{r echo=FALSE}
@@ -140,6 +143,7 @@ subset(mod, mi>3.84, select=lhs:mi)
 
 #### Reestimacion
 ```{r include=FALSE}
+## c06_06_w01 (Grado de confianza en inmigrantes) queda fuera por Mi alto (99.731)
 cfa_1c <- '
 lazos =~ r15_w02
 confianza =~ c02_w01 + c03_w01 + c04_w01
@@ -153,6 +157,7 @@ summary(fit_1c, fit.measures=T, standardized=T)
 
 ```{r echo=FALSE}
 fitMeasures(fit_1c, c("chisq", "df", "pvalue", "cfi", "tli", "rmsea"))
+# Buen ajuste
 ```
 
 ```{r echo=FALSE}
@@ -182,7 +187,7 @@ KMO(corMat)
 
 #### Esfericidad
 ```{r echo=FALSE}
-cortest.bartlett(corMat, n = 1809)
+cortest.bartlett(corMat, n = 1715)
 ```
 
 #### Normalidad (univariada)
@@ -215,6 +220,7 @@ summary(fit_2a, fit.measures=T, standardized=T)
 
 ```{r echo=FALSE}
 fitMeasures(fit_2a, c("chisq", "df", "pvalue", "cfi", "tli", "rmsea"))
+# No hay buen ajuste
 ```
 
 ```{r echo=FALSE}
@@ -229,7 +235,8 @@ subset(mod, mi>3.84, select=lhs:mi)
 #### Reestimacion
 
 ```{r include=FALSE}
-# Quedan fuera de instituciones c05_08 por "mi" alto
+# Queda fuera de dimension confianza en instituciones c05_08_w01 (Confianza en el presidente) por "mi" alto
+# al estimarse con c05_01_w01 (confianza en el gobierno). (mi=243.219)
 cfa_2b <- '
 identificacion =~ c32_01_w01 + c32_02_w01
 justicia =~ c18_09_w01 + c18_10_w01
@@ -242,6 +249,7 @@ summary(fit_2b, fit.measures=T, standardized=T)
 
 ```{r echo=FALSE}
 fitMeasures(fit_2b, c("chisq", "df", "pvalue", "cfi", "tli", "rmsea"))
+# Mejor ajuste, pero no suficiente
 ```
 
 ```{r echo=FALSE}
@@ -255,7 +263,8 @@ subset(mod, mi>3.84, select=lhs:mi)
 
 #### Reestimacion
 ```{r include=FALSE}
-# Quedan fuera de instituciones c05_02 por "mi" alto
+# Quedan fuera de instituciones c05_02_w01 (confianza en partidos politicos) por "mi" alto
+# al estimarse con c05_01_w01 (confianza en el gobierno). (mi=94.961)
 cfa_2c <- '
 identificacion =~ c32_01_w01 + c32_02_w01
 justicia =~ c18_09_w01 + c18_10_w01
@@ -268,6 +277,7 @@ summary(fit_2c, fit.measures=T, standardized=T)
 
 ```{r echo=FALSE}
 fitMeasures(fit_2c, c("chisq", "df", "pvalue", "cfi", "tli", "rmsea"))
+# Buen ajuste
 ```
 
 
@@ -275,16 +285,17 @@ fitMeasures(fit_2c, c("chisq", "df", "pvalue", "cfi", "tli", "rmsea"))
 semPaths(fit_2c, intercepts = FALSE,edge.label.cex=1.5, optimizeLatRes = TRUE, groups = "lat",pastel = TRUE, exoVar = FALSE, sizeInt=5,edge.color ="black",esize = 6, label.prop=2,sizeLat = 6,"std", layout="circle2")
 ```
 
-
 ## Orientacion hacia el bien comun
 
 ```{r include=FALSE}
 # crear una base de datos con menos variables para estimar los AFC
 bien_comun = data %>% 
-  dplyr::select(c07_03_w01, c07_05_w01, c07_06_w01, c07_07_w01, c07_08_w01, c08_01_w01, c08_02_w01, c08_03_w01, c08_04_w01, c12_03_w01, c12_04_w01, c12_05_w01, c12_06_w01, c12_07_w01, c12_08_w01, c11_w01) %>% 
+  dplyr::select(c07_01_w01, c07_02_w01, c07_03_w01, c07_04_w01, c07_05_w01, c07_06_w01, c07_07_w01, c07_08_w01, c08_01_w01, c08_02_w01, c08_03_w01, c08_04_w01, c12_01_w01, c12_02_w01, c12_03_w01, c12_04_w01, c12_05_w01, c12_06_w01, c12_07_w01, c12_08_w01, c11_w01) %>% 
   as.data.frame() %>%
   na.omit()
 ## Pasar "no tenia edad" a "no"
+bien_comun$c12_01_w01 <- car::recode(bien_comun$c12_01_w01, "3=1")
+bien_comun$c12_02_w01 <- car::recode(bien_comun$c12_02_w01, "3=1")
 bien_comun$c12_03_w01 <- car::recode(bien_comun$c12_03_w01, "3=1")
 bien_comun$c12_04_w01 <- car::recode(bien_comun$c12_04_w01, "3=1")
 bien_comun$c12_05_w01 <- car::recode(bien_comun$c12_05_w01, "3=1")
@@ -308,26 +319,25 @@ KMO(corMat)
 
 #### Esfericidad
 ```{r echo=FALSE}
-cortest.bartlett(corMat, n = 1833)
+cortest.bartlett(corMat, n = 1811)
 ```
 
 #### Normalidad (univariada)
 ```{r echo=FALSE}
-shapiro.test(bien_comun$c12_03_w01)
-shapiro.test(bien_comun$c12_03_w01)
-shapiro.test(bien_comun$c12_03_w01)
-shapiro.test(bien_comun$c12_03_w01)
-shapiro.test(bien_comun$c12_03_w01)
 
+shapiro.test(bien_comun$c07_01_w01)
+shapiro.test(bien_comun$c08_01_w01)
+shapiro.test(bien_comun$c11_w01)
+shapiro.test(bien_comun$c12_01_w01)
 ```
 ### Estimación de los modelos
 
 #### Modelo con cuatro dimensiones
 ```{r include=FALSE}
 cfa_3a <- '
-solidaridad =~ c07_03_w01 + c07_05_w01 + c07_06_w01 + c07_07_w01 + c07_08_w01
+solidaridad =~ c07_01_w01 + c07_02_w01 + c07_03_w01 + c07_04_w01 + c07_05_w01 + c07_06_w01 + c07_07_w01 + c07_08_w01
 participacion =~ c08_01_w01 + c08_02_w01 + c08_03_w01 + c08_04_w01
-organizaciones =~ c12_03_w01 + c12_04_w01 + c12_05_w01 + c12_06_w01 + c12_07_w01 + c12_08_w01
+organizaciones =~ c12_01_w01 + c12_02_w01 + c12_03_w01 + c12_04_w01 + c12_05_w01 + c12_06_w01 + c12_07_w01 + c12_08_w01
 voto =~ c11_w01
 '
 fit_3a <- cfa(cfa_3a,data=bien_comun,missing="ML",estimator="MLR")
@@ -337,6 +347,7 @@ summary(fit_3a, fit.measures=T, standardized=T)
 
 ```{r echo=FALSE}
 fitMeasures(fit_3a, c("chisq", "df", "pvalue", "cfi", "tli", "rmsea"))
+# Mal ajuste
 ```
 
 ```{r echo=FALSE}
@@ -350,11 +361,12 @@ subset(mod, mi>3.84, select=lhs:mi)
 
 ### Reestimacion
 ```{r include=FALSE}
-# Queda fuera c08_03 por "mi" alto
+# Queda fuera c07_03_w01 (Amigos visitan su casa) por "mi" alto (114.118) al estimarse con c07_01_w01 (Visitó la casa de un vecino).
+# Y c08_03_w01 (Participación en huelga) por "mi" alto (90.034) al estimarse con c08_02_w01 (Asiste a marcha)
 cfa_3b <- '
-solidaridad =~ c07_03_w01 + c07_05_w01 + c07_06_w01 + c07_07_w01 + c07_08_w01
+solidaridad =~ c07_01_w01 + c07_02_w01 + c07_04_w01 + c07_05_w01 + c07_06_w01 + c07_07_w01 + c07_08_w01
 participacion =~ c08_01_w01 + c08_02_w01 + c08_04_w01
-organizaciones =~ c12_03_w01 + c12_04_w01 + c12_05_w01 + c12_06_w01 + c12_07_w01 + c12_08_w01
+organizaciones =~ c12_01_w01 + c12_02_w01 + c12_03_w01 + c12_04_w01 + c12_05_w01 + c12_06_w01 + c12_07_w01 + c12_08_w01
 voto =~ c11_w01
 '
 fit_3b <- cfa(cfa_3b,data=bien_comun,missing="ML",estimator="MLR")
@@ -364,13 +376,208 @@ summary(fit_3b, fit.measures=T, standardized=T)
 
 ```{r echo=FALSE}
 fitMeasures(fit_3b, c("chisq", "df", "pvalue", "cfi", "tli", "rmsea"))
+# mal ajuste
 ```
 
 ```{r echo=FALSE}
-semPaths(fit_1b, intercepts = FALSE,edge.label.cex=1.5, optimizeLatRes = TRUE, groups = "lat",pastel = TRUE, exoVar = FALSE, sizeInt=5,edge.color ="black",esize = 6, label.prop=2,sizeLat = 6,"std", layout="circle2")
+semPaths(fit_3b, intercepts = FALSE,edge.label.cex=1.5, optimizeLatRes = TRUE, groups = "lat",pastel = TRUE, exoVar = FALSE, sizeInt=5,edge.color ="black",esize = 6, label.prop=2,sizeLat = 6,"std", layout="circle2")
 ```
 
 ```{r echo=FALSE}
 mod=modificationindices(fit_3b)
+subset(mod, mi>3.84, select=lhs:mi)
+```
+
+### Segunda reestimación
+```{r include=FALSE}
+# Queda fuera c07_02_w01 (Asiste a reunion) por "mi" alto (55.021) al estimarse con c07_01_w01 (Visitó la casa de un vecino).
+# Y c12_02_w01 (Organizacion religiosa) por "mi" alto (37.927) al estimarse con c12_01_w01 (Junta de vecinos)
+cfa_3c <- '
+solidaridad =~ c07_01_w01 + c07_04_w01 + c07_05_w01 + c07_06_w01 + c07_07_w01 + c07_08_w01
+participacion =~ c08_01_w01 + c08_02_w01 + c08_04_w01
+organizaciones =~ c12_01_w01 + c12_03_w01 + c12_04_w01 + c12_05_w01 + c12_06_w01 + c12_07_w01 + c12_08_w01
+voto =~ c11_w01
+'
+fit_3c <- cfa(cfa_3c,data=bien_comun,missing="ML",estimator="MLR")
+show(fit_3c) # Resumen ajuste general
+summary(fit_3c, fit.measures=T, standardized=T)
+```
+
+```{r echo=FALSE}
+fitMeasures(fit_3c, c("chisq", "df", "pvalue", "cfi", "tli", "rmsea"))
+# Buen ajuste, pero no suficiente
+```
+
+```{r echo=FALSE}
+semPaths(fit_3c, intercepts = FALSE,edge.label.cex=1.5, optimizeLatRes = TRUE, groups = "lat",pastel = TRUE, exoVar = FALSE, sizeInt=5,edge.color ="black",esize = 6, label.prop=2,sizeLat = 6,"std", layout="circle2")
+```
+
+```{r echo=FALSE}
+mod=modificationindices(fit_3c)
+subset(mod, mi>3.84, select=lhs:mi)
+```
+
+### Tercera reestimacion
+```{r include=FALSE}
+# Queda fuera c07_04_w01 (Hizo voluntariado) por "mi" alto (33.027) al estimarse con participacion.
+# Y c07_08_w01 (ayudar a conseguir trabajo) por "mi" alto (26.542) al estimarse con c07_05_w01 (dono dinero)
+cfa_3d <- '
+solidaridad =~ c07_01_w01 + c07_05_w01 + c07_06_w01 + c07_07_w01
+participacion =~ c08_01_w01 + c08_02_w01 + c08_04_w01
+organizaciones =~ c12_01_w01 + c12_03_w01 + c12_04_w01 + c12_05_w01 + c12_06_w01 + c12_07_w01 + c12_08_w01
+voto =~ c11_w01
+'
+fit_3d <- cfa(cfa_3d,data=bien_comun,missing="ML",estimator="MLR")
+show(fit_3d) # Resumen ajuste general
+summary(fit_3d, fit.measures=T, standardized=T)
+```
+
+```{r echo=FALSE}
+fitMeasures(fit_3d, c("chisq", "df", "pvalue", "cfi", "tli", "rmsea"))
+# Buen ajuste
+```
+
+```{r echo=FALSE}
+semPaths(fit_3d, intercepts = FALSE,edge.label.cex=1.5, optimizeLatRes = TRUE, groups = "lat",pastel = TRUE, exoVar = FALSE, sizeInt=5,edge.color ="black",esize = 6, label.prop=2,sizeLat = 6,"std", layout="circle2")
+```
+
+```{r echo=FALSE}
+mod=modificationindices(fit_3d)
+subset(mod, mi>3.84, select=lhs:mi)
+```
+
+## Calidad de vida en el vecindario
+
+```{r include=FALSE}
+# crear una base de datos con menos variables para estimar los AFC
+vecindario = data %>% 
+  dplyr::select(t01_w01, t02_01_w01, t02_02_w01, t02_03_w01, t02_04_w01, t03_01_w01, t03_02_w01, t03_03_w01, t03_04_w01, t06_01_w01, t06_02_w01, t06_03_w01, t06_04_w01, t06_05_w01, t06_06_w01, t06_07_w01, t06_08_w01) %>% 
+  as.data.frame() %>%
+  na.omit()
+```
+
+### Análisis de supuestos
+#### Correlaciones
+```{r echo=FALSE}
+corMat  <- cor(vecindario, use="na.or.complete", method="spearman")  # estimar matriz correlacion
+stargazer(corMat, title="correlaciones", type = "text") #Latex table
+```
+
+#### Factorizabilidad
+```{r echo=FALSE}
+KMO(corMat)
+```
+
+#### Esfericidad
+```{r echo=FALSE}
+cortest.bartlett(corMat, n = 1780)
+```
+
+#### Normalidad (univariada)
+```{r echo=FALSE}
+shapiro.test(vecindario$t01_w01)
+shapiro.test(vecindario$t02_01_w01)
+shapiro.test(vecindario$t02_02_w01)
+shapiro.test(vecindario$t02_03_w01)
+shapiro.test(vecindario$t02_04_w01)
+shapiro.test(vecindario$t03_01_w01)
+shapiro.test(vecindario$t03_02_w01)
+shapiro.test(vecindario$t03_03_w01)
+shapiro.test(vecindario$t03_04_w01)
+shapiro.test(vecindario$t06_01_w01)
+shapiro.test(vecindario$t06_02_w01)
+shapiro.test(vecindario$t06_03_w01)
+shapiro.test(vecindario$t06_04_w01)
+shapiro.test(vecindario$t06_05_w01)
+shapiro.test(vecindario$t06_06_w01)
+shapiro.test(vecindario$t06_07_w01)
+shapiro.test(vecindario$t06_08_w01)
+
+```
+### Estimación de los modelos
+
+#### Modelo con cuatro dimensiones
+```{r include=FALSE}
+cfa_4a <- '
+confianza =~ t01_w01
+cohesion =~ t02_01_w01 + t02_02_w01 + t02_03_w01 + t02_04_w01
+sociabilidad =~ t03_01_w01 + t03_02_w01 + t03_03_w01 + t03_04_w01
+satisfaccion =~ t06_01_w01 + t06_02_w01 + t06_03_w01 + t06_04_w01 + t06_05_w01 + t06_06_w01 + t06_07_w01 + t06_08_w01
+'
+fit_4a <- cfa(cfa_4a,data=vecindario,missing="ML",estimator="MLR")
+show(fit_4a) # Resumen ajuste general
+summary(fit_4a, fit.measures=T, standardized=T)
+```
+
+```{r echo=FALSE}
+fitMeasures(fit_4a, c("chisq", "df", "pvalue", "cfi", "tli", "rmsea"))
+# Buen ajuste, pero no suficiente
+```
+
+```{r echo=FALSE}
+semPaths(fit_4a, intercepts = FALSE,edge.label.cex=1.5, optimizeLatRes = TRUE, groups = "lat",pastel = TRUE, exoVar = FALSE, sizeInt=5,edge.color ="black",esize = 6, label.prop=2,sizeLat = 6,"std", layout="circle2")
+```
+
+```{r echo=FALSE}
+mod=modificationindices(fit_4a)
+subset(mod, mi>3.84, select=lhs:mi)
+```
+
+### Reestimacion
+
+```{r include=FALSE}
+# Queda fuera t06_01_w01 (seguridad en el vecindario) por "mi" alto al estimarse con cohesion. (mi=112.600)
+# y t06_04_w01 (limpieza y belleza del barrio) al estimarse con t06_03_w01 (areas verdes y de recreacion)
+# (mi=211.998)
+cfa_4b <- '
+confianza =~ t01_w01
+cohesion =~ t02_01_w01 + t02_02_w01 + t02_03_w01 + t02_04_w01
+sociabilidad =~ t03_01_w01 + t03_02_w01 + t03_03_w01 + t03_04_w01
+satisfaccion =~ t06_02_w01 + t06_03_w01 + t06_05_w01 + t06_06_w01 + t06_07_w01 + t06_08_w01
+'
+fit_4b <- cfa(cfa_4b,data=vecindario,missing="ML",estimator="MLR")
+show(fit_4b) # Resumen ajuste general
+summary(fit_4b, fit.measures=T, standardized=T)
+```
+
+```{r echo=FALSE}
+fitMeasures(fit_4b, c("chisq", "df", "pvalue", "cfi", "tli", "rmsea"))
+# Buen ajuste
+```
+
+```{r echo=FALSE}
+semPaths(fit_4b, intercepts = FALSE,edge.label.cex=1.5, optimizeLatRes = TRUE, groups = "lat",pastel = TRUE, exoVar = FALSE, sizeInt=5,edge.color ="black",esize = 6, label.prop=2,sizeLat = 6,"std", layout="circle2")
+```
+
+```{r echo=FALSE}
+mod=modificationindices(fit_4b)
+subset(mod, mi>3.84, select=lhs:mi)
+```
+
+### Segunda reestimacion
+```{r include=FALSE}
+# Queda fuera t03_03_w01 (La gente del barrio es cordial) por "mi" alto al estimarse con t03_01_w01 (En barrio es facil hacer amigos) (mi=91.609)
+cfa_4c <- '
+confianza =~ t01_w01
+cohesion =~ t02_01_w01 + t02_02_w01 + t02_03_w01 + t02_04_w01
+sociabilidad =~ t03_01_w01 + t03_02_w01 + t03_04_w01
+satisfaccion =~ t06_02_w01 + t06_03_w01 + t06_05_w01 + t06_06_w01 + t06_07_w01 + t06_08_w01
+'
+fit_4c <- cfa(cfa_4c,data=vecindario,missing="ML",estimator="MLR")
+show(fit_4c) # Resumen ajuste general
+summary(fit_4c, fit.measures=T, standardized=T)
+```
+
+```{r echo=FALSE}
+fitMeasures(fit_4c, c("chisq", "df", "pvalue", "cfi", "tli", "rmsea"))
+# Buen ajuste
+```
+
+```{r echo=FALSE}
+semPaths(fit_4c, intercepts = FALSE,edge.label.cex=1.5, optimizeLatRes = TRUE, groups = "lat",pastel = TRUE, exoVar = FALSE, sizeInt=5,edge.color ="black",esize = 6, label.prop=2,sizeLat = 6,"std", layout="circle2")
+```
+
+```{r echo=FALSE}
+mod=modificationindices(fit_4c)
 subset(mod, mi>3.84, select=lhs:mi)
 ```
