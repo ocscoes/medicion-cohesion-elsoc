@@ -1,8 +1,8 @@
 ---
 title: "Capitulo I: Medición de cohesión social con ELSOC según modelo CEPAL"
-author: "Kevin Carrasco"
+author: "Equipo CEPAL-ELSOC"
 date: "10-07-2021"
-output: 
+output:
   html_document:
     number_sections: TRUE
 ---
@@ -24,18 +24,33 @@ load("../input/data/data.RData")
 data <- data %>% dplyr::filter(tipo_atricion==1 & tipo_caso !=2)
 ```
 <div style="text-align: justify">
-# Medición
 
-El objetivo de esta consultoría es desarrollar un estudio sobre el estado de la cohesión social en Chile partiendo desde la noción y medición desarrollada en la nota conceptual "Cohesión social y desarrollo social inclusivo en América Latina" [...] “Este servirá de punto de partida en las diferentes dimensiones, salvo cuando otras fuentes nacionales permitan un análisis más profundo y atingente. Este esquema de medición se presenta en la figura 1.
-```{r echo=FALSE, fig.cap="Figura 1: Resumen dimensiones CEPAL.", fig.align = 'center', out.width = '70%',out.height='70%'}
+El objetivo de este primer capítulo es generar indicadores de cohesión social basados en el modelo conceptual de CEPAL, en particular para los denominados _elementos constitutivos de la cohesión social_ y que se presenta en la \@ref(fig:esquema-cepal).
+
+```{r echo=FALSE, fig.cap="esquema-cepal: Resumen dimensiones CEPAL.", fig.align = 'center', out.width = '70%',out.height='70%'}
 knitr::include_graphics(path = "../input/images/dimensiones-cepal.jpg")
 ```
+
+En este capítulo se seleccionarán indicadores de la encuesta ELSOC (Estudio Longitudinal Social de Chile) que se asocien al contenido de cada una de las subdimensiones del concepto de cohesión social. Por ejemplo, si consideramos la dimensión "Relaciones Sociales de Igualdad", comenzaremos con la subdimensión "lazos" identificando indicadores de la encuesta que representen este concepto, y con la información disponible elaboraremos una propuesta para cubrir cada subdimensión.
+
+Antes de comenzar con el trabajo de análisis de subdimensiones e indicadores, es pertinente mencionar una pequeña nota sobre medición. En este contexto medición hace referencia a otorgar propiedades numéricas a ciertos atributos individuales. Este proceso por definición no es exacto y conlleva error, ya que muchos de los conceptos que se trabajan en ciencias sociales no se pueden medir directamente y se consideran por lo tanto constructos latentes (como clase, estatus, pertenencia, confianza, entre muchos otros). Gran parte del trabajo de validez de las mediciones se trata justamente de poder cuantificar y minimizar este error. Para esto no solo basta con un análisis de _validez aparente_, referido a que el contenido de la medición parezca relacionarse con el concepto que se desea medir, sino también con las propiedades métricas del indicador, como variabilidad y covariabilidad/correlación con otras medidas asociadas. Es por ello que en medición muchas veces se utilizan indicadores múltiples para un mismo concepto, de modo de poder identificarlo y estimarlo de una manera más robusta con técnicas específicas de análisis de constructos latentes.
+
+[evaluar si es necesario dar más detalles de medición]
+
+La breve mención a aspectos de medición del párrafo anterior nos permite aclarar el orden y el sentido del análisis que se presenta a continuación. En algunos casos encontraremos indicadores únicos para subdimensiones, donde no existe mayor alternativa que discutir su validez aparente y esperar un bajo nivel de error de medición. En otros casos existen baterías de indicadores múltiples, donde se propondrán índices que representen de mejor manera los elementos comunes (covarianza) y que subyacen a la batería, para lo que se utilizarán técnicas de análisis factorial.
+
+
 # Elementos constitutivos de la cohesión social
 
 ## Relaciones sociales de igualdad
 
+[definición]
+
 ### Lazos
-El indicador utilizado en el informe de CEPAL es "importancia de amigos en la vida". Al trabajar con ELSOC se utilizará "Cantidad de amigos" (Ola 2 y 4) 
+
+[definición] De acuerdo a CEPAL, "Esta  parte de la definición de la cohesión social se acerca a aquellas que conciben la cohesión social como el  compromiso y habilidad para trabajar juntos, incluso cuando los valores que poseen las personas sean  distintos (Comisión Económica para África, 2016; Pornschlegel y Jürgensen, 2019; Dragolov y otros, 2013; De  Beer, 2014; Woolcock, 2011; Banco Mundial, 2012, 2000; Stanley, 2003). Supone asimismo el principio de  reconocimiento recíproco como precondición de la cohesión social (véase, por ejemplo, Jenson, 1998), así  como la superación de todas las formas de discriminación." (CEPAL 2021? pag. ?)
+
+El indicador propuesto en el informe de CEPAL es "importancia de amigos en la vida". En el caso de ELSOC el indicador más cercano corresponde a  "Cantidad de amigos", y que está presente solo en las olas 2 y 4.
 
 ```{r echo=FALSE}
 tabla1 = data %>% select(r15_w02) %>% na_if("") %>% na.omit
@@ -44,7 +59,7 @@ tabla1$r15_w02 <- factor(tabla1$r15_w02, levels = c(1, 2, 3, 4, 5), labels = c("
 "De 3 a 5", "De 6 a 10", "Más de 10"))
 label(tabla1$r15_w02) <- "Cantidad de amigos (2017)"
 
-graf1<-  plot_stackfrq(tabla1, title = "Lazos") + 
+graf1<-  plot_stackfrq(tabla1, title = "Lazos") +
   theme(axis.text.y = element_text(colour = "black", size = 8),
         axis.text.x = element_text(colour = "black", size = 8),
         legend.text = element_text(size = 8),
@@ -69,9 +84,9 @@ label(tabla2$c02_w01) <- "Se puede confiar en la mayoría de las personas (2016)
 label(tabla2$c03_w01) <- "La mayoría de las personas tratar de ayudar a los demás (2016)."
 label(tabla2$c04_w01) <- "La mayoría de las personas trata de ser justa (2016)."
 
-graf2 <- plot_stackfrq(tabla2, title = "Confianza interpersonal", geom.colors = "RdBu") + 
+graf2 <- plot_stackfrq(tabla2, title = "Confianza interpersonal", geom.colors = "RdBu") +
   theme(axis.text.y = element_text(colour = "black", size = 8),
-        axis.text.x = element_text(colour = "black", size = 8), 
+        axis.text.x = element_text(colour = "black", size = 8),
         legend.text = element_text(size = 8),
         legend.position="bottom")
 graf2
@@ -100,7 +115,7 @@ label(tabla3$c37_01_w03) <- "Grado de acuerdo con adopción homoparental (2018).
 
 graf3<- plot_stackfrq(tabla3, title = "Actitudes hacia la diversidad", geom.colors = "RdBu") +
   theme(axis.text.y = element_text(colour = "black", size = 8),
-        axis.text.x = element_text(colour = "black", size = 8), 
+        axis.text.x = element_text(colour = "black", size = 8),
         legend.text = element_text(size = 8),
         legend.position="bottom")
 
@@ -118,9 +133,9 @@ label(tabla4$c06_04_w01) <- "Grado de confianza con personas homosexuales (2016)
 label(tabla4$c06_05_w01) <- "Grado de confianza con personas mapuche (2016)."
 label(tabla4$c06_06_w01) <- "Grado de confianza con personas inmigrantes (2016)."
 
-graf4<- plot_stackfrq(tabla4, title = "Actitudes hacia la diversidad") + 
+graf4<- plot_stackfrq(tabla4, title = "Actitudes hacia la diversidad") +
   theme(axis.text.y = element_text(colour = "black", size = 8),
-        axis.text.x = element_text(colour = "black", size = 8), 
+        axis.text.x = element_text(colour = "black", size = 8),
         legend.text = element_text(size = 8),
         legend.position="bottom")
 
@@ -139,8 +154,8 @@ Además, se excluye el indicador de "Grado de confianza en inmigrantes" de la su
 
 ```{r include=FALSE}
 # crear una base de datos con menos variables para estimar los AFC
-relaciones_sociales = data %>% 
-  dplyr::select(r15_w02, c02_w01, c03_w01, c04_w01, r12_03_w01, r12_04_w01, c06_04_w01, c06_05_w01, c06_06_w01) %>% 
+relaciones_sociales = data %>%
+  dplyr::select(r15_w02, c02_w01, c03_w01, c04_w01, r12_03_w01, r12_04_w01, c06_04_w01, c06_05_w01, c06_06_w01) %>%
   as.data.frame() %>%
   na.omit()
 ```
@@ -177,9 +192,9 @@ tabla5$c32_02_w01<- factor(tabla5$c32_02_w01, levels = c(1, 2, 3, 4, 5), labels 
 label(tabla5$c32_01_w01) <- "Me siento orgulloso de ser chileno (2016)."
 label(tabla5$c32_02_w01) <- "Me identifico con Chile (2016)."
 
-graf5<-plot_stackfrq(tabla5, title = "Identificación con el país", geom.colors = "RdBu") + 
+graf5<-plot_stackfrq(tabla5, title = "Identificación con el país", geom.colors = "RdBu") +
   theme(axis.text.y = element_text(colour = "black", size = 8),
-        axis.text.x = element_text(colour = "black", size = 8), 
+        axis.text.x = element_text(colour = "black", size = 8),
         legend.text = element_text(size = 8),
         legend.position="bottom")
 
@@ -203,9 +218,9 @@ tabla6$c18_10_w01<- factor(tabla6$c18_10_w01, levels = c(1, 2, 3, 4, 5), labels 
 label(tabla6$c18_09_w01) <- "En Chile las personas son recompensadas por sus esfuerzos (2016)."
 label(tabla6$c18_10_w01) <- "En Chile las personas son recompensadas por su inteligencia (2016)."
 
-graf6<-plot_stackfrq(tabla6, title = "Percepción de justicia", geom.colors = "RdBu") + 
+graf6<-plot_stackfrq(tabla6, title = "Percepción de justicia", geom.colors = "RdBu") +
   theme(axis.text.y = element_text(colour = "black", size = 8),
-        axis.text.x = element_text(colour = "black", size = 8), 
+        axis.text.x = element_text(colour = "black", size = 8),
         legend.text = element_text(size = 8),
         legend.position="bottom")
 
@@ -224,12 +239,12 @@ En informe CEPAL utilizan grado de confianza en (a) las cortes, (b) el Congreso 
 
 ```{r echo=FALSE}
 tabla7 = data %>% select(c05_01_w01,
-                         c05_02_w01, 
-                         c05_03_w01, 
-                         c05_04_w01, 
-                         c05_05_w01, 
-                         c05_06_w01, 
-                         c05_07_w01, 
+                         c05_02_w01,
+                         c05_03_w01,
+                         c05_04_w01,
+                         c05_05_w01,
+                         c05_06_w01,
+                         c05_07_w01,
                          c05_08_w01)
 tabla7 = droplevels(tabla7)
 tabla7$c05_01_w01<- factor(tabla7$c05_01_w01, levels = c(1, 2, 3, 4, 5), labels = c("Nada de confianza", "Poca confianza", "Algo de confianza", "Bastante confianza", "Mucha confianza"))
@@ -251,22 +266,22 @@ label(tabla7$c05_08_w01) <- "Confianza en el presidente/a de la república (2016
 
 graf7 <- plot_stackfrq(tabla7, title = "Confianza institucional") +
   theme(axis.text.y = element_text(colour = "black", size = 9),
-        axis.text.x = element_text(colour = "black", size = 9), 
+        axis.text.x = element_text(colour = "black", size = 9),
         legend.text = element_text(size = 8),
         legend.position="bottom")
-  
+
 graf7
 ggsave(graf7, file = "../output/graphs/graf7.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
 ```
 
 ```{r echo=FALSE}
-corrplot.mixed(cor(dplyr::select(data, c05_01_w01, 
-                                 c05_02_w01, 
-                                 c05_03_w01, 
-                                 c05_04_w01, 
-                                 c05_05_w01, 
-                                 c05_06_w01, 
-                                 c05_07_w01, 
+corrplot.mixed(cor(dplyr::select(data, c05_01_w01,
+                                 c05_02_w01,
+                                 c05_03_w01,
+                                 c05_04_w01,
+                                 c05_05_w01,
+                                 c05_06_w01,
+                                 c05_07_w01,
                                  c05_08_w01),
                    method = "spearman",
                    use = "na.or.complete"))
@@ -276,8 +291,8 @@ El ajuste de la dimensión Sentido de pertenencia se estimó a través de un AFC
 Además, se excluyen los indicadores "Confianza en el presidente/a" y "Confianza en los partidos políticos" de la subdimensión Confianza institucional.
 ```{r include=FALSE}
 # crear una base de datos con menos variables para estimar los AFC
-pertenencia = data %>% 
-  dplyr::select(c32_01_w01, c32_02_w01, c18_09_w01, c18_10_w01, c05_01_w01, c05_02_w01, c05_03_w01, c05_04_w01, c05_05_w01, c05_06_w01, c05_07_w01, c05_08_w01) %>% 
+pertenencia = data %>%
+  dplyr::select(c32_01_w01, c32_02_w01, c18_09_w01, c18_10_w01, c05_01_w01, c05_02_w01, c05_03_w01, c05_04_w01, c05_05_w01, c05_06_w01, c05_07_w01, c05_08_w01) %>%
   as.data.frame() %>%
   na.omit()
 ```
@@ -308,12 +323,12 @@ En informe CEPAL utilizan el indicador "Asistencia a reuniones de un grupo de me
 
 ```{r echo=FALSE}
 tabla8 = data %>% select(c07_01_w01,
-                         c07_02_w01, 
-                         c07_03_w01, 
-                         c07_04_w01, 
+                         c07_02_w01,
+                         c07_03_w01,
+                         c07_04_w01,
                          c07_05_w01,
-                         c07_06_w01, 
-                         c07_07_w01, 
+                         c07_06_w01,
+                         c07_07_w01,
                          c07_08_w01)
 tabla8 = droplevels(tabla8)
 tabla8$c07_01_w01<- factor(tabla8$c07_01_w01, levels = c(1, 2, 3), labels = c("Nunca lo hizo", "Lo hizo una o dos veces", "Lo hizo más de dos veces"))
@@ -335,22 +350,22 @@ label(tabla8$c07_08_w01) <- "Ha ayudado a alguien a conseguir trabajo (2016)."
 
 graf8 <- plot_stackfrq(tabla8, title = "Solidaridad") +
   theme(axis.text.y = element_text(colour = "black", size = 9),
-        axis.text.x = element_text(colour = "black", size = 9), 
+        axis.text.x = element_text(colour = "black", size = 9),
         legend.text = element_text(size = 8),
         legend.position="bottom")
-  
+
 graf8
 ggsave(graf8, file = "../output/graphs/graf8.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
 ```
 
 ```{r echo=FALSE}
-corrplot.mixed(cor(dplyr::select(data, c07_01_w01, 
-                                 c07_02_w01, 
-                                 c07_03_w01, 
-                                 c07_04_w01, 
+corrplot.mixed(cor(dplyr::select(data, c07_01_w01,
+                                 c07_02_w01,
+                                 c07_03_w01,
+                                 c07_04_w01,
                                  c07_05_w01,
-                                 c07_06_w01, 
-                                 c07_07_w01, 
+                                 c07_06_w01,
+                                 c07_07_w01,
                                  c07_08_w01),
                    method = "spearman",
                    use = "na.or.complete"))
@@ -360,9 +375,9 @@ corrplot.mixed(cor(dplyr::select(data, c07_01_w01,
 En informe CEPAL se utilizaron los indicadores "Tiene actividad política (firma peticiones, boicot, va a manifestaciones pacíficas, huelgas)", "Participación en organizaciones" y "Voto en elecciones presidenciales". Al trabajar con ELSOC se utilizan cuatro indicadores de actividad política presentes en las cuatro olas, ocho indicadores de participación en organizaciones presentes en ola 1 y 3 y voto en elecciones 2013 y 2017 (ola 1 y 3)
 
 ```{r echo=FALSE}
-tabla9 = data %>% select(c08_01_w01, 
-                         c08_02_w01, 
-                         c08_03_w01, 
+tabla9 = data %>% select(c08_01_w01,
+                         c08_02_w01,
+                         c08_03_w01,
                          c08_04_w01)
 tabla9 = droplevels(tabla9)
 tabla9$c08_01_w01<- factor(tabla9$c08_01_w01, levels = c(1, 2, 3, 4, 5), labels = c("Nunca", "Casi nunca", "A veces", "Frecuentemente", "Muy frecuentemente"))
@@ -377,10 +392,10 @@ label(tabla9$c08_04_w01) <- "Usado las redes sociales para expresar su opinión 
 
 graf9 <- plot_stackfrq(tabla9, title = "Participación cívica") +
   theme(axis.text.y = element_text(colour = "black", size = 9),
-        axis.text.x = element_text(colour = "black", size = 9), 
+        axis.text.x = element_text(colour = "black", size = 9),
         legend.text = element_text(size = 8),
         legend.position="bottom")
-  
+
 graf9
 ggsave(graf9, file = "../output/graphs/graf9.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
 ```
@@ -392,13 +407,13 @@ corrplot.mixed(cor(dplyr::select(data, c08_01_w01, c08_02_w01, c08_03_w01, c08_0
 ```
 
 ```{r echo=FALSE}
-tabla10 = data %>% select(c12_01_w01, 
-                         c12_02_w01, 
-                         c12_03_w01, 
-                         c12_04_w01, 
-                         c12_05_w01, 
-                         c12_06_w01, 
-                         c12_07_w01, 
+tabla10 = data %>% select(c12_01_w01,
+                         c12_02_w01,
+                         c12_03_w01,
+                         c12_04_w01,
+                         c12_05_w01,
+                         c12_06_w01,
+                         c12_07_w01,
                          c12_08_w01)
 tabla10 = droplevels(tabla10)
 tabla10$c12_01_w01<- factor(tabla10$c12_01_w01, levels = c(1, 2, 3), labels = c("No", "Si", "No tenía edad para hacerlo"))
@@ -421,23 +436,23 @@ label(tabla10$c12_08_w01) <- "Asociaciones o centros de estudiantes (2016)."
 
 graf10 <- plot_stackfrq(tabla10, title = "Participación en organizaciones") +
   theme(axis.text.y = element_text(colour = "black", size = 9),
-        axis.text.x = element_text(colour = "black", size = 9), 
+        axis.text.x = element_text(colour = "black", size = 9),
         legend.text = element_text(size = 8),
         legend.position="bottom")
-  
+
 graf10
 ggsave(graf10, file = "../output/graphs/graf10.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
 ```
 
 Para estimar esta correlación la categoría "No tenía edad para hacerlo" fue contabilizada como "No"
 ```{r echo=FALSE}
-cor = data %>% select(c12_01_w01, 
-                         c12_02_w01, 
-                         c12_03_w01, 
-                         c12_04_w01, 
-                         c12_05_w01, 
-                         c12_06_w01, 
-                         c12_07_w01, 
+cor = data %>% select(c12_01_w01,
+                         c12_02_w01,
+                         c12_03_w01,
+                         c12_04_w01,
+                         c12_05_w01,
+                         c12_06_w01,
+                         c12_07_w01,
                          c12_08_w01)
 cor$c12_01_w01 <- recode(cor$c12_01_w01, "3=1")
 cor$c12_02_w01 <- recode(cor$c12_02_w01, "3=1")
@@ -463,10 +478,10 @@ label(tabla11$c11_w03) <- "Voto en elecciones (2018)."
 
 graf11 <- plot_stackfrq(tabla11, title = "Voto en elecciones") +
   theme(axis.text.y = element_text(colour = "black", size = 9),
-        axis.text.x = element_text(colour = "black", size = 9), 
+        axis.text.x = element_text(colour = "black", size = 9),
         legend.text = element_text(size = 8),
         legend.position="bottom")
-  
+
 graf11
 ggsave(graf11, file = "../output/graphs/graf11.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
 ```
@@ -490,7 +505,7 @@ Además, se excluyen los indicadores "Han venido amigos a visitarlo a su casa", 
 ```{r include=FALSE}
 # crear una base de datos con menos variables para estimar los AFC
 bien_comun = data %>%
-  dplyr::select(c07_01_w01, c07_02_w01, c07_03_w01, c07_04_w01, c07_05_w01, c07_06_w01, c07_07_w01, c07_08_w01, c08_01_w01, c08_02_w01, c08_03_w01, c08_04_w01, c12_01_w01, c12_02_w01, c12_03_w01, c12_04_w01, c12_05_w01, c12_06_w01, c12_07_w01, c12_08_w01, c11_w01) %>% 
+  dplyr::select(c07_01_w01, c07_02_w01, c07_03_w01, c07_04_w01, c07_05_w01, c07_06_w01, c07_07_w01, c07_08_w01, c08_01_w01, c08_02_w01, c08_03_w01, c08_04_w01, c12_01_w01, c12_02_w01, c12_03_w01, c12_04_w01, c12_05_w01, c12_06_w01, c12_07_w01, c12_08_w01, c11_w01) %>%
   as.data.frame() %>%
   na.omit()
 ## Pasar "no tenia edad" a "no"
@@ -541,10 +556,10 @@ label(tabla12$t01_w01) <- "Confianza en vecinos (2016)."
 
 graf12 <- plot_stackfrq(tabla12, title = "Confianza en vecinos") +
   theme(axis.text.y = element_text(colour = "black", size = 9),
-        axis.text.x = element_text(colour = "black", size = 9), 
+        axis.text.x = element_text(colour = "black", size = 9),
         legend.text = element_text(size = 8),
         legend.position="bottom")
-  
+
 graf12
 ggsave(graf12, file = "../output/graphs/graf12.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
 
@@ -564,9 +579,9 @@ label(tabla13$t02_02_w01) <- "Me siento integrado/a en este barrio (2016)."
 label(tabla13$t02_03_w01) <- "Me identifico con la gente de este barrio (2016)."
 label(tabla13$t02_04_w01) <- "Este barrio es parte de mi (2016)."
 
-graf13<-plot_stackfrq(tabla13, title = "Cohesion barrial", geom.colors = "RdBu") + 
+graf13<-plot_stackfrq(tabla13, title = "Cohesion barrial", geom.colors = "RdBu") +
   theme(axis.text.y = element_text(colour = "black", size = 8),
-        axis.text.x = element_text(colour = "black", size = 8), 
+        axis.text.x = element_text(colour = "black", size = 8),
         legend.text = element_text(size = 8),
         legend.position="bottom")
 
@@ -595,9 +610,9 @@ label(tabla14$t03_02_w01) <- "La gente en este barrio es sociable (2016)."
 label(tabla14$t03_03_w01) <- "La gente en este barrio es cordial (2016)."
 label(tabla14$t03_04_w01) <- "La gente en este barrio es colaboradora (2016)."
 
-graf14<-plot_stackfrq(tabla14, title = "Sociabilidad barrial", geom.colors = "RdBu") + 
+graf14<-plot_stackfrq(tabla14, title = "Sociabilidad barrial", geom.colors = "RdBu") +
   theme(axis.text.y = element_text(colour = "black", size = 8),
-        axis.text.x = element_text(colour = "black", size = 8), 
+        axis.text.x = element_text(colour = "black", size = 8),
         legend.text = element_text(size = 8),
         legend.position="bottom")
 
@@ -634,9 +649,9 @@ label(tabla15$t06_06_w01) <- "Proximidad a colegios de buena calidad (2016)."
 label(tabla15$t06_07_w01) <- "Proximidad a areas de comercio (2016)."
 label(tabla15$t06_08_w01) <- "Proximidad con familiares y/o amigos cercanos (2016)."
 
-graf15<-plot_stackfrq(tabla15, title = "Satisfaccion residencial", geom.colors = "RdBu") + 
+graf15<-plot_stackfrq(tabla15, title = "Satisfaccion residencial", geom.colors = "RdBu") +
   theme(axis.text.y = element_text(colour = "black", size = 8),
-        axis.text.x = element_text(colour = "black", size = 8), 
+        axis.text.x = element_text(colour = "black", size = 8),
         legend.text = element_text(size = 8),
         legend.position="bottom")
 
@@ -646,24 +661,24 @@ ggsave(graf15, file = "../output/graphs/graf15.png",device = "png",width = 25,he
 ```
 
 ```{r echo=FALSE}
-corrplot.mixed(cor(dplyr::select(data, t06_01_w01, 
-                                 t06_02_w01, 
-                                 t06_03_w01, 
-                                 t06_04_w01, 
-                                 t06_05_w01, 
-                                 t06_06_w01, 
-                                 t06_07_w01, 
+corrplot.mixed(cor(dplyr::select(data, t06_01_w01,
+                                 t06_02_w01,
+                                 t06_03_w01,
+                                 t06_04_w01,
+                                 t06_05_w01,
+                                 t06_06_w01,
+                                 t06_07_w01,
                                  t06_08_w01),
                             use = "na.or.complete"))
 ```
 
 El ajuste de la dimensión Calidad de vida en el vecindario se estimó a través de un AFC. Esta dimensión logra su mejor ajuste al ser separada en cuatro subdimensiones: a) Confianza en vecinos; b) Cohesión barrial; c) Sociabilidad barrial y d) Satisfacción residencial.
-Además, se excluyen los indicadores "Seguridad en el vecindario" y "Limpieza y belleza del barrio" de la subdimensión Satisfacción residencial y el indicador "La gente del barrio es cordial" de la subdimensión Sociabilidad barrial 
+Además, se excluyen los indicadores "Seguridad en el vecindario" y "Limpieza y belleza del barrio" de la subdimensión Satisfacción residencial y el indicador "La gente del barrio es cordial" de la subdimensión Sociabilidad barrial
 
 ```{r include=FALSE}
 # crear una base de datos con menos variables para estimar los AFC
-vecindario = data %>% 
-  dplyr::select(t01_w01, t02_01_w01, t02_02_w01, t02_03_w01, t02_04_w01, t03_01_w01, t03_02_w01, t03_03_w01, t03_04_w01, t06_01_w01, t06_02_w01, t06_03_w01, t06_04_w01, t06_05_w01, t06_06_w01, t06_07_w01, t06_08_w01) %>% 
+vecindario = data %>%
+  dplyr::select(t01_w01, t02_01_w01, t02_02_w01, t02_03_w01, t02_04_w01, t03_01_w01, t03_02_w01, t03_03_w01, t03_04_w01, t06_01_w01, t06_02_w01, t06_03_w01, t06_04_w01, t06_05_w01, t06_06_w01, t06_07_w01, t06_08_w01) %>%
   as.data.frame() %>%
   na.omit()
 ```
@@ -855,7 +870,7 @@ view(dfSummary(select(data, c12_01_w01, c12_02_w01, c12_03_w01, c12_04_w01, c12_
 webshot(url ="../output/tables/table9.html" ,file ="../output/tables/table9.png")
 ```
 
-### Participacion electoral 
+### Participacion electoral
 ```{r echo=FALSE}
 view(dfSummary(select(data, c11_w01, c11_w03),
                plain.ascii = FALSE,
