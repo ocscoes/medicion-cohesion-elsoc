@@ -1,0 +1,510 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\PassOptionsToPackage{dvipsnames,svgnames*,x11names*}{xcolor}
+%
+\documentclass[
+  12pt,
+]{book}
+\usepackage{lmodern}
+\usepackage{setspace}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={Cohesion social CEPAL-ELSOC},
+  pdfauthor={Equipo CEPAL-ELSOC},
+  colorlinks=true,
+  linkcolor=blue,
+  filecolor=Maroon,
+  citecolor=Blue,
+  urlcolor=Blue,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage[left=4cm, right=3cm, top=2.5cm, bottom=2.5cm]{geometry}
+\usepackage{longtable,booktabs}
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{5}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-tabla]{babel}
+\usepackage[fixlanguage]{babelbib}
+\usepackage{geometry}
+\geometry{letterpaper,left=2cm,top=2cm, right=2cm}
+\usepackage{times}           
+\usepackage{caption}
+\captionsetup[figure, table]{labelfont={bf},labelformat={default},labelsep=period}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{wrapfig}
+\usepackage{float}
+\usepackage{colortbl}
+\usepackage{xcolor}
+\usepackage{pdflscape}
+\usepackage{tabu}
+\usepackage{threeparttable}
+\usepackage{pdfpages} %para pdf portada
+
+% fuente: https://stackoverflow.com/questions/45963505/coverpage-and-copyright-notice-before-title-in-r-bookdown
+%\let\oldmaketitle\maketitle 
+%\AtBeginDocument{\let\maketitle\relax}
+
+% \renewcommand{\tablename}{Tabla}
+% \ifxetex
+%   \usepackage{polyglossia}
+%   \setmainlanguage{spanish}
+%   % Tabla en lugar de cuadro
+%   \gappto\captionsspanish{\renewcommand{\tablename}{Tabla}
+%           \renewcommand{\listtablename}{Índice de tablas}}
+% \else
+%   % \usepackage[spanish,es-tabla]{babel}
+% \fi
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{wrapfig}
+\usepackage{float}
+\usepackage{colortbl}
+\usepackage{pdflscape}
+\usepackage{tabu}
+\usepackage{threeparttable}
+\usepackage{threeparttablex}
+\usepackage[normalem]{ulem}
+\usepackage{makecell}
+\usepackage{xcolor}
+
+\title{Cohesion social CEPAL-ELSOC}
+\author{Equipo CEPAL-ELSOC}
+\date{2021-07-28}
+
+\begin{document}
+\maketitle
+
+{
+\hypersetup{linkcolor=}
+\setcounter{tocdepth}{1}
+\tableofcontents
+}
+\listoftables
+\listoffigures
+\setstretch{1.5}
+\hypertarget{introducciuxf3n}{%
+\chapter{Introducción}\label{introducciuxf3n}}
+
+El Centro de Estudios de Conflicto y Cohesión Social (COES) realiza desde el año 2016 el primer ``Estudio Longitudinal Social de Chile'' (ELSOC). Este estudio consiste en encuestar a casi 3.000 chilenos, anualmente, a lo largo de una década. Por lo tanto, el diseño de ELSOC es cuantitativo de tipo panel, es decir, que se repite su aplicación año a año.
+
+El principal objetivo de ELSOC es evaluar la manera como piensan, sienten y se comportan los chilenos en torno a un conjunto de temas referidos al conflicto y la cohesión social en Chile. Además, permite comparar la estabilidad o cambio en diversas dimensiones sociales atendiendo a factores que los moderan o explican a lo largo de los años.
+
+Esta encuesta es aplicada por medio de un cuestionario estructurado que posee 7 módulos diferentes: Territorio, Redes y actitudes sociales, Ciudadanía y democracia, Desigualdad y legitimidad, Conflicto social, Salud y bienestar y Caracterización sociodemográfica. Posee un muestreo probabilístico, estratificado (por tamaño de ciudades), por conglomerados y multietápico (aleatorio en todas sus etapas): Se eligieron aleatoriamente 40 ciudades con más de 10.000 habitantes (92 comunas de 13 regiones), dentro de estas se escogieron aleatoriamente 1067 manzanas. Dentro de cada manzana se escogieron hogares aleatoriamente y dentro de cada hogar fueron elegidos aleatoriamente individuos con 18 años o más. Por lo tanto, su unidad básica de observación son personas individuales. Asimismo, la población objetivo son hombres y mujeres de 18 a 75 años. Esta encuesta alcanza un 77\% de representatividad de la población total del país y un 93\% de la población urbana, con un error muestral del 2\%. La muestra alcanzada en 2019 posee las respuestas de 3417 individuos, que incluye respuestas de participantes de la primera ola (2016) y de la muestra de refresco iniciada en 2018 (COES, \protect\hyperlink{ref-coes_Radiografia_2019}{2019}).
+
+\hypertarget{mediciuxf3n-de-cohesiuxf3n-social-con-elsoc-seguxfan-modelo-de-cepal}{%
+\chapter{Medición de cohesión social con ELSOC según modelo de CEPAL}\label{mediciuxf3n-de-cohesiuxf3n-social-con-elsoc-seguxfan-modelo-de-cepal}}
+
+El objetivo de este primer capítulo es generar indicadores de cohesión social basados en el modelo conceptual de CEPAL, en particular para los denominados \emph{elementos constitutivos de la cohesión social} y que se presenta en la figura \ref{fig:esquema-cepal}.
+
+\begin{figure}[H]
+
+{\centering \includegraphics[width=1\linewidth,height=1\textheight]{input/images/dimensiones-cepal} 
+
+}
+
+\caption{Resumen dimensiones CEPAL.}\label{fig:esquema-cepal}
+\end{figure}
+
+En este capítulo se seleccionarán indicadores de la encuesta ELSOC (Estudio Longitudinal Social de Chile) que se asocien al contenido de cada una de las subdimensiones del concepto de cohesión social. Por ejemplo, si consideramos la dimensión ``Relaciones Sociales de Igualdad'', comenzaremos con la subdimensión ``lazos'' identificando indicadores de la encuesta que representen este concepto, y con la información disponible elaboraremos una propuesta para cubrir cada subdimensión.
+
+Antes de comenzar con el trabajo de análisis de subdimensiones e indicadores, es pertinente mencionar una pequeña nota sobre medición. En este contexto medición hace referencia a otorgar propiedades numéricas a ciertos atributos individuales. Este proceso por definición no es exacto y conlleva error, ya que muchos de los conceptos que se trabajan en ciencias sociales no se pueden medir directamente y se consideran por lo tanto constructos latentes (como clase, estatus, pertenencia, confianza, entre muchos otros). Gran parte del trabajo de validez de las mediciones se trata justamente de poder cuantificar y minimizar este error. Para esto no solo basta con un análisis de \emph{validez aparente}, referido a que el contenido de la medición parezca relacionarse con el concepto que se desea medir, sino también con las propiedades métricas del indicador, como variabilidad y covariabilidad/correlación con otras medidas asociadas. Es por ello que en medición muchas veces se utilizan indicadores múltiples para un mismo concepto, de modo de poder identificarlo y estimarlo de una manera más robusta con técnicas específicas de análisis de constructos latentes.
+
+{[}evaluar si es necesario dar más detalles de medición{]}
+
+La breve mención a aspectos de medición del párrafo anterior nos permite aclarar el orden y el sentido del análisis que se presenta a continuación. En algunos casos encontraremos indicadores únicos para subdimensiones, donde no existe mayor alternativa que discutir su validez aparente y esperar un bajo nivel de error de medición. En otros casos existen baterías de indicadores múltiples, donde se propondrán índices que representen de mejor manera los elementos comunes (covarianza) y que subyacen a la batería, para lo que se utilizarán técnicas de análisis factorial.
+
+\hypertarget{elementos-constitutivos-de-la-cohesiuxf3n-social}{%
+\section{Elementos constitutivos de la cohesión social}\label{elementos-constitutivos-de-la-cohesiuxf3n-social}}
+
+\hypertarget{relaciones-sociales-de-igualdad}{%
+\subsection{Relaciones sociales de igualdad}\label{relaciones-sociales-de-igualdad}}
+
+De acuerdo a CEPAL, ``Esta parte de la definición de la cohesión social se acerca a aquellas que conciben la cohesión social como el compromiso y habilidad para trabajar juntos, incluso cuando los valores que poseen las personas sean distintos (Comisión Económica para África, 2016; Pornschlegel y Jürgensen, 2019; Dragolov y otros, 2013; De Beer, 2014; Woolcock, 2011; Banco Mundial, 2012, 2000; Stanley, 2003). Supone asimismo el principio de reconocimiento recíproco como precondición de la cohesión social (véase, por ejemplo, Jenson, 1998), así como la superación de todas las formas de discriminación.'' (CEPAL, \protect\hyperlink{ref-cepal_Cohesion_2021}{2021}, p. 45)
+
+\textbf{Lazos}
+
+Según CEPAL (\protect\hyperlink{ref-cepal_Cohesion_2021}{2021}), ``Los lazos sociales permiten generar espacios de cooperación que faciliten el desarrollo de relaciones sociales de igualdad, y establece patrones de reciprocidad interpersonal (PNUD, 2013)'' (p.~74)
+
+El indicador propuesto en el informe de CEPAL es ``importancia de amigos en la vida'', que es un indicador de percepción de la Encuesta Mundial de Valores, a partir del cual se busca cuantificar la intensidad del tejido social en los países de la región. En el caso de ELSOC el indicador más cercano corresponde a ``Cantidad de amigos cercanos'', y que está presente solo en las olas 2 y 4. Un análisis descriptivo de este indicador se presenta en la figura \ref{fig:lazos}.
+
+\begin{figure}[H]
+
+{\centering \includegraphics[width=1\linewidth,height=1\textheight]{output/graphs/lazos} 
+
+}
+
+\caption{Descriptivos Lazos.}\label{fig:lazos}
+\end{figure}
+
+\textbf{Confianza interpersonal}
+
+La confianza interpersonal es un atributo de las relaciones sociales que permite la interacción intergrupal y facilita la acción colectiva a favor de los objetivos compartidos. Por lo tanto, ``la confianza se considera un habilitador de la cooperación y participación (capital social)'' (CEPAL, \protect\hyperlink{ref-cepal_Cohesion_2021}{2021}, p. 74).
+
+En el informe de CEPAL se utilizan los indicadores ``Confianza en la gente de su comunidad'', que busca cuantificar que tan confiable consideran a los habitantes de su comunidad y ``Confianza en la gente que se conoce por primera vez'', en el cual se cuantifica si se puede confiar en la mayoría de las personas o uno debe ser lo suficientemente cuidadoso con los demás. Al trabajar con ELSOC se utilizará ``Se puede confiar en la mayoría de las personas'', ``La mayoría de las personas tratar de ayudar a los demás'' y ``la mayoría de la gente trata de ser justa'', presentes en las cuatro olas. Un análisis descriptivo de estos indicadores se presentan en la figura \ref{fig:confianza-interpersonal} y un análisis bivariado en la figura \ref{fig:confianza-interpersonal-cor}.
+
+\begin{figure}[H]
+
+{\centering \includegraphics[width=1\linewidth,height=1\textheight]{output/graphs/confianza-interpersonal} 
+
+}
+
+\caption{Descriptivos Confianza interpersonal.}\label{fig:confianza-interpersonal}
+\end{figure}
+
+\begin{figure}[H]
+
+{\centering \includegraphics[width=1\linewidth,height=1\textheight]{output/graphs/confianza-interpersonal_cor} 
+
+}
+
+\caption{Correlaciones Confianza interpersonal.}\label{fig:confianza-interpersonal-cor}
+\end{figure}
+
+\textbf{Reconocimiento y respeto de la diversidad}
+
+Las relaciones sociales de igualdad suponen el reconocimiento de la dignidad del ``otro'' y el reconocimiento de ser parte de una comunidad de iguales en materia de derechos ciudadanos, siendo un elemento que surge de la interacción en redes y asociaciones con individuos de distintas características (CEPAL, \protect\hyperlink{ref-cepal_Cohesion_2021}{2021}).
+
+En el informe de CEPAL se utilizan dos indicadores ``aprueba el derecho a contraer matrimonio de parejas del mismo sexo'', que se incluye con el objetivo de cuantificar la tolerancia hacia los individuos y comunidades con distinta orientación sexual y ``Los hombres no tienen prioridad sobre la mujer, a la hora acceder a un trabajo'', que se incluye con el objetivo de cuantificar la cultura de igualdad de género en la sociedad. Además, se deja como pendiente la construcción de un indicador sobre tolerancia a personas de distinta raza y etnia, así como de percepción de discriminación. En este sentido, ante la falta de indicadores de ELSOC, se utilizarán los propuestos en {[}informe clases medias{]} como Actitudes hacia la diversidad: a) Chile pierde su identidad con la llegada de inmigrantes; b) Con la llegada de inmigrantes aumenta el desempleo; c) Grado de acuerdo con adopción homoparental; d) grado de confianza con personas homosexuales; e) grado de confianza con personas mapuche; y f) grado de confianza con personas inmigrantes. Los dos primeros indicadores están presentes en las cuatro olas, adopción homoparental en olas 3 y 4 y el resto de indicadores en las olas 2 y 4. Un análisis descriptivo de estos indicadores se presentan en la figura \ref{fig:prejuicios} y en la figura \ref{fig:diversidad} y un análisis bivariado en la figura \ref{fig:diversidad-cor}.
+
+\begin{figure}[H]
+
+{\centering \includegraphics[width=1\linewidth,height=1\textheight]{output/graphs/prejuicios} 
+
+}
+
+\caption{Descriptivos Reconocimiento y respeto de la diversidad I.}\label{fig:prejuicios}
+\end{figure}
+
+\begin{figure}[H]
+
+{\centering \includegraphics[width=1\linewidth,height=1\textheight]{output/graphs/diversidad} 
+
+}
+
+\caption{Descriptivos Reconocimiento y respeto de la diversidad II.}\label{fig:diversidad}
+\end{figure}
+
+\begin{figure}[H]
+
+{\centering \includegraphics[width=1\linewidth,height=1\textheight]{output/graphs/diversidad_cor} 
+
+}
+
+\caption{Correlaciones Reconocimiento y respeto de la diversidad II.}\label{fig:diversidad-cor}
+\end{figure}
+
+\hypertarget{sentido-de-pertenencia}{%
+\subsection{Sentido de pertenencia}\label{sentido-de-pertenencia}}
+
+Una segunda dimensión de la definición propuesta corresponde al sentido de pertenencia, que ``alude a la vinculación e identificación de las personas respecto a la sociedad y a las instituciones y grupos que los integran. Incluye los niveles micro, meso y macro.'' (CEPAL 2021? pag. ?). Esta definición permite relevar la importancia de ``las dinámicas de reconocimiento y participación social para conducir procesos dinámicos de inclusión que contribuyan a la cohesión social y al logro del bienestar (véase, por ejemplo, Jenson, 1998; Kymlicka, 1998).'' (CEPAL, \protect\hyperlink{ref-cepal_Cohesion_2021}{2021}, p. 45).
+
+\textbf{Identificación con el país}
+
+Por medio de esta subdimensión, se busca cuantificar la identificación de los individuos ``con los valores y acciones que representan sus instituciones, y la concordancia con los propios'' (CEPAL, \protect\hyperlink{ref-cepal_Cohesion_2021}{2021}, p. 66).
+
+En el informe CEPAL se incluyen los indicadores ``Orgullo por el sistema político'', que busca medir la adhesión de los encuestados con la labor que realizan sus instituciones en la representación de sus valores y objetivos y ``Orgullo por su nacionalidad'', que busca cuantificar la identificación de los encuestados con los valores y normas que rigen las instituciones del país. Al trabajar con ELSOC se utilizarán los indicadores ``Orgullo de ser chileno'' e ``Identificación con Chile'' que están presentes en las cuatro olas. Un análisis descriptivo de estos indicadores se presentan en la figura \ref{fig:identificacion} y un análisis bivariado en la figura \ref{fig:identificacion-cor}.
+
+\begin{figure}[H]
+
+{\centering \includegraphics[width=1\linewidth,height=1\textheight]{output/graphs/identificacion} 
+
+}
+
+\caption{Descriptivos Identificación con el país.}\label{fig:identificacion}
+\end{figure}
+
+\begin{figure}[H]
+
+{\centering \includegraphics[width=1\linewidth,height=1\textheight]{output/graphs/identificacion_cor} 
+
+}
+
+\caption{Correlaciones Identificación con el país.}\label{fig:identificacion-cor}
+\end{figure}
+
+\textbf{Percepción de justicia}
+
+La subdimensión de percepción de justicia refiere al examen que realizan los miembros de la sociedad respecto a la capacidad de las instituciones de entregar bienestar y/o distribuir el poder económico y político (CEPAL, \protect\hyperlink{ref-cepal_Cohesion_2021}{2021}).
+
+En el informe de CEPAL se utilizan los indicadores ``Se deben equiparar los sueldos, no mantener desigualdad para incentivar el esfuerzo personal'', que cuantifica percepciones respecto a aversiones hacia la desigualdad; ``El trabajo a largo plazo da beneficios, no las conexiones o suerte'', que busca captar percepciones sobre la estructura de oportunidades en el país y las expectativas de movilidad social; y ``El Estado debe implementar políticas para reducir la desigualdad de ingreso'', que aborda las percepciones respecto a la desigualdad de ingresos en el país. Al trabajar con ELSOC se utilizan los indicadores ``En Chile las personas son recompensadas por su esfuerzo'' y ``En Chile las personas son recompensadas por su inteligencia'', presentes en todas las olas. Un análisis descriptivo de estos indicadores se presentan en la figura \ref{fig:justicia} y un análisis bivariado en la figura \ref{fig:justicia-cor}.
+
+\begin{figure}[H]
+
+{\centering \includegraphics[width=1\linewidth,height=1\textheight]{output/graphs/justicia} 
+
+}
+
+\caption{Descriptivos Percepción de justicia.}\label{fig:justicia}
+\end{figure}
+
+\begin{figure}[H]
+
+{\centering \includegraphics[width=1\linewidth,height=1\textheight]{output/graphs/justicia_cor} 
+
+}
+
+\caption{Correlaciones Percepción de justicia.}\label{fig:justicia-cor}
+\end{figure}
+
+\textbf{Confianza institucional}
+
+La subdimensión de confianza institucional ``mide la valoración implícita de las acciones llevadas a cabo por las instituciones para representar los valores de la sociedad y/o de orientar la acción hacia el bien colectivo (Warren, 2010)'' (CEPAL, \protect\hyperlink{ref-cepal_Cohesion_2021}{2021}, p. 66).
+
+En informe CEPAL utilizan grado de confianza en (a) las cortes, (b) el Congreso Nacional, (c) la Policía Nacional, (d) los partidos políticos, (e) el ejecutivo y (f) las elecciones. Al trabajar con ELSOC se utilizan los siguientes ocho indicadores que están presentes en las cuatro olas: grado de confianza en (a) el gobierno, (b) los partidos políticos; (c) carabineros; (d) los sindicatos; (e) el poder judicial; (f) las empresas privadas; (g) el congreso nacional; y (h) el presidente/a de la república. Un análisis descriptivo de estos indicadores se presentan en la figura \ref{fig:confianza-institucional} y un análisis bivariado en la figura \ref{fig:confianza-institucional-cor}.
+
+\begin{figure}[H]
+
+{\centering \includegraphics[width=1\linewidth,height=1\textheight]{output/graphs/confianza-institucional} 
+
+}
+
+\caption{Descriptivos Confianza institucional.}\label{fig:confianza-institucional}
+\end{figure}
+
+\begin{figure}[H]
+
+{\centering \includegraphics[width=1\linewidth,height=1\textheight]{output/graphs/confianza-institucional_cor} 
+
+}
+
+\caption{Correlaciones Confianza institucional.}\label{fig:confianza-institucional-cor}
+\end{figure}
+
+\hypertarget{orientaciuxf3n-hacia-el-bien-comuxfan}{%
+\subsection{Orientación hacia el bien común}\label{orientaciuxf3n-hacia-el-bien-comuxfan}}
+
+Esta tercera dimensión refiere a ``una actitud favorable a acciones que propendan a un mayor bienestar colectivo versus el beneficio puramente individual como parte de un proyecto compartido, o bien, como indican Sorj y Tironi (2007), aceptar ``vivir en un orden colectivo que les reportará beneficios, así como sacrificios individuales''." (CEPAL, \protect\hyperlink{ref-cepal_Cohesion_2021}{2021}, p. 46)
+
+\textbf{Solidaridad}
+
+La subdimensión de solidaridad busca cuantificar la presencia de valores solidarios en los individuos de la sociedad. Esta solidaridad se basa en el ``entendimiento de la reciprocidad aprendida en redes, y es un reflejo de la solidaridad que perciben recibir por parte del Estado y sus pares (CEPAL, 2007)'' (CEPAL, \protect\hyperlink{ref-cepal_Cohesion_2021}{2021}, p. 66).
+
+En informe CEPAL utilizan el indicador ``Asistencia a reuniones de un grupo de mejoras para la comunidad'', que cuantifica la asistencia a reuniones para mejorar su comunidad. Al trabajar con ELSOC se utilizará este indicador y otros siete que abordan un comportamiento prosocial y que están presentes en las cuatro olas. Un análisis descriptivo de estos indicadores se presentan en la figura \ref{fig:solidaridad} y un análisis bivariado en la figura \ref{fig:solidaridad-cor}.
+
+\begin{figure}[H]
+
+{\centering \includegraphics[width=1\linewidth,height=1\textheight]{output/graphs/solidaridad} 
+
+}
+
+\caption{Descriptivos Solidaridad.}\label{fig:solidaridad}
+\end{figure}
+
+\begin{figure}[H]
+
+{\centering \includegraphics[width=1\linewidth,height=1\textheight]{output/graphs/solidaridad_cor} 
+
+}
+
+\caption{Correlaciones Solidaridad.}\label{fig:solidaridad-cor}
+\end{figure}
+
+\textbf{Participación cívica}
+
+La subdimensión de participación cívica da cuenta de la voluntad de adherir a los espacios de participación del sistema político y la vinculación de los individuos con su comunidad. Esta participación ``promueve la participación ciudadana en los asuntos públcios, apoyando pryectos colectivas que representen sus opiniones o intereses políticos (Valdéz, Viramontes y Finol, 2016)'' (CEPAL, \protect\hyperlink{ref-cepal_Cohesion_2021}{2021}, p. 66).
+
+En informe CEPAL se utilizaron los indicadores ``Tiene actividad política (firma peticiones, boicot, va a manifestaciones pacíficas, huelgas)'', que indica la predisposición hacia la actividad política, ``Participación en organizaciones'', que busca medir la implicación de los individuos con su comunidad y ``Voto en elecciones presidenciales'', que pretende capturar el grado de compromiso cívico con el sistema regente y la dirección de la sociedad. Al trabajar con ELSOC se utilizan cuatro indicadores de actividad política presentes en las cuatro olas, ocho indicadores de participación en organizaciones presentes en ola 1 y 3 y voto en elecciones 2013 y 2017 (ola 1 y 3). Un análisis descriptivo de estos indicadores se presentan en la figura \ref{fig:participacion-civica}, en la figura \ref{fig:participacion-organizaciones} y en la figura \ref{fig:participacion-electoral}, mientras que un análisis bivariado en la figura \ref{fig:participacion-civica-cor} y en la figura \ref{fig:participacion-organizaciones-cor}.
+
+\begin{figure}[H]
+
+{\centering \includegraphics[width=1\linewidth,height=1\textheight]{output/graphs/participacion-civica} 
+
+}
+
+\caption{Descriptivos Participación cívica.}\label{fig:participacion-civica}
+\end{figure}
+
+\begin{figure}[H]
+
+{\centering \includegraphics[width=1\linewidth,height=1\textheight]{output/graphs/participacion-civica_cor} 
+
+}
+
+\caption{Correlaciones Participación cívica.}\label{fig:participacion-civica-cor}
+\end{figure}
+
+\textbf{Participación en organizaciones}
+
+\begin{figure}[H]
+
+{\centering \includegraphics[width=1\linewidth,height=1\textheight]{output/graphs/participacion-organizaciones} 
+
+}
+
+\caption{Descriptivos Participación en organizaciones.}\label{fig:participacion-organizaciones}
+\end{figure}
+
+\begin{figure}[H]
+
+{\centering \includegraphics[width=1\linewidth,height=1\textheight]{output/graphs/participacion-organizaciones_cor} 
+
+}
+
+\caption{Correlaciones Participación en organizaciones.}\label{fig:participacion-organizaciones-cor}
+\end{figure}
+
+\textbf{Participación electoral}
+
+\begin{figure}[H]
+
+{\centering \includegraphics[width=1\linewidth,height=1\textheight]{output/graphs/participacion-electoral} 
+
+}
+
+\caption{Descriptivos Participación electoral.}\label{fig:participacion-electoral}
+\end{figure}
+
+\hypertarget{calidad-de-vida-en-el-vecindario}{%
+\subsection{Calidad de vida en el vecindario}\label{calidad-de-vida-en-el-vecindario}}
+
+De manera adicional, se incorpora una dimensión sobre calidad de vida en el vecindario presente en ELSOC. Todos estos indicadores se encuentran presentes en las cuatro olas.
+
+\textbf{Confianza en vecinos}
+
+\begin{figure}[H]
+
+{\centering \includegraphics[width=1\linewidth,height=1\textheight]{output/graphs/confianza-vecinos} 
+
+}
+
+\caption{Descriptivos Confianza en vecinos.}\label{fig:unnamed-chunk-3}
+\end{figure}
+
+\textbf{Cohesión barrial}
+
+\begin{figure}[H]
+
+{\centering \includegraphics[width=1\linewidth,height=1\textheight]{output/graphs/cohesion-barrial} 
+
+}
+
+\caption{Descriptivos Cohesion barrial.}\label{fig:unnamed-chunk-4}
+\end{figure}
+
+\begin{figure}[H]
+
+{\centering \includegraphics[width=1\linewidth,height=1\textheight]{output/graphs/cohesion-barrial_cor} 
+
+}
+
+\caption{Correlaciones Cohesion barrial.}\label{fig:unnamed-chunk-5}
+\end{figure}
+
+\textbf{Sociabilidad barrial}
+
+\begin{figure}[H]
+
+{\centering \includegraphics[width=1\linewidth,height=1\textheight]{output/graphs/sociabilidad-barrial} 
+
+}
+
+\caption{Descriptivos Sociabilidad barrial.}\label{fig:unnamed-chunk-6}
+\end{figure}
+
+\begin{figure}[H]
+
+{\centering \includegraphics[width=1\linewidth,height=1\textheight]{output/graphs/sociabilidad-barrial_cor} 
+
+}
+
+\caption{Correlaciones Sociabilidad barrial.}\label{fig:unnamed-chunk-7}
+\end{figure}
+
+\textbf{Satisfacción residencial}
+
+\begin{figure}[H]
+
+{\centering \includegraphics[width=1\linewidth,height=1\textheight]{output/graphs/satisfaccion-residencial} 
+
+}
+
+\caption{Descriptivos Satisfacción residencial.}\label{fig:unnamed-chunk-8}
+\end{figure}
+
+\begin{figure}[H]
+
+{\centering \includegraphics[width=1\linewidth,height=1\textheight]{output/graphs/satisfaccion-residencial_cor} 
+
+}
+
+\caption{Correlaciones Satisfacción residencial.}\label{fig:unnamed-chunk-9}
+\end{figure}
+
+\hypertarget{capuxedtulo-ii}{%
+\chapter{Capítulo II ---}\label{capuxedtulo-ii}}
+
+\hypertarget{capuxedtulo-iii}{%
+\chapter{Capítulo III ---}\label{capuxedtulo-iii}}
+
+\hypertarget{bibliografuxeda}{%
+\chapter*{Bibliografía}\label{bibliografuxeda}}
+\addcontentsline{toc}{chapter}{Bibliografía}
+
+\hypertarget{refs}{}
+\leavevmode\hypertarget{ref-cepal_Cohesion_2021}{}%
+CEPAL. (2021). \emph{Cohesión social y desarrollo social inclusivo en América Latina. Una propuesta normativa para una era de incertidumbres}.
+
+\leavevmode\hypertarget{ref-coes_Radiografia_2019}{}%
+COES. (2019). \emph{Radiografía del cambio social. Análisis de Resultados Longitudinales 2016-2018}.
+
+\end{document}

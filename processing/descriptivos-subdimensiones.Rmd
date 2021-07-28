@@ -19,8 +19,9 @@ pacman::p_load(dplyr, car, summarytools, webshot, knitr, kableExtra, corrplot, g
 
 
 ```{r include=FALSE}
-# Cargar base elsoc longitudinal (2016-2019)
+# Cargar base elsoc longitudinal (2016-2019) creada en "preparacion"
 load("../input/data/data.RData")
+# Filtrar base por casos participantes en cuatro olas
 data <- data %>% dplyr::filter(tipo_atricion==1 & tipo_caso !=2)
 ```
 <div style="text-align: justify">
@@ -44,11 +45,11 @@ La breve mención a aspectos de medición del párrafo anterior nos permite acla
 
 ## Relaciones sociales de igualdad
 
-[definición]
+[definición] De acuerdo a CEPAL, "Esta  parte de la definición de la cohesión social se acerca a aquellas que conciben la cohesión social como el  compromiso y habilidad para trabajar juntos, incluso cuando los valores que poseen las personas sean  distintos (Comisión Económica para África, 2016; Pornschlegel y Jürgensen, 2019; Dragolov y otros, 2013; De  Beer, 2014; Woolcock, 2011; Banco Mundial, 2012, 2000; Stanley, 2003). Supone asimismo el principio de  reconocimiento recíproco como precondición de la cohesión social (véase, por ejemplo, Jenson, 1998), así  como la superación de todas las formas de discriminación." (CEPAL 2021? pag. ?)
 
 ### Lazos
 
-[definición] De acuerdo a CEPAL, "Esta  parte de la definición de la cohesión social se acerca a aquellas que conciben la cohesión social como el  compromiso y habilidad para trabajar juntos, incluso cuando los valores que poseen las personas sean  distintos (Comisión Económica para África, 2016; Pornschlegel y Jürgensen, 2019; Dragolov y otros, 2013; De  Beer, 2014; Woolcock, 2011; Banco Mundial, 2012, 2000; Stanley, 2003). Supone asimismo el principio de  reconocimiento recíproco como precondición de la cohesión social (véase, por ejemplo, Jenson, 1998), así  como la superación de todas las formas de discriminación." (CEPAL 2021? pag. ?)
+[definición] 
 
 El indicador propuesto en el informe de CEPAL es "importancia de amigos en la vida". En el caso de ELSOC el indicador más cercano corresponde a  "Cantidad de amigos", y que está presente solo en las olas 2 y 4.
 
@@ -65,7 +66,7 @@ graf1<-  plot_stackfrq(tabla1, title = "Lazos") +
         legend.text = element_text(size = 8),
         legend.position="bottom")
 graf1
-ggsave(graf1, file = "../output/graphs/graf1.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
+ggsave(graf1, file = "../output/graphs/lazos.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
 ```
 
 ### Confianza interpersonal
@@ -91,13 +92,15 @@ graf2 <- plot_stackfrq(tabla2, title = "Confianza interpersonal", geom.colors = 
         legend.position="bottom")
 graf2
 
-ggsave(graf2, file = "../output/graphs/graf2.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
+ggsave(graf2, file = "../output/graphs/confianza-interpersonal.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
 ```
 
 ```{r echo=FALSE}
+png("../output/graphs/confianza-interpersonal_cor.png",width=600,height=600)
 corrplot.mixed(cor(dplyr::select(data, c02_w01, c03_w01, c04_w01),
                    method="spearman",
                    use = "na.or.complete"))
+dev.off()
 ```
 
 ### Reconocimiento y respeto de la diversidad
@@ -120,7 +123,7 @@ graf3<- plot_stackfrq(tabla3, title = "Actitudes hacia la diversidad", geom.colo
         legend.position="bottom")
 
 graf3
-ggsave(graf3, file = "../output/graphs/graf3.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
+ggsave(graf3, file = "../output/graphs/prejuicios.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
 ```
 
 ```{r echo=FALSE}
@@ -140,13 +143,15 @@ graf4<- plot_stackfrq(tabla4, title = "Actitudes hacia la diversidad") +
         legend.position="bottom")
 
 graf4
-ggsave(graf4, file = "../output/graphs/graf4.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
+ggsave(graf4, file = "../output/graphs/diversidad.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
 ```
 
 ```{r echo=FALSE}
+png("../output/graphs/diversidad_cor.png",width=600,height=600)
 corrplot.mixed(cor(dplyr::select(data, r12_03_w01, r12_04_w01, c37_01_w03, c06_04_w01, c06_05_w01, c06_06_w01),
                    use = "na.or.complete",
                    method = "spearman"))
+dev.off()
 ```
 
 El ajuste de la dimensión Relaciones sociales de igualdad se estimó a través de un AFC. Esta dimensión logra su mejor ajuste al separarla en cuatro subdimensiones: a) Lazos; b) confianza interpersonal; c) Reconocimiento y respeto hacia la diversidad; y d) prejuicios hacia inmigrantes.
@@ -181,6 +186,8 @@ semPaths(fit_1c, intercepts = FALSE,edge.label.cex=1.5, optimizeLatRes = TRUE, g
 
 ## Sentido de pertenencia
 
+Una segunda dimensión de la definición propuesta corresponde al sentido de pertenencia, que "alude a la vinculación e identificación de las personas respecto a la sociedad y a las instituciones y grupos que los integran. Incluye los niveles micro, meso y macro." (CEPAL 2021? pag. ?). Esta definición permite relevar la importancia de "las dinámicas de reconocimiento y participación social para conducir procesos dinámicos de inclusión que contribuyan a la cohesión social y al logro del bienestar (véase, por ejemplo, Jenson, 1998; Kymlicka, 1998)." (CEPAL 2021? pag. ?)
+
 ### Identificación con el país
 En el informe CEPAL se incluyen los indicadores "Orgullo por el sistema político" y "Orgullo por su nacionalidad". Al trabajar con ELSOC se utilizará "Orgullo de ser chileno" e "Identificación con Chile" que están presentes en las cuatro olas.
 
@@ -199,12 +206,14 @@ graf5<-plot_stackfrq(tabla5, title = "Identificación con el país", geom.colors
         legend.position="bottom")
 
 graf5
-ggsave(graf5, file = "../output/graphs/graf5.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
+ggsave(graf5, file = "../output/graphs/identificacion.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
 ```
 
 ```{r echo=FALSE}
+png("../output/graphs/identificacion_cor.png",width=600,height=600)
 corrplot.mixed(cor(dplyr::select(data, c32_01_w01, c32_02_w01),
                             use = "na.or.complete"))
+dev.off()
 ```
 
 ### Percepción de justicia
@@ -225,13 +234,15 @@ graf6<-plot_stackfrq(tabla6, title = "Percepción de justicia", geom.colors = "R
         legend.position="bottom")
 
 graf6
-ggsave(graf6, file = "../output/graphs/graf6.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
+ggsave(graf6, file = "../output/graphs/justicia.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
 ```
 
 ```{r echo=FALSE}
+png("../output/graphs/justicia_cor.png",width=600,height=600)
 corrplot.mixed(cor(dplyr::select(data, c18_09_w01, c18_10_w01),
                    method = "spearman",
                    use = "na.or.complete"))
+dev.off()
 ```
 
 ### Confianza institucional
@@ -271,10 +282,11 @@ graf7 <- plot_stackfrq(tabla7, title = "Confianza institucional") +
         legend.position="bottom")
 
 graf7
-ggsave(graf7, file = "../output/graphs/graf7.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
+ggsave(graf7, file = "../output/graphs/confianza-institucional.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
 ```
 
 ```{r echo=FALSE}
+png("../output/graphs/confianza-institucional_cor.png",width=600,height=600)
 corrplot.mixed(cor(dplyr::select(data, c05_01_w01,
                                  c05_02_w01,
                                  c05_03_w01,
@@ -285,6 +297,7 @@ corrplot.mixed(cor(dplyr::select(data, c05_01_w01,
                                  c05_08_w01),
                    method = "spearman",
                    use = "na.or.complete"))
+dev.off()
 ```
 
 El ajuste de la dimensión Sentido de pertenencia se estimó a través de un AFC. Esta dimensión logra su mejor ajuste al ser separada en las tres subdimensiones propuestas por CEPAL: a) Identificación con el país; b) Percepción de justicia; y c) Confianza institucional.
@@ -317,6 +330,9 @@ semPaths(fit_2c, intercepts = FALSE,edge.label.cex=1.5, optimizeLatRes = TRUE, g
 ```
 
 ## Orientación hacia el bien común
+
+Esta tercera dimensión refiere a "una actitud favorable a acciones que propendan a un mayor bienestar colectivo versus el beneficio puramente individual como parte de un proyecto compartido, o bien, como indican Sorj y Tironi (2007), aceptar “vivir en un orden colectivo que les reportará beneficios, así como sacrificios individuales”." 
+
 ### Solidaridad
 
 En informe CEPAL utilizan el indicador "Asistencia a reuniones de un grupo de mejoras para la comunidad". Al trabajar con ELSOC se utilizará este indicador y otros siete que abordan un comportamiento prosocial y que están presentes en las cuatro olas.
@@ -355,10 +371,11 @@ graf8 <- plot_stackfrq(tabla8, title = "Solidaridad") +
         legend.position="bottom")
 
 graf8
-ggsave(graf8, file = "../output/graphs/graf8.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
+ggsave(graf8, file = "../output/graphs/solidaridad.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
 ```
 
 ```{r echo=FALSE}
+png("../output/graphs/solidaridad_cor.png",width=600,height=600)
 corrplot.mixed(cor(dplyr::select(data, c07_01_w01,
                                  c07_02_w01,
                                  c07_03_w01,
@@ -369,6 +386,7 @@ corrplot.mixed(cor(dplyr::select(data, c07_01_w01,
                                  c07_08_w01),
                    method = "spearman",
                    use = "na.or.complete"))
+dev.off()
 ```
 
 ### Participación cívica
@@ -397,15 +415,18 @@ graf9 <- plot_stackfrq(tabla9, title = "Participación cívica") +
         legend.position="bottom")
 
 graf9
-ggsave(graf9, file = "../output/graphs/graf9.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
+ggsave(graf9, file = "../output/graphs/participacion-civica.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
 ```
 
 
 ```{r echo=FALSE}
+png("../output/graphs/participacion-civica_cor.png",width=600,height=600)
 corrplot.mixed(cor(dplyr::select(data, c08_01_w01, c08_02_w01, c08_03_w01, c08_04_w01),
                             use = "na.or.complete"))
+dev.off()
 ```
 
+### Participacion en organizaciones
 ```{r echo=FALSE}
 tabla10 = data %>% select(c12_01_w01,
                          c12_02_w01,
@@ -441,7 +462,7 @@ graf10 <- plot_stackfrq(tabla10, title = "Participación en organizaciones") +
         legend.position="bottom")
 
 graf10
-ggsave(graf10, file = "../output/graphs/graf10.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
+ggsave(graf10, file = "../output/graphs/participacion-organizaciones.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
 ```
 
 Para estimar esta correlación la categoría "No tenía edad para hacerlo" fue contabilizada como "No"
@@ -463,10 +484,15 @@ cor$c12_06_w01 <- recode(cor$c12_06_w01, "3=1")
 cor$c12_07_w01 <- recode(cor$c12_07_w01, "3=1")
 cor$c12_08_w01 <- recode(cor$c12_08_w01, "3=1")
 
+
+png("../output/graphs/participacion-organizaciones_cor.png",width=600,height=600)
 corrplot.mixed(cor(cor,
                    method ="spearman",
                    use = "na.or.complete"))
+dev.off()
 ```
+
+### Participacion electoral
 
 ```{r echo=FALSE}
 tabla11 = data %>% select(c11_w01, c11_w03)
@@ -483,7 +509,7 @@ graf11 <- plot_stackfrq(tabla11, title = "Voto en elecciones") +
         legend.position="bottom")
 
 graf11
-ggsave(graf11, file = "../output/graphs/graf11.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
+ggsave(graf11, file = "../output/graphs/participacion-electoral.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
 ```
 
 Para estimar esta correlación la categoría "No tenía edad para hacerlo" fue contabilizada como "No".
@@ -492,9 +518,11 @@ cor = data %>% select(c11_w01, c11_w03)
 cor$c11_w01 <- recode(cor$c11_w01, "3=1")
 cor$c11_w03 <- recode(cor$c11_w03, "3=1")
 
+png("../output/graphs/participacion-electoral_cor.png",width=600,height=600)
 corrplot.mixed(cor(cor,
                    method="spearman",
                    use = "na.or.complete"))
+dev.off()
 ```
 
 #### No se incluye subdimensión respeto por reglas sociales de la dimensión Orientación hacia el bien comun de informe CEPAL, que posee un indicador de respeto por las instituciones inexistente en ELSOC
@@ -561,8 +589,7 @@ graf12 <- plot_stackfrq(tabla12, title = "Confianza en vecinos") +
         legend.position="bottom")
 
 graf12
-ggsave(graf12, file = "../output/graphs/graf12.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
-
+ggsave(graf12, file = "../output/graphs/confianza-vecinos.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
 ```
 
 ```{r echo=FALSE}
@@ -586,14 +613,14 @@ graf13<-plot_stackfrq(tabla13, title = "Cohesion barrial", geom.colors = "RdBu")
         legend.position="bottom")
 
 graf13
-ggsave(graf13, file = "../output/graphs/graf13.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
-
-
+ggsave(graf13, file = "../output/graphs/cohesion-barrial.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
 ```
 
 ```{r echo=FALSE}
+png("../output/graphs/cohesion-barrial_cor.png",width=600,height=600)
 corrplot.mixed(cor(dplyr::select(data, t02_01_w01, t02_02_w01, t02_03_w01, t02_04_w01),
                             use = "na.or.complete"))
+dev.off()
 ```
 
 ```{r echo=FALSE}
@@ -617,14 +644,14 @@ graf14<-plot_stackfrq(tabla14, title = "Sociabilidad barrial", geom.colors = "Rd
         legend.position="bottom")
 
 graf14
-ggsave(graf14, file = "../output/graphs/graf14.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
-
-
+ggsave(graf14, file = "../output/graphs/sociabilidad-barrial.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
 ```
 
 ```{r echo=FALSE}
+png("../output/graphs/sociabilidad-barrial_cor.png",width=600,height=600)
 corrplot.mixed(cor(dplyr::select(data, t03_01_w01, t03_02_w01, t03_03_w01, t03_04_w01),
                             use = "na.or.complete"))
+dev.off()
 ```
 
 ```{r echo=FALSE}
@@ -656,12 +683,12 @@ graf15<-plot_stackfrq(tabla15, title = "Satisfaccion residencial", geom.colors =
         legend.position="bottom")
 
 graf15
-ggsave(graf15, file = "../output/graphs/graf15.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
-
+ggsave(graf15, file = "../output/graphs/satisfaccion-residencial.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
 ```
 
 ```{r echo=FALSE}
-corrplot.mixed(cor(dplyr::select(data, t06_01_w01,
+png("../output/graphs/satisfaccion-residencial_cor.png",width=600,height=600)
+cor_graf15 <- corrplot.mixed(cor(dplyr::select(data, t06_01_w01,
                                  t06_02_w01,
                                  t06_03_w01,
                                  t06_04_w01,
@@ -670,6 +697,7 @@ corrplot.mixed(cor(dplyr::select(data, t06_01_w01,
                                  t06_07_w01,
                                  t06_08_w01),
                             use = "na.or.complete"))
+dev.off()
 ```
 
 El ajuste de la dimensión Calidad de vida en el vecindario se estimó a través de un AFC. Esta dimensión logra su mejor ajuste al ser separada en cuatro subdimensiones: a) Confianza en vecinos; b) Cohesión barrial; c) Sociabilidad barrial y d) Satisfacción residencial.

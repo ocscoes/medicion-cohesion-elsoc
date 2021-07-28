@@ -1,0 +1,47 @@
+bookdown::gitbook:
+ # split_by: section
+  css: "style.css"
+  config:
+    toc:
+      before: |
+        <li><a href="./">Medición Cohesión Social </a></li>
+      after: |
+        <li><a href="https://github.com/ocscoes/concepto-medicion" target="blank">Publicado con bookdown</a></li>
+    fontsettings:
+      theme: white
+      family: sans
+      size: 2
+    download: ["pdf"]
+    edit: null
+    sharing:
+      facebook: yes
+      github: yes
+      twitter: yes
+      linkedin: no
+      weibo: no
+      instapaper: no
+      vk: no
+      all: ['facebook', 'twitter', 'linkedin']
+    info: no
+  citation_package: default
+  pandoc_args: [ "--csl", "input/bib/apa-no-ampersand.csl", "-M","lang:es"]
+  
+bookdown::pdf_book: 
+  includes: 
+      in_header: preamble.tex
+  #    before_body: frontpage.tex
+  latex_engine: pdflatex
+  # citation_package: natbib
+  keep_tex: yes
+  citation_package: default
+  pandoc_args: [ "--csl", "input/bib/apa.csl"]
+
+bookdown::word_document2:
+  reference_docx: "input/bib/template.docx"
+  citation_package: default
+  pandoc_args: [ "--csl", "input/bib/apa-no-ampersand.csl", "-M","lang:es"]
+
+
+# [Cambiar el .csl]: https://stackoverflow.com/questions/48965247/use-csl-file-for-pdf-output-in-bookdown/49145699#49145699
+
+# [IDIOMA EN CITE PROC]: https://tex.stackexchange.com/questions/422699/how-to-set-language-locale-for-pandoc-citeproc-in-the-command-line

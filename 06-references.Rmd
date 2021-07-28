@@ -1,0 +1,12 @@
+`r if (knitr::is_html_output()) '
+# Bibliografía {-}
+'`
+
+
+`r if (is_word_output()) '
+# Bibliografía {-}
+'`
+
+`r if (is_latex_output()) '
+# Bibliografía {-}
+'`
