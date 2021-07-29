@@ -25,8 +25,7 @@ fig:unnamed-chunk-6
 fig:unnamed-chunk-7
 fig:unnamed-chunk-8
 fig:unnamed-chunk-9
-introducción
-medición-de-cohesión-social-con-elsoc-según-modelo-de-cepal
+medición-de-cohesión-social-con-indicadores-elsoc
 elementos-constitutivos-de-la-cohesión-social
 relaciones-sociales-de-igualdad
 sentido-de-pertenencia

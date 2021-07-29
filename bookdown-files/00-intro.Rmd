@@ -1,0 +1,13 @@
+---
+editor_options:
+  markdown:
+    wrap: 72
+---
+
+# Introducción {-}
+
+El Centro de Estudios de Conflicto y Cohesión Social (COES) realiza desde el año 2016 el primer “Estudio Longitudinal Social de Chile” (ELSOC). Este estudio consiste en encuestar a casi 3.000 chilenos, anualmente, a lo largo de una década. Por lo tanto, el diseño de ELSOC es cuantitativo de tipo panel, es decir, que se repite su aplicación año a año.
+
+El principal objetivo de ELSOC es evaluar la manera como piensan, sienten y se comportan los chilenos en torno a un conjunto de temas referidos al conflicto y la cohesión social en Chile. Además, permite comparar la estabilidad o cambio en diversas dimensiones sociales atendiendo a factores que los moderan o explican a lo largo de los años.
+
+Esta encuesta es aplicada por medio de un cuestionario estructurado que posee 7 módulos diferentes: Territorio, Redes y actitudes sociales, Ciudadanía y democracia, Desigualdad y legitimidad, Conflicto social, Salud y bienestar y Caracterización sociodemográfica. Posee un muestreo probabilístico, estratificado (por tamaño de ciudades), por conglomerados y multietápico (aleatorio en todas sus etapas): Se eligieron aleatoriamente 40 ciudades con más de 10.000 habitantes (92 comunas de 13 regiones), dentro de estas se escogieron aleatoriamente 1067 manzanas. Dentro de cada manzana se escogieron hogares aleatoriamente y dentro de cada hogar fueron elegidos aleatoriamente individuos con 18 años o más. Por lo tanto, su unidad básica de observación son personas individuales. Asimismo, la población objetivo son hombres y mujeres de 18 a 75 años. Esta encuesta alcanza un 77% de representatividad de la población total del país y un 93% de la población urbana, con un error muestral del 2%. La muestra alcanzada en 2019 posee las respuestas de 3417 individuos, que incluye respuestas de participantes de la primera ola (2016) y de la muestra de refresco iniciada en 2018 [@coes_Radiografia_2019].

@@ -1,12 +1,12 @@
 bookdown::gitbook:
  # split_by: section
-  css: "style.css"
+  css: "style2.css"
   config:
     toc:
       before: |
-        <li><a href="./">Medición Cohesión Social </a></li>
+        <li><a href="./">Cambios en la Cohesión Social en Chile </a></li>
       after: |
-        <li><a href="https://github.com/ocscoes/concepto-medicion" target="blank">Publicado con bookdown</a></li>
+        <li><a href="https://github.com/juancarloscastillo/cohesion-cepal" target="blank">Juan Carlos Castillo <i class="fa fa-github"></i></a></li>
     fontsettings:
       theme: white
       family: sans
@@ -14,9 +14,9 @@ bookdown::gitbook:
     download: ["pdf"]
     edit: null
     sharing:
-      facebook: yes
+      facebook: no
       github: yes
-      twitter: yes
+      twitter: no
       linkedin: no
       weibo: no
       instapaper: no
@@ -24,22 +24,22 @@ bookdown::gitbook:
       all: ['facebook', 'twitter', 'linkedin']
     info: no
   citation_package: default
-  pandoc_args: [ "--csl", "input/bib/apa-no-ampersand.csl", "-M","lang:es"]
-  
-bookdown::pdf_book: 
-  includes: 
+  pandoc_args: [ "--csl", "bib/apa-no-ampersand.csl", "-M","lang:es"]
+
+bookdown::pdf_book:
+  includes:
       in_header: preamble.tex
   #    before_body: frontpage.tex
   latex_engine: pdflatex
   # citation_package: natbib
   keep_tex: yes
   citation_package: default
-  pandoc_args: [ "--csl", "input/bib/apa.csl"]
+  pandoc_args: [ "--csl", "bib/apa.csl"]
 
 bookdown::word_document2:
-  reference_docx: "input/bib/template.docx"
+  reference_docx: "bib/template.docx"
   citation_package: default
-  pandoc_args: [ "--csl", "input/bib/apa-no-ampersand.csl", "-M","lang:es"]
+  pandoc_args: [ "--csl", "bib/apa-no-ampersand.csl", "-M","lang:es"]
 
 
 # [Cambiar el .csl]: https://stackoverflow.com/questions/48965247/use-csl-file-for-pdf-output-in-bookdown/49145699#49145699

@@ -17,7 +17,5 @@ language:
     exr: 'Exercise '
     proof: 'Proof. '
     remark: 'Remark. '
-    solution: 'Solution. '  
-output_dir: "docs"
-
-  
+    solution: 'Solution. '
+output_dir: "../docs"
