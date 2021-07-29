@@ -11,7 +11,7 @@ editor_options:
 El objetivo de este primer capítulo es generar  indicadores de cohesión social basados en el modelo conceptual de CEPAL, en particular para los denominados _elementos constitutivos de la cohesión social_ y que se presenta en la figura  \@ref(fig:esquema-cepal).
 
 ```{r esquema-cepal, echo=FALSE, fig.cap="Resumen dimensiones CEPAL.", fig.align = 'center', out.width = '100%',out.height='100%'}
-knitr::include_graphics(path = "../input/images/dimensiones-cepal.jpg")
+knitr::include_graphics(path = "images/dimensiones-cepal.jpg")
 ```
 
 En este capítulo se  seleccionarán indicadores de la encuesta ELSOC (Estudio Longitudinal Social de Chile) que se asocien al contenido de cada una de las subdimensiones del concepto de cohesión social. Por ejemplo, si consideramos la dimensión "Relaciones Sociales de Igualdad", comenzaremos con la subdimensión "lazos" identificando indicadores de la encuesta que representen este concepto, y con la información disponible elaboraremos una propuesta para cubrir cada subdimensión.
@@ -22,10 +22,25 @@ Antes de comenzar con el trabajo de análisis de subdimensiones e indicadores, e
 
 La breve mención a aspectos de medición del párrafo anterior nos permite aclarar el orden y el sentido del análisis que se presenta a continuación. En algunos casos encontraremos indicadores únicos para subdimensiones, donde no existe mayor alternativa que discutir su validez aparente y esperar un bajo nivel de error de medición. En otros casos existen baterías de indicadores múltiples, donde se propondrán índices que representen de mejor manera los elementos comunes (covarianza) y que subyacen a la batería, para lo que se utilizarán técnicas de análisis factorial.
 
+Las decisiones respecto de los indicadores de cohesión social variarán según sea el número de variables presentes por subdimension:
 
-## Elementos constitutivos de la cohesión social
+- 1 variable: se considerará simplemente el puntaje de la variable
 
-### Relaciones sociales de igualdad
+- 2 variables: se analizará la correlación entre ambas y sobre esta base se podrá proponer un promedio simple
+
+- 3 variables: se analizará la matriz de correlaciones y el alfa de cronbach como medida de consistencia interna que permita trabajar con el promedio
+
+- 4 variables o más: se realizará un análisis factorial exploratorio para evaluar la dimensionalidad subyacente a los indicadores, y en base a este análisis se podrán proponer puntajes factoriales como índices.
+
+A continuación se presenta el análsis ordenado por dimensiones:
+
+- Relaciones sociales de igualdad
+- Sentido de pertenencia
+- Orientación hacia el bien común
+
+Además de estas dimensiones del modelo de la CEPAL también se agrega una cuarta de cohesión social en el territorio, que se asocia a la confianza en vecinos, identificación barrial, sociabilidad barrial y satisfacción residencial.
+
+## Relaciones sociales de igualdad
 
 De acuerdo a CEPAL, "Esta  parte de la definición de la cohesión social se acerca a aquellas que conciben la cohesión social como el  compromiso y habilidad para trabajar juntos, incluso cuando los valores que poseen las personas sean  distintos (Comisión Económica para África, 2016; Pornschlegel y Jürgensen, 2019; Dragolov y otros, 2013; De  Beer, 2014; Woolcock, 2011; Banco Mundial, 2012, 2000; Stanley, 2003). Supone asimismo el principio de  reconocimiento recíproco como precondición de la cohesión social (véase, por ejemplo, Jenson, 1998), así  como la superación de todas las formas de discriminación." [@cepal_Cohesion_2021, p. 45]
 
@@ -72,7 +87,7 @@ knitr::include_graphics(path = "output/graphs/diversidad.png")
 knitr::include_graphics(path = "output/graphs/diversidad_cor.png")
 ```
 
-### Sentido de pertenencia
+## Sentido de pertenencia
 
 Una segunda dimensión de la definición propuesta corresponde al sentido de pertenencia, que "alude a la vinculación e identificación de las personas respecto a la sociedad y a las instituciones y grupos que los integran. Incluye los niveles micro, meso y macro." (CEPAL 2021? pag. ?). Esta definición permite relevar la importancia de "las dinámicas de reconocimiento y participación social para conducir procesos dinámicos de inclusión que contribuyan a la cohesión social y al logro del bienestar (véase, por ejemplo, Jenson, 1998; Kymlicka, 1998)." [@cepal_Cohesion_2021, p. 45].
 
@@ -118,7 +133,7 @@ knitr::include_graphics(path = "output/graphs/confianza-institucional.png")
 knitr::include_graphics(path = "output/graphs/confianza-institucional_cor.png")
 ```
 
-### Orientación hacia el bien común
+## Orientación hacia el bien común
 
 Esta tercera dimensión refiere a "una actitud favorable a acciones que propendan a un mayor bienestar colectivo versus el beneficio puramente individual como parte de un proyecto compartido, o bien, como indican Sorj y Tironi (2007), aceptar “vivir en un orden colectivo que les reportará beneficios, así como sacrificios individuales”." [@cepal_Cohesion_2021, p. 46]
 
@@ -166,7 +181,7 @@ knitr::include_graphics(path = "output/graphs/participacion-organizaciones_cor.p
 knitr::include_graphics(path = "output/graphs/participacion-electoral.png")
 ```
 
-### Calidad de vida en el vecindario
+## Cohesión territorial
 
 De manera adicional, se incorpora una dimensión sobre calidad de vida en el vecindario presente en ELSOC. Todos estos indicadores se encuentran presentes en las cuatro olas.
 
@@ -176,7 +191,7 @@ De manera adicional, se incorpora una dimensión sobre calidad de vida en el vec
 knitr::include_graphics(path = "output/graphs/confianza-vecinos.png")
 ```
 
-**Cohesión barrial**
+**Identificación barrial**
 
 ```{r echo=FALSE, fig.cap="Descriptivos Cohesion barrial.", fig.align = 'center', out.width = '100%',out.height='100%'}
 knitr::include_graphics(path = "output/graphs/cohesion-barrial.png")

@@ -26,10 +26,9 @@ fig:unnamed-chunk-7
 fig:unnamed-chunk-8
 fig:unnamed-chunk-9
 medición-de-cohesión-social-con-indicadores-elsoc
-elementos-constitutivos-de-la-cohesión-social
 relaciones-sociales-de-igualdad
 sentido-de-pertenencia
 orientación-hacia-el-bien-común
-calidad-de-vida-en-el-vecindario
+cohesión-territorial
 capítulo-ii
 capítulo-iii
