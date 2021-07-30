@@ -24,6 +24,7 @@ load("../input/data/data.RData")
 # Filtrar base por casos participantes en cuatro olas
 data <- data %>% dplyr::filter(tipo_atricion==1 & tipo_caso !=2)
 ```
+
 ## Relaciones sociales de igualdad
 
 ### Lazos
@@ -35,17 +36,16 @@ tabla1$r15_w02 <- factor(tabla1$r15_w02, levels = c(1, 2, 3, 4, 5), labels = c("
 "De 3 a 5", "De 6 a 10", "Más de 10"))
 label(tabla1$r15_w02) <- "Cantidad de amigos (2017)"
 
-graf1<-  plot_stackfrq(tabla1, title = "Lazos") +
-  theme(axis.text.y = element_text(colour = "black", size = 8),
-        axis.text.x = element_text(colour = "black", size = 8),
-        legend.text = element_text(size = 8),
+graf1<-  plot_stackfrq(tabla1, geom.size = 0.14) +
+  theme(axis.text.y = element_text(colour = "black", size = 10),
+        axis.text.x = element_text(colour = "black", size = 10),
+        legend.text = element_text(size = 10),
         legend.position="bottom")
 graf1
 ggsave(graf1, file = "../bookdown-files/output/graphs/lazos.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
 ```
 
 ### Confianza interpersonal
-En el informe de CEPAL se utilizan los indicadores "Confianza en la gente de su comunidad" y "Confianza en la gente que se conoce por primera vez". Al trabajar con ELSOC se utilizará "Se puede confiar en la mayoría de las personas", "La mayoría de las personas tratar de ayudar a los demás" y "la mayoría de la gente trata de ser justa", presentes en las cuatro olas.
 
 ```{r echo=FALSE}
 tabla2 = data %>% select(c02_w01, c03_w01, c04_w01)
@@ -60,10 +60,10 @@ label(tabla2$c02_w01) <- "Se puede confiar en la mayoría de las personas (2016)
 label(tabla2$c03_w01) <- "La mayoría de las personas tratar de ayudar a los demás (2016)."
 label(tabla2$c04_w01) <- "La mayoría de las personas trata de ser justa (2016)."
 
-graf2 <- plot_stackfrq(tabla2, title = "Confianza interpersonal", geom.colors = "RdBu") +
-  theme(axis.text.y = element_text(colour = "black", size = 8),
-        axis.text.x = element_text(colour = "black", size = 8),
-        legend.text = element_text(size = 8),
+graf2 <- plot_stackfrq(tabla2, geom.colors = "RdBu", geom.size = 0.33) +
+  theme(axis.text.y = element_text(colour = "black", size = 10),
+        axis.text.x = element_text(colour = "black", size = 10),
+        legend.text = element_text(size = 10),
         legend.position="bottom")
 graf2
 
@@ -71,15 +71,30 @@ ggsave(graf2, file = "../bookdown-files/output/graphs/confianza-interpersonal.pn
 ```
 
 ```{r echo=FALSE}
+conf_interpersonal<-
+  data %>%
+  dplyr::select(c02_w01, c03_w01, c04_w01) %>% 
+  lavaan::lavCor(., ordered=names(.))
+diag(conf_interpersonal) = NA
+rownames(conf_interpersonal) <- c("A. Se puede confiar en la mayoria de las personas",
+                                  "B. La mayoria de las personas trata de ayudar a los demas",
+                                  "C. La mayoria de las personas trata de ser justa")
+colnames(conf_interpersonal) <-c("(A)", "(B)","(C)")
+
 png("../bookdown-files/output/graphs/confianza-interpersonal_cor.png",width=600,height=600)
-corrplot.mixed(cor(dplyr::select(data, c02_w01, c03_w01, c04_w01),
-                   method="spearman",
-                   use = "na.or.complete"))
+corrplot::corrplot(conf_interpersonal,
+  method = "color",
+  addCoef.col = "#000390",
+  type = "upper",
+  tl.col = "black",
+  col=colorRampPalette(c("white","#0068DC"))(12),
+  bg = "white",
+  na.label = "-",
+  lower.col = "black")
 dev.off()
 ```
 
 ### Reconocimiento y respeto de la diversidad
-En el informe de CEPAL se utilizan dos indicadores "aprueba el derecho a contraer matrimonio de parejas del mismo sexo" y "Los hombres no tienen prioridad sobre la mujer, a la hora acceder a un trabajo" y se deja como pendiente la construcción de un indicador sobre tolerancia a personas de distinta raza y etnia, así como de percepción de discriminación. En este sentido, ante la falta de indicadores de ELSOC, se utilizarán los propuestos en [informe clases medias] como Actitudes hacia la diversidad: Los dos primeros en las cuatro olas, adopción homoparental en olas 3 y 4 y el resto en ola 2 y 4.
 
 ```{r echo=FALSE}
 tabla3 = data %>% select(r12_03_w01, r12_04_w01, c37_01_w03)
@@ -91,10 +106,10 @@ label(tabla3$r12_03_w01) <- "Chile pierde su identidad con la llegada de inmigra
 label(tabla3$r12_04_w01) <- "Con la llegada de inmigrantes aumenta el desempleo (2016)."
 label(tabla3$c37_01_w03) <- "Grado de acuerdo con adopción homoparental (2018)."
 
-graf3<- plot_stackfrq(tabla3, title = "Actitudes hacia la diversidad", geom.colors = "RdBu") +
-  theme(axis.text.y = element_text(colour = "black", size = 8),
-        axis.text.x = element_text(colour = "black", size = 8),
-        legend.text = element_text(size = 8),
+graf3<- plot_stackfrq(tabla3, geom.colors = "RdBu", geom.size = 0.33) +
+  theme(axis.text.y = element_text(colour = "black", size = 10),
+        axis.text.x = element_text(colour = "black", size = 10),
+        legend.text = element_text(size = 10),
         legend.position="bottom")
 
 graf3
@@ -111,10 +126,10 @@ label(tabla4$c06_04_w01) <- "Grado de confianza con personas homosexuales (2016)
 label(tabla4$c06_05_w01) <- "Grado de confianza con personas mapuche (2016)."
 label(tabla4$c06_06_w01) <- "Grado de confianza con personas inmigrantes (2016)."
 
-graf4<- plot_stackfrq(tabla4, title = "Actitudes hacia la diversidad") +
-  theme(axis.text.y = element_text(colour = "black", size = 8),
-        axis.text.x = element_text(colour = "black", size = 8),
-        legend.text = element_text(size = 8),
+graf4<- plot_stackfrq(tabla4, geom.size = 0.33) +
+  theme(axis.text.y = element_text(colour = "black", size = 10),
+        axis.text.x = element_text(colour = "black", size = 10),
+        legend.text = element_text(size = 10),
         legend.position="bottom")
 
 graf4
@@ -122,10 +137,29 @@ ggsave(graf4, file = "../bookdown-files/output/graphs/diversidad.png",device = "
 ```
 
 ```{r echo=FALSE}
+diversidad<-
+  data %>%
+  dplyr::select(r12_03_w01, r12_04_w01, c37_01_w03, c06_04_w01, c06_05_w01, c06_06_w01) %>% 
+  lavaan::lavCor(., ordered=names(.))
+diag(diversidad) = NA
+rownames(diversidad) <- c("A. Chile pierde su identidad con la llegada de inmigrantes",
+                          "B. Con la llegada de inmigrantes aumenta el desempleo",
+                          "C. Grado de acuerdo con adopción homoparental",
+                          "D. Grado de confianza con personas homosexuales",
+                          "E. Grado de confianza con personas mapuche",
+                          "F. Grado de confianza con personas inmigrantes")
+colnames(diversidad) <-c("(A)", "(B)","(C)", "(D)", "(E)", "(F)")
+
 png("../bookdown-files/output/graphs/diversidad_cor.png",width=600,height=600)
-corrplot.mixed(cor(dplyr::select(data, r12_03_w01, r12_04_w01, c37_01_w03, c06_04_w01, c06_05_w01, c06_06_w01),
-                   use = "na.or.complete",
-                   method = "spearman"))
+corrplot::corrplot(diversidad,
+  method = "color",
+  addCoef.col = "#000390",
+  type = "upper",
+  tl.col = "black",
+  col=colorRampPalette(c("white","#0068DC"))(12),
+  bg = "white",
+  na.label = "-",
+  lower.col = "black")
 dev.off()
 ```
 
@@ -161,10 +195,7 @@ semPaths(fit_1c, intercepts = FALSE,edge.label.cex=1.5, optimizeLatRes = TRUE, g
 
 ## Sentido de pertenencia
 
-Una segunda dimensión de la definición propuesta corresponde al sentido de pertenencia, que "alude a la vinculación e identificación de las personas respecto a la sociedad y a las instituciones y grupos que los integran. Incluye los niveles micro, meso y macro." (CEPAL 2021? pag. ?). Esta definición permite relevar la importancia de "las dinámicas de reconocimiento y participación social para conducir procesos dinámicos de inclusión que contribuyan a la cohesión social y al logro del bienestar (véase, por ejemplo, Jenson, 1998; Kymlicka, 1998)." (CEPAL 2021? pag. ?)
-
 ### Identificación con el país
-En el informe CEPAL se incluyen los indicadores "Orgullo por el sistema político" y "Orgullo por su nacionalidad". Al trabajar con ELSOC se utilizará "Orgullo de ser chileno" e "Identificación con Chile" que están presentes en las cuatro olas.
 
 ```{r echo=FALSE}
 tabla5 = data %>% select(c32_01_w01,c32_02_w01)
@@ -174,10 +205,10 @@ tabla5$c32_02_w01<- factor(tabla5$c32_02_w01, levels = c(1, 2, 3, 4, 5), labels 
 label(tabla5$c32_01_w01) <- "Me siento orgulloso de ser chileno (2016)."
 label(tabla5$c32_02_w01) <- "Me identifico con Chile (2016)."
 
-graf5<-plot_stackfrq(tabla5, title = "Identificación con el país", geom.colors = "RdBu") +
-  theme(axis.text.y = element_text(colour = "black", size = 8),
-        axis.text.x = element_text(colour = "black", size = 8),
-        legend.text = element_text(size = 8),
+graf5<-plot_stackfrq(tabla5, geom.colors = "RdBu", geom.size = 0.25) +
+  theme(axis.text.y = element_text(colour = "black", size = 10),
+        axis.text.x = element_text(colour = "black", size = 10),
+        legend.text = element_text(size = 10),
         legend.position="bottom")
 
 graf5
@@ -185,14 +216,13 @@ ggsave(graf5, file = "../bookdown-files/output/graphs/identificacion.png",device
 ```
 
 ```{r echo=FALSE}
-png("../bookdown-files/output/graphs/identificacion_cor.png",width=600,height=600)
+
 corrplot.mixed(cor(dplyr::select(data, c32_01_w01, c32_02_w01),
                             use = "na.or.complete"))
-dev.off()
+
 ```
 
 ### Percepción de justicia
-En informe CEPAL se utilizan los indicadores "Se deben equiparar los sueldos, no mantener desigualdad para incentivar el esfuerzo personal", "El trabajo a largo plazo da beneficios, no las conexiones o suerte", "El Estado debe implementar políticas para reducir la desigualdad de ingreso". Al trabajar con ELSOC se utilizan "En Chile las personas son recompensadas por su esfuerzo" y "En Chile las personas son recompensadas por su inteligencia", presentes en todas las olas
 
 ```{r echo=FALSE}
 tabla6 = data %>% select(c18_09_w01,c18_10_w01)
@@ -202,10 +232,10 @@ tabla6$c18_10_w01<- factor(tabla6$c18_10_w01, levels = c(1, 2, 3, 4, 5), labels 
 label(tabla6$c18_09_w01) <- "En Chile las personas son recompensadas por sus esfuerzos (2016)."
 label(tabla6$c18_10_w01) <- "En Chile las personas son recompensadas por su inteligencia (2016)."
 
-graf6<-plot_stackfrq(tabla6, title = "Percepción de justicia", geom.colors = "RdBu") +
-  theme(axis.text.y = element_text(colour = "black", size = 8),
-        axis.text.x = element_text(colour = "black", size = 8),
-        legend.text = element_text(size = 8),
+graf6<-plot_stackfrq(tabla6, geom.colors = "RdBu", geom.size = 0.25) +
+  theme(axis.text.y = element_text(colour = "black", size = 10),
+        axis.text.x = element_text(colour = "black", size = 10),
+        legend.text = element_text(size = 10),
         legend.position="bottom")
 
 graf6
@@ -213,15 +243,13 @@ ggsave(graf6, file = "../bookdown-files/output/graphs/justicia.png",device = "pn
 ```
 
 ```{r echo=FALSE}
-png("../bookdown-files/output/graphs/justicia_cor.png",width=600,height=600)
+
 corrplot.mixed(cor(dplyr::select(data, c18_09_w01, c18_10_w01),
-                   method = "spearman",
                    use = "na.or.complete"))
-dev.off()
+
 ```
 
 ### Confianza institucional
-En informe CEPAL utilizan grado de confianza en (a) las cortes, (b) el Congreso Nacional, (c) la Policía Nacional, (d) los partidos políticos, (e) el ejecutivo y (f) las elecciones. Al trabajar con ELSOC se utilizan los siguientes ocho indicadores que están presentes en las cuatro olas
 
 ```{r echo=FALSE}
 tabla7 = data %>% select(c05_01_w01,
@@ -250,10 +278,10 @@ label(tabla7$c05_06_w01) <- "Confianza en las empresas privadas (2016)."
 label(tabla7$c05_07_w01) <- "Confianza en el congreso nacional (2016)."
 label(tabla7$c05_08_w01) <- "Confianza en el presidente/a de la república (2016)."
 
-graf7 <- plot_stackfrq(tabla7, title = "Confianza institucional") +
-  theme(axis.text.y = element_text(colour = "black", size = 9),
-        axis.text.x = element_text(colour = "black", size = 9),
-        legend.text = element_text(size = 8),
+graf7 <- plot_stackfrq(tabla7, geom.size = 0.9) +
+  theme(axis.text.y = element_text(colour = "black", size = 10),
+        axis.text.x = element_text(colour = "black", size = 10),
+        legend.text = element_text(size = 10),
         legend.position="bottom")
 
 graf7
@@ -261,17 +289,34 @@ ggsave(graf7, file = "../bookdown-files/output/graphs/confianza-institucional.pn
 ```
 
 ```{r echo=FALSE}
+conf_institucional<-
+  data %>%
+  dplyr::select(c05_01_w01,c05_02_w01,c05_03_w01,c05_04_w01,c05_05_w01,c05_06_w01,c05_07_w01,c05_08_w01) %>% 
+  lavaan::lavCor(., ordered=names(.))
+diag(conf_institucional) = NA
+rownames(conf_institucional) <- c("A. Confianza en el gobierno",
+                          "B. Confianza en los partidos políticos",
+                          "C. Confianza en Carabineros",
+                          "D. Confianza en los sindicatos",
+                          "E. Confianza en el poder judicial",
+                          "F. Confianza en las empresas privadas",
+                          "G. Confianza en el congreso nacional",
+                          "H. Confianza en el presidente/a de la república")
+colnames(conf_institucional) <-c("(A)", "(B)","(C)", "(D)", "(E)", "(F)", "(G)", "(H)")
+
+
+
+
 png("../bookdown-files/output/graphs/confianza-institucional_cor.png",width=600,height=600)
-corrplot.mixed(cor(dplyr::select(data, c05_01_w01,
-                                 c05_02_w01,
-                                 c05_03_w01,
-                                 c05_04_w01,
-                                 c05_05_w01,
-                                 c05_06_w01,
-                                 c05_07_w01,
-                                 c05_08_w01),
-                   method = "spearman",
-                   use = "na.or.complete"))
+corrplot::corrplot(conf_institucional,
+  method = "color",
+  addCoef.col = "#000390",
+  type = "upper",
+  tl.col = "black",
+  col=colorRampPalette(c("white","#0068DC"))(12),
+  bg = "white",
+  na.label = "-",
+  lower.col = "black")
 dev.off()
 ```
 
@@ -306,11 +351,7 @@ semPaths(fit_2c, intercepts = FALSE,edge.label.cex=1.5, optimizeLatRes = TRUE, g
 
 ## Orientación hacia el bien común
 
-Esta tercera dimensión refiere a "una actitud favorable a acciones que propendan a un mayor bienestar colectivo versus el beneficio puramente individual como parte de un proyecto compartido, o bien, como indican Sorj y Tironi (2007), aceptar “vivir en un orden colectivo que les reportará beneficios, así como sacrificios individuales”."
-
 ### Solidaridad
-
-En informe CEPAL utilizan el indicador "Asistencia a reuniones de un grupo de mejoras para la comunidad". Al trabajar con ELSOC se utilizará este indicador y otros siete que abordan un comportamiento prosocial y que están presentes en las cuatro olas.
 
 ```{r echo=FALSE}
 tabla8 = data %>% select(c07_01_w01,
@@ -339,10 +380,10 @@ label(tabla8$c07_06_w01) <- "Ha prestado una suma de dinero de $10.000.- o más 
 label(tabla8$c07_07_w01) <- "Ha conversado con una persona en problemas o deprimida (2016)."
 label(tabla8$c07_08_w01) <- "Ha ayudado a alguien a conseguir trabajo (2016)."
 
-graf8 <- plot_stackfrq(tabla8, title = "Solidaridad") +
-  theme(axis.text.y = element_text(colour = "black", size = 9),
-        axis.text.x = element_text(colour = "black", size = 9),
-        legend.text = element_text(size = 8),
+graf8 <- plot_stackfrq(tabla8, geom.size = 0.9) +
+  theme(axis.text.y = element_text(colour = "black", size = 10),
+        axis.text.x = element_text(colour = "black", size = 10),
+        legend.text = element_text(size = 10),
         legend.position="bottom")
 
 graf8
@@ -350,22 +391,35 @@ ggsave(graf8, file = "../bookdown-files/output/graphs/solidaridad.png",device = 
 ```
 
 ```{r echo=FALSE}
+solidaridad<-
+  data %>%
+  dplyr::select(c07_01_w01,c07_02_w01,c07_03_w01,c07_04_w01,c07_05_w01,c07_06_w01,c07_07_w01,c07_08_w01) %>% 
+  lavaan::lavCor(., ordered=names(.))
+diag(solidaridad) = NA
+rownames(solidaridad) <- c("A. Visita la casa de algún vecino",
+                          "B. Asiste a reunión sobre temas de interés publico",
+                          "C. Han venido amigos a visitarlo a su casa",
+                          "D. Hace voluntariado",
+                          "E. Dona dinero a una obra social o de caridad",
+                          "F. Presta una suma de dinero de $10.000.- o más",
+                          "G. Conversa con persona en problemas o deprimida",
+                          "H. Ayuda a alguien a conseguir trabajo")
+colnames(solidaridad) <-c("(A)", "(B)","(C)", "(D)", "(E)", "(F)", "(G)", "(H)")
+
 png("../bookdown-files/output/graphs/solidaridad_cor.png",width=600,height=600)
-corrplot.mixed(cor(dplyr::select(data, c07_01_w01,
-                                 c07_02_w01,
-                                 c07_03_w01,
-                                 c07_04_w01,
-                                 c07_05_w01,
-                                 c07_06_w01,
-                                 c07_07_w01,
-                                 c07_08_w01),
-                   method = "spearman",
-                   use = "na.or.complete"))
+corrplot::corrplot(solidaridad,
+  method = "color",
+  addCoef.col = "#000390",
+  type = "upper",
+  tl.col = "black",
+  col=colorRampPalette(c("white","#0068DC"))(12),
+  bg = "white",
+  na.label = "-",
+  lower.col = "black")
 dev.off()
 ```
 
 ### Participación cívica
-En informe CEPAL se utilizaron los indicadores "Tiene actividad política (firma peticiones, boicot, va a manifestaciones pacíficas, huelgas)", "Participación en organizaciones" y "Voto en elecciones presidenciales". Al trabajar con ELSOC se utilizan cuatro indicadores de actividad política presentes en las cuatro olas, ocho indicadores de participación en organizaciones presentes en ola 1 y 3 y voto en elecciones 2013 y 2017 (ola 1 y 3)
 
 ```{r echo=FALSE}
 tabla9 = data %>% select(c08_01_w01,
@@ -383,21 +437,38 @@ label(tabla9$c08_03_w01) <- "Participado en una huelga (2016)."
 label(tabla9$c08_04_w01) <- "Usado las redes sociales para expresar su opinión en temas públicos (2016)."
 
 
-graf9 <- plot_stackfrq(tabla9, title = "Participación cívica") +
-  theme(axis.text.y = element_text(colour = "black", size = 9),
-        axis.text.x = element_text(colour = "black", size = 9),
-        legend.text = element_text(size = 8),
+graf9 <- plot_stackfrq(tabla9, geom.size = 0.45) +
+  theme(axis.text.y = element_text(colour = "black", size = 10),
+        axis.text.x = element_text(colour = "black", size = 10),
+        legend.text = element_text(size = 10),
         legend.position="bottom")
 
 graf9
 ggsave(graf9, file = "../bookdown-files/output/graphs/participacion-civica.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
 ```
 
-
 ```{r echo=FALSE}
+part_civica<-
+  data %>%
+  dplyr::select(c08_01_w01, c08_02_w01, c08_03_w01, c08_04_w01) %>% 
+  lavaan::lavCor(., ordered=names(.))
+diag(part_civica) = NA
+rownames(part_civica) <- c("A. Firma una carta o petición",
+                          "B. Asiste a una marcha o manifestación",
+                          "C. Participa en una huelga",
+                          "D. Usa redes sociales para expresar su opinión")
+colnames(part_civica) <-c("(A)", "(B)","(C)", "(D)")
+
 png("../bookdown-files/output/graphs/participacion-civica_cor.png",width=600,height=600)
-corrplot.mixed(cor(dplyr::select(data, c08_01_w01, c08_02_w01, c08_03_w01, c08_04_w01),
-                            use = "na.or.complete"))
+corrplot::corrplot(part_civica,
+  method = "color",
+  addCoef.col = "#000390",
+  type = "upper",
+  tl.col = "black",
+  col=colorRampPalette(c("white","#0068DC"))(12),
+  bg = "white",
+  na.label = "-",
+  lower.col = "black")
 dev.off()
 ```
 
@@ -430,10 +501,10 @@ label(tabla10$c12_07_w01) <- "Organización ecológica o medioambiental (2016)."
 label(tabla10$c12_08_w01) <- "Asociaciones o centros de estudiantes (2016)."
 
 
-graf10 <- plot_stackfrq(tabla10, title = "Participación en organizaciones") +
-  theme(axis.text.y = element_text(colour = "black", size = 9),
-        axis.text.x = element_text(colour = "black", size = 9),
-        legend.text = element_text(size = 8),
+graf10 <- plot_stackfrq(tabla10, geom.size = 0.9) +
+  theme(axis.text.y = element_text(colour = "black", size = 10),
+        axis.text.x = element_text(colour = "black", size = 10),
+        legend.text = element_text(size = 10),
         legend.position="bottom")
 
 graf10
@@ -459,11 +530,31 @@ cor$c12_06_w01 <- recode(cor$c12_06_w01, "3=1")
 cor$c12_07_w01 <- recode(cor$c12_07_w01, "3=1")
 cor$c12_08_w01 <- recode(cor$c12_08_w01, "3=1")
 
+part_organizaciones <-
+  cor %>%
+  dplyr::select(c12_01_w01, c12_02_w01, c12_03_w01, c12_04_w01, c12_05_w01, c12_06_w01, c12_07_w01, c12_08_w01) %>% 
+  lavaan::lavCor(., ordered=names(.))
+diag(part_organizaciones) = NA
+rownames(part_organizaciones) <- c("A. Junta de vecinos u otra organización",
+                          "B. Organización religiosa o Iglesia",
+                          "C. Partido o movimiento político",
+                          "D. Sindicato",
+                          "E. Asociación profesional o gremial",
+                          "F. Organización deportiva",
+                          "G. Organización ecológica o medioambiental",
+                          "H. Asociaciones o centros de estudiantes")
+colnames(part_organizaciones) <-c("(A)", "(B)","(C)", "(D)", "(E)", "(F)", "(G)", "(H)")
 
 png("../bookdown-files/output/graphs/participacion-organizaciones_cor.png",width=600,height=600)
-corrplot.mixed(cor(cor,
-                   method ="spearman",
-                   use = "na.or.complete"))
+corrplot::corrplot(part_organizaciones,
+  method = "color",
+  addCoef.col = "#000390",
+  type = "upper",
+  tl.col = "black",
+  col=colorRampPalette(c("white","#0068DC"))(12),
+  bg = "white",
+  na.label = "-",
+  lower.col = "black")
 dev.off()
 ```
 
@@ -477,10 +568,10 @@ tabla11$c11_w03<- factor(tabla11$c11_w03, levels = c(1, 2, 3), labels = c("No", 
 label(tabla11$c11_w01) <- "Voto en elecciones (2016)."
 label(tabla11$c11_w03) <- "Voto en elecciones (2018)."
 
-graf11 <- plot_stackfrq(tabla11, title = "Voto en elecciones") +
-  theme(axis.text.y = element_text(colour = "black", size = 9),
-        axis.text.x = element_text(colour = "black", size = 9),
-        legend.text = element_text(size = 8),
+graf11 <- plot_stackfrq(tabla11, geom.size = 0.25) +
+  theme(axis.text.y = element_text(colour = "black", size = 10),
+        axis.text.x = element_text(colour = "black", size = 10),
+        legend.text = element_text(size = 10),
         legend.position="bottom")
 
 graf11
@@ -557,10 +648,10 @@ tabla12$t01_w01<- factor(tabla12$t01_w01, levels = c(1, 2, 3, 4, 5), labels = c(
 label(tabla12$t01_w01) <- "Confianza en vecinos (2016)."
 
 
-graf12 <- plot_stackfrq(tabla12, title = "Confianza en vecinos") +
-  theme(axis.text.y = element_text(colour = "black", size = 9),
-        axis.text.x = element_text(colour = "black", size = 9),
-        legend.text = element_text(size = 8),
+graf12 <- plot_stackfrq(tabla12, geom.size = 0.14) +
+  theme(axis.text.y = element_text(colour = "black", size = 10),
+        axis.text.x = element_text(colour = "black", size = 10),
+        legend.text = element_text(size = 10),
         legend.position="bottom")
 
 graf12
@@ -581,10 +672,10 @@ label(tabla13$t02_02_w01) <- "Me siento integrado/a en este barrio (2016)."
 label(tabla13$t02_03_w01) <- "Me identifico con la gente de este barrio (2016)."
 label(tabla13$t02_04_w01) <- "Este barrio es parte de mi (2016)."
 
-graf13<-plot_stackfrq(tabla13, title = "Cohesion barrial", geom.colors = "RdBu") +
-  theme(axis.text.y = element_text(colour = "black", size = 8),
-        axis.text.x = element_text(colour = "black", size = 8),
-        legend.text = element_text(size = 8),
+graf13<-plot_stackfrq(tabla13, geom.colors = "RdBu", geom.size = 0.45) +
+  theme(axis.text.y = element_text(colour = "black", size = 10),
+        axis.text.x = element_text(colour = "black", size = 10),
+        legend.text = element_text(size = 10),
         legend.position="bottom")
 
 graf13
@@ -592,9 +683,27 @@ ggsave(graf13, file = "../bookdown-files/output/graphs/cohesion-barrial.png",dev
 ```
 
 ```{r echo=FALSE}
+cohesion_barrial <-
+  data %>%
+  dplyr::select(t02_01_w01, t02_02_w01, t02_03_w01, t02_04_w01) %>% 
+  lavaan::lavCor(., ordered=names(.))
+diag(cohesion_barrial) = NA
+rownames(cohesion_barrial) <- c("A. Este barrio es ideal para mi",
+                          "B. Me siento integrado/a en este barrio",
+                          "C. Me identifico con la gente de este barrio",
+                          "D. Este barrio es parte de mi")
+colnames(cohesion_barrial) <-c("(A)", "(B)","(C)", "(D)")
+
 png("../bookdown-files/output/graphs/cohesion-barrial_cor.png",width=600,height=600)
-corrplot.mixed(cor(dplyr::select(data, t02_01_w01, t02_02_w01, t02_03_w01, t02_04_w01),
-                            use = "na.or.complete"))
+corrplot::corrplot(cohesion_barrial,
+  method = "color",
+  addCoef.col = "#000390",
+  type = "upper",
+  tl.col = "black",
+  col=colorRampPalette(c("white","#0068DC"))(12),
+  bg = "white",
+  na.label = "-",
+  lower.col = "black")
 dev.off()
 ```
 
@@ -612,10 +721,10 @@ label(tabla14$t03_02_w01) <- "La gente en este barrio es sociable (2016)."
 label(tabla14$t03_03_w01) <- "La gente en este barrio es cordial (2016)."
 label(tabla14$t03_04_w01) <- "La gente en este barrio es colaboradora (2016)."
 
-graf14<-plot_stackfrq(tabla14, title = "Sociabilidad barrial", geom.colors = "RdBu") +
-  theme(axis.text.y = element_text(colour = "black", size = 8),
-        axis.text.x = element_text(colour = "black", size = 8),
-        legend.text = element_text(size = 8),
+graf14<-plot_stackfrq(tabla14, geom.colors = "RdBu", geom.size = 0.45) +
+  theme(axis.text.y = element_text(colour = "black", size = 10),
+        axis.text.x = element_text(colour = "black", size = 10),
+        legend.text = element_text(size = 10),
         legend.position="bottom")
 
 graf14
@@ -623,9 +732,27 @@ ggsave(graf14, file = "../bookdown-files/output/graphs/sociabilidad-barrial.png"
 ```
 
 ```{r echo=FALSE}
+sociabilidad_barrial <-
+  data %>%
+  dplyr::select(t03_01_w01, t03_02_w01, t03_03_w01, t03_04_w01) %>% 
+  lavaan::lavCor(., ordered=names(.))
+diag(sociabilidad_barrial) = NA
+rownames(sociabilidad_barrial) <- c("A. En este barrio es fácil hacer amigos",
+                          "B. La gente en este barrio es sociable",
+                          "C. La gente en este barrio es cordial",
+                          "D. La gente en este barrio es colaboradora")
+colnames(sociabilidad_barrial) <-c("(A)", "(B)","(C)", "(D)")
+
 png("../bookdown-files/output/graphs/sociabilidad-barrial_cor.png",width=600,height=600)
-corrplot.mixed(cor(dplyr::select(data, t03_01_w01, t03_02_w01, t03_03_w01, t03_04_w01),
-                            use = "na.or.complete"))
+corrplot::corrplot(sociabilidad_barrial,
+  method = "color",
+  addCoef.col = "#000390",
+  type = "upper",
+  tl.col = "black",
+  col=colorRampPalette(c("white","#0068DC"))(12),
+  bg = "white",
+  na.label = "-",
+  lower.col = "black")
 dev.off()
 ```
 
@@ -651,10 +778,10 @@ label(tabla15$t06_06_w01) <- "Proximidad a colegios de buena calidad (2016)."
 label(tabla15$t06_07_w01) <- "Proximidad a areas de comercio (2016)."
 label(tabla15$t06_08_w01) <- "Proximidad con familiares y/o amigos cercanos (2016)."
 
-graf15<-plot_stackfrq(tabla15, title = "Satisfaccion residencial", geom.colors = "RdBu") +
-  theme(axis.text.y = element_text(colour = "black", size = 8),
-        axis.text.x = element_text(colour = "black", size = 8),
-        legend.text = element_text(size = 8),
+graf15<-plot_stackfrq(tabla15, geom.colors = "RdBu", geom.size = 0.9) +
+  theme(axis.text.y = element_text(colour = "black", size = 10),
+        axis.text.x = element_text(colour = "black", size = 10),
+        legend.text = element_text(size = 10),
         legend.position="bottom")
 
 graf15
@@ -662,16 +789,31 @@ ggsave(graf15, file = "../bookdown-files/output/graphs/satisfaccion-residencial.
 ```
 
 ```{r echo=FALSE}
+sat_residencial <-
+  data %>%
+  dplyr::select(t06_01_w01, t06_02_w01, t06_03_w01, t06_04_w01, t06_05_w01, t06_06_w01, t06_07_w01, t06_08_w01) %>% 
+  lavaan::lavCor(., ordered=names(.))
+diag(sat_residencial) = NA
+rownames(sat_residencial) <- c("A. Seguridad del barrio",
+                          "B. Conectividad",
+                          "C. Areas verdes y de recreacion disponibles",
+                          "D. Limpieza y belleza del barrio",
+                          "E. Proximidad al lugar de actividad principal",
+                          "F. Proximidad a colegios de buena calidad",
+                          "G. Proximidad a areas de comercio",
+                          "H. Proximidad con familiares y/o amigos")
+colnames(sat_residencial) <-c("(A)", "(B)","(C)", "(D)", "(E)", "(F)", "(G)", "(H)")
+
 png("../bookdown-files/output/graphs/satisfaccion-residencial_cor.png",width=600,height=600)
-cor_graf15 <- corrplot.mixed(cor(dplyr::select(data, t06_01_w01,
-                                 t06_02_w01,
-                                 t06_03_w01,
-                                 t06_04_w01,
-                                 t06_05_w01,
-                                 t06_06_w01,
-                                 t06_07_w01,
-                                 t06_08_w01),
-                            use = "na.or.complete"))
+corrplot::corrplot(sat_residencial,
+  method = "color",
+  addCoef.col = "#000390",
+  type = "upper",
+  tl.col = "black",
+  col=colorRampPalette(c("white","#0068DC"))(12),
+  bg = "white",
+  na.label = "-",
+  lower.col = "black")
 dev.off()
 ```
 
