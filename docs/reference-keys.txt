@@ -6,9 +6,7 @@ fig:prejuicios
 fig:diversidad
 fig:diversidad-cor
 fig:identificacion
-fig:identificacion-cor
 fig:justicia
-fig:justicia-cor
 fig:confianza-institucional
 fig:confianza-institucional-cor
 fig:solidaridad

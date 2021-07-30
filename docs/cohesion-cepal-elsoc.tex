@@ -58,7 +58,7 @@
 % Allow footnotes in longtable head/foot
 \IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
 \makesavenoteenv{longtable}
-\usepackage{graphicx}
+\usepackage{graphicx,grffile}
 \makeatletter
 \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
 \def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
@@ -112,7 +112,6 @@
 % \else
 %   % \usepackage[spanish,es-tabla]{babel}
 % \fi
-
 \usepackage{booktabs}
 \usepackage{longtable}
 \usepackage{array}
@@ -127,19 +126,10 @@
 \usepackage[normalem]{ulem}
 \usepackage{makecell}
 \usepackage{xcolor}
-\ifluatex
-  \usepackage{selnolig}  % disable illegal ligatures
-\fi
-\newlength{\cslhangindent}
-\setlength{\cslhangindent}{1.5em}
-\newenvironment{cslreferences}%
-  {\setlength{\parindent}{0pt}%
-  \everypar{\setlength{\hangindent}{\cslhangindent}}\ignorespaces}%
-  {\par}
 
 \title{Cambios en la Cohesión Social en Chile}
 \author{Equipo CEPAL-ELSOC}
-\date{2021-07-29}
+\date{2021-07-30}
 
 \begin{document}
 \maketitle
@@ -248,7 +238,7 @@ El indicador propuesto en el informe de CEPAL es ``importancia de amigos en la v
 
 }
 
-\caption{Descriptivos Lazos.}\label{fig:lazos}
+\caption{Cantidad de amigos cercanos.}\label{fig:lazos}
 \end{figure}
 
 \textbf{Confianza interpersonal}
@@ -263,7 +253,7 @@ En el informe de CEPAL se utilizan los indicadores ``Confianza en la gente de su
 
 }
 
-\caption{Descriptivos Confianza interpersonal.}\label{fig:confianza-interpersonal}
+\caption{Confianza interpersonal.}\label{fig:confianza-interpersonal}
 \end{figure}
 
 \begin{figure}[H]
@@ -272,7 +262,7 @@ En el informe de CEPAL se utilizan los indicadores ``Confianza en la gente de su
 
 }
 
-\caption{Correlaciones Confianza interpersonal.}\label{fig:confianza-interpersonal-cor}
+\caption{Asociación indicadores Confianza interpersonal.}\label{fig:confianza-interpersonal-cor}
 \end{figure}
 
 \textbf{Reconocimiento y respeto de la diversidad}
@@ -287,7 +277,7 @@ En el informe de CEPAL se utilizan dos indicadores ``aprueba el derecho a contra
 
 }
 
-\caption{Descriptivos Reconocimiento y respeto de la diversidad I.}\label{fig:prejuicios}
+\caption{Prejuicios hacia inmigrantes y adopción homoparental.}\label{fig:prejuicios}
 \end{figure}
 
 \begin{figure}[H]
@@ -296,7 +286,7 @@ En el informe de CEPAL se utilizan dos indicadores ``aprueba el derecho a contra
 
 }
 
-\caption{Descriptivos Reconocimiento y respeto de la diversidad II.}\label{fig:diversidad}
+\caption{Grado de confianza grupos sociales.}\label{fig:diversidad}
 \end{figure}
 
 \begin{figure}[H]
@@ -305,7 +295,7 @@ En el informe de CEPAL se utilizan dos indicadores ``aprueba el derecho a contra
 
 }
 
-\caption{Correlaciones Reconocimiento y respeto de la diversidad II.}\label{fig:diversidad-cor}
+\caption{Asociación indicadores Reconocimiento y respeto de la diversidad.}\label{fig:diversidad-cor}
 \end{figure}
 
 \hypertarget{sentido-de-pertenencia}{%
@@ -317,7 +307,7 @@ Una segunda dimensión de la definición propuesta corresponde al sentido de per
 
 Por medio de esta subdimensión, se busca cuantificar la identificación de los individuos ``con los valores y acciones que representan sus instituciones, y la concordancia con los propios'' (CEPAL, \protect\hyperlink{ref-cepal_Cohesion_2021}{2021}, p. 66).
 
-En el informe CEPAL se incluyen los indicadores ``Orgullo por el sistema político'', que busca medir la adhesión de los encuestados con la labor que realizan sus instituciones en la representación de sus valores y objetivos y ``Orgullo por su nacionalidad'', que busca cuantificar la identificación de los encuestados con los valores y normas que rigen las instituciones del país. Al trabajar con ELSOC se utilizarán los indicadores ``Orgullo de ser chileno'' e ``Identificación con Chile'' que están presentes en las cuatro olas. Un análisis descriptivo de estos indicadores se presentan en la figura \ref{fig:identificacion} y un análisis bivariado en la figura \ref{fig:identificacion-cor}.
+En el informe CEPAL se incluyen los indicadores ``Orgullo por el sistema político'', que busca medir la adhesión de los encuestados con la labor que realizan sus instituciones en la representación de sus valores y objetivos y ``Orgullo por su nacionalidad'', que busca cuantificar la identificación de los encuestados con los valores y normas que rigen las instituciones del país. Al trabajar con ELSOC se utilizarán los indicadores ``Orgullo de ser chileno'' e ``Identificación con Chile'' que están presentes en las cuatro olas. Un análisis descriptivo de estos indicadores se presentan en la figura \ref{fig:identificacion}. La correlación entre estos indicadores es positiva y alta (r=0.76).
 
 \begin{figure}[H]
 
@@ -325,23 +315,14 @@ En el informe CEPAL se incluyen los indicadores ``Orgullo por el sistema políti
 
 }
 
-\caption{Descriptivos Identificación con el país.}\label{fig:identificacion}
-\end{figure}
-
-\begin{figure}[H]
-
-{\centering \includegraphics[width=1\linewidth,height=1\textheight]{output/graphs/identificacion_cor} 
-
-}
-
-\caption{Correlaciones Identificación con el país.}\label{fig:identificacion-cor}
+\caption{Identificación y orgullo con Chile.}\label{fig:identificacion}
 \end{figure}
 
 \textbf{Percepción de justicia}
 
 La subdimensión de percepción de justicia refiere al examen que realizan los miembros de la sociedad respecto a la capacidad de las instituciones de entregar bienestar y/o distribuir el poder económico y político (CEPAL, \protect\hyperlink{ref-cepal_Cohesion_2021}{2021}).
 
-En el informe de CEPAL se utilizan los indicadores ``Se deben equiparar los sueldos, no mantener desigualdad para incentivar el esfuerzo personal'', que cuantifica percepciones respecto a aversiones hacia la desigualdad; ``El trabajo a largo plazo da beneficios, no las conexiones o suerte'', que busca captar percepciones sobre la estructura de oportunidades en el país y las expectativas de movilidad social; y ``El Estado debe implementar políticas para reducir la desigualdad de ingreso'', que aborda las percepciones respecto a la desigualdad de ingresos en el país. Al trabajar con ELSOC se utilizan los indicadores ``En Chile las personas son recompensadas por su esfuerzo'' y ``En Chile las personas son recompensadas por su inteligencia'', presentes en todas las olas. Un análisis descriptivo de estos indicadores se presentan en la figura \ref{fig:justicia} y un análisis bivariado en la figura \ref{fig:justicia-cor}.
+En el informe de CEPAL se utilizan los indicadores ``Se deben equiparar los sueldos, no mantener desigualdad para incentivar el esfuerzo personal'', que cuantifica percepciones respecto a aversiones hacia la desigualdad; ``El trabajo a largo plazo da beneficios, no las conexiones o suerte'', que busca captar percepciones sobre la estructura de oportunidades en el país y las expectativas de movilidad social; y ``El Estado debe implementar políticas para reducir la desigualdad de ingreso'', que aborda las percepciones respecto a la desigualdad de ingresos en el país. Al trabajar con ELSOC se utilizan los indicadores ``En Chile las personas son recompensadas por su esfuerzo'' y ``En Chile las personas son recompensadas por su inteligencia'', presentes en todas las olas. Un análisis descriptivo de estos indicadores se presentan en la figura \ref{fig:justicia}. La correlación entre estos indicadores es positiva y alta (r=0.7).
 
 \begin{figure}[H]
 
@@ -349,16 +330,7 @@ En el informe de CEPAL se utilizan los indicadores ``Se deben equiparar los suel
 
 }
 
-\caption{Descriptivos Percepción de justicia.}\label{fig:justicia}
-\end{figure}
-
-\begin{figure}[H]
-
-{\centering \includegraphics[width=1\linewidth,height=1\textheight]{output/graphs/justicia_cor} 
-
-}
-
-\caption{Correlaciones Percepción de justicia.}\label{fig:justicia-cor}
+\caption{Descriptivos Percepción de recompensa por esfuerzo e inteligencia.}\label{fig:justicia}
 \end{figure}
 
 \textbf{Confianza institucional}
@@ -373,7 +345,7 @@ En informe CEPAL utilizan grado de confianza en (a) las cortes, (b) el Congreso 
 
 }
 
-\caption{Descriptivos Confianza institucional.}\label{fig:confianza-institucional}
+\caption{Confianza en instituciones.}\label{fig:confianza-institucional}
 \end{figure}
 
 \begin{figure}[H]
@@ -382,7 +354,7 @@ En informe CEPAL utilizan grado de confianza en (a) las cortes, (b) el Congreso 
 
 }
 
-\caption{Correlaciones Confianza institucional.}\label{fig:confianza-institucional-cor}
+\caption{Asociación indicadores Confianza institucional.}\label{fig:confianza-institucional-cor}
 \end{figure}
 
 \hypertarget{orientaciuxf3n-hacia-el-bien-comuxfan}{%
@@ -402,7 +374,7 @@ En informe CEPAL utilizan el indicador ``Asistencia a reuniones de un grupo de m
 
 }
 
-\caption{Descriptivos Solidaridad.}\label{fig:solidaridad}
+\caption{Acciones de solidaridad.}\label{fig:solidaridad}
 \end{figure}
 
 \begin{figure}[H]
@@ -411,7 +383,7 @@ En informe CEPAL utilizan el indicador ``Asistencia a reuniones de un grupo de m
 
 }
 
-\caption{Correlaciones Solidaridad.}\label{fig:solidaridad-cor}
+\caption{Asociación indicadores de solidaridad.}\label{fig:solidaridad-cor}
 \end{figure}
 
 \textbf{Participación cívica}
@@ -426,7 +398,7 @@ En informe CEPAL se utilizaron los indicadores ``Tiene actividad política (firm
 
 }
 
-\caption{Descriptivos Participación cívica.}\label{fig:participacion-civica}
+\caption{Participación en actividades cívicas.}\label{fig:participacion-civica}
 \end{figure}
 
 \begin{figure}[H]
@@ -435,7 +407,7 @@ En informe CEPAL se utilizaron los indicadores ``Tiene actividad política (firm
 
 }
 
-\caption{Correlaciones Participación cívica.}\label{fig:participacion-civica-cor}
+\caption{Asociación indicadores participación cívica.}\label{fig:participacion-civica-cor}
 \end{figure}
 
 \textbf{Participación en organizaciones}
@@ -446,7 +418,7 @@ En informe CEPAL se utilizaron los indicadores ``Tiene actividad política (firm
 
 }
 
-\caption{Descriptivos Participación en organizaciones.}\label{fig:participacion-organizaciones}
+\caption{Participación en organizaciones sociales.}\label{fig:participacion-organizaciones}
 \end{figure}
 
 \begin{figure}[H]
@@ -455,7 +427,7 @@ En informe CEPAL se utilizaron los indicadores ``Tiene actividad política (firm
 
 }
 
-\caption{Correlaciones Participación en organizaciones.}\label{fig:participacion-organizaciones-cor}
+\caption{Asociación indicadores participación en organizaciones.}\label{fig:participacion-organizaciones-cor}
 \end{figure}
 
 \textbf{Participación electoral}
@@ -466,7 +438,7 @@ En informe CEPAL se utilizaron los indicadores ``Tiene actividad política (firm
 
 }
 
-\caption{Descriptivos Participación electoral.}\label{fig:participacion-electoral}
+\caption{Participación en elecciones 2013 y 2017.}\label{fig:participacion-electoral}
 \end{figure}
 
 \hypertarget{cohesiuxf3n-territorial}{%
@@ -482,7 +454,7 @@ De manera adicional, se incorpora una dimensión sobre calidad de vida en el vec
 
 }
 
-\caption{Descriptivos Confianza en vecinos.}\label{fig:unnamed-chunk-3}
+\caption{Confianza en vecinos.}\label{fig:unnamed-chunk-3}
 \end{figure}
 
 \textbf{Identificación barrial}
@@ -493,7 +465,7 @@ De manera adicional, se incorpora una dimensión sobre calidad de vida en el vec
 
 }
 
-\caption{Descriptivos Cohesion barrial.}\label{fig:unnamed-chunk-4}
+\caption{ Identificación con el barrio.}\label{fig:unnamed-chunk-4}
 \end{figure}
 
 \begin{figure}[H]
@@ -502,7 +474,7 @@ De manera adicional, se incorpora una dimensión sobre calidad de vida en el vec
 
 }
 
-\caption{Correlaciones Cohesion barrial.}\label{fig:unnamed-chunk-5}
+\caption{Asociación indicadores identificación barrial.}\label{fig:unnamed-chunk-5}
 \end{figure}
 
 \textbf{Sociabilidad barrial}
@@ -513,7 +485,7 @@ De manera adicional, se incorpora una dimensión sobre calidad de vida en el vec
 
 }
 
-\caption{Descriptivos Sociabilidad barrial.}\label{fig:unnamed-chunk-6}
+\caption{Sociabilidad barrial.}\label{fig:unnamed-chunk-6}
 \end{figure}
 
 \begin{figure}[H]
@@ -522,7 +494,7 @@ De manera adicional, se incorpora una dimensión sobre calidad de vida en el vec
 
 }
 
-\caption{Correlaciones Sociabilidad barrial.}\label{fig:unnamed-chunk-7}
+\caption{Asociación indicadores sociabilidad barrial.}\label{fig:unnamed-chunk-7}
 \end{figure}
 
 \textbf{Satisfacción residencial}
@@ -533,7 +505,7 @@ De manera adicional, se incorpora una dimensión sobre calidad de vida en el vec
 
 }
 
-\caption{Descriptivos Satisfacción residencial.}\label{fig:unnamed-chunk-8}
+\caption{Satisfacción con el barrio.}\label{fig:unnamed-chunk-8}
 \end{figure}
 
 \begin{figure}[H]
@@ -542,7 +514,7 @@ De manera adicional, se incorpora una dimensión sobre calidad de vida en el vec
 
 }
 
-\caption{Correlaciones Satisfacción residencial.}\label{fig:unnamed-chunk-9}
+\caption{Asociación indicadores satisfacción residencial.}\label{fig:unnamed-chunk-9}
 \end{figure}
 
 \hypertarget{capuxedtulo-ii}{%
@@ -556,12 +528,10 @@ De manera adicional, se incorpora una dimensión sobre calidad de vida en el vec
 \addcontentsline{toc}{chapter}{Bibliografía}
 
 \hypertarget{refs}{}
-\begin{cslreferences}
 \leavevmode\hypertarget{ref-cepal_Cohesion_2021}{}%
 CEPAL. (2021). \emph{Cohesión social y desarrollo social inclusivo en América Latina. Una propuesta normativa para una era de incertidumbres}.
 
 \leavevmode\hypertarget{ref-coes_Radiografia_2019}{}%
 COES. (2019). \emph{Radiografía del cambio social. Análisis de Resultados Longitudinales 2016-2018}.
-\end{cslreferences}
 
 \end{document}
