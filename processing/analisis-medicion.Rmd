@@ -73,7 +73,7 @@ ggsave(graf2, file = "../bookdown-files/output/graphs/confianza-interpersonal.pn
 ```{r echo=FALSE}
 conf_interpersonal<-
   data %>%
-  dplyr::select(c02_w01, c03_w01, c04_w01) %>% 
+  dplyr::select(c02_w01, c03_w01, c04_w01) %>%
   lavaan::lavCor(., ordered=names(.))
 diag(conf_interpersonal) = NA
 rownames(conf_interpersonal) <- c("A. Se puede confiar en la mayoria de las personas",
@@ -92,13 +92,36 @@ corrplot::corrplot(conf_interpersonal,
   na.label = "-",
   lower.col = "black")
 dev.off()
+
+
+ltm::cronbach.alpha(data %>%
+  dplyr::select(c02_w01, c03_w01, c04_w01), na.rm=TRUE)
+
+ltm::cronbach.alpha(data %>%
+  dplyr::select(c02_w01, c03_w01), na.rm=TRUE)
+
+
+
 ```
 
 ### Reconocimiento y respeto de la diversidad
 
 ```{r echo=FALSE}
 tabla3 = data %>% select(r12_03_w01, r12_04_w01, c37_01_w03)
+labelled::remove_labels(tabla3)
+frq(tabla3$r12_03_w01)
+
+str(tabla3$r12_03_w01)
+col_names <- names(tabla3)
+col_names
+tabla3[,col_names] <- lapply(tabla3[,col_names] , factor)
+tabla3 <- as.factor(tabla3)
+summary(tabla3)
 tabla3 = droplevels(tabla3)
+
+to_label(tabla3, drop.levels=TRUE)
+
+frq(tabla3)
 tabla3$r12_03_w01<- factor(tabla3$r12_03_w01, levels = c(1, 2, 3, 4, 5), labels = c("Totalmente en desacuerdo", "En desacuerdo", "Ni en desacuerdo ni de acuerdo", "De acuerdo", "Totalmente de acuerdo"))
 tabla3$r12_04_w01<- factor(tabla3$r12_04_w01, levels = c(1, 2, 3, 4, 5), labels = c("Totalmente en desacuerdo", "En desacuerdo", "Ni en desacuerdo ni de acuerdo", "De acuerdo", "Totalmente de acuerdo"))
 tabla3$c37_01_w03<- factor(tabla3$c37_01_w03, levels = c(1, 2, 3, 4, 5), labels = c("Totalmente en desacuerdo", "En desacuerdo", "Ni en desacuerdo ni de acuerdo", "De acuerdo", "Totalmente de acuerdo"))
@@ -139,7 +162,7 @@ ggsave(graf4, file = "../bookdown-files/output/graphs/diversidad.png",device = "
 ```{r echo=FALSE}
 diversidad<-
   data %>%
-  dplyr::select(r12_03_w01, r12_04_w01, c37_01_w03, c06_04_w01, c06_05_w01, c06_06_w01) %>% 
+  dplyr::select(r12_03_w01, r12_04_w01, c37_01_w03, c06_04_w01, c06_05_w01, c06_06_w01) %>%
   lavaan::lavCor(., ordered=names(.))
 diag(diversidad) = NA
 rownames(diversidad) <- c("A. Chile pierde su identidad con la llegada de inmigrantes",
@@ -162,6 +185,42 @@ corrplot::corrplot(diversidad,
   lower.col = "black")
 dev.off()
 ```
+
+
+```{r}
+# Análisis Factorial Exploratorio
+diversidad_fa<-
+  data %>%
+  dplyr::select(r12_03_w01, r12_04_w01, c37_01_w03, c06_04_w01, c06_05_w01, c06_06_w01)
+
+## reverse coding items sentido inverso:
+
+sjmisc::frq(data$r12_03_w01)
+sjmisc::frq(data$r12_04_w01)
+
+diversidad_fa <- diversidad_fa %>% 
+  mutate(r12_03_w01_rev = 6 - r12_03_w01,
+         r12_04_w01_rev = 6 - r12_04_w01)
+
+diversidad_fa <- diversidad_fa %>% select(-r12_03_w01,-r12_04_w01)
+
+psych::fa.parallel(diversidad_fa, fa="fa")
+psych::scree(diversidad_fa)
+
+fac_ml <- psych::fa(r = diversidad_fa, nfactors = 3, fm= "ml", rotate = "varimax" )
+
+fac_ml$loadings
+# ver https://www.anthonyschmidt.co/post/2020-09-27-efa-tables-in-r/
+
+source("processing/fa_table.R") 
+
+div_fa <-fa_table(fac_ml, .32)
+knitr::kable(div_fa, "html") %>%
+  kable_styling(bootstrap_options = c("striped", "hover")) %>%
+  cat(., file = "bookdown-files/output/tables/div_fa.html")
+
+```
+
 
 El ajuste de la dimensión Relaciones sociales de igualdad se estimó a través de un AFC. Esta dimensión logra su mejor ajuste al separarla en cuatro subdimensiones: a) Lazos; b) confianza interpersonal; c) Reconocimiento y respeto hacia la diversidad; y d) prejuicios hacia inmigrantes.
 Además, se excluye el indicador de "Grado de confianza en inmigrantes" de la subdimensión Reconocimiento y respeto hacia la diversidad.
@@ -291,7 +350,7 @@ ggsave(graf7, file = "../bookdown-files/output/graphs/confianza-institucional.pn
 ```{r echo=FALSE}
 conf_institucional<-
   data %>%
-  dplyr::select(c05_01_w01,c05_02_w01,c05_03_w01,c05_04_w01,c05_05_w01,c05_06_w01,c05_07_w01,c05_08_w01) %>% 
+  dplyr::select(c05_01_w01,c05_02_w01,c05_03_w01,c05_04_w01,c05_05_w01,c05_06_w01,c05_07_w01,c05_08_w01) %>%
   lavaan::lavCor(., ordered=names(.))
 diag(conf_institucional) = NA
 rownames(conf_institucional) <- c("A. Confianza en el gobierno",
@@ -393,7 +452,7 @@ ggsave(graf8, file = "../bookdown-files/output/graphs/solidaridad.png",device = 
 ```{r echo=FALSE}
 solidaridad<-
   data %>%
-  dplyr::select(c07_01_w01,c07_02_w01,c07_03_w01,c07_04_w01,c07_05_w01,c07_06_w01,c07_07_w01,c07_08_w01) %>% 
+  dplyr::select(c07_01_w01,c07_02_w01,c07_03_w01,c07_04_w01,c07_05_w01,c07_06_w01,c07_07_w01,c07_08_w01) %>%
   lavaan::lavCor(., ordered=names(.))
 diag(solidaridad) = NA
 rownames(solidaridad) <- c("A. Visita la casa de algún vecino",
@@ -450,7 +509,7 @@ ggsave(graf9, file = "../bookdown-files/output/graphs/participacion-civica.png",
 ```{r echo=FALSE}
 part_civica<-
   data %>%
-  dplyr::select(c08_01_w01, c08_02_w01, c08_03_w01, c08_04_w01) %>% 
+  dplyr::select(c08_01_w01, c08_02_w01, c08_03_w01, c08_04_w01) %>%
   lavaan::lavCor(., ordered=names(.))
 diag(part_civica) = NA
 rownames(part_civica) <- c("A. Firma una carta o petición",
@@ -532,7 +591,7 @@ cor$c12_08_w01 <- recode(cor$c12_08_w01, "3=1")
 
 part_organizaciones <-
   cor %>%
-  dplyr::select(c12_01_w01, c12_02_w01, c12_03_w01, c12_04_w01, c12_05_w01, c12_06_w01, c12_07_w01, c12_08_w01) %>% 
+  dplyr::select(c12_01_w01, c12_02_w01, c12_03_w01, c12_04_w01, c12_05_w01, c12_06_w01, c12_07_w01, c12_08_w01) %>%
   lavaan::lavCor(., ordered=names(.))
 diag(part_organizaciones) = NA
 rownames(part_organizaciones) <- c("A. Junta de vecinos u otra organización",
@@ -685,7 +744,7 @@ ggsave(graf13, file = "../bookdown-files/output/graphs/cohesion-barrial.png",dev
 ```{r echo=FALSE}
 cohesion_barrial <-
   data %>%
-  dplyr::select(t02_01_w01, t02_02_w01, t02_03_w01, t02_04_w01) %>% 
+  dplyr::select(t02_01_w01, t02_02_w01, t02_03_w01, t02_04_w01) %>%
   lavaan::lavCor(., ordered=names(.))
 diag(cohesion_barrial) = NA
 rownames(cohesion_barrial) <- c("A. Este barrio es ideal para mi",
@@ -734,7 +793,7 @@ ggsave(graf14, file = "../bookdown-files/output/graphs/sociabilidad-barrial.png"
 ```{r echo=FALSE}
 sociabilidad_barrial <-
   data %>%
-  dplyr::select(t03_01_w01, t03_02_w01, t03_03_w01, t03_04_w01) %>% 
+  dplyr::select(t03_01_w01, t03_02_w01, t03_03_w01, t03_04_w01) %>%
   lavaan::lavCor(., ordered=names(.))
 diag(sociabilidad_barrial) = NA
 rownames(sociabilidad_barrial) <- c("A. En este barrio es fácil hacer amigos",
@@ -791,7 +850,7 @@ ggsave(graf15, file = "../bookdown-files/output/graphs/satisfaccion-residencial.
 ```{r echo=FALSE}
 sat_residencial <-
   data %>%
-  dplyr::select(t06_01_w01, t06_02_w01, t06_03_w01, t06_04_w01, t06_05_w01, t06_06_w01, t06_07_w01, t06_08_w01) %>% 
+  dplyr::select(t06_01_w01, t06_02_w01, t06_03_w01, t06_04_w01, t06_05_w01, t06_06_w01, t06_07_w01, t06_08_w01) %>%
   lavaan::lavCor(., ordered=names(.))
 diag(sat_residencial) = NA
 rownames(sat_residencial) <- c("A. Seguridad del barrio",

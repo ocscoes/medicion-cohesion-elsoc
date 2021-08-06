@@ -13,13 +13,40 @@ knitr::opts_chunk$set(echo = T, warning = F, message = F)
 ```
 El siguiente código produce una base de datos con variables filtradas y preparadas para el análisis (limpieza de missings, reetiquetados, recodificación).
 
-Los datos corresponden a la base de datos longitudinal de ELSOC 2016-2019. Las variables seleccionadas se basan en la propuesta conceptual de cohesión social de la CEPAL (ver documento consultoría) y son las siguientes:
+Los datos corresponden a la base de datos longitudinal de ELSOC 2016-2019. Las variables seleccionadas se basan en la propuesta conceptual de cohesión social de la CEPAL (ver documento consultoría).
+
+
+# Cargar paquetes
+```{r}
+pacman::p_load(dplyr, car, summarytools, webshot, sjmisc)
+```
+
+# Cargar base elsoc longitudinal (2016-2019)
+```{r}
+data <- get(load(url("https://dataverse.harvard.edu/api/access/datafile/4606527"))) #desde url oficial en dataverse
+
+data <- data %>% car::recode(., "c(-888,-999)=NA") # recode missings de no respuesta a NA
+
+data <- data %>% sjlabelled::remove_labels(labels = c('No Responde (no leer)','No Sabe (no leer)')) # elimina value labels de missings de no respuesta para no interferir en descriptivos posteriores
+
+# remove(elsoc_wide_2016_2019) # ?
+```
 
 # Relaciones sociales de igualdad
 
 ## Lazos
 
-R15: Cantidad de amigos (w02 & w04)
+### R15: Cantidad de amigos (w02 & w04)
+
+```{r}
+data %>% select (r15_w02,r15_w04)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
+```
+
+######### Aplicar esta lógica al resto del código
+
+
+
+
 
 ## Confianza interpersonal
 
@@ -172,16 +199,9 @@ T06_07: Proximidad a áreas de comercio (w01, w02, w03 & w04)
 
 T06_08: Proximidad con familiares y/o amigos cercanos (w01, w02, w03 & w04)
 
-# Cargar paquetes
-```{r}
-pacman::p_load(dplyr, car, summarytools, webshot, sjmisc)
-```
 
-# Cargar base elsoc longitudinal (2016-2019)
-```{r}
-data <- get(load(url("https://dataverse.harvard.edu/api/access/datafile/4606527"))) #desde url oficial en dataverse
-remove(elsoc_wide_2016_2019)
-```
+##########################################
+
 
 # Relaciones sociales de igualdad
 ## Lazos
@@ -782,5 +802,5 @@ sjmisc::frq(data$t06_08_w01)
 
 # Guardar base
 ```{r}
-save(data,file = "../input/data/data.RData")
+save(data,file = "input/data/data.RData")
 ```

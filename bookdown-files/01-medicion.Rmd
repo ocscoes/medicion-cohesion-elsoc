@@ -28,11 +28,11 @@ Las decisiones respecto de los indicadores de cohesión social variarán según 
 
 - 2 variables: se analizará la correlación entre ambas y sobre esta base se podrá proponer un promedio simple
 
-- 3 variables: se analizará la matriz de correlaciones y el alfa de cronbach como medida de consistencia interna que permita trabajar con el promedio
+- 3 variables: se analizará la matriz de correlaciones y el alfa de Cronbach como medida de consistencia interna que permita trabajar con el promedio. Esta medida otorga un número que va entre 0 y 1, donde el nivele convencionales para considerar consistencia es 0.7 o mayor.
 
 - 4 variables o más: se realizará un análisis factorial exploratorio para evaluar la dimensionalidad subyacente a los indicadores, y en base a este análisis se podrán proponer puntajes factoriales como índices.
 
-A continuación se presenta el análsis ordenado por dimensiones:
+A continuación se presenta el análisis ordenado por dimensiones:
 
 - Relaciones sociales de igualdad
 - Sentido de pertenencia
@@ -48,7 +48,7 @@ De acuerdo a CEPAL, "Esta  parte de la definición de la cohesión social se ace
 
 Según @cepal_Cohesion_2021, "Los lazos sociales permiten generar espacios de cooperación que faciliten el desarrollo de relaciones sociales de igualdad, y establece patrones de reciprocidad interpersonal (PNUD, 2013)" (p. 74)
 
-El indicador propuesto en el informe de CEPAL es "importancia de amigos en la vida", que es un indicador de percepción de la Encuesta Mundial de Valores, a partir del cual se busca cuantificar la intensidad del tejido social en los países de la región. En el caso de ELSOC el indicador más cercano corresponde a "Cantidad de amigos cercanos", y que está presente solo en las olas 2 y 4. Un análisis descriptivo de este indicador se presenta en la figura \@ref(fig:lazos).
+El indicador propuesto en el informe de CEPAL es "importancia de amigos en la vida", que es un indicador de percepción de la Encuesta Mundial de Valores, a partir del cual se busca cuantificar la intensidad del tejido social en los países de la región. En el caso de ELSOC el indicador más cercano corresponde a "Cantidad de amigos cercanos", y que está presente solo en las olas 2 y 4. Un análisis descriptivo de este indicador, que sería el único representante de esta subdimensión, se presenta en la figura \@ref(fig:lazos).
 
 ```{r lazos, echo=FALSE, fig.cap="Cantidad de amigos cercanos.", fig.align = 'center', out.width = '100%',out.height='100%'}
 knitr::include_graphics(path = "output/graphs/lazos.png")
@@ -58,11 +58,12 @@ knitr::include_graphics(path = "output/graphs/lazos.png")
 
 La confianza interpersonal es un atributo de las relaciones sociales que permite la interacción intergrupal y facilita la acción colectiva a favor de los objetivos compartidos. Por lo tanto, "la confianza se considera un habilitador de la cooperación y participación (capital social)" [@cepal_Cohesion_2021, p. 74].
 
-En el informe de CEPAL se utilizan los indicadores "Confianza en la gente de su comunidad", que busca cuantificar que tan confiable consideran a los habitantes de su comunidad y "Confianza en la gente que se conoce por primera vez", en el cual se cuantifica si se puede confiar en la mayoría de las personas o uno debe ser lo suficientemente cuidadoso con los demás. Al trabajar con ELSOC se utilizará "Se puede confiar en la mayoría de las personas", "La mayoría de las personas tratar de ayudar a los demás" y "la mayoría de la gente trata de ser justa", presentes en las cuatro olas. Un análisis descriptivo de estos indicadores se presentan en la figura \@ref(fig:confianza-interpersonal) y un análisis bivariado en la figura \@ref(fig:confianza-interpersonal-cor).
+En el informe de CEPAL se utilizan los indicadores "Confianza en la gente de su comunidad", que busca cuantificar que tan confiable consideran a los habitantes de su comunidad y "Confianza en la gente que se conoce por primera vez", en el cual se cuantifica si se puede confiar en la mayoría de las personas o uno debe ser lo suficientemente cuidadoso con los demás. Al trabajar con ELSOC los indicadores que van en esta línea son "Se puede confiar en la mayoría de las personas", "La mayoría de las personas tratar de ayudar a los demás" y "la mayoría de la gente trata de ser justa", presentes en las cuatro olas. Un análisis descriptivo de estos indicadores se presentan en la figura \@ref(fig:confianza-interpersonal) y un análisis bivariado en la figura \@ref(fig:confianza-interpersonal-cor).
 
 ```{r confianza-interpersonal, echo=FALSE, fig.cap="Confianza interpersonal.", fig.align = 'center', out.width = '100%',out.height='100%'}
 knitr::include_graphics(path = "output/graphs/confianza-interpersonal.png")
 ```
+En la matriz de correlaciones de la Figura \@ref(confianza-interpersonal_cor) vemos que las correlaciones entre los indicadores van en el rango bajo a moderado, donde los indicadores más correlacionados son A y B. Al calcular la consistencia interna de estos indicadores mediante alpha de Cronbach el resultado arroja 0.38, bastante por debajo del límite recomendable de 0.7. Por lo tanto, el índice sugerido para esta subdimensión considera un promedio solo de aquellos items que presentan una correlación mayor: "Se puede confiar en la mayoria de las personas" y "a mayoria de las personas trata de ayudar a los demás".
 
 ```{r confianza-interpersonal-cor, echo=FALSE, fig.cap="Asociación indicadores Confianza interpersonal.", fig.align = 'center', out.width = '100%',out.height='100%'}
 knitr::include_graphics(path = "output/graphs/confianza-interpersonal_cor.png")
@@ -72,7 +73,7 @@ knitr::include_graphics(path = "output/graphs/confianza-interpersonal_cor.png")
 
 Las relaciones sociales de igualdad suponen el reconocimiento de la dignidad del "otro" y el reconocimiento de ser parte de una comunidad de iguales en materia de derechos ciudadanos, siendo un elemento que surge de la interacción en redes y asociaciones con individuos de distintas características [@cepal_Cohesion_2021].
 
-En el informe de CEPAL se utilizan dos indicadores "aprueba el derecho a contraer matrimonio de parejas del mismo sexo", que se incluye con el objetivo de cuantificar la tolerancia hacia los individuos y comunidades con distinta orientación sexual y "Los hombres no tienen prioridad sobre la mujer, a la hora acceder a un trabajo", que se incluye con el objetivo de cuantificar la cultura de igualdad de género en la sociedad. Además, se deja como pendiente la construcción de un indicador sobre tolerancia a personas de distinta raza y etnia, así como de percepción de discriminación. En este sentido, ante la falta de indicadores de ELSOC, se utilizarán los propuestos en [informe clases medias] como Actitudes hacia la diversidad: a) Chile pierde su identidad con la llegada de inmigrantes; b) Con la llegada de inmigrantes aumenta el desempleo; c) Grado de acuerdo con adopción homoparental; d) grado de confianza con personas homosexuales; e) grado de confianza con personas mapuche; y f) grado de confianza con personas inmigrantes. Los dos primeros indicadores están presentes en las cuatro olas, adopción homoparental en olas 3 y 4 y el resto de indicadores en las olas 2 y 4. Un análisis descriptivo de estos indicadores se presentan en la figura \@ref(fig:prejuicios) y en la figura \@ref(fig:diversidad) y un análisis bivariado en la figura \@ref(fig:diversidad-cor).
+En el informe de CEPAL se utilizan dos indicadores en esta subdimensión: "aprueba el derecho a contraer matrimonio de parejas del mismo sexo", que se incluye con el objetivo de cuantificar la tolerancia hacia los individuos y comunidades con distinta orientación sexual y "Los hombres no tienen prioridad sobre la mujer, a la hora acceder a un trabajo", que se incluye con el objetivo de cuantificar la cultura de igualdad de género en la sociedad. Además, se deja como pendiente la construcción de un indicador sobre tolerancia a personas de distinta raza y etnia, así como de percepción de discriminación. En el caso de ELSOC encontramos indicadores distintos pero relacionados con actitudes hacia la diversidad: a) Chile pierde su identidad con la llegada de inmigrantes; b) con la llegada de inmigrantes aumenta el desempleo; c) grado de acuerdo con adopción homoparental; d) grado de confianza con personas homosexuales; e) grado de confianza con personas mapuche; y f) grado de confianza con personas inmigrantes. Los dos primeros indicadores están presentes en las cuatro olas, adopción homoparental en olas 3 y 4 y el resto de indicadores en las olas 2 y 4. Un análisis descriptivo de estos indicadores se presentan en la figura \@ref(fig:prejuicios) y en la figura \@ref(fig:diversidad) y un análisis bivariado en la figura \@ref(fig:diversidad-cor).
 
 
 ```{r prejuicios, echo=FALSE, fig.cap="Prejuicios hacia inmigrantes y adopción homoparental.", fig.align = 'center', out.width = '100%',out.height='100%'}
@@ -86,6 +87,13 @@ knitr::include_graphics(path = "output/graphs/diversidad.png")
 ```{r diversidad-cor, echo=FALSE, fig.cap="Asociación indicadores Reconocimiento y respeto de la diversidad.", fig.align = 'center', out.width = '100%',out.height='100%'}
 knitr::include_graphics(path = "output/graphs/diversidad_cor.png")
 ```
+Para poder avanzar hacia la construcción de un índice basado en esta serie de indicadores utilizaremos análisis factorial exploratorio, que nos entrega información de las dimensiones comunes que subyacen a un conjunto de indicadores. La tabla (x) nos muestra el resultado de la extracción de tres factores:
+
+[acá insertar div_fa.html]
+
+En la tabla [ref] observamos en la primera columna un factor que se relaciona con las preguntas sobre el grado de confianza de la figura \@ref(fig:diversidad), luego un segundo factor asociado a las preguntas de inmigrantes, y finalmente un tercer factor asociado a la pregunta de adopción homoparental. Atendiendo ahora a la varianza asociada a estos factores (SS loadings), el primer factor representa casi un 30% de la varianza, el segundo alrededor de 20% y el tercero muy por debajo con 0.06. Por lo tanto podemos decir que hay mayor consistencia en los dos primeros factores, y entre ellos dos el asociado a diversidad es el más claro. Basándose en este análisis es posible proponer dos índices asociados a esta subdimensión y que serán calculados mediante puntajes factoriales: uno sobre diversidad y el otro sobre migrantes. 
+
+
 
 ## Sentido de pertenencia
 
