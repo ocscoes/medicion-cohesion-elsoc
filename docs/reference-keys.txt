@@ -5,6 +5,7 @@ fig:confianza-interpersonal-cor
 fig:prejuicios
 fig:diversidad
 fig:diversidad-cor
+tab:div-fa
 fig:identificacion
 fig:justicia
 fig:confianza-institucional

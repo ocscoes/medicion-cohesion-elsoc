@@ -17,8 +17,8 @@ toc-depth: 1
 lof: True
 lot: True
 # lang: es
-github-repo: "Kevin-carrasco/cohesion-cepal"
-url: "https://kevin-carrasco.github.io/cohesion-cepal/"
+github-repo: "juancarloscastillo/cohesion-cepal"
+url: "https://cohesion-cepal.netlify.app/"
 always_allow_html: true
 ---
 
