@@ -58,7 +58,7 @@
 % Allow footnotes in longtable head/foot
 \IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
 \makesavenoteenv{longtable}
-\usepackage{graphicx,grffile}
+\usepackage{graphicx}
 \makeatletter
 \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
 \def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
@@ -112,6 +112,7 @@
 % \else
 %   % \usepackage[spanish,es-tabla]{babel}
 % \fi
+
 \usepackage{booktabs}
 \usepackage{longtable}
 \usepackage{array}
@@ -126,10 +127,19 @@
 \usepackage[normalem]{ulem}
 \usepackage{makecell}
 \usepackage{xcolor}
+\ifluatex
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\newlength{\cslhangindent}
+\setlength{\cslhangindent}{1.5em}
+\newenvironment{cslreferences}%
+  {\setlength{\parindent}{0pt}%
+  \everypar{\setlength{\hangindent}{\cslhangindent}}\ignorespaces}%
+  {\par}
 
 \title{Cambios en la Cohesión Social en Chile}
 \author{Equipo CEPAL-ELSOC}
-\date{2021-08-08}
+\date{2021-08-09}
 
 \begin{document}
 \maketitle
@@ -166,16 +176,26 @@ Ayudante de investigación: Kevin Carrasco.
 \chapter*{Introducción}\label{introducciuxf3n}}
 \addcontentsline{toc}{chapter}{Introducción}
 
-El Centro de Estudios de Conflicto y Cohesión Social (COES) realiza desde el año 2016 el primer ``Estudio Longitudinal Social de Chile'' (ELSOC). Este estudio consiste en encuestar a casi 3.000 chilenos, anualmente, a lo largo de una década. Por lo tanto, el diseño de ELSOC es cuantitativo de tipo panel, es decir, que se repite su aplicación año a año.
+El presente estudio tiene por objetivo analizar los cambios en la cohesión social en Chile en los últimos años. Para ello toma como punto de partida la definición de cohesión social de la CEPAL (CEPAL, \protect\hyperlink{ref-cepal_Cohesion_2021}{2021}) que señala que:
 
-El principal objetivo de ELSOC es evaluar la manera como piensan, sienten y se comportan los chilenos en torno a un conjunto de temas referidos al conflicto y la cohesión social en Chile. Además, permite comparar la estabilidad o cambio en diversas dimensiones sociales atendiendo a factores que los moderan o explican a lo largo de los años.
+\textbf{``la cohesión social puede ser comprendida como la capacidad de una sociedad y sus instituciones democráticas de promover relaciones sociales de igualdad y generar un sentido de pertenencia y una orientación hacia el bien común de una forma percibida como legítima por sus miembros. Esa capacidad requiere de la existencia de garantías de bienestar, la promoción activa de una cultura de la igualdad, de mecanismos para la reducción de las desigualdades, de reconocimiento, de participación y para la resolución pacífica de conflictos y adaptación a cambios, en el marc0 de un Estado de derecho y una democracia de calidad''}. (CEPAL, \protect\hyperlink{ref-cepal_Cohesion_2021}{2021})
 
-Esta encuesta es aplicada por medio de un cuestionario estructurado que posee 7 módulos diferentes: Territorio, Redes y actitudes sociales, Ciudadanía y democracia, Desigualdad y legitimidad, Conflicto social, Salud y bienestar y Caracterización sociodemográfica. Posee un muestreo probabilístico, estratificado (por tamaño de ciudades), por conglomerados y multietápico (aleatorio en todas sus etapas): Se eligieron aleatoriamente 40 ciudades con más de 10.000 habitantes (92 comunas de 13 regiones), dentro de estas se escogieron aleatoriamente 1067 manzanas. Dentro de cada manzana se escogieron hogares aleatoriamente y dentro de cada hogar fueron elegidos aleatoriamente individuos con 18 años o más. Por lo tanto, su unidad básica de observación son personas individuales. Asimismo, la población objetivo son hombres y mujeres de 18 a 75 años. Esta encuesta alcanza un 77\% de representatividad de la población total del país y un 93\% de la población urbana, con un error muestral del 2\%. La muestra alcanzada en 2019 posee las respuestas de 3417 individuos, que incluye respuestas de participantes de la primera ola (2016) y de la muestra de refresco iniciada en 2018 (COES, \protect\hyperlink{ref-coes_Radiografia_2019}{2019}).
+La primera parte de esta definición de cohesión social como capacidad hace referencia a una serie de elementos constitutivos del concepto de cohesión social, y que se pueden encontrar en otras definiciones contemporáneas de cohesión como las del \href{https://www.bertelsmann-stiftung.de/en/publications/publication/did/social-cohesion-radar/}{Radar de la Cohesión Social} y las del \href{https://www.desarrollosocialyfamilia.gob.cl/storage/docs/Informe_Final_Consejo_Cohesion_Social.pdf}{Consejo Asesor para la Cohesión Social} desarrollada en Chile el año 2020, y que entienden la cohesión como un fenómeno multidimensional. Gran parte de la literatura y estudios empíricos a la fecha en el área se han enfocado en intentar generar mediciones e indicadores para cada una de estas subdimensiones basándose en datos secundarios de encuestas nacionales e internacionales, de modo de poder entregar un diagnóstico del estado de la cohesión social.
+
+En Chile es posible identificar dos estudios específicos que se han abocado a la medición de los elementos constitutivos de la cohesión social basados en encuestas: Ecosocial (Valenzuela et al., \protect\hyperlink{ref-valenzuela_vinculos_2008}{2008}) y \href{https://coes.cl/encuesta-panel/}{ELSOC}. Ecosocial es una encuesta ``construida con el propósito de medir y documentar una serie de aspectos relacionados con el estado de la cohesión social en la población de las principales ciudades de siete países Latinoamericanos: México, Guatemala, Colombia, Brasil, Perú, Argentina y Chile.'' (Valenzuela et al., \protect\hyperlink{ref-valenzuela_vinculos_2008}{2008}, p. 5). Los resultados de esta encuesta han sido publicados en libros como \href{https://www.cieplan.org/wp-content/uploads/2019/12/Libro_Completo_Vinculos_Creencia_e_Ilusiones.pdf}{``Vínculos, Creencias e Ilusiones''} (2008), en conexión con otros trabajos también de CIEPLAN centrados en cohesión como el libro \href{https://www.cieplan.org/wp-content/uploads/2019/12/Libro_Completo_Redes_Estado_y_Mercado_compressed.pdf}{``Redes, Estado y Mercado''}(2008). En cuanto a ELSOC (Estudio Longitudinal Social de Chile), es una encuesta longitudinal panel desarrollada por el Centro de Estudios de Conflicto y Cohesión Social \href{https://www.coes.cl/}{COES}, y que será la base de datos principal para el presente estudio.
+
+El principal objetivo de ELSOC es evaluar la manera como piensan, sienten y se comportan los chilenos en torno a un conjunto de temas referidos al conflicto y la cohesión social en Chile. Además, permite comparar la estabilidad o cambio en diversas dimensiones sociales atendiendo a factores que los moderan o explican a lo largo de los años. Para ello se encuesta anualmente desde el año 2016 a alrededor de 3.000 casos de manera longitudinal panel, es decir, todos los años se encuesta a las mismas personas de manera de poder analizar cambios en trayectorias individuales en distintos temas. Su naturaleza longitudinal es única en el país y permite despejar una serie de preguntas sobre cambio social que no pueden ser abordadas con precisión con la comparación de encuestas repetidas en el tiempo a distintos sujetos.
+
+ELSOC es aplicada por medio de un cuestionario estructurado que posee 7 módulos diferentes: Territorio, Redes y actitudes sociales, Ciudadanía y democracia, Desigualdad y legitimidad, Conflicto social, Salud y bienestar y Caracterización sociodemográfica. Posee un muestreo probabilístico, estratificado (por tamaño de ciudades), por conglomerados y multietápico (aleatorio en todas sus etapas): Se eligieron aleatoriamente 40 ciudades con más de 10.000 habitantes (92 comunas de 13 regiones), dentro de estas se escogieron aleatoriamente 1067 manzanas. Dentro de cada manzana se escogieron hogares aleatoriamente y dentro de cada hogar fueron elegidos aleatoriamente individuos con 18 años o más. Por lo tanto, su unidad básica de observación son personas individuales. Asimismo, la población objetivo son hombres y mujeres de 18 a 75 años. Esta encuesta alcanza un 77\% de representatividad de la población total del país y un 93\% de la población urbana, con un error muestral del 2\%. La muestra alcanzada en 2019 posee las respuestas de 3417 individuos, que incluye respuestas de participantes de la primera ola (2016) y de la muestra de refresco iniciada en 2018 (COES, \protect\hyperlink{ref-coes_Radiografia_2019}{2019}).
+
+{[}aquí más detalles sobre el diseño longitudinal ELSOC{]}
+
+El presente documento se estructura en tres capítulos principales. El primer capítulo está abocado a medición de cohesión social, donde se proponen indicadores de ELSOC para las distintas subdimensiones de cohesión social propuestas por CEPAL. EL segundo capítulo toma estos indicadores por dimensión y subdimensión y analiza su cambio/estabilidad en el tiempo en Chile entre 2016 y 2020. Finalmente, el capítulo 3 ahonda en los determinantes sociales de los posibles cambios detectados en el capítulo 2.
 
 \hypertarget{mediciuxf3n-de-cohesiuxf3n-social-con-indicadores-elsoc}{%
 \chapter{Medición de cohesión social con indicadores ELSOC}\label{mediciuxf3n-de-cohesiuxf3n-social-con-indicadores-elsoc}}
 
-El objetivo de este primer capítulo es generar indicadores de cohesión social basados en el modelo conceptual de CEPAL, en particular para los denominados \emph{elementos constitutivos de la cohesión social} y que se presenta en la Figura \ref{fig:esquema-cepal}.
+El objetivo de este primer capítulo es generar indicadores de cohesión social basados en el modelo conceptual de CEPAL, en particular para los denominados \emph{elementos constitutivos de la cohesión social} y que se presentan en la Figura \ref{fig:esquema-cepal}.
 
 \begin{figure}[H]
 
@@ -186,25 +206,25 @@ El objetivo de este primer capítulo es generar indicadores de cohesión social 
 \caption{Resumen dimensiones CEPAL.}\label{fig:esquema-cepal}
 \end{figure}
 
-En este capítulo se seleccionarán indicadores de la encuesta ELSOC (Estudio Longitudinal Social de Chile) que se asocien al contenido de cada una de las subdimensiones del concepto de cohesión social. Por ejemplo, si consideramos la dimensión ``Relaciones Sociales de Igualdad'', comenzaremos con la subdimensión ``lazos'' identificando indicadores de la encuesta que representen este concepto, y con la información disponible elaboraremos una propuesta para cubrir cada subdimensión.
+En este capítulo se seleccionarán indicadores de la encuesta \href{https://coes.cl/encuesta-panel/}{ELSOC} (Estudio Longitudinal Social de Chile) que se asocien al contenido de cada una de las subdimensiones del concepto de cohesión social. Por ejemplo, si consideramos la dimensión ``Relaciones Sociales de Igualdad'', comenzaremos con la subdimensión ``lazos'' identificando indicadores de la encuesta que representen este concepto, y con la información disponible elaboraremos una propuesta para cubrir cada una de las subdimensiones.
 
-Antes de comenzar con el trabajo de análisis de subdimensiones e indicadores, es pertinente mencionar una pequeña nota sobre medición. En este contexto medición hace referencia a otorgar propiedades numéricas a ciertos atributos individuales. Este proceso por definición no es exacto y conlleva error, ya que muchos de los conceptos que se trabajan en ciencias sociales no se pueden medir directamente y se consideran por lo tanto constructos latentes (como clase, estatus, pertenencia, confianza, entre muchos otros). Gran parte del trabajo de validez de las mediciones se trata justamente de poder cuantificar y minimizar este error. Para esto no solo basta con un análisis de \emph{validez aparente}, referido a que el contenido de la medición parezca relacionarse con el concepto que se desea medir, sino también con las propiedades métricas del indicador, como variabilidad y covariabilidad/correlación con otras medidas asociadas. Es por ello que en medición muchas veces se utilizan indicadores múltiples para un mismo concepto, de modo de poder identificarlo y estimarlo de una manera más robusta con técnicas específicas de análisis de constructos latentes.
+Antes de comenzar con el trabajo de análisis de subdimensiones e indicadores, es pertinente hacer algunos alcances sobre lo que vamos a entender por \emph{medición}. En este contexto medición hace referencia a otorgar propiedades numéricas a ciertos atributos individuales. Este proceso por definición no es exacto y conlleva error, ya que muchos de los conceptos que se trabajan en ciencias sociales no se pueden medir directamente y se consideran por lo tanto constructos latentes (como clase, estatus, pertenencia, confianza, entre muchos otros). Gran parte del trabajo de buscar evidencia de validez de las mediciones se trata justamente de poder cuantificar y minimizar este error. Para esto no solo basta con un análisis de \emph{validez aparente}, referido a que el contenido de los items preguntas de un cuestionario parezcan relacionarse con el concepto que se desea medir, sino también con las propiedades métricas del indicador, como son la variabilidad y covariabilidad/correlación con otras medidas asociadas. Es por ello que en medición muchas veces se utilizan indicadores múltiples para un mismo concepto, de modo de poder identificarlo y estimarlo de una manera más robusta con técnicas específicas de análisis de constructos latentes.
 
 {[}evaluar si es necesario dar más detalles de medición{]}
 
-La breve mención a aspectos de medición del párrafo anterior nos permite aclarar el orden y el sentido del análisis que se presenta a continuación. En algunos casos encontraremos indicadores únicos para subdimensiones, donde no existe mayor alternativa que discutir su validez aparente y esperar un bajo nivel de error de medición. En otros casos existen baterías de indicadores múltiples, donde se propondrán índices que representen de mejor manera los elementos comunes (covarianza) y que subyacen a la batería, para lo que se utilizarán técnicas de análisis factorial.
+La breve mención a aspectos de medición del párrafo anterior nos permite aclarar el orden y el sentido del análisis que se presenta a continuación. En algunos casos encontraremos items únicos para las subdimensiones, y en este caso no tenemos mayor alternativa que discutir su validez aparente y esperar un bajo nivel de error de medición. En otros casos existen baterías de items múltiples, donde se propondrán índices que representen de mejor manera los elementos comunes (covarianza) y que subyacen a la batería, para lo que se utilizarán técnicas de análisis factorial.
 
-Las decisiones respecto de los indicadores de cohesión social variarán según sea el número de variables presentes por subdimension:
+Las decisiones respecto de los indicadores de cohesión social variarán según sea el número de items presentes por subdimension:
 
 \begin{itemize}
 \item
-  1 variable: se considerará simplemente el puntaje de la variable
+  1 item: se considerará simplemente el puntaje de la variable.
 \item
-  2 variables: se analizará la correlación entre ambas y sobre esta base se podrá proponer un promedio simple
+  2 items: se analizará la correlación entre ambas y sobre esta base se podrá proponer un promedio simple.
 \item
-  3 variables: se analizará la matriz de correlaciones y el alfa de Cronbach como medida de consistencia interna que permita trabajar con el promedio. Esta medida otorga un número que va entre 0 y 1, donde el nivele convencionales para considerar consistencia es 0.7 o mayor.
+  3 items: se analizará la matriz de correlaciones y el alfa de Cronbach como medida de consistencia interna que permita trabajar con el promedio. Esta medida otorga un número que va entre 0 y 1, donde el nivele convencionales para considerar consistencia es 0.7 o mayor.
 \item
-  4 variables o más: se realizará un análisis factorial exploratorio para evaluar la dimensionalidad subyacente a los indicadores, y en base a este análisis se podrán proponer puntajes factoriales como índices.
+  4 items o más: se realizará un análisis factorial exploratorio para evaluar la dimensionalidad subyacente a los items, y en base a este análisis se podrán proponer puntajes factoriales como índices.
 \end{itemize}
 
 A continuación se presenta el análisis ordenado por dimensiones:
@@ -230,7 +250,7 @@ De acuerdo a CEPAL, ``Esta parte de la definición de la cohesión social se ace
 
 Según CEPAL (\protect\hyperlink{ref-cepal_Cohesion_2021}{2021}), ``Los lazos sociales permiten generar espacios de cooperación que faciliten el desarrollo de relaciones sociales de igualdad, y establece patrones de reciprocidad interpersonal (PNUD, 2013)'' (p.~74)
 
-El indicador propuesto en el informe de CEPAL es ``importancia de amigos en la vida'', que es un indicador de percepción de la Encuesta Mundial de Valores, a partir del cual se busca cuantificar la intensidad del tejido social en los países de la región. En el caso de ELSOC el indicador más cercano corresponde a ``Cantidad de amigos cercanos'', y que está presente solo en las olas 2 y 4. Un análisis descriptivo de este indicador, que sería el único representante de esta subdimensión, se presenta en la Figura \ref{fig:lazos}.
+El indicador propuesto en el informe de CEPAL para esta subdimensión es ``importancia de amigos en la vida'', que es un indicador de percepción de la Encuesta Mundial de Valores, a partir del cual se busca cuantificar la intensidad del tejido social en los países de la región. En el caso de ELSOC el indicador más cercano a esta operacionalización corresponde a ``Cantidad de amigos cercanos'', y que está presente solo en las olas 2 y 4 de la encuesta. Un análisis descriptivo de este indicador, que sería el único representante de esta subdimensión, se presenta en la Figura \ref{fig:lazos}.
 
 \begin{figure}[H]
 
@@ -245,7 +265,7 @@ El indicador propuesto en el informe de CEPAL es ``importancia de amigos en la v
 
 La confianza interpersonal es un atributo de las relaciones sociales que permite la interacción intergrupal y facilita la acción colectiva a favor de los objetivos compartidos. Por lo tanto, ``la confianza se considera un habilitador de la cooperación y participación (capital social)'' (CEPAL, \protect\hyperlink{ref-cepal_Cohesion_2021}{2021}, p. 74).
 
-En el informe de CEPAL se utilizan los indicadores ``Confianza en la gente de su comunidad'', que busca cuantificar que tan confiable consideran a los habitantes de su comunidad y ``Confianza en la gente que se conoce por primera vez'', en el cual se cuantifica si se puede confiar en la mayoría de las personas o uno debe ser lo suficientemente cuidadoso con los demás. Al trabajar con ELSOC los indicadores que van en esta línea son ``Se puede confiar en la mayoría de las personas'', ``La mayoría de las personas tratan de ayudar a las demás'' y ``la mayoría de la gente trata de ser justa'', presentes en las cuatro olas. Un análisis descriptivo de estos indicadores se presentan en la Figura \ref{fig:confianza-interpersonal} y un análisis bivariado en la Figura \ref{fig:confianza-interpersonal-cor}.
+En el informe de CEPAL se utilizan los indicadores ``Confianza en la gente de su comunidad'', que busca cuantificar que tan confiable consideran a los habitantes de su comunidad y ``Confianza en la gente que se conoce por primera vez'', en el cual se cuantifica si se puede confiar en la mayoría de las personas o uno debe ser lo suficientemente cuidadoso con los demás. Al trabajar con ELSOC, los indicadores que van en esta línea son ``Se puede confiar en la mayoría de las personas'', ``La mayoría de las personas tratan de ayudar a las demás'' y ``la mayoría de la gente trata de ser justa'', presentes en las cuatro olas. Un análisis descriptivo de estos indicadores se presentan en la Figura \ref{fig:confianza-interpersonal} y un análisis bivariado en la Figura \ref{fig:confianza-interpersonal-cor}.
 
 \begin{figure}[H]
 
@@ -271,7 +291,7 @@ En la matriz de correlaciones de la Figura \ref{fig:confianza-interpersonal-cor}
 
 Las relaciones sociales de igualdad suponen el reconocimiento de la dignidad del ``otro'' y el reconocimiento de ser parte de una comunidad de iguales en materia de derechos ciudadanos, siendo un elemento que surge de la interacción en redes y asociaciones con individuos de distintas características (CEPAL, \protect\hyperlink{ref-cepal_Cohesion_2021}{2021}).
 
-En el informe de CEPAL se utilizan dos indicadores en esta subdimensión: ``aprueba el derecho a contraer matrimonio de parejas del mismo sexo'', que se incluye con el objetivo de cuantificar la tolerancia hacia los individuos y comunidades con distinta orientación sexual y ``Los hombres no tienen prioridad sobre la mujer, a la hora acceder a un trabajo'', que se incluye con el objetivo de cuantificar la cultura de igualdad de género en la sociedad. Además, se deja como pendiente la construcción de un indicador sobre tolerancia a personas de distinta raza y etnia, así como de percepción de discriminación. En el caso de ELSOC encontramos indicadores distintos pero relacionados con actitudes hacia la diversidad: a) Chile pierde su identidad con la llegada de inmigrantes; b) con la llegada de inmigrantes aumenta el desempleo; c) grado de acuerdo con adopción homoparental; d) grado de confianza con personas homosexuales; e) grado de confianza con personas mapuche; y f) grado de confianza con personas inmigrantes. Los dos primeros indicadores están presentes en las cuatro olas, adopción homoparental en olas 3 y 4 y el resto de indicadores en las olas 2 y 4. Un análisis descriptivo de estos indicadores se presentan en la Figura \ref{fig:prejuicios} y en la Figura \ref{fig:diversidad} y un análisis bivariado en la Figura \ref{fig:diversidad-cor}.
+En el informe de CEPAL se utilizan dos indicadores en esta subdimensión: ``aprueba el derecho a contraer matrimonio de parejas del mismo sexo'', que se incluye con el objetivo de cuantificar la tolerancia hacia los individuos y comunidades con distinta orientación sexual y ``Los hombres no tienen prioridad sobre la mujer, a la hora acceder a un trabajo'', que se incluye con el objetivo de cuantificar la cultura de igualdad de género en la sociedad. Además, se deja como pendiente la construcción de un indicador sobre tolerancia a personas de distinta raza y etnia, así como de percepción de discriminación. En el caso de ELSOC encontramos items distintos pero relacionados con actitudes hacia la diversidad: a) Chile pierde su identidad con la llegada de inmigrantes; b) con la llegada de inmigrantes aumenta el desempleo; c) grado de acuerdo con adopción homoparental; d) grado de confianza con personas homosexuales; e) grado de confianza con personas mapuche; y f) grado de confianza con personas inmigrantes. Los dos primeros items están presentes en las cuatro olas, adopción homoparental en olas 3 y 4 y el resto de indicadores en las olas 2 y 4. Un análisis descriptivo de estos items se presentan en la Figura \ref{fig:prejuicios} y en la Figura \ref{fig:diversidad} y un análisis bivariado en la Figura \ref{fig:diversidad-cor}.
 
 \begin{figure}[H]
 
@@ -300,7 +320,7 @@ En el informe de CEPAL se utilizan dos indicadores en esta subdimensión: ``apru
 \caption{Asociación indicadores Reconocimiento y respeto de la diversidad.}\label{fig:diversidad-cor}
 \end{figure}
 
-Para poder avanzar hacia la construcción de un índice basado en esta serie de indicadores utilizaremos análisis factorial exploratorio, que nos entrega información de las dimensiones comunes que subyacen a un conjunto de indicadores. La Tabla \ref{tab:div-fa} nos muestra el resultado de la extracción de tres factores:
+Para poder avanzar hacia la construcción de un índice basado en esta serie de items utilizaremos análisis factorial exploratorio, que nos entrega información de las dimensiones comunes que subyacen a un conjunto de indicadores. La Tabla \ref{tab:div-fa} nos muestra el resultado de la extracción de tres factores:
 
 \begin{longtable}[]{@{}l@{}}
 \caption{\label{tab:div-fa}Dimensiones de reconocimiento y respeto de la diversidad.}\tabularnewline
@@ -315,7 +335,7 @@ En la Tabla \ref{tab:div-fa} observamos en la primera columna un factor que se r
 \hypertarget{sentido-de-pertenencia}{%
 \section{Sentido de pertenencia}\label{sentido-de-pertenencia}}
 
-Una segunda dimensión de la definición propuesta corresponde al sentido de pertenencia, que ``alude a la vinculación e identificación de las personas respecto a la sociedad y a las instituciones y grupos que los integran. Incluye los niveles micro, meso y macro.'' (CEPAL, \protect\hyperlink{ref-cepal_Cohesion_2021}{2021}, p. 45). Esta definición permite relevar la importancia de ``las dinámicas de reconocimiento y participación social para conducir procesos dinámicos de inclusión que contribuyan a la cohesión social y al logro del bienestar (véase, por ejemplo, Jenson, 1998; Kymlicka, 1998).'' (CEPAL, \protect\hyperlink{ref-cepal_Cohesion_2021}{2021}, p. 45).
+Una segunda dimensión de la definición propuesta por CEPAL para cohesión social corresponde al sentido de pertenencia, que ``alude a la vinculación e identificación de las personas respecto a la sociedad y a las instituciones y grupos que los integran. Incluye los niveles micro, meso y macro.'' (CEPAL, \protect\hyperlink{ref-cepal_Cohesion_2021}{2021}, p. 45). Esta definición permite relevar la importancia de ``las dinámicas de reconocimiento y participación social para conducir procesos dinámicos de inclusión que contribuyan a la cohesión social y al logro del bienestar (véase, por ejemplo, Jenson, 1998; Kymlicka, 1998).'' (CEPAL, \protect\hyperlink{ref-cepal_Cohesion_2021}{2021}, p. 45).
 
 \textbf{Identificación con el país}
 
@@ -542,10 +562,15 @@ De manera adicional, se incorpora una dimensión sobre calidad de vida en el vec
 \addcontentsline{toc}{chapter}{Bibliografía}
 
 \hypertarget{refs}{}
+\begin{cslreferences}
 \leavevmode\hypertarget{ref-cepal_Cohesion_2021}{}%
 CEPAL. (2021). \emph{Cohesión social y desarrollo social inclusivo en América Latina. Una propuesta normativa para una era de incertidumbres}.
 
 \leavevmode\hypertarget{ref-coes_Radiografia_2019}{}%
 COES. (2019). \emph{Radiografía del cambio social. Análisis de Resultados Longitudinales 2016-2018}.
+
+\leavevmode\hypertarget{ref-valenzuela_vinculos_2008}{}%
+Valenzuela, E., Schwartzman, S., Valenzuela, S., Scully, T., Somma, N., \& Biehl, A. (2008). \emph{Vínculos, creencias e ilusiones. La cohesión social de los latinoamericanos Cieplan} (Uqbar).
+\end{cslreferences}
 
 \end{document}
