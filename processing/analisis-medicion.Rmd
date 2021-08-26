@@ -63,7 +63,7 @@ rownames(conf_interpersonal_cor) <- c("A. Se puede confiar en la mayoria de las 
                                   "C. La mayoria de las personas trata de ser justa")
 colnames(conf_interpersonal_cor) <-c("(A)", "(B)","(C)")
 
-png("bookdown-files/output/graphs/confianza-interpersonal_cor.png",width=600,height=600)
+png("bookdown-files/output/graphs/confianza-interpersonal_cor.png",width=600,height=300)
 corrplot::corrplot(conf_interpersonal_cor,
   method = "color",
   addCoef.col = "#000390",
@@ -122,7 +122,7 @@ rownames(diversidad_cor) <- c("A. Chile pierde su identidad con la llegada de in
                           "F. Grado de confianza con personas inmigrantes")
 colnames(diversidad_cor) <-c("(A)", "(B)","(C)", "(D)", "(E)", "(F)")
 
-png("bookdown-files/output/graphs/diversidad_cor.png",width=600,height=600)
+png("bookdown-files/output/graphs/diversidad_cor.png",width=600,height=300)
 corrplot::corrplot(diversidad_cor,
   method = "color",
   addCoef.col = "#000390",
@@ -255,7 +255,7 @@ colnames(conf_institucional_cor) <-c("(A)", "(B)","(C)", "(D)", "(E)", "(F)", "(
 
 
 
-png("bookdown-files/output/graphs/confianza-institucional_cor.png",width=600,height=600)
+png("bookdown-files/output/graphs/confianza-institucional_cor.png",width=600,height=300)
 corrplot::corrplot(conf_institucional_cor,
   method = "color",
   addCoef.col = "#000390",
@@ -306,7 +306,7 @@ rownames(solidaridad_cor) <- c("A. Visita la casa de algún vecino",
                           "H. Ayuda a alguien a conseguir trabajo")
 colnames(solidaridad_cor) <-c("(A)", "(B)","(C)", "(D)", "(E)", "(F)", "(G)", "(H)")
 
-png("bookdown-files/output/graphs/solidaridad_cor.png",width=600,height=600)
+png("bookdown-files/output/graphs/solidaridad_cor.png",width=600,height=300)
 corrplot::corrplot(solidaridad_cor,
   method = "color",
   addCoef.col = "#000390",
@@ -347,7 +347,7 @@ rownames(part_civica_cor) <- c("A. Firma una carta o petición",
                           "D. Usa redes sociales para expresar su opinión")
 colnames(part_civica_cor) <-c("(A)", "(B)","(C)", "(D)")
 
-png("bookdown-files/output/graphs/participacion-civica_cor.png",width=600,height=600)
+png("bookdown-files/output/graphs/participacion-civica_cor.png",width=600,height=300)
 corrplot::corrplot(part_civica_cor,
   method = "color",
   addCoef.col = "#000390",
@@ -395,7 +395,7 @@ rownames(part_organizaciones_cor) <- c("A. Junta de vecinos u otra organización
                           "H. Asociaciones o centros de estudiantes")
 colnames(part_organizaciones_cor) <-c("(A)", "(B)","(C)", "(D)", "(E)", "(F)", "(G)", "(H)")
 
-png("bookdown-files/output/graphs/participacion-organizaciones_cor.png",width=600,height=600)
+png("bookdown-files/output/graphs/participacion-organizaciones_cor.png",width=600,height=300)
 corrplot::corrplot(part_organizaciones_cor,
   method = "color",
   addCoef.col = "#000390",
@@ -427,7 +427,7 @@ cor = data %>% select(c11_w01, c11_w03)
 cor$c11_w01 <- recode(cor$c11_w01, "3=1")
 cor$c11_w03 <- recode(cor$c11_w03, "3=1")
 
-png("bookdown-files/output/graphs/participacion-electoral_cor.png",width=600,height=600)
+png("bookdown-files/output/graphs/participacion-electoral_cor.png",width=600,height=300)
 corrplot.mixed(cor(cor,
                    method="spearman",
                    use = "na.or.complete"))
@@ -472,7 +472,7 @@ rownames(cohesion_barrial_cor) <- c("A. Este barrio es ideal para mi",
                           "D. Este barrio es parte de mi")
 colnames(cohesion_barrial_cor) <-c("(A)", "(B)","(C)", "(D)")
 
-png("bookdown-files/output/graphs/cohesion-barrial_cor.png",width=600,height=600)
+png("bookdown-files/output/graphs/cohesion-barrial_cor.png",width=600,height=300)
 corrplot::corrplot(cohesion_barrial_cor,
   method = "color",
   addCoef.col = "#000390",
@@ -508,7 +508,7 @@ rownames(sociabilidad_barrial_cor) <- c("A. En este barrio es fácil hacer amigo
                           "D. La gente en este barrio es colaboradora")
 colnames(sociabilidad_barrial_cor) <-c("(A)", "(B)","(C)", "(D)")
 
-png("bookdown-files/output/graphs/sociabilidad-barrial_cor.png",width=600,height=600)
+png("bookdown-files/output/graphs/sociabilidad-barrial_cor.png",width=600,height=300)
 corrplot::corrplot(sociabilidad_barrial_cor,
   method = "color",
   addCoef.col = "#000390",
@@ -548,7 +548,7 @@ rownames(sat_residencial_cor) <- c("A. Seguridad del barrio",
                           "H. Proximidad con familiares y/o amigos")
 colnames(sat_residencial_cor) <-c("(A)", "(B)","(C)", "(D)", "(E)", "(F)", "(G)", "(H)")
 
-png("bookdown-files/output/graphs/satisfaccion-residencial_cor.png",width=600,height=600)
+png("bookdown-files/output/graphs/satisfaccion-residencial_cor.png",width=600,height=300)
 corrplot::corrplot(sat_residencial_cor,
   method = "color",
   addCoef.col = "#000390",
