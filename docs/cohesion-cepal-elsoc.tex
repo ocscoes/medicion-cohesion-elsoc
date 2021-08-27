@@ -129,7 +129,7 @@
 
 \title{Cambios en la Cohesión Social en Chile}
 \author{Equipo CEPAL-ELSOC}
-\date{2021-08-09}
+\date{2021-08-27}
 
 \begin{document}
 \maketitle
@@ -212,7 +212,7 @@ Las decisiones respecto de los indicadores de cohesión social variarán según 
 \item
   2 items: se analizará la correlación entre ambas y sobre esta base se podrá proponer un promedio simple.
 \item
-  3 items: se analizará la matriz de correlaciones y el alfa de Cronbach como medida de consistencia interna que permita trabajar con el promedio. Esta medida otorga un número que va entre 0 y 1, donde el nivele convencionales para considerar consistencia es 0.7 o mayor.
+  3 items: se analizará la matriz de correlaciones y el alfa de Cronbach como medida de consistencia interna que permita trabajar con el promedio. Esta medida otorga un número que va entre 0 y 1, donde el nivel convencional para considerar consistencia es 0.7 o mayor.
 \item
   4 items o más: se realizará un análisis factorial exploratorio para evaluar la dimensionalidad subyacente a los items, y en base a este análisis se podrán proponer puntajes factoriales como índices.
 \end{itemize}
@@ -229,7 +229,7 @@ A continuación se presenta el análisis ordenado por dimensiones:
   Orientación hacia el bien común
 \end{itemize}
 
-Además de estas dimensiones del modelo de la CEPAL también se agrega una cuarta de cohesión social en el territorio, que se asocia a la confianza en vecinos, identificación barrial, sociabilidad barrial y satisfacción residencial.
+Estas tres dimensiones provienen desde el modelo presentado por la CEPAL, que centra su atención en el nivel nacional, utilizando fuentes de datos que permitan una comparabilidad a nivel regional. Sin embargo, no deja de ser relevante abordar una dimensión territorial que permita complementar y enriquecer el análisis a nivel de país. Por lo tanto, además de estas dimensiones del modelo de la CEPAL también se agrega una cuarta de cohesión social en el territorio, que se asocia a la confianza en vecinos, identificación barrial, sociabilidad barrial y satisfacción residencial.
 
 \hypertarget{relaciones-sociales-de-igualdad}{%
 \section{Relaciones sociales de igualdad}\label{relaciones-sociales-de-igualdad}}
@@ -240,7 +240,7 @@ De acuerdo a CEPAL, ``Esta parte de la definición de la cohesión social se ace
 
 Según CEPAL (\protect\hyperlink{ref-cepal_Cohesion_2021}{2021}), ``Los lazos sociales permiten generar espacios de cooperación que faciliten el desarrollo de relaciones sociales de igualdad, y establece patrones de reciprocidad interpersonal (PNUD, 2013)'' (p.~74)
 
-El indicador propuesto en el informe de CEPAL para esta subdimensión es ``importancia de amigos en la vida'', que es un indicador de percepción de la Encuesta Mundial de Valores, a partir del cual se busca cuantificar la intensidad del tejido social en los países de la región. En el caso de ELSOC el indicador más cercano a esta operacionalización corresponde a ``Cantidad de amigos cercanos'', y que está presente solo en las olas 2 y 4 de la encuesta. Un análisis descriptivo de este indicador, que sería el único representante de esta subdimensión, se presenta en la Figura \ref{fig:lazos}.
+El indicador utilizado en la propuesta regional de CEPAL para esta subdimensión es ``importancia de amigos en la vida'', que es un indicador de percepción de la Encuesta Mundial de Valores, a partir del cual se busca cuantificar la intensidad del tejido social en los países de la región. En el caso de ELSOC los indicadores más cercanos a esta operacionalización corresponden a ``Cantidad de amigos/as ceranos'' y ``Tamaño de la red cercana'', que están presentes solo en las olas 2 y 4 de la encuesta. Además, se incluye un indicador de ``Variedad de la red'' construido a partir de un generador de posiciones, donde se aborda la cantidad de individuos con diferentes ocupaciones que la persona encuestada conoce; este indicador está presente en las olas 1 y 3. Un análisis descriptivo de estos indicadores se presenta en la Figura \ref{fig:lazos} y un análisis bivariado en la Figura \ref{fig:lazos-cor}.
 
 \begin{figure}[H]
 
@@ -249,6 +249,17 @@ El indicador propuesto en el informe de CEPAL para esta subdimensión es ``impor
 }
 
 \caption{Cantidad de amigos cercanos.}\label{fig:lazos}
+\end{figure}
+
+En la matriz de correlaciones de la Figura \ref{fig:lazos-cor} es posible observar que las correlaciones entre los indicadores están en un rango bajo, donde los indicadores que presentan una correlación mayor son A y C. Para calcular la consistencia interna de estos tres indicadores se utilizó alpha de Cronbach, obteniendo un resultado de 0.36, muy por debajo del valor mínimo recomendado de 0.7. Por lo tanto, para esta subdimensión se considerará un promedio solo de aquellos items que poseen una mayor correlación: ``Cantidad de amigos/as cercanos'' y ``Variedad de la red''.
+
+\begin{figure}[H]
+
+{\centering \includegraphics[width=1\linewidth,height=1\textheight]{output/graphs/lazos_cor} 
+
+}
+
+\caption{Asociación indicadores lazos.}\label{fig:lazos-cor}
 \end{figure}
 
 \textbf{Confianza interpersonal}
@@ -281,7 +292,7 @@ En la matriz de correlaciones de la Figura \ref{fig:confianza-interpersonal-cor}
 
 Las relaciones sociales de igualdad suponen el reconocimiento de la dignidad del ``otro'' y el reconocimiento de ser parte de una comunidad de iguales en materia de derechos ciudadanos, siendo un elemento que surge de la interacción en redes y asociaciones con individuos de distintas características (CEPAL, \protect\hyperlink{ref-cepal_Cohesion_2021}{2021}).
 
-En el informe de CEPAL se utilizan dos indicadores en esta subdimensión: ``aprueba el derecho a contraer matrimonio de parejas del mismo sexo'', que se incluye con el objetivo de cuantificar la tolerancia hacia los individuos y comunidades con distinta orientación sexual y ``Los hombres no tienen prioridad sobre la mujer, a la hora acceder a un trabajo'', que se incluye con el objetivo de cuantificar la cultura de igualdad de género en la sociedad. Además, se deja como pendiente la construcción de un indicador sobre tolerancia a personas de distinta raza y etnia, así como de percepción de discriminación. En el caso de ELSOC encontramos items distintos pero relacionados con actitudes hacia la diversidad: a) Chile pierde su identidad con la llegada de inmigrantes; b) con la llegada de inmigrantes aumenta el desempleo; c) grado de acuerdo con adopción homoparental; d) grado de confianza con personas homosexuales; e) grado de confianza con personas mapuche; y f) grado de confianza con personas inmigrantes. Los dos primeros items están presentes en las cuatro olas, adopción homoparental en olas 3 y 4 y el resto de indicadores en las olas 2 y 4. Un análisis descriptivo de estos items se presentan en la Figura \ref{fig:prejuicios} y en la Figura \ref{fig:diversidad} y un análisis bivariado en la Figura \ref{fig:diversidad-cor}.
+En la propuesta regional de CEPAL se utilizan dos indicadores en esta subdimensión: ``aprueba el derecho a contraer matrimonio de parejas del mismo sexo'', que se incluye con el objetivo de cuantificar la tolerancia hacia los individuos y comunidades con distinta orientación sexual y ``Los hombres no tienen prioridad sobre la mujer, a la hora acceder a un trabajo'', que se incluye con el objetivo de cuantificar la cultura de igualdad de género en la sociedad. Además, en esta propuesta regional de la CEPAL se deja como pendiente la construcción de un indicador sobre tolerancia a personas de distinta raza y etnia, así como de percepción de discriminación. En el caso de ELSOC encontramos items distintos pero relacionados con actitudes hacia la diversidad: a) Chile pierde su identidad con la llegada de inmigrantes; b) con la llegada de inmigrantes aumenta el desempleo; c) grado de acuerdo con adopción homoparental; d) grado de confianza con personas homosexuales; e) grado de confianza con personas mapuche; y f) grado de confianza con personas inmigrantes. Los dos primeros items están presentes en las cuatro olas, adopción homoparental en olas 3 y 4 y el resto de indicadores en las olas 2 y 4. Un análisis descriptivo de estos items se presentan en la Figura \ref{fig:prejuicios} y en la Figura \ref{fig:diversidad} y un análisis bivariado en la Figura \ref{fig:diversidad-cor}.
 
 \begin{figure}[H]
 
@@ -320,7 +331,7 @@ Para poder avanzar hacia la construcción de un índice basado en esta serie de 
 \bottomrule
 \end{longtable}
 
-En la Tabla \ref{tab:div-fa} observamos en la primera columna un factor que se relaciona con las preguntas sobre el grado de confianza de la Figura \ref{fig:diversidad}, luego un segundo factor asociado a las preguntas de inmigrantes, y finalmente un tercer factor asociado a la pregunta de adopción homoparental. Atendiendo ahora a la varianza asociada a estos factores (SS loadings), el primer factor representa casi un 30\% de la varianza, el segundo alrededor de 20\% y el tercero muy por debajo con 0.08. Por lo tanto podemos decir que hay mayor consistencia en los dos primeros factores, y entre ellos dos el asociado a diversidad es el más claro. Basándose en este análisis es posible proponer dos índices asociados a esta subdimensión y que serán calculados mediante puntajes factoriales: uno sobre diversidad y el otro sobre migrantes.
+En la Tabla \ref{tab:div-fa} observamos en la segunda columna (ML1) un factor que se relaciona con las preguntas sobre el grado de confianza de la Figura \ref{fig:diversidad}, luego un segundo factor asociado a las preguntas de inmigrantes, y finalmente un tercer factor asociado a la pregunta de adopción homoparental. Atendiendo ahora a la varianza asociada a estos factores (SS loadings), el primer factor representa casi un 30\% de la varianza, el segundo alrededor de 20\% y el tercero muy por debajo con 8\%. Por lo tanto podemos decir que hay mayor consistencia en los dos primeros factores, y entre ellos dos el asociado a diversidad es el más claro. Basándose en este análisis es posible proponer dos índices asociados a esta subdimensión y que serán calculados mediante puntajes factoriales: uno sobre diversidad y el otro sobre migrantes.
 
 \hypertarget{sentido-de-pertenencia}{%
 \section{Sentido de pertenencia}\label{sentido-de-pertenencia}}
@@ -331,7 +342,7 @@ Una segunda dimensión de la definición propuesta por CEPAL para cohesión soci
 
 Por medio de esta subdimensión, se busca cuantificar la identificación de los individuos ``con los valores y acciones que representan sus instituciones, y la concordancia con los propios'' (CEPAL, \protect\hyperlink{ref-cepal_Cohesion_2021}{2021}, p. 66).
 
-En el informe CEPAL se incluyen los indicadores ``Orgullo por el sistema político'', que busca medir la adhesión de los encuestados con la labor que realizan sus instituciones en la representación de sus valores y objetivos y ``Orgullo por su nacionalidad'', que busca cuantificar la identificación de los encuestados con los valores y normas que rigen las instituciones del país. Al trabajar con ELSOC se utilizarán los indicadores ``Orgullo de ser chileno'' e ``Identificación con Chile'' que están presentes en las cuatro olas. Un análisis descriptivo de estos indicadores se presentan en la Figura \ref{fig:identificacion}. La correlación entre estos indicadores es positiva y alta (r=0.76).
+En el informe CEPAL se incluyen los indicadores ``Orgullo por el sistema político'', que busca medir la adhesión de los encuestados con la labor que realizan sus instituciones en la representación de sus valores y objetivos y ``Orgullo por su nacionalidad'', que busca cuantificar la identificación de los encuestados con los valores y normas que rigen las instituciones del país. Al trabajar con ELSOC se utilizarán los indicadores ``Orgullo de ser chileno'' e ``Identificación con Chile'' que están presentes en las cuatro olas. Un análisis descriptivo de estos indicadores se presentan en la Figura \ref{fig:identificacion}. La correlación entre estos indicadores es positiva y alta (r=0.76). Por lo tanto, en esta subdimensión se utilizará un promedio simple de ambos indicadores.
 
 \begin{figure}[H]
 
@@ -346,7 +357,7 @@ En el informe CEPAL se incluyen los indicadores ``Orgullo por el sistema políti
 
 La subdimensión de percepción de justicia refiere al examen que realizan los miembros de la sociedad respecto a la capacidad de las instituciones de entregar bienestar y/o distribuir el poder económico y político (CEPAL, \protect\hyperlink{ref-cepal_Cohesion_2021}{2021}).
 
-En el informe de CEPAL se utilizan los indicadores ``Se deben equiparar los sueldos, no mantener desigualdad para incentivar el esfuerzo personal'', que cuantifica percepciones respecto a aversiones hacia la desigualdad; ``El trabajo a largo plazo da beneficios, no las conexiones o suerte'', que busca captar percepciones sobre la estructura de oportunidades en el país y las expectativas de movilidad social; y ``El Estado debe implementar políticas para reducir la desigualdad de ingreso'', que aborda las percepciones respecto a la desigualdad de ingresos en el país. Al trabajar con ELSOC se utilizan los indicadores ``En Chile las personas son recompensadas por su esfuerzo'' y ``En Chile las personas son recompensadas por su inteligencia'', presentes en todas las olas. Un análisis descriptivo de estos indicadores se presentan en la Figura \ref{fig:justicia}. La correlación entre estos indicadores es positiva y alta (r=0.7).
+En el informe de CEPAL se utilizan los indicadores ``Se deben equiparar los sueldos, no mantener desigualdad para incentivar el esfuerzo personal'', que cuantifica percepciones respecto a aversiones hacia la desigualdad; ``El trabajo a largo plazo da beneficios, no las conexiones o suerte'', que busca captar percepciones sobre la estructura de oportunidades en el país y las expectativas de movilidad social; y ``El Estado debe implementar políticas para reducir la desigualdad de ingreso'', que aborda las percepciones respecto a la desigualdad de ingresos en el país. Al trabajar con ELSOC se utilizan los indicadores ``En Chile las personas son recompensadas por su esfuerzo'' y ``En Chile las personas son recompensadas por su inteligencia'', presentes en todas las olas. Un análisis descriptivo de estos indicadores se presentan en la Figura \ref{fig:justicia}. La correlación entre estos indicadores es positiva y alta (r=0.7). Por lo tanto, se utilizará un promedio simple de ambos indicadores en esta subdimensión.
 
 \begin{figure}[H]
 
@@ -381,6 +392,18 @@ En informe CEPAL utilizan grado de confianza en (a) las cortes, (b) el Congreso 
 \caption{Asociación indicadores Confianza institucional.}\label{fig:confianza-institucional-cor}
 \end{figure}
 
+En esta oportunidad, nuevamente se utilizó un análisis factorial exploratorio con el objetivo de construir un índice a partir de la información de las dimensiones comunes que subyacen a este conjunto de ocho indicadores. La Tabla \ref{tab:inst-fa} nos muestra el resultado de la extracción de tres factores:
+
+\begin{longtable}[]{@{}l@{}}
+\caption{\label{tab:inst-fa}Dimensiones de confianza institucional.}\tabularnewline
+\toprule
+\endhead
+\includegraphics[width=5.20833in,height=\textheight]{output/tables/inst_fa.png}\tabularnewline
+\bottomrule
+\end{longtable}
+
+En la Tabla \ref{tab:inst-fa} observamos en la segunda columna (ML2) un factor que se relaciona con las preguntas sobre el grado de confianza con instituciones políticas (el gobierno, presidente/a, partidos políticos), luego un segundo factor (ML3) asociado con instituciones más cercanas a la sociedad civil (empresas privadas, carabineros, sindicatos y poder judicial) y finalmente un tercer factor (ML1) que se asocia con el poder judicial y el congreso. En relación con la varianza asociada a estos tres factores (SS loadings), el primer factor representa un 20\% de la varianza, el segundo un 16\% y el tercero un 15\%. Por lo tanto, existe cierto grado de consistencia en los tres factores, siendo el primero de ellos -relacionado con las instituciones políticas- el que representa una mayor proporción de la varianza.
+
 \hypertarget{orientaciuxf3n-hacia-el-bien-comuxfan}{%
 \section{Orientación hacia el bien común}\label{orientaciuxf3n-hacia-el-bien-comuxfan}}
 
@@ -410,6 +433,18 @@ En informe CEPAL utilizan el indicador ``Asistencia a reuniones de un grupo de m
 \caption{Asociación indicadores de solidaridad.}\label{fig:solidaridad-cor}
 \end{figure}
 
+Como esta subdimensión posee ocho indicadores, se volvió a realizar un análisis factorial exploratorio para construir un índice a partir de la información de las dimensiones comunes entre este conjunto de indicadores. La Tabla \ref{tab:solidaridad-fa} nos muestra el resultado de la extracción de tres factores:
+
+\begin{longtable}[]{@{}l@{}}
+\caption{\label{tab:solidaridad-fa}Dimensiones de solidaridad.}\tabularnewline
+\toprule
+\endhead
+\includegraphics[width=5.20833in,height=\textheight]{output/tables/solidaridad_fa.png}\tabularnewline
+\bottomrule
+\end{longtable}
+
+En la Tabla \ref{tab:inst-fa} es posible observar en la segunda columna (ML1) un factor relacionado con acciones de solidaridad como prestar o donar dinero, ayudar a una persona a conseguir trabajo y conversar con una persona con problemas o deprimida, luego en la tercera columna (ML3) se presenta un segundo factor asociado con la participación en reuniones sociales, como visitar casas de vecinos, recibir visitas de amigos o asistir a reuniones donde se traten problemas relevantes para la comunidad. Finalmente, en la cuarta columna (ML2) se observa un tercer factor que posee un indicador sobre realizar trabajo voluntario. En relación con la varianza que se asocia a cada uno de estos factores (SS loadings), el primer factor representa un 19\% de la varianza, el segundo un 12\% y el tercero un 9\%. Por lo tanto, los dos primeros presentan un mayor grado de consistencia con respecto al factor asociado al trabajo voluntario. Así, se propone utilizar dos índices asociados a estos dos primeros factores y que serán calculados mediante puntajes factoriales.
+
 \textbf{Participación cívica}
 
 La subdimensión de participación cívica da cuenta de la voluntad de adherir a los espacios de participación del sistema político y la vinculación de los individuos con su comunidad. Esta participación ``promueve la participación ciudadana en los asuntos públcios, apoyando pryectos colectivas que representen sus opiniones o intereses políticos (Valdéz, Viramontes y Finol, 2016)'' (CEPAL, \protect\hyperlink{ref-cepal_Cohesion_2021}{2021}, p. 66).
@@ -434,6 +469,18 @@ En informe CEPAL se utilizaron los indicadores ``Tiene actividad política (firm
 \caption{Asociación indicadores participación cívica.}\label{fig:participacion-civica-cor}
 \end{figure}
 
+En esta oportunidad, nuevamente se utilizó un análisis factorial exploratorio con el objetivo de construir un índice a partir de la información de las dimensiones comunes que subyacen a este conjunto de cuatro indicadores. La Tabla \ref{tab:part-civica-fa} nos muestra el resultado de la extracción de tres factores:
+
+\begin{longtable}[]{@{}l@{}}
+\caption{\label{tab:part-civica-fa}Dimensiones de Participación cívica.}\tabularnewline
+\toprule
+\endhead
+\includegraphics[width=5.20833in,height=\textheight]{output/tables/part_civica_fa.png}\tabularnewline
+\bottomrule
+\end{longtable}
+
+En la Tabla \ref{tab:part-civica-fa} observamos un primer factor que agrupa tres indicadores: firmar una carta o petición, expresar su opinión por redes sociales y asistir a una marcha o manifestación. Luego se observa un segundo factor que posee solo el indicador de asistir a una marcha o manifestación y un tercer factor que posee solo el indicador de participar en una huelga. Por lo tanto, se propone utilizar un solo índice asociado al primer factor, que representa un 19\% de la varianza, y que será calculado a partir de puntajes factoriales.
+
 \textbf{Participación en organizaciones}
 
 \begin{figure}[H]
@@ -454,6 +501,18 @@ En informe CEPAL se utilizaron los indicadores ``Tiene actividad política (firm
 \caption{Asociación indicadores participación en organizaciones.}\label{fig:participacion-organizaciones-cor}
 \end{figure}
 
+En cuanto a la participación en organizaciones, se estimó un segundo análisis factorial exploratorio sobre los ocho tipos de organizaciones presentes en ELSOC. La Tabla \ref{tab:organizaciones-fa} muestra el resultado de la extracción de tres factores:
+
+\begin{longtable}[]{@{}l@{}}
+\caption{\label{tab:organizaciones-fa}Dimensiones de Participación en organizaciones.}\tabularnewline
+\toprule
+\endhead
+\includegraphics[width=5.20833in,height=\textheight]{output/tables/organizaciones_fa.png}\tabularnewline
+\bottomrule
+\end{longtable}
+
+Podemos observar en la Tabla \ref{tab:organizaciones-fa} un primer factor asociado con la participación en asociaciones profesionales, sindicatos y partidos políticos, luego un segundo factor relacionado con la participación en organizaciones religiosas y juntas de vecinos y, finalmente, un tercer factor relacionado con organizaciones deportivas, ecológicas y centros de estudiantes. En cuanto a la varianza asociada a cada uno de estos factores (SS loadings), el primer y segundo factor representan un 9\% de la varianza cada uno, mientras que el tercer factor representa un 6\% de la varianza. Por lo tanto, no existe un grado de consistencia relevante en ninguno de estos tres factores. Así, basándonos en este análisis, se propone no incluir los indicadores asociados a la participación en organizaciones y trabajar sólo con los indicadores referentes a participación cívica.
+
 \textbf{Participación electoral}
 
 \begin{figure}[H]
@@ -472,16 +531,20 @@ De manera adicional, se incorpora una dimensión sobre calidad de vida en el vec
 
 \textbf{Confianza en vecinos}
 
+En la encuesta ELSOC se incluye un indicador territorial sobre el grado de confianza en vecinos. Un análisis descriptivo de este indicador, que sería el único representante de esta subdimensión, se presenta en laFfigura \ref{fig:confianza-vecinos}
+
 \begin{figure}[H]
 
 {\centering \includegraphics[width=1\linewidth,height=1\textheight]{output/graphs/confianza-vecinos} 
 
 }
 
-\caption{Confianza en vecinos.}\label{fig:unnamed-chunk-3}
+\caption{Confianza en vecinos.}\label{fig:confianza-vecinos}
 \end{figure}
 
-\textbf{Identificación barrial}
+\textbf{Cohesión barrial}
+
+Otros indicadores territoriales presentes en ELSOC están asociados con la subdimensión de Cohesión barrial. Estos indicadores identifican si las personas se sienten identificadas con la gente del barrio, si se sienten integrados, si se sienten parte del barrio y si creen que es su barrio ideal. Un análisis descriptivo de estos cuatro indicadores se presenta en la Figura \ref{fig:cohesion-barrial} y un análisis bivariado en la Figura \ref{fig:cohesion-barrial-cor}
 
 \begin{figure}[H]
 
@@ -489,7 +552,7 @@ De manera adicional, se incorpora una dimensión sobre calidad de vida en el vec
 
 }
 
-\caption{ Identificación con el barrio.}\label{fig:unnamed-chunk-4}
+\caption{Cohesión en el barrio.}\label{fig:cohesion-barrial}
 \end{figure}
 
 \begin{figure}[H]
@@ -498,10 +561,22 @@ De manera adicional, se incorpora una dimensión sobre calidad de vida en el vec
 
 }
 
-\caption{Asociación indicadores identificación barrial.}\label{fig:unnamed-chunk-5}
+\caption{Asociación indicadores cohesión barrial.}\label{fig:cohesion-barrial-cor}
 \end{figure}
 
+Como esta subdimensión posee cuatro indicadores, se utilizó un análisis factorial exploratorio para construir un índice sobre las dimensiones que los subyacen. La Tabla \ref{tab:cohesion-barrial-fa} nos muestra el resultado de este análisis. En las segunda y tercera columna se observan dos factores que incluyen los cuatro indicadores y que representan un 26\% y 24\% de la varianza respectivamente. En la cuarta columna podemos observar un factor que agrupa tres indicadores y que representa un 21\% de la varianza.
+
+\begin{longtable}[]{@{}l@{}}
+\caption{\label{tab:cohesion-barrial-fa}Dimensiones de Cohesión barrial.}\tabularnewline
+\toprule
+\endhead
+\includegraphics[width=5.20833in,height=\textheight]{output/tables/cohesion_barrial_fa.png}\tabularnewline
+\bottomrule
+\end{longtable}
+
 \textbf{Sociabilidad barrial}
+
+Esta subdimensión de indicadores territoriales aborda la percepción que se tiene sobre el barrio en relación con si las demás personas son sociables, si es fácil hacer amigos, si las personas son cordiales y si son colaboradoras. Un análisis descriptivo de estos cuatro indicadores se presenta en la Figura \ref{fig:sociabilidad-barrial} y un análisis bivariado en la Figura \ref{fig:sociabilidad-barrial-cor}.
 
 \begin{figure}[H]
 
@@ -509,7 +584,7 @@ De manera adicional, se incorpora una dimensión sobre calidad de vida en el vec
 
 }
 
-\caption{Sociabilidad barrial.}\label{fig:unnamed-chunk-6}
+\caption{Sociabilidad barrial.}\label{fig:sociabilidad-barrial}
 \end{figure}
 
 \begin{figure}[H]
@@ -518,10 +593,22 @@ De manera adicional, se incorpora una dimensión sobre calidad de vida en el vec
 
 }
 
-\caption{Asociación indicadores sociabilidad barrial.}\label{fig:unnamed-chunk-7}
+\caption{Asociación indicadores sociabilidad barrial.}\label{fig:sociabilidad-barrial-cor}
 \end{figure}
 
+Igual que en el caso anterior, se realizó un análisis factorial exploratorio sobre estos cuatro indicadores. Los resultados se muestran en la Tabla \ref{tab:sociabilidad-barrial-fa}. En esta tabla podemos observar dos factores que incluyen tres indicadores y que cada uno representa un 24\% de la varianza. Además, podemos observar un tercer factor que incluye dos indicadores y que representa un 15\% de la varianza.
+
+\begin{longtable}[]{@{}l@{}}
+\caption{\label{tab:sociabilidad-barrial-fa}Dimensiones de sociabilidad barrial.}\tabularnewline
+\toprule
+\endhead
+\includegraphics[width=5.20833in,height=\textheight]{output/tables/sociabilidad_barrial_fa.png}\tabularnewline
+\bottomrule
+\end{longtable}
+
 \textbf{Satisfacción residencial}
+
+Finalmente, se incluye una subdimensión de Satisfacción residencial presente en ELSOC y que está relacionada con indicadores que miden la conectividad del barrio, la proximidad con el comercio, colegios, familiares y la principal actividad de trabajo, la limpieza del barrio, la cantidad de áreas verdes y la seguridad del barrio. Se incluye un análisis descriptivo de estos ocho indicadores en la Figura \ref{fig:satisfaccion-residencial} y un análisis bivariado en la Figura \ref{fig:satisfaccion-residencial-cor}.
 
 \begin{figure}[H]
 
@@ -529,7 +616,7 @@ De manera adicional, se incorpora una dimensión sobre calidad de vida en el vec
 
 }
 
-\caption{Satisfacción con el barrio.}\label{fig:unnamed-chunk-8}
+\caption{Satisfacción con el barrio.}\label{fig:satisfaccion-residencial}
 \end{figure}
 
 \begin{figure}[H]
@@ -538,8 +625,18 @@ De manera adicional, se incorpora una dimensión sobre calidad de vida en el vec
 
 }
 
-\caption{Asociación indicadores satisfacción residencial.}\label{fig:unnamed-chunk-9}
+\caption{Asociación indicadores satisfacción residencial.}\label{fig:satisfaccion-residencial-cor}
 \end{figure}
+
+En esta subdimensión se volvió a realizar un análisis factorial exploratorio. Como observamos en la Tabla \ref{tab:satisfaccion-barrial-fa}, en la segunda columna se presenta un factor que incluye los indicadores referidos a la conectividad y proximidad del barrio con algunos servicios, luego un segundo factor que incluye los indicadores sobre limpieza y áreas verdes y finalmente un tercer factor que incluye el indicador sobre seguridad. El primero de estos factores representa un 20\% de la varianza, el segundo un 14\% y el tercer factor representa un 13\% de la varianza.
+
+\begin{longtable}[]{@{}l@{}}
+\caption{\label{tab:satisfaccion-barrial-fa}Dimensiones de satisfaccion residencial.}\tabularnewline
+\toprule
+\endhead
+\includegraphics[width=5.20833in,height=\textheight]{output/tables/sat_residencial_fa.png}\tabularnewline
+\bottomrule
+\end{longtable}
 
 \hypertarget{capuxedtulo-ii}{%
 \chapter{Capítulo II ---}\label{capuxedtulo-ii}}

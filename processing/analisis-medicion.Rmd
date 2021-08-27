@@ -21,8 +21,7 @@ pacman::p_load(dplyr, car, summarytools, webshot, knitr, kableExtra, corrplot, g
 ```{r include=FALSE}
 # Cargar base elsoc longitudinal (2016-2019) creada en "preparacion"
 load("input/data/data.RData")
-# Filtrar base por casos participantes en cuatro olas
-data <- data %>% dplyr::filter(tipo_atricion==1 & tipo_caso !=2)
+
 ```
 
 ## Relaciones sociales de igualdad
@@ -30,7 +29,7 @@ data <- data %>% dplyr::filter(tipo_atricion==1 & tipo_caso !=2)
 ### Lazos
 
 ```{r echo=FALSE}
-lazos <-  plot_stackfrq(data$r15_w02, geom.size = 0.14) +
+lazos <-  plot_stackfrq(select(data, r15_w02, r13_nredes_w02, vol.red_w01), geom.size = 0.33) +
   theme(axis.text.y = element_text(colour = "black", size = 10),
         axis.text.x = element_text(colour = "black", size = 10),
         legend.text = element_text(size = 10),
@@ -38,6 +37,34 @@ lazos <-  plot_stackfrq(data$r15_w02, geom.size = 0.14) +
 lazos
 ggsave(lazos, file = "bookdown-files/output/graphs/lazos.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
 ```
+
+```{r}
+lazos_cor<-
+  data %>%
+  dplyr::select(r15_w02, r13_nredes_w02, vol.red_w01) %>%
+  lavaan::lavCor(., ordered=names(.))
+diag(lazos_cor) = NA
+rownames(lazos_cor) <- c("A. Cantidad de amigos/as cercanos",
+                                  "B. Tamaño de red cercana",
+                                  "C. Variedad de la red")
+colnames(lazos_cor) <-c("(A)", "(B)","(C)")
+
+png("bookdown-files/output/graphs/lazos_cor.png",width=600,height=300)
+corrplot::corrplot(lazos_cor,
+  method = "color",
+  addCoef.col = "#000390",
+  type = "upper",
+  tl.col = "black",
+  col=colorRampPalette(c("white","#0068DC"))(12),
+  bg = "white",
+  na.label = "-",
+  lower.col = "black")
+dev.off()
+
+ltm::cronbach.alpha(data %>%
+  dplyr::select(r15_w02, r13_nredes_w02, vol.red_w01), na.rm=TRUE)
+```
+
 
 ### Confianza interpersonal
 
@@ -268,6 +295,39 @@ corrplot::corrplot(conf_institucional_cor,
 dev.off()
 ```
 
+```{r}
+# Análisis Factorial Exploratorio
+conf_institucional_fa<-
+  data %>%
+  dplyr::select(gobierno = c05_01_w01,
+                partidos = c05_02_w01,
+                carabineros = c05_03_w01,
+                sindicatos = c05_04_w01,
+                judicial = c05_05_w01,
+                empresas = c05_06_w01,
+                congreso = c05_07_w01,
+                presidente = c05_08_w01)
+
+
+psych::fa.parallel(conf_institucional_fa, fa="fa")
+psych::scree(conf_institucional_fa)
+
+fac_ml <- psych::fa(r = conf_institucional_fa, nfactors = 3, fm= "ml", rotate = "varimax" )
+
+fac_ml$loadings
+# ver https://www.anthonyschmidt.co/post/2020-09-27-efa-tables-in-r/
+
+source("processing/fa_table.R") 
+
+inst_fa <-fa_table(fac_ml, .32)
+knitr::kable(inst_fa, "html") %>%
+  kable_styling(bootstrap_options = c("striped", "hover")) %>%
+  cat(., file = "bookdown-files/output/tables/inst_fa.html")
+
+webshot(url ="bookdown-files/output/tables/inst_fa.html", file ="bookdown-files/output/tables/inst_fa.png", vheight = 10,  vwidth = 10)
+```
+
+
 ## Orientación hacia el bien común
 
 ### Solidaridad
@@ -319,6 +379,39 @@ corrplot::corrplot(solidaridad_cor,
 dev.off()
 ```
 
+```{r}
+# Análisis Factorial Exploratorio
+solidaridad_fa<-
+  data %>%
+  dplyr::select(visita_vecinos = c07_01_w01,
+                asiste_reunion = c07_02_w01,
+                recibe_amigos = c07_03_w01,
+                voluntariado = c07_04_w01,
+                dona_dinero = c07_05_w01,
+                presta_dinero = c07_06_w01,
+                conversa_depresion = c07_07_w01,
+                ayuda_trabajo = c07_08_w01)
+
+
+psych::fa.parallel(solidaridad_fa, fa="fa")
+psych::scree(solidaridad_fa)
+
+fac_ml <- psych::fa(r = solidaridad_fa, nfactors = 3, fm= "ml", rotate = "varimax" )
+
+fac_ml$loadings
+# ver https://www.anthonyschmidt.co/post/2020-09-27-efa-tables-in-r/
+
+source("processing/fa_table.R") 
+
+solidaridad_fa <-fa_table(fac_ml, .32)
+knitr::kable(solidaridad_fa, "html") %>%
+  kable_styling(bootstrap_options = c("striped", "hover")) %>%
+  cat(., file = "bookdown-files/output/tables/solidaridad_fa.html")
+
+webshot(url ="bookdown-files/output/tables/solidaridad_fa.html", file ="bookdown-files/output/tables/solidaridad_fa.png", vheight = 10,  vwidth = 10)
+```
+
+
 ### Participación cívica
 
 ```{r echo=FALSE}
@@ -359,6 +452,37 @@ corrplot::corrplot(part_civica_cor,
   lower.col = "black")
 dev.off()
 ```
+
+```{r}
+# Análisis Factorial Exploratorio
+part_civica_fa<-
+  data %>%
+  dplyr::select(firma_carta = c08_01_w01, 
+                asiste_marcha = c08_02_w01, 
+                participa_huelga = c08_03_w01, 
+                expresa_opinion = c08_04_w01)
+
+
+
+psych::fa.parallel(part_civica_fa, fa="fa")
+psych::scree(part_civica_fa)
+
+fac_ml <- psych::fa(r = part_civica_fa, nfactors = 3, fm= "ml", rotate = "varimax" )
+
+fac_ml$loadings
+# ver https://www.anthonyschmidt.co/post/2020-09-27-efa-tables-in-r/
+
+source("processing/fa_table.R") 
+
+part_civica_fa <-fa_table(fac_ml, .32)
+knitr::kable(part_civica_fa, "html") %>%
+  kable_styling(bootstrap_options = c("striped", "hover")) %>%
+  cat(., file = "bookdown-files/output/tables/part_civica_fa.html")
+
+webshot(url ="bookdown-files/output/tables/part_civica_fa.html", file ="bookdown-files/output/tables/part_civica_fa.png", vheight = 10,  vwidth = 10)
+
+```
+
 
 ### Participacion en organizaciones
 ```{r echo=FALSE}
@@ -407,6 +531,41 @@ corrplot::corrplot(part_organizaciones_cor,
   lower.col = "black")
 dev.off()
 ```
+
+```{r}
+# Análisis Factorial Exploratorio
+organizaciones_fa<-
+  data %>%
+  dplyr::select(junta_vecinos = c12_01_w01, 
+                organizacion_religiosa = c12_02_w01, 
+                partido_politico = c12_03_w01, 
+                sindicato = c12_04_w01, 
+                asociacion_profesional = c12_05_w01, 
+                organizacion_deportiva = c12_06_w01, 
+                organizacion_ecologica = c12_07_w01, 
+                centro_estudiantes = c12_08_w01)
+
+
+
+psych::fa.parallel(organizaciones_fa, fa="fa")
+psych::scree(organizaciones_fa)
+
+fac_ml <- psych::fa(r = organizaciones_fa, nfactors = 3, fm= "ml", rotate = "varimax" )
+
+fac_ml$loadings
+# ver https://www.anthonyschmidt.co/post/2020-09-27-efa-tables-in-r/
+
+source("processing/fa_table.R") 
+
+organizaciones_fa <-fa_table(fac_ml, .32)
+knitr::kable(organizaciones_fa, "html") %>%
+  kable_styling(bootstrap_options = c("striped", "hover")) %>%
+  cat(., file = "bookdown-files/output/tables/organizaciones_fa.html")
+
+webshot(url ="bookdown-files/output/tables/organizaciones_fa.html", file ="bookdown-files/output/tables/organizaciones_fa.png", vheight = 10,  vwidth = 10)
+
+```
+
 
 ### Participacion electoral
 
@@ -485,6 +644,36 @@ corrplot::corrplot(cohesion_barrial_cor,
 dev.off()
 ```
 
+```{r}
+# Análisis Factorial Exploratorio
+cohesion_barrial_fa<-
+  data %>%
+  dplyr::select(barrio_ideal = t02_01_w01,
+                integrado_barrio = t02_02_w01, 
+                identificado_barrio = t02_03_w01, 
+                barrio_partedemi = t02_04_w01)
+
+
+
+psych::fa.parallel(cohesion_barrial_fa, fa="fa")
+psych::scree(cohesion_barrial_fa)
+
+fac_ml <- psych::fa(r = cohesion_barrial_fa, nfactors = 3, fm= "ml", rotate = "varimax" )
+
+fac_ml$loadings
+# ver https://www.anthonyschmidt.co/post/2020-09-27-efa-tables-in-r/
+
+source("processing/fa_table.R") 
+
+cohesion_barrial_fa <-fa_table(fac_ml, .32)
+knitr::kable(cohesion_barrial_fa, "html") %>%
+  kable_styling(bootstrap_options = c("striped", "hover")) %>%
+  cat(., file = "bookdown-files/output/tables/cohesion_barrial_fa.html")
+
+webshot(url ="bookdown-files/output/tables/cohesion_barrial_fa.html", file ="bookdown-files/output/tables/cohesion_barrial_fa.png", vheight = 10,  vwidth = 10)
+
+```
+
 ```{r echo=FALSE}
 sociabilidad_barrial <-plot_stackfrq(select(data, t03_01_w01, t03_02_w01, t03_03_w01, t03_04_w01), geom.colors = "RdBu", geom.size = 0.45) +
   theme(axis.text.y = element_text(colour = "black", size = 10),
@@ -519,6 +708,36 @@ corrplot::corrplot(sociabilidad_barrial_cor,
   na.label = "-",
   lower.col = "black")
 dev.off()
+```
+
+```{r}
+# Análisis Factorial Exploratorio
+sociabilidad_barrial_fa<-
+  data %>%
+  dplyr::select(hacer_amigos = t03_01_w01, 
+                barrio_sociable = t03_02_w01, 
+                barrio_cordial = t03_03_w01, 
+                barrio_colaborador = t03_04_w01)
+
+
+
+psych::fa.parallel(sociabilidad_barrial_fa, fa="fa")
+psych::scree(sociabilidad_barrial_fa)
+
+fac_ml <- psych::fa(r = sociabilidad_barrial_fa, nfactors = 3, fm= "ml", rotate = "varimax" )
+
+fac_ml$loadings
+# ver https://www.anthonyschmidt.co/post/2020-09-27-efa-tables-in-r/
+
+source("processing/fa_table.R") 
+
+sociabilidad_barrial_fa <-fa_table(fac_ml, .32)
+knitr::kable(sociabilidad_barrial_fa, "html") %>%
+  kable_styling(bootstrap_options = c("striped", "hover")) %>%
+  cat(., file = "bookdown-files/output/tables/sociabilidad_barrial_fa.html")
+
+webshot(url ="bookdown-files/output/tables/sociabilidad_barrial_fa.html", file ="bookdown-files/output/tables/sociabilidad_barrial_fa.png", vheight = 10,  vwidth = 10)
+
 ```
 
 ```{r echo=FALSE}
@@ -560,6 +779,41 @@ corrplot::corrplot(sat_residencial_cor,
   lower.col = "black")
 dev.off()
 ```
+
+```{r}
+# Análisis Factorial Exploratorio
+sat_residencial_fa<-
+  data %>%
+  dplyr::select(seguridad = t06_01_w01, 
+                conectividad = t06_02_w01, 
+                areas_verdes = t06_03_w01, 
+                limpieza = t06_04_w01, 
+                proximidad_actividad = t06_05_w01, 
+                proximidad_colegios = t06_06_w01, 
+                proximidad_comercio = t06_07_w01, 
+                proximidad_familiares = t06_08_w01)
+
+
+
+psych::fa.parallel(sat_residencial_fa, fa="fa")
+psych::scree(sat_residencial_fa)
+
+fac_ml <- psych::fa(r = sat_residencial_fa, nfactors = 3, fm= "ml", rotate = "varimax" )
+
+fac_ml$loadings
+# ver https://www.anthonyschmidt.co/post/2020-09-27-efa-tables-in-r/
+
+source("processing/fa_table.R") 
+
+sat_residencial_fa <-fa_table(fac_ml, .32)
+knitr::kable(sat_residencial_fa, "html") %>%
+  kable_styling(bootstrap_options = c("striped", "hover")) %>%
+  cat(., file = "bookdown-files/output/tables/sat_residencial_fa.html")
+
+webshot(url ="bookdown-files/output/tables/sat_residencial_fa.html", file ="bookdown-files/output/tables/sat_residencial_fa.png", vheight = 10,  vwidth = 10)
+
+```
+
 
 # Anexos
 

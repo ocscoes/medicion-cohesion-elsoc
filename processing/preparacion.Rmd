@@ -29,7 +29,8 @@ data <- data %>% car::recode(., "c(-888,-999)=NA") # recode missings de no respu
 
 data <- data %>% sjlabelled::remove_labels(labels = c('No Responde (no leer)','No Sabe (no leer)')) # elimina value labels de missings de no respuesta para no interferir en descriptivos posteriores
 
-# remove(elsoc_wide_2016_2019) # ?
+# Filtrar base por casos participantes en cuatro olas
+data <- data %>% dplyr::filter(tipo_atricion==1 & tipo_caso !=2)
 ```
 
 # Relaciones sociales de igualdad
@@ -39,11 +40,86 @@ data <- data %>% sjlabelled::remove_labels(labels = c('No Responde (no leer)','N
 ### R15: Cantidad de amigos cercanos (w02 & w04)
 
 ```{r}
+data$r15_w02<- factor(data$r15_w02, levels = c(1, 2, 3, 4, 5), labels = c("No tiene", "De 1 a 2", "De 3 a 5", "De 6 a 10", "Mas de 10"))
+data$r15_w04<- factor(data$r15_w04, levels = c(1, 2, 3, 4, 5), labels = c("No tiene", "De 1 a 2", "De 3 a 5", "De 6 a 10", "Mas de 10"))
 label(data$r15_w02) <- "Cantidad de amigos cercanos (2017)"
 label(data$r15_w04) <- "Cantidad de amigos cercanos (2019)"
 
 data %>% select (r15_w02,r15_w04)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
 ```
+
+### R13_nredes: Tamaño de red cercana
+```{r}
+data$r13_nredes_w02<- factor(data$r13_nredes_w02, levels = c(1, 2, 3, 4, 5), labels = c("No tiene", "De 1 a 2", "De 3 a 5", "De 6 a 10", "Mas de 10"))
+data$r13_nredes_w04<- factor(data$r13_nredes_w04, levels = c(1, 2, 3, 4, 5), labels = c("No tiene", "De 1 a 2", "De 3 a 5", "De 6 a 10", "Mas de 10"))
+label(data$r13_nredes_w02) <- "Tamaño de red cercana (2017)"
+label(data$r13_nredes_w04) <- "Tamaño de red cercana (2019)"
+
+data %>% select (r13_nredes_w02,r13_nredes_w04)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
+```
+
+### R13_relacion: Numero de parientes red cercana
+```{r}
+data$numkin_w02 <- apply(data[, c('r13_relacion_01_w02','r13_relacion_02_w02','r13_relacion_03_w02','r13_relacion_04_w02','r13_relacion_05_w02')], 1, function(x) sum(x>0 & x<4, na.rm=TRUE))
+
+data$numkin_w04 <- apply(data[, c('r13_relacion_01_w04','r13_relacion_02_w04','r13_relacion_03_w04','r13_relacion_04_w04','r13_relacion_05_w04')], 1, function(x) sum(x>0 & x<4, na.rm=TRUE))
+
+label(data$numkin_w02) <- "Numero de parientes red cercana (2017)"
+label(data$numkin_w04) <- "Numero de parientes red cercana (2019)"
+
+
+data %>% select(numkin_w02, numkin_w04)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
+```
+
+### R01: generador posicional (variedad de la red)
+
+```{r}
+#2016
+data$vol.red_w01 <- rep(0, length(data$comuna_w01))
+data$vol.red_w01 <- apply(data[,c('r01_01_w03', 'r01_02_w03', 'r01_03_w03', 'r01_04_w03', 'r01_05_w03', 'r01_06_w03', 'r01_07_w03', 'r01_08_w03','r01_09_w03', 'r01_10_w03', 'r01_11_w03','r01_12_w03', 'r01_13_w03')], 1, function(x)  sum(x>1 & x<8, na.rm=TRUE)) #suma para todos los casos los que tienen al menos una persona.
+
+data$vol.red_w01 <- ifelse(data$vol.red_w01==0, 1,
+                                 ifelse(data$vol.red_w01==1, 1,
+                                        ifelse(data$vol.red_w01==2, 1,
+                                               ifelse(data$vol.red_w01==3, 2,
+                                                      ifelse(data$vol.red_w01==4, 2,
+                                                             ifelse(data$vol.red_w01==5, 2,
+                                                                    ifelse(data$vol.red_w01==6, 3,
+                                                                           ifelse(data$vol.red_w01==7, 3,
+                                                                                  ifelse(data$vol.red_w01==8, 3,
+                                                                                         ifelse(data$vol.red_w01==9, 4,
+                                                                                                ifelse(data$vol.red_w01==10, 4,
+                                                                                                       ifelse(data$vol.red_w01==11, 4,
+                                                                                                              ifelse(data$vol.red_w01==12, 5,
+                                                                                                                     ifelse(data$vol.red_w01==13, 5, NA))))))))))))))
+# 2018
+data$vol.red_w03 <- rep(0, length(data$comuna_w03))
+data$vol.red_w03 <- apply(data[,c('r01_01_w03', 'r01_02_w03', 'r01_03_w03', 'r01_04_w03', 'r01_05_w03', 'r01_06_w03', 'r01_07_w03', 'r01_08_w03','r01_09_w03', 'r01_10_w03', 'r01_11_w03','r01_12_w03', 'r01_13_w03')], 1, function(x)  sum(x>1 & x<8, na.rm=TRUE)) #suma para todos los casos los que tienen al menos una persona.
+
+data$vol.red_w03 <- ifelse(data$vol.red_w03==0, 1,
+                                 ifelse(data$vol.red_w03==1, 1,
+                                        ifelse(data$vol.red_w03==2, 1,
+                                               ifelse(data$vol.red_w03==3, 2,
+                                                      ifelse(data$vol.red_w03==4, 2,
+                                                             ifelse(data$vol.red_w03==5, 2,
+                                                                    ifelse(data$vol.red_w03==6, 3,
+                                                                           ifelse(data$vol.red_w03==7, 3,
+                                                                                  ifelse(data$vol.red_w03==8, 3,
+                                                                                         ifelse(data$vol.red_w03==9, 4,
+                                                                                                ifelse(data$vol.red_w03==10, 4,
+                                                                                                       ifelse(data$vol.red_w03==11, 4,
+                                                                                                              ifelse(data$vol.red_w03==12, 5,
+                                                                                                                     ifelse(data$vol.red_w03==13, 5, NA))))))))))))))
+
+data$vol.red_w01<- factor(data$vol.red_w01, levels = c(1, 2, 3, 4, 5), labels = c("No tiene", "De 1 a 2", "De 3 a 5", "De 6 a 10", "Mas de 10"))
+data$vol.red_w03<- factor(data$vol.red_w03, levels = c(1, 2, 3, 4, 5), labels = c("No tiene", "De 1 a 2", "De 3 a 5", "De 6 a 10", "Mas de 10"))
+
+label(data$vol.red_w01) <- "Variedad de la red (2016)"
+label(data$vol.red_w03) <- "Variedad de la red (2018)"
+
+data %>% select(vol.red_w01, vol.red_w03)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
+```
+
 
 ## Confianza interpersonal
 
@@ -67,7 +143,7 @@ label(data$c02_rec_w04) <- "Se puede confiar en la mayoria de las personas (2019
 data %>% select (c02_rec_w01, c02_rec_w02, c02_rec_w03, c02_rec_w04)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
 ```
 
-C03: Las personas tratar de ayudar a los demás o se preocupan mayormente sólo de sí mismas (w01, w02, w03 & w04)
+C03: Las personas tratan de ayudar a los demás o se preocupan mayormente sólo de sí mismas (w01, w02, w03 & w04)
 
 ```{r}
 data <- data %>%

@@ -24,7 +24,7 @@
 <meta name="author" content="Equipo CEPAL-ELSOC" />
 
 
-<meta name="date" content="2021-08-09" />
+<meta name="date" content="2021-08-27" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -120,7 +120,7 @@ Figura 1.1: Resumen dimensiones CEPAL.
 <ul>
 <li><p>1 item: se considerará simplemente el puntaje de la variable.</p></li>
 <li><p>2 items: se analizará la correlación entre ambas y sobre esta base se podrá proponer un promedio simple.</p></li>
-<li><p>3 items: se analizará la matriz de correlaciones y el alfa de Cronbach como medida de consistencia interna que permita trabajar con el promedio. Esta medida otorga un número que va entre 0 y 1, donde el nivele convencionales para considerar consistencia es 0.7 o mayor.</p></li>
+<li><p>3 items: se analizará la matriz de correlaciones y el alfa de Cronbach como medida de consistencia interna que permita trabajar con el promedio. Esta medida otorga un número que va entre 0 y 1, donde el nivel convencional para considerar consistencia es 0.7 o mayor.</p></li>
 <li><p>4 items o más: se realizará un análisis factorial exploratorio para evaluar la dimensionalidad subyacente a los items, y en base a este análisis se podrán proponer puntajes factoriales como índices.</p></li>
 </ul>
 <p>A continuación se presenta el análisis ordenado por dimensiones:</p>
@@ -129,54 +129,61 @@ Figura 1.1: Resumen dimensiones CEPAL.
 <li>Sentido de pertenencia</li>
 <li>Orientación hacia el bien común</li>
 </ul>
-<p>Además de estas dimensiones del modelo de la CEPAL también se agrega una cuarta de cohesión social en el territorio, que se asocia a la confianza en vecinos, identificación barrial, sociabilidad barrial y satisfacción residencial.</p>
+<p>Estas tres dimensiones provienen desde el modelo presentado por la CEPAL, que centra su atención en el nivel nacional, utilizando fuentes de datos que permitan una comparabilidad a nivel regional. Sin embargo, no deja de ser relevante abordar una dimensión territorial que permita complementar y enriquecer el análisis a nivel de país. Por lo tanto, además de estas dimensiones del modelo de la CEPAL también se agrega una cuarta de cohesión social en el territorio, que se asocia a la confianza en vecinos, identificación barrial, sociabilidad barrial y satisfacción residencial.</p>
 <div id="relaciones-sociales-de-igualdad" class="section level2">
 <h2><span class="header-section-number">1.1</span> Relaciones sociales de igualdad</h2>
 <p>De acuerdo a CEPAL, “Esta parte de la definición de la cohesión social se acerca a aquellas que conciben la cohesión social como el compromiso y habilidad para trabajar juntos, incluso cuando los valores que poseen las personas sean distintos (Comisión Económica para África, 2016; Pornschlegel y Jürgensen, 2019; Dragolov y otros, 2013; De Beer, 2014; Woolcock, 2011; Banco Mundial, 2012, 2000; Stanley, 2003). Supone asimismo el principio de reconocimiento recíproco como precondición de la cohesión social (véase, por ejemplo, Jenson, 1998), así como la superación de todas las formas de discriminación.” <span class="citation">(CEPAL, <a href="#ref-cepal_Cohesion_2021" role="doc-biblioref">2021</a>, p. 45)</span></p>
 <p><strong>Lazos</strong></p>
 <p>Según <span class="citation">CEPAL (<a href="#ref-cepal_Cohesion_2021" role="doc-biblioref">2021</a>)</span>, “Los lazos sociales permiten generar espacios de cooperación que faciliten el desarrollo de relaciones sociales de igualdad, y establece patrones de reciprocidad interpersonal (PNUD, 2013)” (p. 74)</p>
-<p>El indicador propuesto en el informe de CEPAL para esta subdimensión es “importancia de amigos en la vida”, que es un indicador de percepción de la Encuesta Mundial de Valores, a partir del cual se busca cuantificar la intensidad del tejido social en los países de la región. En el caso de ELSOC el indicador más cercano a esta operacionalización corresponde a “Cantidad de amigos cercanos”, y que está presente solo en las olas 2 y 4 de la encuesta. Un análisis descriptivo de este indicador, que sería el único representante de esta subdimensión, se presenta en la Figura <a href="medición-de-cohesión-social-con-indicadores-elsoc.html#fig:lazos">1.2</a>.</p>
+<p>El indicador utilizado en la propuesta regional de CEPAL para esta subdimensión es “importancia de amigos en la vida”, que es un indicador de percepción de la Encuesta Mundial de Valores, a partir del cual se busca cuantificar la intensidad del tejido social en los países de la región. En el caso de ELSOC los indicadores más cercanos a esta operacionalización corresponden a “Cantidad de amigos/as ceranos” y “Tamaño de la red cercana”, que están presentes solo en las olas 2 y 4 de la encuesta. Además, se incluye un indicador de “Variedad de la red” construido a partir de un generador de posiciones, donde se aborda la cantidad de individuos con diferentes ocupaciones que la persona encuestada conoce; este indicador está presente en las olas 1 y 3. Un análisis descriptivo de estos indicadores se presenta en la Figura <a href="medición-de-cohesión-social-con-indicadores-elsoc.html#fig:lazos">1.2</a> y un análisis bivariado en la Figura <a href="medición-de-cohesión-social-con-indicadores-elsoc.html#fig:lazos-cor">1.3</a>.</p>
 <div class="figure" style="text-align: center"><span id="fig:lazos"></span>
 <img src="output/graphs/lazos.png" alt="Cantidad de amigos cercanos." width="100%" height="100%" />
 <p class="caption">
 Figura 1.2: Cantidad de amigos cercanos.
 </p>
 </div>
+<p>En la matriz de correlaciones de la Figura <a href="medición-de-cohesión-social-con-indicadores-elsoc.html#fig:lazos-cor">1.3</a> es posible observar que las correlaciones entre los indicadores están en un rango bajo, donde los indicadores que presentan una correlación mayor son A y C. Para calcular la consistencia interna de estos tres indicadores se utilizó alpha de Cronbach, obteniendo un resultado de 0.36, muy por debajo del valor mínimo recomendado de 0.7. Por lo tanto, para esta subdimensión se considerará un promedio solo de aquellos items que poseen una mayor correlación: “Cantidad de amigos/as cercanos” y “Variedad de la red”.</p>
+<div class="figure" style="text-align: center"><span id="fig:lazos-cor"></span>
+<img src="output/graphs/lazos_cor.png" alt="Asociación indicadores lazos." width="100%" height="100%" />
+<p class="caption">
+Figura 1.3: Asociación indicadores lazos.
+</p>
+</div>
 <p><strong>Confianza interpersonal</strong></p>
 <p>La confianza interpersonal es un atributo de las relaciones sociales que permite la interacción intergrupal y facilita la acción colectiva a favor de los objetivos compartidos. Por lo tanto, “la confianza se considera un habilitador de la cooperación y participación (capital social)” <span class="citation">(CEPAL, <a href="#ref-cepal_Cohesion_2021" role="doc-biblioref">2021</a>, p. 74)</span>.</p>
-<p>En el informe de CEPAL se utilizan los indicadores “Confianza en la gente de su comunidad”, que busca cuantificar que tan confiable consideran a los habitantes de su comunidad y “Confianza en la gente que se conoce por primera vez”, en el cual se cuantifica si se puede confiar en la mayoría de las personas o uno debe ser lo suficientemente cuidadoso con los demás. Al trabajar con ELSOC, los indicadores que van en esta línea son “Se puede confiar en la mayoría de las personas”, “La mayoría de las personas tratan de ayudar a las demás” y “la mayoría de la gente trata de ser justa”, presentes en las cuatro olas. Un análisis descriptivo de estos indicadores se presentan en la Figura <a href="medición-de-cohesión-social-con-indicadores-elsoc.html#fig:confianza-interpersonal">1.3</a> y un análisis bivariado en la Figura <a href="medición-de-cohesión-social-con-indicadores-elsoc.html#fig:confianza-interpersonal-cor">1.4</a>.</p>
+<p>En el informe de CEPAL se utilizan los indicadores “Confianza en la gente de su comunidad”, que busca cuantificar que tan confiable consideran a los habitantes de su comunidad y “Confianza en la gente que se conoce por primera vez”, en el cual se cuantifica si se puede confiar en la mayoría de las personas o uno debe ser lo suficientemente cuidadoso con los demás. Al trabajar con ELSOC, los indicadores que van en esta línea son “Se puede confiar en la mayoría de las personas”, “La mayoría de las personas tratan de ayudar a las demás” y “la mayoría de la gente trata de ser justa”, presentes en las cuatro olas. Un análisis descriptivo de estos indicadores se presentan en la Figura <a href="medición-de-cohesión-social-con-indicadores-elsoc.html#fig:confianza-interpersonal">1.4</a> y un análisis bivariado en la Figura <a href="medición-de-cohesión-social-con-indicadores-elsoc.html#fig:confianza-interpersonal-cor">1.5</a>.</p>
 <div class="figure" style="text-align: center"><span id="fig:confianza-interpersonal"></span>
 <img src="output/graphs/confianza-interpersonal.png" alt="Confianza interpersonal." width="100%" height="100%" />
 <p class="caption">
-Figura 1.3: Confianza interpersonal.
+Figura 1.4: Confianza interpersonal.
 </p>
 </div>
-<p>En la matriz de correlaciones de la Figura <a href="medición-de-cohesión-social-con-indicadores-elsoc.html#fig:confianza-interpersonal-cor">1.4</a> vemos que las correlaciones entre los indicadores van en el rango bajo a moderado, donde los indicadores más correlacionados son A y B. Al calcular la consistencia interna de estos indicadores mediante alpha de Cronbach el resultado arroja 0.45, bastante por debajo del límite recomendable de 0.7. Por lo tanto, el índice sugerido para esta subdimensión considera un promedio solo de aquellos items que presentan una correlación mayor: “Se puede confiar en la mayoría de las personas” y “la mayoría de las personas trata de ayudar a los demás”.</p>
+<p>En la matriz de correlaciones de la Figura <a href="medición-de-cohesión-social-con-indicadores-elsoc.html#fig:confianza-interpersonal-cor">1.5</a> vemos que las correlaciones entre los indicadores van en el rango bajo a moderado, donde los indicadores más correlacionados son A y B. Al calcular la consistencia interna de estos indicadores mediante alpha de Cronbach el resultado arroja 0.45, bastante por debajo del límite recomendable de 0.7. Por lo tanto, el índice sugerido para esta subdimensión considera un promedio solo de aquellos items que presentan una correlación mayor: “Se puede confiar en la mayoría de las personas” y “la mayoría de las personas trata de ayudar a los demás”.</p>
 <div class="figure" style="text-align: center"><span id="fig:confianza-interpersonal-cor"></span>
 <img src="output/graphs/confianza-interpersonal_cor.png" alt="Asociación indicadores Confianza interpersonal." width="100%" height="100%" />
 <p class="caption">
-Figura 1.4: Asociación indicadores Confianza interpersonal.
+Figura 1.5: Asociación indicadores Confianza interpersonal.
 </p>
 </div>
 <p><strong>Reconocimiento y respeto de la diversidad</strong></p>
 <p>Las relaciones sociales de igualdad suponen el reconocimiento de la dignidad del “otro” y el reconocimiento de ser parte de una comunidad de iguales en materia de derechos ciudadanos, siendo un elemento que surge de la interacción en redes y asociaciones con individuos de distintas características <span class="citation">(CEPAL, <a href="#ref-cepal_Cohesion_2021" role="doc-biblioref">2021</a>)</span>.</p>
-<p>En el informe de CEPAL se utilizan dos indicadores en esta subdimensión: “aprueba el derecho a contraer matrimonio de parejas del mismo sexo”, que se incluye con el objetivo de cuantificar la tolerancia hacia los individuos y comunidades con distinta orientación sexual y “Los hombres no tienen prioridad sobre la mujer, a la hora acceder a un trabajo”, que se incluye con el objetivo de cuantificar la cultura de igualdad de género en la sociedad. Además, se deja como pendiente la construcción de un indicador sobre tolerancia a personas de distinta raza y etnia, así como de percepción de discriminación. En el caso de ELSOC encontramos items distintos pero relacionados con actitudes hacia la diversidad: a) Chile pierde su identidad con la llegada de inmigrantes; b) con la llegada de inmigrantes aumenta el desempleo; c) grado de acuerdo con adopción homoparental; d) grado de confianza con personas homosexuales; e) grado de confianza con personas mapuche; y f) grado de confianza con personas inmigrantes. Los dos primeros items están presentes en las cuatro olas, adopción homoparental en olas 3 y 4 y el resto de indicadores en las olas 2 y 4. Un análisis descriptivo de estos items se presentan en la Figura <a href="medición-de-cohesión-social-con-indicadores-elsoc.html#fig:prejuicios">1.5</a> y en la Figura <a href="medición-de-cohesión-social-con-indicadores-elsoc.html#fig:diversidad">1.6</a> y un análisis bivariado en la Figura <a href="medición-de-cohesión-social-con-indicadores-elsoc.html#fig:diversidad-cor">1.7</a>.</p>
+<p>En la propuesta regional de CEPAL se utilizan dos indicadores en esta subdimensión: “aprueba el derecho a contraer matrimonio de parejas del mismo sexo”, que se incluye con el objetivo de cuantificar la tolerancia hacia los individuos y comunidades con distinta orientación sexual y “Los hombres no tienen prioridad sobre la mujer, a la hora acceder a un trabajo”, que se incluye con el objetivo de cuantificar la cultura de igualdad de género en la sociedad. Además, en esta propuesta regional de la CEPAL se deja como pendiente la construcción de un indicador sobre tolerancia a personas de distinta raza y etnia, así como de percepción de discriminación. En el caso de ELSOC encontramos items distintos pero relacionados con actitudes hacia la diversidad: a) Chile pierde su identidad con la llegada de inmigrantes; b) con la llegada de inmigrantes aumenta el desempleo; c) grado de acuerdo con adopción homoparental; d) grado de confianza con personas homosexuales; e) grado de confianza con personas mapuche; y f) grado de confianza con personas inmigrantes. Los dos primeros items están presentes en las cuatro olas, adopción homoparental en olas 3 y 4 y el resto de indicadores en las olas 2 y 4. Un análisis descriptivo de estos items se presentan en la Figura <a href="medición-de-cohesión-social-con-indicadores-elsoc.html#fig:prejuicios">1.6</a> y en la Figura <a href="medición-de-cohesión-social-con-indicadores-elsoc.html#fig:diversidad">1.7</a> y un análisis bivariado en la Figura <a href="medición-de-cohesión-social-con-indicadores-elsoc.html#fig:diversidad-cor">1.8</a>.</p>
 <div class="figure" style="text-align: center"><span id="fig:prejuicios"></span>
 <img src="output/graphs/prejuicios.png" alt="Prejuicios hacia inmigrantes y adopción homoparental." width="100%" height="100%" />
 <p class="caption">
-Figura 1.5: Prejuicios hacia inmigrantes y adopción homoparental.
+Figura 1.6: Prejuicios hacia inmigrantes y adopción homoparental.
 </p>
 </div>
 <div class="figure" style="text-align: center"><span id="fig:diversidad"></span>
 <img src="output/graphs/diversidad.png" alt="Grado de confianza grupos sociales." width="100%" height="100%" />
 <p class="caption">
-Figura 1.6: Grado de confianza grupos sociales.
+Figura 1.7: Grado de confianza grupos sociales.
 </p>
 </div>
 <div class="figure" style="text-align: center"><span id="fig:diversidad-cor"></span>
 <img src="output/graphs/diversidad_cor.png" alt="Asociación indicadores Reconocimiento y respeto de la diversidad." width="100%" height="100%" />
 <p class="caption">
-Figura 1.7: Asociación indicadores Reconocimiento y respeto de la diversidad.
+Figura 1.8: Asociación indicadores Reconocimiento y respeto de la diversidad.
 </p>
 </div>
 <p>Para poder avanzar hacia la construcción de un índice basado en esta serie de items utilizaremos análisis factorial exploratorio, que nos entrega información de las dimensiones comunes que subyacen a un conjunto de indicadores. La Tabla <a href="medición-de-cohesión-social-con-indicadores-elsoc.html#tab:div-fa">1.1</a> nos muestra el resultado de la extracción de tres factores:</p>
@@ -188,96 +195,136 @@ Figura 1.7: Asociación indicadores Reconocimiento y respeto de la diversidad.
 </tr>
 </tbody>
 </table>
-<p>En la Tabla <a href="medición-de-cohesión-social-con-indicadores-elsoc.html#tab:div-fa">1.1</a> observamos en la primera columna un factor que se relaciona con las preguntas sobre el grado de confianza de la Figura <a href="medición-de-cohesión-social-con-indicadores-elsoc.html#fig:diversidad">1.6</a>, luego un segundo factor asociado a las preguntas de inmigrantes, y finalmente un tercer factor asociado a la pregunta de adopción homoparental. Atendiendo ahora a la varianza asociada a estos factores (SS loadings), el primer factor representa casi un 30% de la varianza, el segundo alrededor de 20% y el tercero muy por debajo con 0.08. Por lo tanto podemos decir que hay mayor consistencia en los dos primeros factores, y entre ellos dos el asociado a diversidad es el más claro. Basándose en este análisis es posible proponer dos índices asociados a esta subdimensión y que serán calculados mediante puntajes factoriales: uno sobre diversidad y el otro sobre migrantes.</p>
+<p>En la Tabla <a href="medición-de-cohesión-social-con-indicadores-elsoc.html#tab:div-fa">1.1</a> observamos en la segunda columna (ML1) un factor que se relaciona con las preguntas sobre el grado de confianza de la Figura <a href="medición-de-cohesión-social-con-indicadores-elsoc.html#fig:diversidad">1.7</a>, luego un segundo factor asociado a las preguntas de inmigrantes, y finalmente un tercer factor asociado a la pregunta de adopción homoparental. Atendiendo ahora a la varianza asociada a estos factores (SS loadings), el primer factor representa casi un 30% de la varianza, el segundo alrededor de 20% y el tercero muy por debajo con 8%. Por lo tanto podemos decir que hay mayor consistencia en los dos primeros factores, y entre ellos dos el asociado a diversidad es el más claro. Basándose en este análisis es posible proponer dos índices asociados a esta subdimensión y que serán calculados mediante puntajes factoriales: uno sobre diversidad y el otro sobre migrantes.</p>
 </div>
 <div id="sentido-de-pertenencia" class="section level2">
 <h2><span class="header-section-number">1.2</span> Sentido de pertenencia</h2>
 <p>Una segunda dimensión de la definición propuesta por CEPAL para cohesión social corresponde al sentido de pertenencia, que “alude a la vinculación e identificación de las personas respecto a la sociedad y a las instituciones y grupos que los integran. Incluye los niveles micro, meso y macro.” <span class="citation">(CEPAL, <a href="#ref-cepal_Cohesion_2021" role="doc-biblioref">2021</a>, p. 45)</span>. Esta definición permite relevar la importancia de “las dinámicas de reconocimiento y participación social para conducir procesos dinámicos de inclusión que contribuyan a la cohesión social y al logro del bienestar (véase, por ejemplo, Jenson, 1998; Kymlicka, 1998).” <span class="citation">(CEPAL, <a href="#ref-cepal_Cohesion_2021" role="doc-biblioref">2021</a>, p. 45)</span>.</p>
 <p><strong>Identificación con el país</strong></p>
 <p>Por medio de esta subdimensión, se busca cuantificar la identificación de los individuos “con los valores y acciones que representan sus instituciones, y la concordancia con los propios” <span class="citation">(CEPAL, <a href="#ref-cepal_Cohesion_2021" role="doc-biblioref">2021</a>, p. 66)</span>.</p>
-<p>En el informe CEPAL se incluyen los indicadores “Orgullo por el sistema político”, que busca medir la adhesión de los encuestados con la labor que realizan sus instituciones en la representación de sus valores y objetivos y “Orgullo por su nacionalidad”, que busca cuantificar la identificación de los encuestados con los valores y normas que rigen las instituciones del país. Al trabajar con ELSOC se utilizarán los indicadores “Orgullo de ser chileno” e “Identificación con Chile” que están presentes en las cuatro olas. Un análisis descriptivo de estos indicadores se presentan en la Figura <a href="medición-de-cohesión-social-con-indicadores-elsoc.html#fig:identificacion">1.8</a>. La correlación entre estos indicadores es positiva y alta (r=0.76).</p>
+<p>En el informe CEPAL se incluyen los indicadores “Orgullo por el sistema político”, que busca medir la adhesión de los encuestados con la labor que realizan sus instituciones en la representación de sus valores y objetivos y “Orgullo por su nacionalidad”, que busca cuantificar la identificación de los encuestados con los valores y normas que rigen las instituciones del país. Al trabajar con ELSOC se utilizarán los indicadores “Orgullo de ser chileno” e “Identificación con Chile” que están presentes en las cuatro olas. Un análisis descriptivo de estos indicadores se presentan en la Figura <a href="medición-de-cohesión-social-con-indicadores-elsoc.html#fig:identificacion">1.9</a>. La correlación entre estos indicadores es positiva y alta (r=0.76). Por lo tanto, en esta subdimensión se utilizará un promedio simple de ambos indicadores.</p>
 <div class="figure" style="text-align: center"><span id="fig:identificacion"></span>
 <img src="output/graphs/identificacion.png" alt="Identificación y orgullo con Chile." width="100%" height="100%" />
 <p class="caption">
-Figura 1.8: Identificación y orgullo con Chile.
+Figura 1.9: Identificación y orgullo con Chile.
 </p>
 </div>
 <p><strong>Percepción de justicia</strong></p>
 <p>La subdimensión de percepción de justicia refiere al examen que realizan los miembros de la sociedad respecto a la capacidad de las instituciones de entregar bienestar y/o distribuir el poder económico y político <span class="citation">(CEPAL, <a href="#ref-cepal_Cohesion_2021" role="doc-biblioref">2021</a>)</span>.</p>
-<p>En el informe de CEPAL se utilizan los indicadores “Se deben equiparar los sueldos, no mantener desigualdad para incentivar el esfuerzo personal”, que cuantifica percepciones respecto a aversiones hacia la desigualdad; “El trabajo a largo plazo da beneficios, no las conexiones o suerte”, que busca captar percepciones sobre la estructura de oportunidades en el país y las expectativas de movilidad social; y “El Estado debe implementar políticas para reducir la desigualdad de ingreso”, que aborda las percepciones respecto a la desigualdad de ingresos en el país. Al trabajar con ELSOC se utilizan los indicadores “En Chile las personas son recompensadas por su esfuerzo” y “En Chile las personas son recompensadas por su inteligencia”, presentes en todas las olas. Un análisis descriptivo de estos indicadores se presentan en la Figura <a href="medición-de-cohesión-social-con-indicadores-elsoc.html#fig:justicia">1.9</a>. La correlación entre estos indicadores es positiva y alta (r=0.7).</p>
+<p>En el informe de CEPAL se utilizan los indicadores “Se deben equiparar los sueldos, no mantener desigualdad para incentivar el esfuerzo personal”, que cuantifica percepciones respecto a aversiones hacia la desigualdad; “El trabajo a largo plazo da beneficios, no las conexiones o suerte”, que busca captar percepciones sobre la estructura de oportunidades en el país y las expectativas de movilidad social; y “El Estado debe implementar políticas para reducir la desigualdad de ingreso”, que aborda las percepciones respecto a la desigualdad de ingresos en el país. Al trabajar con ELSOC se utilizan los indicadores “En Chile las personas son recompensadas por su esfuerzo” y “En Chile las personas son recompensadas por su inteligencia”, presentes en todas las olas. Un análisis descriptivo de estos indicadores se presentan en la Figura <a href="medición-de-cohesión-social-con-indicadores-elsoc.html#fig:justicia">1.10</a>. La correlación entre estos indicadores es positiva y alta (r=0.7). Por lo tanto, se utilizará un promedio simple de ambos indicadores en esta subdimensión.</p>
 <div class="figure" style="text-align: center"><span id="fig:justicia"></span>
 <img src="output/graphs/justicia.png" alt="Descriptivos Percepción de recompensa por esfuerzo e inteligencia." width="100%" height="100%" />
 <p class="caption">
-Figura 1.9: Descriptivos Percepción de recompensa por esfuerzo e inteligencia.
+Figura 1.10: Descriptivos Percepción de recompensa por esfuerzo e inteligencia.
 </p>
 </div>
 <p><strong>Confianza institucional</strong></p>
 <p>La subdimensión de confianza institucional “mide la valoración implícita de las acciones llevadas a cabo por las instituciones para representar los valores de la sociedad y/o de orientar la acción hacia el bien colectivo (Warren, 2010)” <span class="citation">(CEPAL, <a href="#ref-cepal_Cohesion_2021" role="doc-biblioref">2021</a>, p. 66)</span>.</p>
-<p>En informe CEPAL utilizan grado de confianza en (a) las cortes, (b) el Congreso Nacional, (c) la Policía Nacional, (d) los partidos políticos, (e) el ejecutivo y (f) las elecciones. Al trabajar con ELSOC se utilizan los siguientes ocho indicadores que están presentes en las cuatro olas: grado de confianza en (a) el gobierno, (b) los partidos políticos; (c) carabineros; (d) los sindicatos; (e) el poder judicial; (f) las empresas privadas; (g) el congreso nacional; y (h) el presidente/a de la república. Un análisis descriptivo de estos indicadores se presentan en la Figura <a href="medición-de-cohesión-social-con-indicadores-elsoc.html#fig:confianza-institucional">1.10</a> y un análisis bivariado en la Figura <a href="medición-de-cohesión-social-con-indicadores-elsoc.html#fig:confianza-institucional-cor">1.11</a>.</p>
+<p>En informe CEPAL utilizan grado de confianza en (a) las cortes, (b) el Congreso Nacional, (c) la Policía Nacional, (d) los partidos políticos, (e) el ejecutivo y (f) las elecciones. Al trabajar con ELSOC se utilizan los siguientes ocho indicadores que están presentes en las cuatro olas: grado de confianza en (a) el gobierno, (b) los partidos políticos; (c) carabineros; (d) los sindicatos; (e) el poder judicial; (f) las empresas privadas; (g) el congreso nacional; y (h) el presidente/a de la república. Un análisis descriptivo de estos indicadores se presentan en la Figura <a href="medición-de-cohesión-social-con-indicadores-elsoc.html#fig:confianza-institucional">1.11</a> y un análisis bivariado en la Figura <a href="medición-de-cohesión-social-con-indicadores-elsoc.html#fig:confianza-institucional-cor">1.12</a>.</p>
 <div class="figure" style="text-align: center"><span id="fig:confianza-institucional"></span>
 <img src="output/graphs/confianza-institucional.png" alt="Confianza en instituciones." width="100%" height="100%" />
 <p class="caption">
-Figura 1.10: Confianza en instituciones.
+Figura 1.11: Confianza en instituciones.
 </p>
 </div>
 <div class="figure" style="text-align: center"><span id="fig:confianza-institucional-cor"></span>
 <img src="output/graphs/confianza-institucional_cor.png" alt="Asociación indicadores Confianza institucional." width="100%" height="100%" />
 <p class="caption">
-Figura 1.11: Asociación indicadores Confianza institucional.
+Figura 1.12: Asociación indicadores Confianza institucional.
 </p>
 </div>
+<p>En esta oportunidad, nuevamente se utilizó un análisis factorial exploratorio con el objetivo de construir un índice a partir de la información de las dimensiones comunes que subyacen a este conjunto de ocho indicadores. La Tabla <a href="medición-de-cohesión-social-con-indicadores-elsoc.html#tab:inst-fa">1.2</a> nos muestra el resultado de la extracción de tres factores:</p>
+<table>
+<caption><span id="tab:inst-fa">Tabla 1.2: </span>Dimensiones de confianza institucional.</caption>
+<tbody>
+<tr class="odd">
+<td align="left"><img src="output/tables/inst_fa.png" width="500" /></td>
+</tr>
+</tbody>
+</table>
+<p>En la Tabla <a href="medición-de-cohesión-social-con-indicadores-elsoc.html#tab:inst-fa">1.2</a> observamos en la segunda columna (ML2) un factor que se relaciona con las preguntas sobre el grado de confianza con instituciones políticas (el gobierno, presidente/a, partidos políticos), luego un segundo factor (ML3) asociado con instituciones más cercanas a la sociedad civil (empresas privadas, carabineros, sindicatos y poder judicial) y finalmente un tercer factor (ML1) que se asocia con el poder judicial y el congreso. En relación con la varianza asociada a estos tres factores (SS loadings), el primer factor representa un 20% de la varianza, el segundo un 16% y el tercero un 15%. Por lo tanto, existe cierto grado de consistencia en los tres factores, siendo el primero de ellos -relacionado con las instituciones políticas- el que representa una mayor proporción de la varianza.</p>
 </div>
 <div id="orientación-hacia-el-bien-común" class="section level2">
 <h2><span class="header-section-number">1.3</span> Orientación hacia el bien común</h2>
 <p>Esta tercera dimensión refiere a “una actitud favorable a acciones que propendan a un mayor bienestar colectivo versus el beneficio puramente individual como parte de un proyecto compartido, o bien, como indican Sorj y Tironi (2007), aceptar “vivir en un orden colectivo que les reportará beneficios, así como sacrificios individuales”." <span class="citation">(CEPAL, <a href="#ref-cepal_Cohesion_2021" role="doc-biblioref">2021</a>, p. 46)</span></p>
 <p><strong>Solidaridad</strong></p>
 <p>La subdimensión de solidaridad busca cuantificar la presencia de valores solidarios en los individuos de la sociedad. Esta solidaridad se basa en el “entendimiento de la reciprocidad aprendida en redes, y es un reflejo de la solidaridad que perciben recibir por parte del Estado y sus pares (CEPAL, 2007)” <span class="citation">(CEPAL, <a href="#ref-cepal_Cohesion_2021" role="doc-biblioref">2021</a>, p. 66)</span>.</p>
-<p>En informe CEPAL utilizan el indicador “Asistencia a reuniones de un grupo de mejoras para la comunidad”, que cuantifica la asistencia a reuniones para mejorar su comunidad. Al trabajar con ELSOC se utilizará este indicador y otros siete que abordan un comportamiento prosocial y que están presentes en las cuatro olas. Un análisis descriptivo de estos indicadores se presentan en la Figura <a href="medición-de-cohesión-social-con-indicadores-elsoc.html#fig:solidaridad">1.12</a> y un análisis bivariado en la Figura <a href="medición-de-cohesión-social-con-indicadores-elsoc.html#fig:solidaridad-cor">1.13</a>.</p>
+<p>En informe CEPAL utilizan el indicador “Asistencia a reuniones de un grupo de mejoras para la comunidad”, que cuantifica la asistencia a reuniones para mejorar su comunidad. Al trabajar con ELSOC se utilizará este indicador y otros siete que abordan un comportamiento prosocial y que están presentes en las cuatro olas. Un análisis descriptivo de estos indicadores se presentan en la Figura <a href="medición-de-cohesión-social-con-indicadores-elsoc.html#fig:solidaridad">1.13</a> y un análisis bivariado en la Figura <a href="medición-de-cohesión-social-con-indicadores-elsoc.html#fig:solidaridad-cor">1.14</a>.</p>
 <div class="figure" style="text-align: center"><span id="fig:solidaridad"></span>
 <img src="output/graphs/solidaridad.png" alt="Acciones de solidaridad." width="100%" height="100%" />
 <p class="caption">
-Figura 1.12: Acciones de solidaridad.
+Figura 1.13: Acciones de solidaridad.
 </p>
 </div>
 <div class="figure" style="text-align: center"><span id="fig:solidaridad-cor"></span>
 <img src="output/graphs/solidaridad_cor.png" alt="Asociación indicadores de solidaridad." width="100%" height="100%" />
 <p class="caption">
-Figura 1.13: Asociación indicadores de solidaridad.
+Figura 1.14: Asociación indicadores de solidaridad.
 </p>
 </div>
+<p>Como esta subdimensión posee ocho indicadores, se volvió a realizar un análisis factorial exploratorio para construir un índice a partir de la información de las dimensiones comunes entre este conjunto de indicadores. La Tabla <a href="medición-de-cohesión-social-con-indicadores-elsoc.html#tab:solidaridad-fa">1.3</a> nos muestra el resultado de la extracción de tres factores:</p>
+<table>
+<caption><span id="tab:solidaridad-fa">Tabla 1.3: </span>Dimensiones de solidaridad.</caption>
+<tbody>
+<tr class="odd">
+<td align="left"><img src="output/tables/solidaridad_fa.png" width="500" /></td>
+</tr>
+</tbody>
+</table>
+<p>En la Tabla <a href="medición-de-cohesión-social-con-indicadores-elsoc.html#tab:inst-fa">1.2</a> es posible observar en la segunda columna (ML1) un factor relacionado con acciones de solidaridad como prestar o donar dinero, ayudar a una persona a conseguir trabajo y conversar con una persona con problemas o deprimida, luego en la tercera columna (ML3) se presenta un segundo factor asociado con la participación en reuniones sociales, como visitar casas de vecinos, recibir visitas de amigos o asistir a reuniones donde se traten problemas relevantes para la comunidad. Finalmente, en la cuarta columna (ML2) se observa un tercer factor que posee un indicador sobre realizar trabajo voluntario. En relación con la varianza que se asocia a cada uno de estos factores (SS loadings), el primer factor representa un 19% de la varianza, el segundo un 12% y el tercero un 9%. Por lo tanto, los dos primeros presentan un mayor grado de consistencia con respecto al factor asociado al trabajo voluntario. Así, se propone utilizar dos índices asociados a estos dos primeros factores y que serán calculados mediante puntajes factoriales.</p>
 <p><strong>Participación cívica</strong></p>
 <p>La subdimensión de participación cívica da cuenta de la voluntad de adherir a los espacios de participación del sistema político y la vinculación de los individuos con su comunidad. Esta participación “promueve la participación ciudadana en los asuntos públcios, apoyando pryectos colectivas que representen sus opiniones o intereses políticos (Valdéz, Viramontes y Finol, 2016)” <span class="citation">(CEPAL, <a href="#ref-cepal_Cohesion_2021" role="doc-biblioref">2021</a>, p. 66)</span>.</p>
-<p>En informe CEPAL se utilizaron los indicadores “Tiene actividad política (firma peticiones, boicot, va a manifestaciones pacíficas, huelgas)”, que indica la predisposición hacia la actividad política, “Participación en organizaciones”, que busca medir la implicación de los individuos con su comunidad y “Voto en elecciones presidenciales”, que pretende capturar el grado de compromiso cívico con el sistema regente y la dirección de la sociedad. Al trabajar con ELSOC se utilizan cuatro indicadores de actividad política presentes en las cuatro olas, ocho indicadores de participación en organizaciones presentes en ola 1 y 3 y voto en elecciones 2013 y 2017 (ola 1 y 3). Un análisis descriptivo de estos indicadores se presentan en la Figura <a href="medición-de-cohesión-social-con-indicadores-elsoc.html#fig:participacion-civica">1.14</a>, en la Figura <a href="medición-de-cohesión-social-con-indicadores-elsoc.html#fig:participacion-organizaciones">1.16</a> y en la Figura <a href="medición-de-cohesión-social-con-indicadores-elsoc.html#fig:participacion-electoral">1.18</a>, mientras que un análisis bivariado en la Figura <a href="medición-de-cohesión-social-con-indicadores-elsoc.html#fig:participacion-civica-cor">1.15</a> y en la Figura <a href="medición-de-cohesión-social-con-indicadores-elsoc.html#fig:participacion-organizaciones-cor">1.17</a>.</p>
+<p>En informe CEPAL se utilizaron los indicadores “Tiene actividad política (firma peticiones, boicot, va a manifestaciones pacíficas, huelgas)”, que indica la predisposición hacia la actividad política, “Participación en organizaciones”, que busca medir la implicación de los individuos con su comunidad y “Voto en elecciones presidenciales”, que pretende capturar el grado de compromiso cívico con el sistema regente y la dirección de la sociedad. Al trabajar con ELSOC se utilizan cuatro indicadores de actividad política presentes en las cuatro olas, ocho indicadores de participación en organizaciones presentes en ola 1 y 3 y voto en elecciones 2013 y 2017 (ola 1 y 3). Un análisis descriptivo de estos indicadores se presentan en la Figura <a href="medición-de-cohesión-social-con-indicadores-elsoc.html#fig:participacion-civica">1.15</a>, en la Figura <a href="medición-de-cohesión-social-con-indicadores-elsoc.html#fig:participacion-organizaciones">1.17</a> y en la Figura <a href="medición-de-cohesión-social-con-indicadores-elsoc.html#fig:participacion-electoral">1.19</a>, mientras que un análisis bivariado en la Figura <a href="medición-de-cohesión-social-con-indicadores-elsoc.html#fig:participacion-civica-cor">1.16</a> y en la Figura <a href="medición-de-cohesión-social-con-indicadores-elsoc.html#fig:participacion-organizaciones-cor">1.18</a>.</p>
 <div class="figure" style="text-align: center"><span id="fig:participacion-civica"></span>
 <img src="output/graphs/participacion-civica.png" alt="Participación en actividades cívicas." width="100%" height="100%" />
 <p class="caption">
-Figura 1.14: Participación en actividades cívicas.
+Figura 1.15: Participación en actividades cívicas.
 </p>
 </div>
 <div class="figure" style="text-align: center"><span id="fig:participacion-civica-cor"></span>
 <img src="output/graphs/participacion-civica_cor.png" alt="Asociación indicadores participación cívica." width="100%" height="100%" />
 <p class="caption">
-Figura 1.15: Asociación indicadores participación cívica.
+Figura 1.16: Asociación indicadores participación cívica.
 </p>
 </div>
+<p>En esta oportunidad, nuevamente se utilizó un análisis factorial exploratorio con el objetivo de construir un índice a partir de la información de las dimensiones comunes que subyacen a este conjunto de cuatro indicadores. La Tabla <a href="medición-de-cohesión-social-con-indicadores-elsoc.html#tab:part-civica-fa">1.4</a> nos muestra el resultado de la extracción de tres factores:</p>
+<table>
+<caption><span id="tab:part-civica-fa">Tabla 1.4: </span>Dimensiones de Participación cívica.</caption>
+<tbody>
+<tr class="odd">
+<td align="left"><img src="output/tables/part_civica_fa.png" width="500" /></td>
+</tr>
+</tbody>
+</table>
+<p>En la Tabla <a href="medición-de-cohesión-social-con-indicadores-elsoc.html#tab:part-civica-fa">1.4</a> observamos un primer factor que agrupa tres indicadores: firmar una carta o petición, expresar su opinión por redes sociales y asistir a una marcha o manifestación. Luego se observa un segundo factor que posee solo el indicador de asistir a una marcha o manifestación y un tercer factor que posee solo el indicador de participar en una huelga. Por lo tanto, se propone utilizar un solo índice asociado al primer factor, que representa un 19% de la varianza, y que será calculado a partir de puntajes factoriales.</p>
 <p><strong>Participación en organizaciones</strong></p>
 <div class="figure" style="text-align: center"><span id="fig:participacion-organizaciones"></span>
 <img src="output/graphs/participacion-organizaciones.png" alt="Participación en organizaciones sociales." width="100%" height="100%" />
 <p class="caption">
-Figura 1.16: Participación en organizaciones sociales.
+Figura 1.17: Participación en organizaciones sociales.
 </p>
 </div>
 <div class="figure" style="text-align: center"><span id="fig:participacion-organizaciones-cor"></span>
 <img src="output/graphs/participacion-organizaciones_cor.png" alt="Asociación indicadores participación en organizaciones." width="100%" height="100%" />
 <p class="caption">
-Figura 1.17: Asociación indicadores participación en organizaciones.
+Figura 1.18: Asociación indicadores participación en organizaciones.
 </p>
 </div>
+<p>En cuanto a la participación en organizaciones, se estimó un segundo análisis factorial exploratorio sobre los ocho tipos de organizaciones presentes en ELSOC. La Tabla <a href="medición-de-cohesión-social-con-indicadores-elsoc.html#tab:organizaciones-fa">1.5</a> muestra el resultado de la extracción de tres factores:</p>
+<table>
+<caption><span id="tab:organizaciones-fa">Tabla 1.5: </span>Dimensiones de Participación en organizaciones.</caption>
+<tbody>
+<tr class="odd">
+<td align="left"><img src="output/tables/organizaciones_fa.png" width="500" /></td>
+</tr>
+</tbody>
+</table>
+<p>Podemos observar en la Tabla <a href="medición-de-cohesión-social-con-indicadores-elsoc.html#tab:organizaciones-fa">1.5</a> un primer factor asociado con la participación en asociaciones profesionales, sindicatos y partidos políticos, luego un segundo factor relacionado con la participación en organizaciones religiosas y juntas de vecinos y, finalmente, un tercer factor relacionado con organizaciones deportivas, ecológicas y centros de estudiantes. En cuanto a la varianza asociada a cada uno de estos factores (SS loadings), el primer y segundo factor representan un 9% de la varianza cada uno, mientras que el tercer factor representa un 6% de la varianza. Por lo tanto, no existe un grado de consistencia relevante en ninguno de estos tres factores. Así, basándonos en este análisis, se propone no incluir los indicadores asociados a la participación en organizaciones y trabajar sólo con los indicadores referentes a participación cívica.</p>
 <p><strong>Participación electoral</strong></p>
 <div class="figure" style="text-align: center"><span id="fig:participacion-electoral"></span>
 <img src="output/graphs/participacion-electoral.png" alt="Participación en elecciones 2013 y 2017." width="100%" height="100%" />
 <p class="caption">
-Figura 1.18: Participación en elecciones 2013 y 2017.
+Figura 1.19: Participación en elecciones 2013 y 2017.
 </p>
 </div>
 </div>
@@ -285,51 +332,82 @@ Figura 1.18: Participación en elecciones 2013 y 2017.
 <h2><span class="header-section-number">1.4</span> Cohesión territorial</h2>
 <p>De manera adicional, se incorpora una dimensión sobre calidad de vida en el vecindario presente en ELSOC. Todos estos indicadores se encuentran presentes en las cuatro olas.</p>
 <p><strong>Confianza en vecinos</strong></p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-3"></span>
+<p>En la encuesta ELSOC se incluye un indicador territorial sobre el grado de confianza en vecinos. Un análisis descriptivo de este indicador, que sería el único representante de esta subdimensión, se presenta en laFfigura <a href="medición-de-cohesión-social-con-indicadores-elsoc.html#fig:confianza-vecinos">1.20</a></p>
+<div class="figure" style="text-align: center"><span id="fig:confianza-vecinos"></span>
 <img src="output/graphs/confianza-vecinos.png" alt="Confianza en vecinos." width="100%" height="100%" />
 <p class="caption">
-Figura 1.19: Confianza en vecinos.
+Figura 1.20: Confianza en vecinos.
 </p>
 </div>
-<p><strong>Identificación barrial</strong></p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-4"></span>
-<img src="output/graphs/cohesion-barrial.png" alt=" Identificación con el barrio." width="100%" height="100%" />
+<p><strong>Cohesión barrial</strong></p>
+<p>Otros indicadores territoriales presentes en ELSOC están asociados con la subdimensión de Cohesión barrial. Estos indicadores identifican si las personas se sienten identificadas con la gente del barrio, si se sienten integrados, si se sienten parte del barrio y si creen que es su barrio ideal. Un análisis descriptivo de estos cuatro indicadores se presenta en la Figura <a href="medición-de-cohesión-social-con-indicadores-elsoc.html#fig:cohesion-barrial">1.21</a> y un análisis bivariado en la Figura <a href="medición-de-cohesión-social-con-indicadores-elsoc.html#fig:cohesion-barrial-cor">1.22</a></p>
+<div class="figure" style="text-align: center"><span id="fig:cohesion-barrial"></span>
+<img src="output/graphs/cohesion-barrial.png" alt="Cohesión en el barrio." width="100%" height="100%" />
 <p class="caption">
-Figura 1.20:  Identificación con el barrio.
+Figura 1.21: Cohesión en el barrio.
 </p>
 </div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-5"></span>
-<img src="output/graphs/cohesion-barrial_cor.png" alt="Asociación indicadores identificación barrial." width="100%" height="100%" />
+<div class="figure" style="text-align: center"><span id="fig:cohesion-barrial-cor"></span>
+<img src="output/graphs/cohesion-barrial_cor.png" alt="Asociación indicadores cohesión barrial." width="100%" height="100%" />
 <p class="caption">
-Figura 1.21: Asociación indicadores identificación barrial.
+Figura 1.22: Asociación indicadores cohesión barrial.
 </p>
 </div>
+<p>Como esta subdimensión posee cuatro indicadores, se utilizó un análisis factorial exploratorio para construir un índice sobre las dimensiones que los subyacen. La Tabla <a href="medición-de-cohesión-social-con-indicadores-elsoc.html#tab:cohesion-barrial-fa">1.6</a> nos muestra el resultado de este análisis. En las segunda y tercera columna se observan dos factores que incluyen los cuatro indicadores y que representan un 26% y 24% de la varianza respectivamente. En la cuarta columna podemos observar un factor que agrupa tres indicadores y que representa un 21% de la varianza.</p>
+<table>
+<caption><span id="tab:cohesion-barrial-fa">Tabla 1.6: </span>Dimensiones de Cohesión barrial.</caption>
+<tbody>
+<tr class="odd">
+<td align="left"><img src="output/tables/cohesion_barrial_fa.png" width="500" /></td>
+</tr>
+</tbody>
+</table>
 <p><strong>Sociabilidad barrial</strong></p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-6"></span>
+<p>Esta subdimensión de indicadores territoriales aborda la percepción que se tiene sobre el barrio en relación con si las demás personas son sociables, si es fácil hacer amigos, si las personas son cordiales y si son colaboradoras. Un análisis descriptivo de estos cuatro indicadores se presenta en la Figura <a href="medición-de-cohesión-social-con-indicadores-elsoc.html#fig:sociabilidad-barrial">1.23</a> y un análisis bivariado en la Figura <a href="medición-de-cohesión-social-con-indicadores-elsoc.html#fig:sociabilidad-barrial-cor">1.24</a>.</p>
+<div class="figure" style="text-align: center"><span id="fig:sociabilidad-barrial"></span>
 <img src="output/graphs/sociabilidad-barrial.png" alt="Sociabilidad barrial." width="100%" height="100%" />
 <p class="caption">
-Figura 1.22: Sociabilidad barrial.
+Figura 1.23: Sociabilidad barrial.
 </p>
 </div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-7"></span>
+<div class="figure" style="text-align: center"><span id="fig:sociabilidad-barrial-cor"></span>
 <img src="output/graphs/sociabilidad-barrial_cor.png" alt="Asociación indicadores sociabilidad barrial." width="100%" height="100%" />
 <p class="caption">
-Figura 1.23: Asociación indicadores sociabilidad barrial.
+Figura 1.24: Asociación indicadores sociabilidad barrial.
 </p>
 </div>
+<p>Igual que en el caso anterior, se realizó un análisis factorial exploratorio sobre estos cuatro indicadores. Los resultados se muestran en la Tabla <a href="medición-de-cohesión-social-con-indicadores-elsoc.html#tab:sociabilidad-barrial-fa">1.7</a>. En esta tabla podemos observar dos factores que incluyen tres indicadores y que cada uno representa un 24% de la varianza. Además, podemos observar un tercer factor que incluye dos indicadores y que representa un 15% de la varianza.</p>
+<table>
+<caption><span id="tab:sociabilidad-barrial-fa">Tabla 1.7: </span>Dimensiones de sociabilidad barrial.</caption>
+<tbody>
+<tr class="odd">
+<td align="left"><img src="output/tables/sociabilidad_barrial_fa.png" width="500" /></td>
+</tr>
+</tbody>
+</table>
 <p><strong>Satisfacción residencial</strong></p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-8"></span>
+<p>Finalmente, se incluye una subdimensión de Satisfacción residencial presente en ELSOC y que está relacionada con indicadores que miden la conectividad del barrio, la proximidad con el comercio, colegios, familiares y la principal actividad de trabajo, la limpieza del barrio, la cantidad de áreas verdes y la seguridad del barrio. Se incluye un análisis descriptivo de estos ocho indicadores en la Figura <a href="medición-de-cohesión-social-con-indicadores-elsoc.html#fig:satisfaccion-residencial">1.25</a> y un análisis bivariado en la Figura <a href="medición-de-cohesión-social-con-indicadores-elsoc.html#fig:satisfaccion-residencial-cor">1.26</a>.</p>
+<div class="figure" style="text-align: center"><span id="fig:satisfaccion-residencial"></span>
 <img src="output/graphs/satisfaccion-residencial.png" alt="Satisfacción con el barrio." width="100%" height="100%" />
 <p class="caption">
-Figura 1.24: Satisfacción con el barrio.
+Figura 1.25: Satisfacción con el barrio.
 </p>
 </div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-9"></span>
+<div class="figure" style="text-align: center"><span id="fig:satisfaccion-residencial-cor"></span>
 <img src="output/graphs/satisfaccion-residencial_cor.png" alt="Asociación indicadores satisfacción residencial." width="100%" height="100%" />
 <p class="caption">
-Figura 1.25: Asociación indicadores satisfacción residencial.
+Figura 1.26: Asociación indicadores satisfacción residencial.
 </p>
 </div>
+<p>En esta subdimensión se volvió a realizar un análisis factorial exploratorio. Como observamos en la Tabla <a href="medición-de-cohesión-social-con-indicadores-elsoc.html#tab:satisfaccion-barrial-fa">1.8</a>, en la segunda columna se presenta un factor que incluye los indicadores referidos a la conectividad y proximidad del barrio con algunos servicios, luego un segundo factor que incluye los indicadores sobre limpieza y áreas verdes y finalmente un tercer factor que incluye el indicador sobre seguridad. El primero de estos factores representa un 20% de la varianza, el segundo un 14% y el tercer factor representa un 13% de la varianza.</p>
+<table>
+<caption><span id="tab:satisfaccion-barrial-fa">Tabla 1.8: </span>Dimensiones de satisfaccion residencial.</caption>
+<tbody>
+<tr class="odd">
+<td align="left"><img src="output/tables/sat_residencial_fa.png" width="500" /></td>
+</tr>
+</tbody>
+</table>
 
 </div>
 </div>
