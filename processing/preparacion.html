@@ -1617,48 +1617,27 @@ data %&gt;% select(numkin_w02, numkin_w04)  %&gt;% sjlabelled::as_label(.)  %&gt
 </div>
 <div id="r01-generador-posicional-variedad-de-la-red" class="section level3">
 <h3><span class="header-section-number">3.1.4</span> R01: generador posicional (variedad de la red)</h3>
-<pre class="r"><code>#2016
+<pre class="r"><code># Ocupaciones correspondientes a 13 posiciones del generador de posiciones
+
+# (&#39;CEO&#39;, &#39;Vend.Ambulante&#39;, &#39;Secretario/a&#39;, &#39;Mec.Autos&#39;, &#39;Vend.Tienda&#39;, &#39;Abogado&#39;, &#39;Aseador.of&#39;, &#39;Médico&#39;, &#39;Parvularia&#39;, &#39;Chofer.Taxi&#39;, &#39;Camarero/a&#39;, &#39;Contador/a&#39;, &#39;Prof.Univ&#39;)
+
+#2016
 data$vol.red_w01 &lt;- rep(0, length(data$comuna_w01))
 data$vol.red_w01 &lt;- apply(data[,c(&#39;r01_01_w03&#39;, &#39;r01_02_w03&#39;, &#39;r01_03_w03&#39;, &#39;r01_04_w03&#39;, &#39;r01_05_w03&#39;, &#39;r01_06_w03&#39;, &#39;r01_07_w03&#39;, &#39;r01_08_w03&#39;,&#39;r01_09_w03&#39;, &#39;r01_10_w03&#39;, &#39;r01_11_w03&#39;,&#39;r01_12_w03&#39;, &#39;r01_13_w03&#39;)], 1, function(x)  sum(x&gt;1 &amp; x&lt;8, na.rm=TRUE)) #suma para todos los casos los que tienen al menos una persona.
 
-data$vol.red_w01 &lt;- ifelse(data$vol.red_w01==0, 1,
-                                 ifelse(data$vol.red_w01==1, 1,
-                                        ifelse(data$vol.red_w01==2, 1,
-                                               ifelse(data$vol.red_w01==3, 2,
-                                                      ifelse(data$vol.red_w01==4, 2,
-                                                             ifelse(data$vol.red_w01==5, 2,
-                                                                    ifelse(data$vol.red_w01==6, 3,
-                                                                           ifelse(data$vol.red_w01==7, 3,
-                                                                                  ifelse(data$vol.red_w01==8, 3,
-                                                                                         ifelse(data$vol.red_w01==9, 4,
-                                                                                                ifelse(data$vol.red_w01==10, 4,
-                                                                                                       ifelse(data$vol.red_w01==11, 4,
-                                                                                                              ifelse(data$vol.red_w01==12, 5,
-                                                                                                                     ifelse(data$vol.red_w01==13, 5, NA))))))))))))))
+data$vol.red_w01 &lt;- recode(data$vol.red_w01, &quot;0=1; 1:2=2; 3:5=3; 6:10=4; 11:13=5&quot;)
+
 # 2018
 data$vol.red_w03 &lt;- rep(0, length(data$comuna_w03))
 data$vol.red_w03 &lt;- apply(data[,c(&#39;r01_01_w03&#39;, &#39;r01_02_w03&#39;, &#39;r01_03_w03&#39;, &#39;r01_04_w03&#39;, &#39;r01_05_w03&#39;, &#39;r01_06_w03&#39;, &#39;r01_07_w03&#39;, &#39;r01_08_w03&#39;,&#39;r01_09_w03&#39;, &#39;r01_10_w03&#39;, &#39;r01_11_w03&#39;,&#39;r01_12_w03&#39;, &#39;r01_13_w03&#39;)], 1, function(x)  sum(x&gt;1 &amp; x&lt;8, na.rm=TRUE)) #suma para todos los casos los que tienen al menos una persona.
 
-data$vol.red_w03 &lt;- ifelse(data$vol.red_w03==0, 1,
-                                 ifelse(data$vol.red_w03==1, 1,
-                                        ifelse(data$vol.red_w03==2, 1,
-                                               ifelse(data$vol.red_w03==3, 2,
-                                                      ifelse(data$vol.red_w03==4, 2,
-                                                             ifelse(data$vol.red_w03==5, 2,
-                                                                    ifelse(data$vol.red_w03==6, 3,
-                                                                           ifelse(data$vol.red_w03==7, 3,
-                                                                                  ifelse(data$vol.red_w03==8, 3,
-                                                                                         ifelse(data$vol.red_w03==9, 4,
-                                                                                                ifelse(data$vol.red_w03==10, 4,
-                                                                                                       ifelse(data$vol.red_w03==11, 4,
-                                                                                                              ifelse(data$vol.red_w03==12, 5,
-                                                                                                                     ifelse(data$vol.red_w03==13, 5, NA))))))))))))))
+data$vol.red_w03 &lt;- recode(data$vol.red_w03, &quot;0=1; 1:2=2; 3:5=3; 6:10=4; 11:13=5&quot;)
 
 data$vol.red_w01&lt;- factor(data$vol.red_w01, levels = c(1, 2, 3, 4, 5), labels = c(&quot;No tiene&quot;, &quot;De 1 a 2&quot;, &quot;De 3 a 5&quot;, &quot;De 6 a 10&quot;, &quot;Mas de 10&quot;))
 data$vol.red_w03&lt;- factor(data$vol.red_w03, levels = c(1, 2, 3, 4, 5), labels = c(&quot;No tiene&quot;, &quot;De 1 a 2&quot;, &quot;De 3 a 5&quot;, &quot;De 6 a 10&quot;, &quot;Mas de 10&quot;))
 
-label(data$vol.red_w01) &lt;- &quot;Variedad de la red (2016)&quot;
-label(data$vol.red_w03) &lt;- &quot;Variedad de la red (2018)&quot;
+label(data$vol.red_w01) &lt;- &quot;Cantidad de personas que se conocen con diferentes ocupaciones (2016)&quot;
+label(data$vol.red_w03) &lt;- &quot;Cantidad de personas que se conocen con diferentes ocupaciones (2018)&quot;
 
 data %&gt;% select(vol.red_w01, vol.red_w03)  %&gt;% sjlabelled::as_label(.)  %&gt;%  dfSummary(, graph.col = FALSE)</code></pre>
 <pre><code>## Data Frame Summary  
@@ -1666,21 +1645,21 @@ data %&gt;% select(vol.red_w01, vol.red_w03)  %&gt;% sjlabelled::as_label(.)  %&
 ## Dimensions: 1886 x 2  
 ## Duplicates: 1881  
 ## 
-## ----------------------------------------------------------------------------------------------------------
-## No   Variable       Label                       Stats / Values   Freqs (% of Valid)   Valid      Missing  
-## ---- -------------- --------------------------- ---------------- -------------------- ---------- ---------
-## 1    vol.red_w01    Variedad de la red (2016)   1. No tiene      159 ( 8.4%)          1886       0        
-##      [factor]                                   2. De 1 a 2      324 (17.2%)          (100.0%)   (0.0%)   
-##                                                 3. De 3 a 5      479 (25.4%)                              
-##                                                 4. De 6 a 10     552 (29.3%)                              
-##                                                 5. Mas de 10     372 (19.7%)                              
+## ------------------------------------------------------------------------------------------------------------------------
+## No   Variable       Label                                     Stats / Values   Freqs (% of Valid)   Valid      Missing  
+## ---- -------------- ----------------------------------------- ---------------- -------------------- ---------- ---------
+## 1    vol.red_w01    Cantidad de personas que se conocen con   1. No tiene       36 ( 1.9%)          1886       0        
+##      [factor]       diferentes ocupaciones (2016)             2. De 1 a 2      123 ( 6.5%)          (100.0%)   (0.0%)   
+##                                                               3. De 3 a 5      324 (17.2%)                              
+##                                                               4. De 6 a 10     837 (44.4%)                              
+##                                                               5. Mas de 10     566 (30.0%)                              
 ## 
-## 2    vol.red_w03    Variedad de la red (2018)   1. No tiene      159 ( 8.4%)          1886       0        
-##      [factor]                                   2. De 1 a 2      324 (17.2%)          (100.0%)   (0.0%)   
-##                                                 3. De 3 a 5      479 (25.4%)                              
-##                                                 4. De 6 a 10     552 (29.3%)                              
-##                                                 5. Mas de 10     372 (19.7%)                              
-## ----------------------------------------------------------------------------------------------------------</code></pre>
+## 2    vol.red_w03    Cantidad de personas que se conocen con   1. No tiene       36 ( 1.9%)          1886       0        
+##      [factor]       diferentes ocupaciones (2018)             2. De 1 a 2      123 ( 6.5%)          (100.0%)   (0.0%)   
+##                                                               3. De 3 a 5      324 (17.2%)                              
+##                                                               4. De 6 a 10     837 (44.4%)                              
+##                                                               5. Mas de 10     566 (30.0%)                              
+## ------------------------------------------------------------------------------------------------------------------------</code></pre>
 </div>
 </div>
 <div id="confianza-interpersonal" class="section level2">
@@ -2723,40 +2702,56 @@ data %&gt;% select (c07_08_w01, c07_08_w02, c07_08_w03, c07_08_w04)  %&gt;% sjla
 </div>
 <div id="participación-cívica" class="section level2">
 <h2><span class="header-section-number">5.2</span> Participación cívica</h2>
-<p>C08_01: Firmado una carta o petición apoyando una causa (w01 &amp; w03)</p>
+<p>C08_01: Firmado una carta o petición apoyando una causa (w01, w02, w03 &amp; w04)</p>
 <pre class="r"><code>label(data$c08_01_w01) &lt;- &quot;Firmado una carta o peticion apoyando una causa (2016).&quot;
+label(data$c08_01_w02) &lt;- &quot;Firmado una carta o peticion apoyando una causa (2017).&quot;
 label(data$c08_01_w03) &lt;- &quot;Firmado una carta o peticion apoyando una causa (2018).&quot;
+label(data$c08_01_w04) &lt;- &quot;Firmado una carta o peticion apoyando una causa (2019).&quot;
 
-data %&gt;% select (c08_01_w01, c08_01_w03)  %&gt;% sjlabelled::as_label(.)  %&gt;%  dfSummary(, graph.col = FALSE)</code></pre>
+data %&gt;% select (c08_01_w01, c08_01_w02, c08_01_w03, c08_01_w04)  %&gt;% sjlabelled::as_label(.)  %&gt;%  dfSummary(, graph.col = FALSE)</code></pre>
 <pre><code>## Data Frame Summary  
 ##   
-## Dimensions: 1886 x 2  
-## Duplicates: 1859  
+## Dimensions: 1886 x 4  
+## Duplicates: 1674  
 ## 
-## ----------------------------------------------------------------------------------------------------------------------------
-## No   Variable      Label                                   Stats / Values           Freqs (% of Valid)   Valid     Missing  
-## ---- ------------- --------------------------------------- ------------------------ -------------------- --------- ---------
-## 1    c08_01_w01    Firmado una carta o peticion apoyando   1. Nunca                 1244 (66.1%)         1882      4        
-##      [factor]      una causa (2016).                       2. Casi nunca             191 (10.1%)         (99.8%)   (0.2%)   
-##                                                            3. A veces                337 (17.9%)                            
-##                                                            4. Frecuentemente          90 ( 4.8%)                            
-##                                                            5. Muy frecuentemente      20 ( 1.1%)                            
+## -----------------------------------------------------------------------------------------------------------------------------
+## No   Variable      Label                                   Stats / Values           Freqs (% of Valid)   Valid      Missing  
+## ---- ------------- --------------------------------------- ------------------------ -------------------- ---------- ---------
+## 1    c08_01_w01    Firmado una carta o peticion apoyando   1. Nunca                 1244 (66.1%)         1882       4        
+##      [factor]      una causa (2016).                       2. Casi nunca             191 (10.1%)         (99.8%)    (0.2%)   
+##                                                            3. A veces                337 (17.9%)                             
+##                                                            4. Frecuentemente          90 ( 4.8%)                             
+##                                                            5. Muy frecuentemente      20 ( 1.1%)                             
 ## 
-## 2    c08_01_w03    Firmado una carta o peticion apoyando   1. Nunca                 1388 (73.6%)         1885      1        
-##      [factor]      una causa (2018).                       2. Casi nunca             222 (11.8%)         (99.9%)   (0.1%)   
-##                                                            3. A veces                210 (11.1%)                            
-##                                                            4. Frecuentemente          54 ( 2.9%)                            
-##                                                            5. Muy frecuentemente      11 ( 0.6%)                            
-## ----------------------------------------------------------------------------------------------------------------------------</code></pre>
-<p>C08_02: Asistir a una marcha o manifestación pacífica (w01 &amp; w03)</p>
+## 2    c08_01_w02    Firmado una carta o peticion apoyando   1. Nunca                 1299 (68.9%)         1886       0        
+##      [factor]      una causa (2017).                       2. Casi nunca             212 (11.2%)         (100.0%)   (0.0%)   
+##                                                            3. A veces                283 (15.0%)                             
+##                                                            4. Frecuentemente          74 ( 3.9%)                             
+##                                                            5. Muy frecuentemente      18 ( 1.0%)                             
+## 
+## 3    c08_01_w03    Firmado una carta o peticion apoyando   1. Nunca                 1388 (73.6%)         1885       1        
+##      [factor]      una causa (2018).                       2. Casi nunca             222 (11.8%)         (99.9%)    (0.1%)   
+##                                                            3. A veces                210 (11.1%)                             
+##                                                            4. Frecuentemente          54 ( 2.9%)                             
+##                                                            5. Muy frecuentemente      11 ( 0.6%)                             
+## 
+## 4    c08_01_w04    Firmado una carta o peticion apoyando   1. Nunca                 1446 (76.8%)         1884       2        
+##      [factor]      una causa (2019).                       2. Casi nunca             183 ( 9.7%)         (99.9%)    (0.1%)   
+##                                                            3. A veces                198 (10.5%)                             
+##                                                            4. Frecuentemente          51 ( 2.7%)                             
+##                                                            5. Muy frecuentemente       6 ( 0.3%)                             
+## -----------------------------------------------------------------------------------------------------------------------------</code></pre>
+<p>C08_02: Asistir a una marcha o manifestación pacífica (w01, w02, w03 &amp; w04)</p>
 <pre class="r"><code>label(data$c08_02_w01) &lt;- &quot;Asistido a una marcha o manifestacion pacifica (2016).&quot;
+label(data$c08_02_w02) &lt;- &quot;Asistido a una marcha o manifestacion pacifica (2017).&quot;
 label(data$c08_02_w03) &lt;- &quot;Asistido a una marcha o manifestacion pacifica (2018).&quot;
+label(data$c08_02_w04) &lt;- &quot;Asistido a una marcha o manifestacion pacifica (2019).&quot;
 
-data %&gt;% select (c08_02_w01, c08_02_w03)  %&gt;% sjlabelled::as_label(.)  %&gt;%  dfSummary(, graph.col = FALSE)</code></pre>
+data %&gt;% select (c08_02_w01, c08_02_w02, c08_02_w03, c08_02_w04)  %&gt;% sjlabelled::as_label(.)  %&gt;%  dfSummary(, graph.col = FALSE)</code></pre>
 <pre><code>## Data Frame Summary  
 ##   
-## Dimensions: 1886 x 2  
-## Duplicates: 1862  
+## Dimensions: 1886 x 4  
+## Duplicates: 1731  
 ## 
 ## -----------------------------------------------------------------------------------------------------------------------------
 ## No   Variable      Label                                   Stats / Values           Freqs (% of Valid)   Valid      Missing  
@@ -2767,21 +2762,35 @@ data %&gt;% select (c08_02_w01, c08_02_w03)  %&gt;% sjlabelled::as_label(.)  %&g
 ##                                                            4. Frecuentemente          45 ( 2.4%)                             
 ##                                                            5. Muy frecuentemente      15 ( 0.8%)                             
 ## 
-## 2    c08_02_w03    Asistido a una marcha o manifestacion   1. Nunca                 1687 (89.4%)         1886       0        
+## 2    c08_02_w02    Asistido a una marcha o manifestacion   1. Nunca                 1661 (88.1%)         1886       0        
+##      [factor]      pacifica (2017).                        2. Casi nunca              83 ( 4.4%)         (100.0%)   (0.0%)   
+##                                                            3. A veces                108 ( 5.7%)                             
+##                                                            4. Frecuentemente          26 ( 1.4%)                             
+##                                                            5. Muy frecuentemente       8 ( 0.4%)                             
+## 
+## 3    c08_02_w03    Asistido a una marcha o manifestacion   1. Nunca                 1687 (89.4%)         1886       0        
 ##      [factor]      pacifica (2018).                        2. Casi nunca              88 ( 4.7%)         (100.0%)   (0.0%)   
 ##                                                            3. A veces                 84 ( 4.5%)                             
 ##                                                            4. Frecuentemente          20 ( 1.1%)                             
 ##                                                            5. Muy frecuentemente       7 ( 0.4%)                             
+## 
+## 4    c08_02_w04    Asistido a una marcha o manifestacion   1. Nunca                 1440 (76.4%)         1886       0        
+##      [factor]      pacifica (2019).                        2. Casi nunca             128 ( 6.8%)         (100.0%)   (0.0%)   
+##                                                            3. A veces                197 (10.4%)                             
+##                                                            4. Frecuentemente          86 ( 4.6%)                             
+##                                                            5. Muy frecuentemente      35 ( 1.9%)                             
 ## -----------------------------------------------------------------------------------------------------------------------------</code></pre>
-<p>C08_03: Participar en una huelga (w01 &amp; w03)</p>
+<p>C08_03: Participar en una huelga (w01, w02, w03 &amp; w04)</p>
 <pre class="r"><code>label(data$c08_03_w01) &lt;- &quot;Participado en una huelga (2016).&quot;
+label(data$c08_03_w02) &lt;- &quot;Participado en una huelga (2017).&quot;
 label(data$c08_03_w03) &lt;- &quot;Participado en una huelga (2018).&quot;
+label(data$c08_03_w04) &lt;- &quot;Participado en una huelga (2019).&quot;
 
-data %&gt;% select (c08_03_w01, c08_03_w03)  %&gt;% sjlabelled::as_label(.)  %&gt;%  dfSummary(, graph.col = FALSE)</code></pre>
+data %&gt;% select (c08_03_w01, c08_03_w02, c08_03_w03, c08_03_w04)  %&gt;% sjlabelled::as_label(.)  %&gt;%  dfSummary(, graph.col = FALSE)</code></pre>
 <pre><code>## Data Frame Summary  
 ##   
-## Dimensions: 1886 x 2  
-## Duplicates: 1863  
+## Dimensions: 1886 x 4  
+## Duplicates: 1780  
 ## 
 ## -------------------------------------------------------------------------------------------------------------------------
 ## No   Variable      Label                               Stats / Values           Freqs (% of Valid)   Valid      Missing  
@@ -2792,37 +2801,63 @@ data %&gt;% select (c08_03_w01, c08_03_w03)  %&gt;% sjlabelled::as_label(.)  %&g
 ##                                                        4. Frecuentemente          31 ( 1.6%)                             
 ##                                                        5. Muy frecuentemente      11 ( 0.6%)                             
 ## 
-## 2    c08_03_w03    Participado en una huelga (2018).   1. Nunca                 1748 (92.7%)         1886       0        
+## 2    c08_03_w02    Participado en una huelga (2017).   1. Nunca                 1729 (91.7%)         1886       0        
+##      [factor]                                          2. Casi nunca              59 ( 3.1%)         (100.0%)   (0.0%)   
+##                                                        3. A veces                 70 ( 3.7%)                             
+##                                                        4. Frecuentemente          21 ( 1.1%)                             
+##                                                        5. Muy frecuentemente       7 ( 0.4%)                             
+## 
+## 3    c08_03_w03    Participado en una huelga (2018).   1. Nunca                 1748 (92.7%)         1886       0        
 ##      [factor]                                          2. Casi nunca              69 ( 3.7%)         (100.0%)   (0.0%)   
 ##                                                        3. A veces                 58 ( 3.1%)                             
 ##                                                        4. Frecuentemente           7 ( 0.4%)                             
 ##                                                        5. Muy frecuentemente       4 ( 0.2%)                             
+## 
+## 4    c08_03_w04    Participado en una huelga (2019).   1. Nunca                 1713 (90.9%)         1884       2        
+##      [factor]                                          2. Casi nunca              72 ( 3.8%)         (99.9%)    (0.1%)   
+##                                                        3. A veces                 64 ( 3.4%)                             
+##                                                        4. Frecuentemente          25 ( 1.3%)                             
+##                                                        5. Muy frecuentemente      10 ( 0.5%)                             
 ## -------------------------------------------------------------------------------------------------------------------------</code></pre>
-<p>C08_04: Usar las redes sociales para expresar su opinión en temas públicos (w01 &amp; w03)</p>
+<p>C08_04: Usar las redes sociales para expresar su opinión en temas públicos (w01, w02, w03 &amp; w04)</p>
 <pre class="r"><code>label(data$c08_04_w01) &lt;- &quot;Usado las redes sociales para expresar su opinion en temas publicos (2016).&quot;
+label(data$c08_04_w02) &lt;- &quot;Usado las redes sociales para expresar su opinion en temas publicos (2017).&quot;
 label(data$c08_04_w03) &lt;- &quot;Usado las redes sociales para expresar su opinion en temas publicos (2018).&quot;
+label(data$c08_04_w04) &lt;- &quot;Usado las redes sociales para expresar su opinion en temas publicos (2019).&quot;
 
-data %&gt;% select (c08_04_w01, c08_04_w03)  %&gt;% sjlabelled::as_label(.)  %&gt;%  dfSummary(, graph.col = FALSE)</code></pre>
+data %&gt;% select (c08_04_w01, c08_04_w02, c08_04_w03, c08_04_w04)  %&gt;% sjlabelled::as_label(.)  %&gt;%  dfSummary(, graph.col = FALSE)</code></pre>
 <pre><code>## Data Frame Summary  
 ##   
-## Dimensions: 1886 x 2  
-## Duplicates: 1858  
+## Dimensions: 1886 x 4  
+## Duplicates: 1572  
 ## 
-## -----------------------------------------------------------------------------------------------------------------------------
-## No   Variable      Label                                    Stats / Values           Freqs (% of Valid)   Valid     Missing  
-## ---- ------------- ---------------------------------------- ------------------------ -------------------- --------- ---------
-## 1    c08_04_w01    Usado las redes sociales para expresar   1. Nunca                 1309 (69.6%)         1880      6        
-##      [factor]      su opinion en temas publicos (2016).     2. Casi nunca             114 ( 6.1%)         (99.7%)   (0.3%)   
-##                                                             3. A veces                242 (12.9%)                            
-##                                                             4. Frecuentemente         152 ( 8.1%)                            
-##                                                             5. Muy frecuentemente      63 ( 3.4%)                            
+## ------------------------------------------------------------------------------------------------------------------------------
+## No   Variable      Label                                    Stats / Values           Freqs (% of Valid)   Valid      Missing  
+## ---- ------------- ---------------------------------------- ------------------------ -------------------- ---------- ---------
+## 1    c08_04_w01    Usado las redes sociales para expresar   1. Nunca                 1309 (69.6%)         1880       6        
+##      [factor]      su opinion en temas publicos (2016).     2. Casi nunca             114 ( 6.1%)         (99.7%)    (0.3%)   
+##                                                             3. A veces                242 (12.9%)                             
+##                                                             4. Frecuentemente         152 ( 8.1%)                             
+##                                                             5. Muy frecuentemente      63 ( 3.4%)                             
 ## 
-## 2    c08_04_w03    Usado las redes sociales para expresar   1. Nunca                 1356 (72.0%)         1884      2        
-##      [factor]      su opinion en temas publicos (2018).     2. Casi nunca             137 ( 7.3%)         (99.9%)   (0.1%)   
-##                                                             3. A veces                236 (12.5%)                            
-##                                                             4. Frecuentemente         110 ( 5.8%)                            
-##                                                             5. Muy frecuentemente      45 ( 2.4%)                            
-## -----------------------------------------------------------------------------------------------------------------------------</code></pre>
+## 2    c08_04_w02    Usado las redes sociales para expresar   1. Nunca                 1371 (72.7%)         1886       0        
+##      [factor]      su opinion en temas publicos (2017).     2. Casi nunca             113 ( 6.0%)         (100.0%)   (0.0%)   
+##                                                             3. A veces                227 (12.0%)                             
+##                                                             4. Frecuentemente         125 ( 6.6%)                             
+##                                                             5. Muy frecuentemente      50 ( 2.7%)                             
+## 
+## 3    c08_04_w03    Usado las redes sociales para expresar   1. Nunca                 1356 (72.0%)         1884       2        
+##      [factor]      su opinion en temas publicos (2018).     2. Casi nunca             137 ( 7.3%)         (99.9%)    (0.1%)   
+##                                                             3. A veces                236 (12.5%)                             
+##                                                             4. Frecuentemente         110 ( 5.8%)                             
+##                                                             5. Muy frecuentemente      45 ( 2.4%)                             
+## 
+## 4    c08_04_w04    Usado las redes sociales para expresar   1. Nunca                 1211 (64.2%)         1886       0        
+##      [factor]      su opinion en temas publicos (2019).     2. Casi nunca             114 ( 6.0%)         (100.0%)   (0.0%)   
+##                                                             3. A veces                281 (14.9%)                             
+##                                                             4. Frecuentemente         178 ( 9.4%)                             
+##                                                             5. Muy frecuentemente     102 ( 5.4%)                             
+## ------------------------------------------------------------------------------------------------------------------------------</code></pre>
 </div>
 <div id="participación-en-organizaciones" class="section level2">
 <h2><span class="header-section-number">5.3</span> Participación en organizaciones</h2>

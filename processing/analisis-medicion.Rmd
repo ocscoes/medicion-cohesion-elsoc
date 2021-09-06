@@ -65,6 +65,16 @@ ltm::cronbach.alpha(data %>%
   dplyr::select(r15_w02, r13_nredes_w02, vol.red_w01), na.rm=TRUE)
 ```
 
+## Promedio simple Cantidad de amigos/as cercanos y Variedad de la red
+```{r}
+data <- data %>%
+  rowwise() %>%
+  mutate(lazos_w01 =
+           mean(c(r15_w02, vol.red_w01), na.rm = T))
+```
+
+
+
 
 ### Confianza interpersonal
 
@@ -110,6 +120,16 @@ ltm::cronbach.alpha(data %>%
   dplyr::select(c02_rec_w01, c03_rec_w01), na.rm=TRUE)
 
 ```
+
+```{r}
+# Promedio simple "Se puede confiar en la mayoría de las personas" y "la mayoría de las personas trata de ayudar a los demás".
+
+data <- data %>%
+  rowwise() %>%
+  mutate(conf_interpersonal_w01 =
+           mean(c(c02_rec_w01, c03_rec_w01), na.rm = T))
+```
+
 
 ### Reconocimiento y respeto de la diversidad
 
@@ -174,6 +194,7 @@ diversidad_fa<-
                 confianza_mapuche = c06_05_w01,
                 confianza_inmigrantes = c06_06_w01)
 
+
 ## reverse coding items sentido inverso:
 
 sjmisc::frq(data$r12_03_w01)
@@ -184,6 +205,8 @@ diversidad_fa <- diversidad_fa %>%
          amenaza_material_rev = 6 - amenaza_material)
 
 diversidad_fa <- diversidad_fa %>% select(-amenaza_simbolica,-amenaza_material)
+
+colnames(diversidad_fa) <- c(label(diversidad_fa$adopcion_homoparental), label(diversidad_fa$confianza_homosexuales), label(diversidad_fa$confianza_mapuche), label(diversidad_fa$confianza_inmigrantes), label(data$r12_03_w01), label(data$r12_04_w01))
 
 psych::fa.parallel(diversidad_fa, fa="fa")
 psych::scree(diversidad_fa)
@@ -198,10 +221,47 @@ source("processing/fa_table.R")
 div_fa <-fa_table(fac_ml, .32)
 knitr::kable(div_fa, "html") %>%
   kable_styling(bootstrap_options = c("striped", "hover")) %>%
+  column_spec(column = 1,width = "20 cm") %>%
   cat(., file = "bookdown-files/output/tables/div_fa.html")
 
-webshot(url ="bookdown-files/output/tables/div_fa.html", file ="bookdown-files/output/tables/div_fa.png", vheight = 10,  vwidth = 10)
+webshot(url ="bookdown-files/output/tables/div_fa.html", file ="bookdown-files/output/tables/div_fa.png", vheight = 10, vwidth = 600)
 ```
+
+```{r}
+# Promedio simple indicadores confianza en diversidad
+
+data <- data %>%
+  rowwise() %>%
+  mutate(diversidad_w01 =
+           mean(c(c06_04_w01, c06_05_w01, c06_06_w01), na.rm = T))
+```
+
+### Correlación Relaciones sociales de igualdad
+
+```{r echo=FALSE}
+relaciones_cor<-
+  data %>%
+  dplyr::select(vol.red_w01, conf_interpersonal_w01, diversidad_w01) %>%
+  lavaan::lavCor(., ordered=names(.))
+diag(relaciones_cor) = NA
+rownames(relaciones_cor) <- c("A. Lazos",
+                          "B. Confianza interpersonal",
+                          "C. Reconocimiento y respeto de la diversidad")
+colnames(relaciones_cor) <-c("(A)", "(B)","(C)")
+
+png("bookdown-files/output/graphs/relaciones_cor.png",width=600,height=300)
+corrplot::corrplot(relaciones_cor,
+  method = "color",
+  addCoef.col = "#000390",
+  type = "upper",
+  tl.col = "black",
+  col=colorRampPalette(c("white","#0068DC"))(12),
+  bg = "white",
+  na.label = "-",
+  lower.col = "black")
+dev.off()
+```
+
 
 ## Sentido de pertenencia
 
@@ -224,6 +284,15 @@ corrplot.mixed(cor(dplyr::select(data, c32_01_w01, c32_02_w01),
 
 ```
 
+```{r}
+# Promedio simple identificacion con el pais 
+
+data <- data %>%
+  rowwise() %>%
+  mutate(identificacion_w01 =
+           mean(c(c32_01_w01, c32_02_w01), na.rm = T))
+```
+
 ### Percepción de justicia
 
 ```{r echo=FALSE}
@@ -241,6 +310,15 @@ ggsave(justicia, file = "bookdown-files/output/graphs/justicia.png",device = "pn
 corrplot.mixed(cor(dplyr::select(data, c18_09_w01, c18_10_w01),
                    use = "na.or.complete"))
 
+```
+
+```{r}
+# Promedio simple percepcion de justicia
+
+data <- data %>%
+  rowwise() %>%
+  mutate(justicia_w01 =
+           mean(c(c18_09_w01, c18_10_w01), na.rm = T))
 ```
 
 ### Confianza institucional
@@ -299,15 +377,16 @@ dev.off()
 # Análisis Factorial Exploratorio
 conf_institucional_fa<-
   data %>%
-  dplyr::select(gobierno = c05_01_w01,
-                partidos = c05_02_w01,
-                carabineros = c05_03_w01,
-                sindicatos = c05_04_w01,
-                judicial = c05_05_w01,
-                empresas = c05_06_w01,
-                congreso = c05_07_w01,
-                presidente = c05_08_w01)
+  dplyr::select(c05_01_w01,
+                c05_02_w01,
+                c05_03_w01,
+                c05_04_w01,
+                c05_05_w01,
+                c05_06_w01,
+                c05_07_w01,
+                c05_08_w01)
 
+colnames(conf_institucional_fa) <- c(label(conf_institucional_fa$c05_01_w01), label(conf_institucional_fa$c05_02_w01), label(conf_institucional_fa$c05_03_w01), label(conf_institucional_fa$c05_04_w01), label(conf_institucional_fa$c05_05_w01), label(conf_institucional_fa$c05_06_w01), label(conf_institucional_fa$c05_07_w01), label(conf_institucional_fa$c05_08_w01))
 
 psych::fa.parallel(conf_institucional_fa, fa="fa")
 psych::scree(conf_institucional_fa)
@@ -324,7 +403,42 @@ knitr::kable(inst_fa, "html") %>%
   kable_styling(bootstrap_options = c("striped", "hover")) %>%
   cat(., file = "bookdown-files/output/tables/inst_fa.html")
 
-webshot(url ="bookdown-files/output/tables/inst_fa.html", file ="bookdown-files/output/tables/inst_fa.png", vheight = 10,  vwidth = 10)
+webshot(url ="bookdown-files/output/tables/inst_fa.html", file ="bookdown-files/output/tables/inst_fa.png", vheight = 10, vwidth = 600)
+```
+
+```{r}
+# Promedios simples confianza institucional
+
+data <- data %>%
+  rowwise() %>%
+  mutate(conf_institucional_w01 =
+           mean(c(c05_01_w01, c05_08_w01, c05_02_w01), na.rm = T))
+```
+
+### Correlación Sentido de pertenencia
+
+```{r echo=FALSE}
+pertenencia_cor<-
+  data %>%
+  dplyr::select(identificacion_w01, justicia_w01, conf_institucional_w01) %>%
+  lavaan::lavCor(., ordered=names(.))
+diag(pertenencia_cor) = NA
+rownames(pertenencia_cor) <- c("A. Identificación con el país",
+                          "B. Percepción de justicia",
+                          "C. Confianza en instituciones políticas")
+colnames(pertenencia_cor) <-c("(A)", "(B)","(C)")
+
+png("bookdown-files/output/graphs/pertenencia_cor.png",width=600,height=300)
+corrplot::corrplot(pertenencia_cor,
+  method = "color",
+  addCoef.col = "#000390",
+  type = "upper",
+  tl.col = "black",
+  col=colorRampPalette(c("white","#0068DC"))(12),
+  bg = "white",
+  na.label = "-",
+  lower.col = "black")
+dev.off()
 ```
 
 
@@ -383,14 +497,16 @@ dev.off()
 # Análisis Factorial Exploratorio
 solidaridad_fa<-
   data %>%
-  dplyr::select(visita_vecinos = c07_01_w01,
-                asiste_reunion = c07_02_w01,
-                recibe_amigos = c07_03_w01,
-                voluntariado = c07_04_w01,
-                dona_dinero = c07_05_w01,
-                presta_dinero = c07_06_w01,
-                conversa_depresion = c07_07_w01,
-                ayuda_trabajo = c07_08_w01)
+  dplyr::select(c07_01_w01,
+                c07_02_w01,
+                c07_03_w01,
+                c07_04_w01,
+                c07_05_w01,
+                c07_06_w01,
+                c07_07_w01,
+                c07_08_w01)
+
+colnames(solidaridad_fa) <- c(label(solidaridad_fa$c07_01_w01), label(solidaridad_fa$c07_02_w01), label(solidaridad_fa$c07_03_w01), label(solidaridad_fa$c07_04_w01), label(solidaridad_fa$c07_05_w01), label(solidaridad_fa$c07_06_w01), label(solidaridad_fa$c07_07_w01), label(solidaridad_fa$c07_08_w01))
 
 
 psych::fa.parallel(solidaridad_fa, fa="fa")
@@ -408,7 +524,16 @@ knitr::kable(solidaridad_fa, "html") %>%
   kable_styling(bootstrap_options = c("striped", "hover")) %>%
   cat(., file = "bookdown-files/output/tables/solidaridad_fa.html")
 
-webshot(url ="bookdown-files/output/tables/solidaridad_fa.html", file ="bookdown-files/output/tables/solidaridad_fa.png", vheight = 10,  vwidth = 10)
+webshot(url ="bookdown-files/output/tables/solidaridad_fa.html", file ="bookdown-files/output/tables/solidaridad_fa.png", vheight = 10, vwidth = 600)
+```
+
+```{r}
+# Promedios simples solidaridad
+
+data <- data %>%
+  rowwise() %>%
+  mutate(solidaridad_w01 =
+           mean(c(c07_05_w01, c07_06_w01, c07_07_w01, c07_08_w01), na.rm = T))
 ```
 
 
@@ -452,37 +577,6 @@ corrplot::corrplot(part_civica_cor,
   lower.col = "black")
 dev.off()
 ```
-
-```{r}
-# Análisis Factorial Exploratorio
-part_civica_fa<-
-  data %>%
-  dplyr::select(firma_carta = c08_01_w01, 
-                asiste_marcha = c08_02_w01, 
-                participa_huelga = c08_03_w01, 
-                expresa_opinion = c08_04_w01)
-
-
-
-psych::fa.parallel(part_civica_fa, fa="fa")
-psych::scree(part_civica_fa)
-
-fac_ml <- psych::fa(r = part_civica_fa, nfactors = 3, fm= "ml", rotate = "varimax" )
-
-fac_ml$loadings
-# ver https://www.anthonyschmidt.co/post/2020-09-27-efa-tables-in-r/
-
-source("processing/fa_table.R") 
-
-part_civica_fa <-fa_table(fac_ml, .32)
-knitr::kable(part_civica_fa, "html") %>%
-  kable_styling(bootstrap_options = c("striped", "hover")) %>%
-  cat(., file = "bookdown-files/output/tables/part_civica_fa.html")
-
-webshot(url ="bookdown-files/output/tables/part_civica_fa.html", file ="bookdown-files/output/tables/part_civica_fa.png", vheight = 10,  vwidth = 10)
-
-```
-
 
 ### Participacion en organizaciones
 ```{r echo=FALSE}
@@ -532,45 +626,10 @@ corrplot::corrplot(part_organizaciones_cor,
 dev.off()
 ```
 
-```{r}
-# Análisis Factorial Exploratorio
-organizaciones_fa<-
-  data %>%
-  dplyr::select(junta_vecinos = c12_01_w01, 
-                organizacion_religiosa = c12_02_w01, 
-                partido_politico = c12_03_w01, 
-                sindicato = c12_04_w01, 
-                asociacion_profesional = c12_05_w01, 
-                organizacion_deportiva = c12_06_w01, 
-                organizacion_ecologica = c12_07_w01, 
-                centro_estudiantes = c12_08_w01)
-
-
-
-psych::fa.parallel(organizaciones_fa, fa="fa")
-psych::scree(organizaciones_fa)
-
-fac_ml <- psych::fa(r = organizaciones_fa, nfactors = 3, fm= "ml", rotate = "varimax" )
-
-fac_ml$loadings
-# ver https://www.anthonyschmidt.co/post/2020-09-27-efa-tables-in-r/
-
-source("processing/fa_table.R") 
-
-organizaciones_fa <-fa_table(fac_ml, .32)
-knitr::kable(organizaciones_fa, "html") %>%
-  kable_styling(bootstrap_options = c("striped", "hover")) %>%
-  cat(., file = "bookdown-files/output/tables/organizaciones_fa.html")
-
-webshot(url ="bookdown-files/output/tables/organizaciones_fa.html", file ="bookdown-files/output/tables/organizaciones_fa.png", vheight = 10,  vwidth = 10)
-
-```
-
-
 ### Participacion electoral
 
 ```{r echo=FALSE}
-part_electoral <- plot_stackfrq(select(data, c11_w01, c11_w03), geom.size = 0.25) +
+part_electoral <- plot_stackfrq(select(data, c11_w01), geom.size = 0.14) +
   theme(axis.text.y = element_text(colour = "black", size = 10),
         axis.text.x = element_text(colour = "black", size = 10),
         legend.text = element_text(size = 10),
@@ -580,18 +639,81 @@ part_electoral
 ggsave(part_electoral, file = "bookdown-files/output/graphs/participacion-electoral.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
 ```
 
-Para estimar esta correlación la categoría "No tenía edad para hacerlo" fue contabilizada como "No".
+### Análisis factorial exploratorio participación cívica y participación en organizaciones
 ```{r echo=FALSE}
-cor = data %>% select(c11_w01, c11_w03)
-cor$c11_w01 <- recode(cor$c11_w01, "3=1")
-cor$c11_w03 <- recode(cor$c11_w03, "3=1")
+# Análisis Factorial Exploratorio
+participacion_fa<-
+  data %>%
+  dplyr::select(c08_01_w01, 
+                c08_02_w01, 
+                c08_03_w01, 
+                c08_04_w01,
+                c11_w01,
+                c12_01_w01, 
+                c12_02_w01, 
+                c12_03_w01, 
+                c12_04_w01, 
+                c12_05_w01, 
+                c12_06_w01, 
+                c12_07_w01, 
+                c12_08_w01)
 
-png("bookdown-files/output/graphs/participacion-electoral_cor.png",width=600,height=300)
-corrplot.mixed(cor(cor,
-                   method="spearman",
-                   use = "na.or.complete"))
+colnames(participacion_fa) <- c(label(participacion_fa$c08_01_w01), label(participacion_fa$c08_02_w01), label(participacion_fa$c08_03_w01), label(participacion_fa$c08_04_w01), label(participacion_fa$c11_w01), label(participacion_fa$c12_01_w01), label(participacion_fa$c12_02_w01), label(participacion_fa$c12_03_w01), label(participacion_fa$c12_04_w01), label(participacion_fa$c12_05_w01), label(participacion_fa$c12_06_w01), label(participacion_fa$c12_07_w01), label(participacion_fa$c12_08_w01))
+
+
+psych::fa.parallel(participacion_fa, fa="fa")
+psych::scree(participacion_fa)
+
+fac_ml <- psych::fa(r = participacion_fa, nfactors = 3, fm= "ml", rotate = "varimax" )
+
+fac_ml$loadings
+# ver https://www.anthonyschmidt.co/post/2020-09-27-efa-tables-in-r/
+
+source("processing/fa_table.R") 
+
+participacion_fa <-fa_table(fac_ml, .32)
+knitr::kable(participacion_fa, "html") %>%
+  kable_styling(bootstrap_options = c("striped", "hover")) %>%
+  cat(., file = "bookdown-files/output/tables/participacion_fa.html")
+
+webshot(url ="bookdown-files/output/tables/participacion_fa.html", file ="bookdown-files/output/tables/participacion_fa.png", vheight = 10, vwidth = 600)
+
+```
+
+```{r}
+# Promedios simples participacion civica
+
+data <- data %>%
+  rowwise() %>%
+  mutate(participacion_w01 =
+           mean(c(c08_01_w01, c08_02_w01, c08_03_w01, c08_04_w01), na.rm = T))
+```
+
+### Correlación orientación hacia el bien común
+
+```{r echo=FALSE}
+bien_comun_cor<-
+  data %>%
+  dplyr::select(solidaridad_w01, participacion_w01) %>%
+  lavaan::lavCor(., ordered=names(.))
+diag(bien_comun_cor) = NA
+rownames(bien_comun_cor) <- c("A. Solidaridad",
+                          "B. Participación cívica")
+colnames(bien_comun_cor) <-c("(A)", "(B)")
+
+png("bookdown-files/output/graphs/bien_comun_cor.png",width=600,height=300)
+corrplot::corrplot(bien_comun_cor,
+  method = "color",
+  addCoef.col = "#000390",
+  type = "upper",
+  tl.col = "black",
+  col=colorRampPalette(c("white","#0068DC"))(12),
+  bg = "white",
+  na.label = "-",
+  lower.col = "black")
 dev.off()
 ```
+
 
 #### No se incluye subdimensión respeto por reglas sociales de la dimensión Orientación hacia el bien comun de informe CEPAL, que posee un indicador de respeto por las instituciones inexistente en ELSOC
 
@@ -644,36 +766,6 @@ corrplot::corrplot(cohesion_barrial_cor,
 dev.off()
 ```
 
-```{r}
-# Análisis Factorial Exploratorio
-cohesion_barrial_fa<-
-  data %>%
-  dplyr::select(barrio_ideal = t02_01_w01,
-                integrado_barrio = t02_02_w01, 
-                identificado_barrio = t02_03_w01, 
-                barrio_partedemi = t02_04_w01)
-
-
-
-psych::fa.parallel(cohesion_barrial_fa, fa="fa")
-psych::scree(cohesion_barrial_fa)
-
-fac_ml <- psych::fa(r = cohesion_barrial_fa, nfactors = 3, fm= "ml", rotate = "varimax" )
-
-fac_ml$loadings
-# ver https://www.anthonyschmidt.co/post/2020-09-27-efa-tables-in-r/
-
-source("processing/fa_table.R") 
-
-cohesion_barrial_fa <-fa_table(fac_ml, .32)
-knitr::kable(cohesion_barrial_fa, "html") %>%
-  kable_styling(bootstrap_options = c("striped", "hover")) %>%
-  cat(., file = "bookdown-files/output/tables/cohesion_barrial_fa.html")
-
-webshot(url ="bookdown-files/output/tables/cohesion_barrial_fa.html", file ="bookdown-files/output/tables/cohesion_barrial_fa.png", vheight = 10,  vwidth = 10)
-
-```
-
 ```{r echo=FALSE}
 sociabilidad_barrial <-plot_stackfrq(select(data, t03_01_w01, t03_02_w01, t03_03_w01, t03_04_w01), geom.colors = "RdBu", geom.size = 0.45) +
   theme(axis.text.y = element_text(colour = "black", size = 10),
@@ -708,36 +800,6 @@ corrplot::corrplot(sociabilidad_barrial_cor,
   na.label = "-",
   lower.col = "black")
 dev.off()
-```
-
-```{r}
-# Análisis Factorial Exploratorio
-sociabilidad_barrial_fa<-
-  data %>%
-  dplyr::select(hacer_amigos = t03_01_w01, 
-                barrio_sociable = t03_02_w01, 
-                barrio_cordial = t03_03_w01, 
-                barrio_colaborador = t03_04_w01)
-
-
-
-psych::fa.parallel(sociabilidad_barrial_fa, fa="fa")
-psych::scree(sociabilidad_barrial_fa)
-
-fac_ml <- psych::fa(r = sociabilidad_barrial_fa, nfactors = 3, fm= "ml", rotate = "varimax" )
-
-fac_ml$loadings
-# ver https://www.anthonyschmidt.co/post/2020-09-27-efa-tables-in-r/
-
-source("processing/fa_table.R") 
-
-sociabilidad_barrial_fa <-fa_table(fac_ml, .32)
-knitr::kable(sociabilidad_barrial_fa, "html") %>%
-  kable_styling(bootstrap_options = c("striped", "hover")) %>%
-  cat(., file = "bookdown-files/output/tables/sociabilidad_barrial_fa.html")
-
-webshot(url ="bookdown-files/output/tables/sociabilidad_barrial_fa.html", file ="bookdown-files/output/tables/sociabilidad_barrial_fa.png", vheight = 10,  vwidth = 10)
-
 ```
 
 ```{r echo=FALSE}
@@ -780,298 +842,192 @@ corrplot::corrplot(sat_residencial_cor,
 dev.off()
 ```
 
-```{r}
+```{r echo=FALSE}
 # Análisis Factorial Exploratorio
-sat_residencial_fa<-
+cohesion_territorial_fa<-
   data %>%
-  dplyr::select(seguridad = t06_01_w01, 
-                conectividad = t06_02_w01, 
-                areas_verdes = t06_03_w01, 
-                limpieza = t06_04_w01, 
-                proximidad_actividad = t06_05_w01, 
-                proximidad_colegios = t06_06_w01, 
-                proximidad_comercio = t06_07_w01, 
-                proximidad_familiares = t06_08_w01)
+  dplyr::select(t01_w01,
+                t02_01_w01,
+                t02_02_w01, 
+                t02_03_w01, 
+                t02_04_w01,
+                t03_01_w01, 
+                t03_02_w01, 
+                t03_03_w01, 
+                t03_04_w01,
+                t06_01_w01, 
+                t06_02_w01, 
+                t06_03_w01, 
+                t06_04_w01, 
+                t06_05_w01, 
+                t06_06_w01, 
+                t06_07_w01, 
+                t06_08_w01)
 
+colnames(cohesion_territorial_fa) <- c(label(cohesion_territorial_fa$t01_w01), label(cohesion_territorial_fa$t02_01_w01), label(cohesion_territorial_fa$t02_02_w01), label(cohesion_territorial_fa$t02_03_w01), label(cohesion_territorial_fa$t02_04_w01), label(cohesion_territorial_fa$t03_01_w01), label(cohesion_territorial_fa$t03_02_w01), label(cohesion_territorial_fa$t03_03_w01), label(cohesion_territorial_fa$t03_04_w01), label(cohesion_territorial_fa$t06_01_w01), label(cohesion_territorial_fa$t06_02_w01), label(cohesion_territorial_fa$t06_03_w01), label(cohesion_territorial_fa$t06_04_w01), label(cohesion_territorial_fa$t06_05_w01), label(cohesion_territorial_fa$t06_06_w01), label(cohesion_territorial_fa$t06_07_w01), label(cohesion_territorial_fa$t06_08_w01))
 
+psych::fa.parallel(cohesion_territorial_fa, fa="fa")
+psych::scree(cohesion_territorial_fa)
 
-psych::fa.parallel(sat_residencial_fa, fa="fa")
-psych::scree(sat_residencial_fa)
-
-fac_ml <- psych::fa(r = sat_residencial_fa, nfactors = 3, fm= "ml", rotate = "varimax" )
+fac_ml <- psych::fa(r = cohesion_territorial_fa, nfactors = 3, fm= "ml", rotate = "varimax" )
 
 fac_ml$loadings
 # ver https://www.anthonyschmidt.co/post/2020-09-27-efa-tables-in-r/
 
 source("processing/fa_table.R") 
 
-sat_residencial_fa <-fa_table(fac_ml, .32)
-knitr::kable(sat_residencial_fa, "html") %>%
+cohesion_territorial_fa <-fa_table(fac_ml, .32)
+knitr::kable(cohesion_territorial_fa, "html") %>%
   kable_styling(bootstrap_options = c("striped", "hover")) %>%
-  cat(., file = "bookdown-files/output/tables/sat_residencial_fa.html")
+  cat(., file = "bookdown-files/output/tables/cohesion_territorial_fa.html")
 
-webshot(url ="bookdown-files/output/tables/sat_residencial_fa.html", file ="bookdown-files/output/tables/sat_residencial_fa.png", vheight = 10,  vwidth = 10)
+webshot(url ="bookdown-files/output/tables/cohesion_territorial_fa.html", file ="bookdown-files/output/tables/cohesion_territorial_fa.png", vheight = 10, vwidth = 600)
 
 ```
-
-
-# Anexos
-
-## Tablas descriptivas por subdimensión
-### Lazos
 
 ```{r echo=FALSE}
-view(dfSummary(select(data, r15_w02),
-               plain.ascii = FALSE,
-               style = "grid",
-               #tmp.img.dir = "/tmp",
-               graph.magnif = 0.9,
-               headings = F,  # encabezado
-               varnumbers = F, # num variable
-               labels.col = T, # etiquetas
-               na.col = T,    # missing
-               graph.col = T, # plot
-               valid.col = T, # n valido
-               # col.widths = c(5,5,10,10,10,10)
-               ), file = "output/tables/table1.html")
-webshot(url ="output/tables/table1.html" ,file ="output/tables/table1.png")
+# Promedios simples cohesion territorial
+
+data <- data %>%
+  rowwise() %>%
+  mutate(cohesion_territorial_w01 =
+           mean(c(t02_01_w01, t02_02_w01, t02_03_w01, t02_04_w01), na.rm = T))
 ```
 
-### Confianza interpersonal
-```{r echo=FALSE}
-view(dfSummary(select(data, c02_w01, c03_w01, c04_w01),
-               plain.ascii = FALSE,
-               style = "grid",
-               #tmp.img.dir = "/tmp",
-               graph.magnif = 0.9,
-               headings = F,  # encabezado
-               varnumbers = F, # num variable
-               labels.col = T, # etiquetas
-               na.col = T,    # missing
-               graph.col = T, # plot
-               valid.col = T, # n valido
-               # col.widths = c(5,5,10,10,10,10)
-               ), file = "output/tables/table2.html")
-webshot(url ="output/tables/table2.html" ,file ="output/tables/table2.png")
-```
-
-### Reconocimiento y respeto de la diversidad
-```{r echo=FALSE}
-view(dfSummary(select(data, r12_03_w01, r12_04_w01, c37_01_w03, c06_04_w01, c06_05_w01, c06_06_w01),
-               plain.ascii = FALSE,
-               style = "grid",
-               #tmp.img.dir = "/tmp",
-               graph.magnif = 0.9,
-               headings = F,  # encabezado
-               varnumbers = F, # num variable
-               labels.col = T, # etiquetas
-               na.col = T,    # missing
-               graph.col = T, # plot
-               valid.col = T, # n valido
-               # col.widths = c(5,5,10,10,10,10)
-               ), file = "output/tables/table3.html")
-webshot(url ="output/tables/table3.html" ,file ="output/tables/table3.png")
-```
-
-### Identificación con el país
+# Tabla resumen final
 
 ```{r echo=FALSE}
-view(dfSummary(select(data, c32_01_w01, c32_02_w01),
-               plain.ascii = FALSE,
-               style = "grid",
-               #tmp.img.dir = "/tmp",
-               graph.magnif = 0.9,
-               headings = F,  # encabezado
-               varnumbers = F, # num variable
-               labels.col = T, # etiquetas
-               na.col = T,    # missing
-               graph.col = T, # plot
-               valid.col = T, # n valido
-               # col.widths = c(5,5,10,10,10,10)
-               ), file = "output/tables/table4.html")
-webshot(url ="output/tables/table4.html" ,file ="output/tables/table4.png")
+# -------------------------------------------------------------------------
+cohesion.item=
+  c(label(data$vol.red_w01),
+    label(data$c02_rec_w01),
+    label(data$c03_rec_w01),
+    label(data$c06_04_w01),
+    label(data$c06_05_w01),
+    label(data$c06_06_w01),
+    label(data$c32_01_w01),
+    label(data$c32_02_w01),
+    label(data$c18_09_w01),
+    label(data$c18_10_w01),
+    label(data$c05_01_w01),
+    label(data$c05_08_w01), 
+    label(data$c05_02_w01),
+    label(data$c07_05_w01),
+    label(data$c07_06_w01),
+    label(data$c07_07_w01),
+    label(data$c07_08_w01),
+    label(data$c08_01_w01),
+    label(data$c08_02_w01),
+    label(data$c08_03_w01),
+    label(data$c08_04_w01),
+    label(data$t02_01_w01),
+    label(data$t02_02_w01),
+    label(data$t02_03_w01),
+    label(data$t02_04_w01))
+cohesion.min = 
+  c(paste0(min(as.numeric(data$vol.red_w01)), " - ", max(as.numeric(data$vol.red_w01))),
+    rep(paste0(min(as.numeric(data$conf_interpersonal_w01), na.rm = T), " - ", max(as.numeric(data$conf_interpersonal_w01), na.rm = T)),2),
+    rep(paste0(min(as.numeric(data$diversidad_w01), na.rm = T), " - ", max(as.numeric(data$diversidad_w01), na.rm = T)),3),
+    rep(paste0(min(as.numeric(data$identificacion_w01), na.rm = T), " - ", max(as.numeric(data$identificacion_w01), na.rm = T)),2),
+    rep(paste0(min(as.numeric(data$justicia_w01), na.rm = T), " - ", max(as.numeric(data$justicia_w01), na.rm = T)),2),
+    rep(paste0(min(as.numeric(data$conf_institucional_w01), na.rm = T), " - ", max(as.numeric(data$conf_institucional_w01), na.rm = T)),3),
+    rep(paste0(min(as.numeric(data$solidaridad_w01), na.rm = T), " - ", max(as.numeric(data$solidaridad_w01), na.rm = T)),4),
+    rep(paste0(min(as.numeric(data$participacion_w01), na.rm = T), " - ", max(as.numeric(data$participacion_w01), na.rm = T)),4),
+    rep(paste0(min(as.numeric(data$cohesion_territorial_w01), na.rm = T), " - ", max(as.numeric(data$cohesion_territorial_w01), na.rm = T)),4))
+cohesion.mean = 
+  c(paste0(round(mean(as.numeric(data$vol.red_w01)),3), " (", round(sd(as.numeric(data$vol.red_w01)),3), ")"),
+    rep(paste0(round(mean(as.numeric(data$conf_interpersonal_w01), na.rm = T),3), " (", round(sd(as.numeric(data$conf_interpersonal_w01), na.rm = T),3), ")"),2),
+    rep(paste0(round(mean(as.numeric(data$diversidad_w01), na.rm = T),3), " (", round(sd(as.numeric(data$diversidad_w01), na.rm = T),3), ")"),3),
+    rep(paste0(round(mean(as.numeric(data$identificacion_w01), na.rm = T),3), " (", round(sd(as.numeric(data$identificacion_w01), na.rm = T),3), ")"),2),
+    rep(paste0(round(mean(as.numeric(data$justicia_w01), na.rm = T),3), " (", round(sd(as.numeric(data$justicia_w01), na.rm = T),3), ")"),2),
+    rep(paste0(round(mean(as.numeric(data$conf_institucional_w01), na.rm = T),3), " (", round(sd(as.numeric(data$conf_institucional_w01), na.rm = T),3), ")"),3),
+    rep(paste0(round(mean(as.numeric(data$solidaridad_w01), na.rm = T),3), " (", round(sd(as.numeric(data$solidaridad_w01), na.rm = T),3), ")"),4),
+    rep(paste0(round(mean(as.numeric(data$participacion_w01), na.rm = T),3), " (", round(sd(as.numeric(data$participacion_w01), na.rm = T),3), ")"),4),
+    rep(paste0(round(mean(as.numeric(data$cohesion_territorial_w01), na.rm = T),3), " (", round(sd(as.numeric(data$cohesion_territorial_w01), na.rm = T),3), ")"),4))
 ```
 
-### Percepción de justicia
 ```{r echo=FALSE}
-view(dfSummary(select(data, c18_09_w01, c18_10_w01),
-               plain.ascii = FALSE,
-               style = "grid",
-               #tmp.img.dir = "/tmp",
-               graph.magnif = 0.9,
-               headings = F,  # encabezado
-               varnumbers = F, # num variable
-               labels.col = T, # etiquetas
-               na.col = T,    # missing
-               graph.col = T, # plot
-               valid.col = T, # n valido
-               # col.widths = c(5,5,10,10,10,10)
-               ), file = "output/tables/table5.html")
-webshot(url ="output/tables/table5.html" ,file ="output/tables/table5.png")
+collapse_rows_cohesion <-
+    data.frame(vars = c(rep("Lazos", 1),
+           rep("Confianza interpersonal", 2),
+           rep("Reconocimiento y respeto de la diversidad", 3),
+           rep("Identificación con el país", 2),
+           rep("Percepción de justicia", 2),
+           rep("Confianza institucional", 3),
+           rep("Solidaridad", 4),
+           rep("Participación cívica", 4),
+           rep("Cohesión territorial", 4)),
+           cohesion.item,cohesion.min,cohesion.mean) #derechos y oport
 ```
 
-### Confianza institucional
 ```{r echo=FALSE}
-view(dfSummary(select(data, c05_01_w01, c05_02_w01, c05_03_w01, c05_04_w01, c05_05_w01, c05_06_w01, c05_07_w01, c05_08_w01),
-               plain.ascii = FALSE,
-               style = "grid",
-               #tmp.img.dir = "/tmp",
-               graph.magnif = 1.0,
-               headings = F,  # encabezado
-               varnumbers = F, # num variable
-               labels.col = T, # etiquetas
-               na.col = T,    # missing
-               graph.col = T, # plot
-               valid.col = T, # n valido
-               # col.widths = c(5,5,10,10,10,10)
-               ), file = "output/tables/table6.html")
-webshot(url ="output/tables/table6.html" ,file ="output/tables/table6.png")
+knitr::kable(collapse_rows_cohesion, "html",
+             col.names =  c("Subdimensión",
+                            "Indicadores",
+                            "Min - max",
+                            "Mean (sd)")) %>%
+  column_spec(1, bold = T) %>%
+  collapse_rows(columns = 1:4, valign = "middle") %>%
+  kable_styling(bootstrap_options = c("striped", "hover")) %>%
+  cat(., file = "bookdown-files/output/tables/descriptivos_cohesion.html")
 ```
 
-### Solidaridad
+# Matriz de correlaciones final
+
 ```{r echo=FALSE}
-view(dfSummary(select(data, c07_01_w01, c07_02_w01, c07_03_w01, c07_04_w01, c07_05_w01, c07_06_w01, c07_07_w01, c07_08_w01),
-               plain.ascii = FALSE,
-               style = "grid",
-               #tmp.img.dir = "/tmp",
-               graph.magnif = 0.9,
-               headings = F,  # encabezado
-               varnumbers = F, # num variable
-               labels.col = T, # etiquetas
-               na.col = T,    # missing
-               graph.col = T, # plot
-               valid.col = T, # n valido
-               # col.widths = c(5,5,10,10,10,10)
-               ), file = "output/tables/table7.html")
-webshot(url ="output/tables/table7.html" ,file ="output/tables/table7.png")
+cohesion_social_cor <-
+  data %>%
+  dplyr::select(lazos_w01, conf_interpersonal_w01, diversidad_w01, identificacion_w01, justicia_w01, conf_institucional_w01, solidaridad_w01,participacion_w01, cohesion_territorial_w01) %>%
+  lavaan::lavCor(., ordered=names(.))
+diag(cohesion_social_cor) = NA
+rownames(cohesion_social_cor) <- c("A. Lazos",
+                          "B. Confianza interpersonal",
+                          "C. Reconocimiento y respeto de la diversidad",
+                          "D. Identificación con el país",
+                          "E. Percepción de justicia",
+                          "F. Confianza institucional",
+                          "G. Solidaridad",
+                          "H. Participación cívica",
+                          "I. Cohesión territorial")
+colnames(cohesion_social_cor) <-c("(A)", "(B)","(C)", "(D)", "(E)", "(F)", "(G)", "(H)", "(I)")
+
+png("bookdown-files/output/graphs/cohesion_social_cor.png",width=600,height=300)
+corrplot::corrplot(cohesion_social_cor,
+  method = "color",
+  addCoef.col = "#000390",
+  type = "upper",
+  tl.col = "black",
+  col=colorRampPalette(c("white","#0068DC"))(12),
+  bg = "white",
+  na.label = "-",
+  lower.col = "black")
+dev.off()
 ```
 
-### Participación cívica
+# Análisis factorial exploratorio final
+
 ```{r echo=FALSE}
-view(dfSummary(select(data, c08_01_w01, c08_02_w01, c08_03_w01, c08_04_w01),
-               plain.ascii = FALSE,
-               style = "grid",
-               #tmp.img.dir = "/tmp",
-               graph.magnif = 0.9,
-               headings = F,  # encabezado
-               varnumbers = F, # num variable
-               labels.col = T, # etiquetas
-               na.col = T,    # missing
-               graph.col = T, # plot
-               valid.col = T, # n valido
-               # col.widths = c(5,5,10,10,10,10)
-               ), file = "output/tables/table8.html")
-webshot(url ="output/tables/table8.html" ,file ="output/tables/table8.png")
+cohesion_social_fa <-
+  data %>%
+  dplyr::select(lazos_w01, conf_interpersonal_w01, diversidad_w01, identificacion_w01, justicia_w01, conf_institucional_w01, solidaridad_w01,participacion_w01, cohesion_territorial_w01)
+
+psych::fa.parallel(cohesion_social_fa, fa="fa")
+psych::scree(cohesion_social_fa)
+
+fac_ml <- psych::fa(r = cohesion_social_fa, nfactors = 3, fm= "ml", rotate = "varimax" )
+
+fac_ml$loadings
+# ver https://www.anthonyschmidt.co/post/2020-09-27-efa-tables-in-r/
+
+source("processing/fa_table.R") 
+
+cohesion_social_fa <-fa_table(fac_ml, .32)
+knitr::kable(cohesion_social_fa, "html") %>%
+  kable_styling(bootstrap_options = c("striped", "hover")) %>%
+  cat(., file = "bookdown-files/output/tables/cohesion_social_fa.html")
+
+webshot(url ="bookdown-files/output/tables/cohesion_social_fa.html", file ="bookdown-files/output/tables/cohesion_social_fa.png", vheight = 10, vwidth = 600)
+
 ```
-
-### Participacion en organizaciones
-```{r echo=FALSE}
-view(dfSummary(select(data, c12_01_w01, c12_02_w01, c12_03_w01, c12_04_w01, c12_05_w01, c12_06_w01, c12_07_w01, c12_08_w01),
-               plain.ascii = FALSE,
-               style = "grid",
-               #tmp.img.dir = "/tmp",
-               graph.magnif = 0.9,
-               headings = F,  # encabezado
-               varnumbers = F, # num variable
-               labels.col = T, # etiquetas
-               na.col = T,    # missing
-               graph.col = T, # plot
-               valid.col = T, # n valido
-               # col.widths = c(5,5,10,10,10,10)
-               ), file = "output/tables/table9.html")
-webshot(url ="output/tables/table9.html" ,file ="output/tables/table9.png")
-```
-
-### Participacion electoral
-```{r echo=FALSE}
-view(dfSummary(select(data, c11_w01, c11_w03),
-               plain.ascii = FALSE,
-               style = "grid",
-               #tmp.img.dir = "/tmp",
-               graph.magnif = 0.9,
-               headings = F,  # encabezado
-               varnumbers = F, # num variable
-               labels.col = T, # etiquetas
-               na.col = T,    # missing
-               graph.col = T, # plot
-               valid.col = T, # n valido
-               # col.widths = c(5,5,10,10,10,10)
-               ), file = "output/tables/table10.html")
-webshot(url ="output/tables/table10.html" ,file ="output/tables/table10.png")
-```
-
-### Confianza en vecinos
-```{r echo=FALSE}
-view(dfSummary(select(data, t01_w01),
-               plain.ascii = FALSE,
-               style = "grid",
-               #tmp.img.dir = "/tmp",
-               graph.magnif = 0.9,
-               headings = F,  # encabezado
-               varnumbers = F, # num variable
-               labels.col = T, # etiquetas
-               na.col = T,    # missing
-               graph.col = T, # plot
-               valid.col = T, # n valido
-               # col.widths = c(5,5,10,10,10,10)
-               ), file = "output/tables/table11.html")
-webshot(url ="output/tables/table11.html" ,file ="output/tables/table11.png")
-```
-
-### Cohesion barrial
-```{r echo=FALSE}
-
-view(dfSummary(select(data, t02_01_w01, t02_02_w01, t02_03_w01, t02_04_w01),
-               plain.ascii = FALSE,
-               style = "grid",
-               #tmp.img.dir = "/tmp",
-               graph.magnif = 0.9,
-               headings = F,  # encabezado
-               varnumbers = F, # num variable
-               labels.col = T, # etiquetas
-               na.col = T,    # missing
-               graph.col = T, # plot
-               valid.col = T, # n valido
-               # col.widths = c(5,5,10,10,10,10)
-               ), file = "output/tables/table12.html")
-webshot(url ="output/tables/table12.html" ,file ="output/tables/table12.png")
-```
-
-### Sociabilidad barrial
-```{r echo=FALSE}
-view(dfSummary(select(data, t03_01_w01, t03_02_w01, t03_03_w01, t03_04_w01),
-               plain.ascii = FALSE,
-               style = "grid",
-               #tmp.img.dir = "/tmp",
-               graph.magnif = 0.9,
-               headings = F,  # encabezado
-               varnumbers = F, # num variable
-               labels.col = T, # etiquetas
-               na.col = T,    # missing
-               graph.col = T, # plot
-               valid.col = T, # n valido
-               # col.widths = c(5,5,10,10,10,10)
-               ), file = "output/tables/table13.html")
-webshot(url ="output/tables/table13.html" ,file ="output/tables/table13.png")
-```
-
-### Satisfaccion residencial
-```{r echo=FALSE}
-view(dfSummary(select(data, t06_01_w01, t06_02_w01, t06_03_w01, t06_04_w01, t06_05_w01, t06_06_w01, t06_07_w01, t06_08_w01),
-               plain.ascii = FALSE,
-               style = "grid",
-               #tmp.img.dir = "/tmp",
-               graph.magnif = 0.9,
-               headings = F,  # encabezado
-               varnumbers = F, # num variable
-               labels.col = T, # etiquetas
-               na.col = T,    # missing
-               graph.col = T, # plot
-               valid.col = T, # n valido
-               # col.widths = c(5,5,10,10,10,10)
-               ), file = "output/tables/table14.html")
-webshot(url ="output/tables/table14.html" ,file ="output/tables/table14.png")
-```
-
 
 <div style="text-align: justify">

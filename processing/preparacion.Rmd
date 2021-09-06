@@ -74,48 +74,28 @@ data %>% select(numkin_w02, numkin_w04)  %>% sjlabelled::as_label(.)  %>%  dfSum
 ### R01: generador posicional (variedad de la red)
 
 ```{r}
+
+# Ocupaciones correspondientes a 13 posiciones del generador de posiciones
+
+# ('CEO', 'Vend.Ambulante', 'Secretario/a', 'Mec.Autos', 'Vend.Tienda', 'Abogado', 'Aseador.of', 'Médico', 'Parvularia', 'Chofer.Taxi', 'Camarero/a', 'Contador/a', 'Prof.Univ')
+
 #2016
 data$vol.red_w01 <- rep(0, length(data$comuna_w01))
 data$vol.red_w01 <- apply(data[,c('r01_01_w03', 'r01_02_w03', 'r01_03_w03', 'r01_04_w03', 'r01_05_w03', 'r01_06_w03', 'r01_07_w03', 'r01_08_w03','r01_09_w03', 'r01_10_w03', 'r01_11_w03','r01_12_w03', 'r01_13_w03')], 1, function(x)  sum(x>1 & x<8, na.rm=TRUE)) #suma para todos los casos los que tienen al menos una persona.
 
-data$vol.red_w01 <- ifelse(data$vol.red_w01==0, 1,
-                                 ifelse(data$vol.red_w01==1, 1,
-                                        ifelse(data$vol.red_w01==2, 1,
-                                               ifelse(data$vol.red_w01==3, 2,
-                                                      ifelse(data$vol.red_w01==4, 2,
-                                                             ifelse(data$vol.red_w01==5, 2,
-                                                                    ifelse(data$vol.red_w01==6, 3,
-                                                                           ifelse(data$vol.red_w01==7, 3,
-                                                                                  ifelse(data$vol.red_w01==8, 3,
-                                                                                         ifelse(data$vol.red_w01==9, 4,
-                                                                                                ifelse(data$vol.red_w01==10, 4,
-                                                                                                       ifelse(data$vol.red_w01==11, 4,
-                                                                                                              ifelse(data$vol.red_w01==12, 5,
-                                                                                                                     ifelse(data$vol.red_w01==13, 5, NA))))))))))))))
+data$vol.red_w01 <- recode(data$vol.red_w01, "0=1; 1:2=2; 3:5=3; 6:10=4; 11:13=5")
+
 # 2018
 data$vol.red_w03 <- rep(0, length(data$comuna_w03))
 data$vol.red_w03 <- apply(data[,c('r01_01_w03', 'r01_02_w03', 'r01_03_w03', 'r01_04_w03', 'r01_05_w03', 'r01_06_w03', 'r01_07_w03', 'r01_08_w03','r01_09_w03', 'r01_10_w03', 'r01_11_w03','r01_12_w03', 'r01_13_w03')], 1, function(x)  sum(x>1 & x<8, na.rm=TRUE)) #suma para todos los casos los que tienen al menos una persona.
 
-data$vol.red_w03 <- ifelse(data$vol.red_w03==0, 1,
-                                 ifelse(data$vol.red_w03==1, 1,
-                                        ifelse(data$vol.red_w03==2, 1,
-                                               ifelse(data$vol.red_w03==3, 2,
-                                                      ifelse(data$vol.red_w03==4, 2,
-                                                             ifelse(data$vol.red_w03==5, 2,
-                                                                    ifelse(data$vol.red_w03==6, 3,
-                                                                           ifelse(data$vol.red_w03==7, 3,
-                                                                                  ifelse(data$vol.red_w03==8, 3,
-                                                                                         ifelse(data$vol.red_w03==9, 4,
-                                                                                                ifelse(data$vol.red_w03==10, 4,
-                                                                                                       ifelse(data$vol.red_w03==11, 4,
-                                                                                                              ifelse(data$vol.red_w03==12, 5,
-                                                                                                                     ifelse(data$vol.red_w03==13, 5, NA))))))))))))))
+data$vol.red_w03 <- recode(data$vol.red_w03, "0=1; 1:2=2; 3:5=3; 6:10=4; 11:13=5")
 
 data$vol.red_w01<- factor(data$vol.red_w01, levels = c(1, 2, 3, 4, 5), labels = c("No tiene", "De 1 a 2", "De 3 a 5", "De 6 a 10", "Mas de 10"))
 data$vol.red_w03<- factor(data$vol.red_w03, levels = c(1, 2, 3, 4, 5), labels = c("No tiene", "De 1 a 2", "De 3 a 5", "De 6 a 10", "Mas de 10"))
 
-label(data$vol.red_w01) <- "Variedad de la red (2016)"
-label(data$vol.red_w03) <- "Variedad de la red (2018)"
+label(data$vol.red_w01) <- "Cantidad de personas que se conocen con diferentes ocupaciones (2016)"
+label(data$vol.red_w03) <- "Cantidad de personas que se conocen con diferentes ocupaciones (2018)"
 
 data %>% select(vol.red_w01, vol.red_w03)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
 ```
@@ -477,40 +457,48 @@ data %>% select (c07_08_w01, c07_08_w02, c07_08_w03, c07_08_w04)  %>% sjlabelled
 
 ## Participación cívica
 
-C08_01: Firmado una carta o petición apoyando una causa (w01 & w03)
+C08_01: Firmado una carta o petición apoyando una causa (w01, w02, w03 & w04)
 
 ```{r}
 label(data$c08_01_w01) <- "Firmado una carta o peticion apoyando una causa (2016)."
+label(data$c08_01_w02) <- "Firmado una carta o peticion apoyando una causa (2017)."
 label(data$c08_01_w03) <- "Firmado una carta o peticion apoyando una causa (2018)."
+label(data$c08_01_w04) <- "Firmado una carta o peticion apoyando una causa (2019)."
 
-data %>% select (c08_01_w01, c08_01_w03)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
+data %>% select (c08_01_w01, c08_01_w02, c08_01_w03, c08_01_w04)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
 ```
 
-C08_02: Asistir a una marcha o manifestación pacífica (w01 & w03)
+C08_02: Asistir a una marcha o manifestación pacífica (w01, w02, w03 & w04)
 
 ```{r}
 label(data$c08_02_w01) <- "Asistido a una marcha o manifestacion pacifica (2016)."
+label(data$c08_02_w02) <- "Asistido a una marcha o manifestacion pacifica (2017)."
 label(data$c08_02_w03) <- "Asistido a una marcha o manifestacion pacifica (2018)."
+label(data$c08_02_w04) <- "Asistido a una marcha o manifestacion pacifica (2019)."
 
-data %>% select (c08_02_w01, c08_02_w03)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
+data %>% select (c08_02_w01, c08_02_w02, c08_02_w03, c08_02_w04)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
 ```
 
-C08_03: Participar en una huelga (w01 & w03)
+C08_03: Participar en una huelga (w01, w02, w03 & w04)
 
 ```{r}
 label(data$c08_03_w01) <- "Participado en una huelga (2016)."
+label(data$c08_03_w02) <- "Participado en una huelga (2017)."
 label(data$c08_03_w03) <- "Participado en una huelga (2018)."
+label(data$c08_03_w04) <- "Participado en una huelga (2019)."
 
-data %>% select (c08_03_w01, c08_03_w03)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
+data %>% select (c08_03_w01, c08_03_w02, c08_03_w03, c08_03_w04)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
 ```
 
-C08_04: Usar las redes sociales para expresar su opinión en temas públicos (w01 & w03)
+C08_04: Usar las redes sociales para expresar su opinión en temas públicos (w01, w02, w03 & w04)
 
 ```{r}
 label(data$c08_04_w01) <- "Usado las redes sociales para expresar su opinion en temas publicos (2016)."
+label(data$c08_04_w02) <- "Usado las redes sociales para expresar su opinion en temas publicos (2017)."
 label(data$c08_04_w03) <- "Usado las redes sociales para expresar su opinion en temas publicos (2018)."
+label(data$c08_04_w04) <- "Usado las redes sociales para expresar su opinion en temas publicos (2019)."
 
-data %>% select (c08_04_w01, c08_04_w03)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
+data %>% select (c08_04_w01, c08_04_w02, c08_04_w03, c08_04_w04)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
 ```
 
 ## Participación en organizaciones
