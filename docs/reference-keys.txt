@@ -34,7 +34,7 @@ tab:cohesion-territorial-fa
 tab:descriptivos-cohesion
 fig:cohesion-social-cor
 tab:cohesion-social-fa
-medición-de-cohesión-social-con-indicadores-elsoc
+generación-de-indicadores-de-cohesión-social
 relaciones-sociales-de-igualdad
 sentido-de-pertenencia
 orientación-hacia-el-bien-común
