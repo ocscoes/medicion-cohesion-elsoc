@@ -56,7 +56,6 @@ A continuación se presenta el análisis ordenado por dimensiones y subdimension
 
 - Dimensión orientación hacia el bien común:
   - solidaridad
-  - respeto por reglas sociales
   - participación cívica
 
 Por ejemplo, considerando en primer lugar la dimensión "Relaciones Sociales de Igualdad", comenzaremos con la subdimensión "lazos" identificando items  de la encuesta que representen este concepto, y con la información disponible elaboraremos una propuesta para cubrir cada una de las subdimensiones.
