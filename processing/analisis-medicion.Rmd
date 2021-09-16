@@ -14,7 +14,7 @@ knitr::opts_chunk$set(echo = TRUE, warning=F, message=F)
 
 ```{r include=FALSE}
 # Cargar paquetes
-pacman::p_load(dplyr, car, summarytools, webshot, knitr, kableExtra, corrplot, ggplot2, sjPlot, sjmisc, semPlot, semTools)
+pacman::p_load(dplyr, car, summarytools, webshot, knitr, kableExtra, corrplot, ggplot2, sjPlot, sjmisc, semPlot, semTools, psych)
 ```
 
 
@@ -241,7 +241,7 @@ data <- data %>%
 ```{r echo=FALSE}
 relaciones_cor<-
   data %>%
-  dplyr::select(vol.red_w01, conf_interpersonal_w01, diversidad_w01) %>%
+  dplyr::select(lazos_w01, conf_interpersonal_w01, diversidad_w01) %>%
   lavaan::lavCor(., ordered=names(.))
 diag(relaciones_cor) = NA
 rownames(relaciones_cor) <- c("A. Lazos",
@@ -899,7 +899,7 @@ data <- data %>%
 ```{r echo=FALSE}
 # -------------------------------------------------------------------------
 cohesion.item=
-  c(label(data$vol.red_w01),
+  c(label(data$lazos_w01),
     label(data$c02_rec_w01),
     label(data$c03_rec_w01),
     label(data$c06_04_w01),
@@ -925,7 +925,7 @@ cohesion.item=
     label(data$t02_03_w01),
     label(data$t02_04_w01))
 cohesion.min = 
-  c(paste0(min(as.numeric(data$vol.red_w01)), " - ", max(as.numeric(data$vol.red_w01))),
+  c(paste0(min(as.numeric(data$lazos_w01)), " - ", max(as.numeric(data$lazos_w01))),
     rep(paste0(min(as.numeric(data$conf_interpersonal_w01), na.rm = T), " - ", max(as.numeric(data$conf_interpersonal_w01), na.rm = T)),2),
     rep(paste0(min(as.numeric(data$diversidad_w01), na.rm = T), " - ", max(as.numeric(data$diversidad_w01), na.rm = T)),3),
     rep(paste0(min(as.numeric(data$identificacion_w01), na.rm = T), " - ", max(as.numeric(data$identificacion_w01), na.rm = T)),2),
@@ -935,7 +935,7 @@ cohesion.min =
     rep(paste0(min(as.numeric(data$participacion_w01), na.rm = T), " - ", max(as.numeric(data$participacion_w01), na.rm = T)),4),
     rep(paste0(min(as.numeric(data$cohesion_territorial_w01), na.rm = T), " - ", max(as.numeric(data$cohesion_territorial_w01), na.rm = T)),4))
 cohesion.mean = 
-  c(paste0(round(mean(as.numeric(data$vol.red_w01)),3), " (", round(sd(as.numeric(data$vol.red_w01)),3), ")"),
+  c(paste0(round(mean(as.numeric(data$lazos_w01)),3), " (", round(sd(as.numeric(data$lazos_w01)),3), ")"),
     rep(paste0(round(mean(as.numeric(data$conf_interpersonal_w01), na.rm = T),3), " (", round(sd(as.numeric(data$conf_interpersonal_w01), na.rm = T),3), ")"),2),
     rep(paste0(round(mean(as.numeric(data$diversidad_w01), na.rm = T),3), " (", round(sd(as.numeric(data$diversidad_w01), na.rm = T),3), ")"),3),
     rep(paste0(round(mean(as.numeric(data$identificacion_w01), na.rm = T),3), " (", round(sd(as.numeric(data$identificacion_w01), na.rm = T),3), ")"),2),

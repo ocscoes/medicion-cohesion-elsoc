@@ -1,0 +1,615 @@
+---
+title: "analisis-habilitadores"
+author: "Equipo CEPAL-ELSOC"
+date: "15-09-2021"
+output: html_document
+---
+
+Este código produce los análisis necesarios para el capítulo III del informe CEPAL-COES.
+
+```{r include=FALSE}
+# Cargar paquetes
+pacman::p_load(dplyr, car, summarytools, webshot, knitr, kableExtra, corrplot, ggplot2, sjPlot, sjmisc, semPlot, semTools, lavaan, texreg, lme4)
+```
+
+```{r}
+# Cargar base de datos
+load("input/data/data.RData")
+```
+
+# Estimación de puntuaciones factoriales y promedios simples según análisis medición
+
+## Lazos
+
+```{r}
+data <- data %>%
+  rowwise() %>%
+  mutate(lazos_w01 =
+           mean(c(r15_w02, vol.red_w01), na.rm = T))
+data <- data %>%
+  rowwise() %>%
+  mutate(lazos_w03 =
+           mean(c(r15_w04, vol.red_w03), na.rm = T))
+
+
+data %>% select(lazos_w01, lazos_w03)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
+```
+
+## Confianza interpersonal (w01, w02, w03, w04 & w05)
+```{r}
+data <- data %>%
+  rowwise() %>%
+  mutate(conf_interpersonal_w01 =
+           mean(c(c02_rec_w01, c03_rec_w01), na.rm = T))
+data <- data %>%
+  rowwise() %>%
+  mutate(conf_interpersonal_w02 =
+           mean(c(c02_rec_w02, c03_rec_w02), na.rm = T))
+data <- data %>%
+  rowwise() %>%
+  mutate(conf_interpersonal_w03 =
+           mean(c(c02_rec_w03, c03_rec_w03), na.rm = T))
+data <- data %>%
+  rowwise() %>%
+  mutate(conf_interpersonal_w04 =
+           mean(c(c02_rec_w04, c03_rec_w04), na.rm = T))
+data <- data %>%
+  rowwise() %>%
+  mutate(conf_interpersonal_w05 =
+           mean(c(c02_rec_w05, c03_rec_w05), na.rm = T))
+
+data %>% select(conf_interpersonal_w01, conf_interpersonal_w02, conf_interpersonal_w03, conf_interpersonal_w04, conf_interpersonal_w05)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
+```
+
+## Diversidad
+```{r}
+cfa_1a <- '
+diversidad =~ c06_04_w01 + c06_05_w01 + c06_06_w01
+'
+fit_1a <- cfa(cfa_1a,data=data,missing="ML",estimator="MLR")
+
+p1a <- predict(fit_1a)
+
+scores_diversidad = as.data.frame(p1a)
+
+# Merge with factor scores
+data = as.data.frame(cbind(data, scores_diversidad))
+
+# Check
+data %>% select(diversidad)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
+```
+
+## Identificación con el país
+```{r}
+data <- data %>%
+  rowwise() %>%
+  mutate(identificacion_w01 =
+           mean(c(c32_01_w01, c32_02_w01), na.rm = T))
+data <- data %>%
+  rowwise() %>%
+  mutate(identificacion_w02 =
+           mean(c(c32_01_w02, c32_02_w02), na.rm = T))
+data <- data %>%
+  rowwise() %>%
+  mutate(identificacion_w03 =
+           mean(c(c32_01_w03, c32_02_w03), na.rm = T))
+data <- data %>%
+  rowwise() %>%
+  mutate(identificacion_w04 =
+           mean(c(c32_01_w04, c32_02_w04), na.rm = T))
+data <- data %>%
+  rowwise() %>%
+  mutate(identificacion_w05 =
+           mean(c(c32_01_w05, c32_02_w05), na.rm = T))
+
+data %>% select(identificacion_w01, identificacion_w02, identificacion_w03, identificacion_w04, identificacion_w05)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
+```
+
+## Percepción de justicia
+```{r}
+data <- data %>%
+  rowwise() %>%
+  mutate(justicia_w01 =
+           mean(c(c18_09_w01, c18_10_w01), na.rm = T))
+data <- data %>%
+  rowwise() %>%
+  mutate(justicia_w02 =
+           mean(c(c18_09_w02, c18_10_w02), na.rm = T))
+data <- data %>%
+  rowwise() %>%
+  mutate(justicia_w03 =
+           mean(c(c18_09_w03, c18_10_w03), na.rm = T))
+data <- data %>%
+  rowwise() %>%
+  mutate(justicia_w04 =
+           mean(c(c18_09_w04, c18_10_w04), na.rm = T))
+data <- data %>%
+  rowwise() %>%
+  mutate(justicia_w05 =
+           mean(c(c18_09_w05, c18_10_w05), na.rm = T))
+
+data %>% select(justicia_w01, justicia_w02, justicia_w03, justicia_w04, justicia_w05)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
+```
+
+## Confianza institucional
+```{r}
+cfa_2a <- '
+conf_institucional =~ c05_01_w01 + c05_02_w01 + c05_08_w01
+'
+fit_2a <- cfa(cfa_2a,data=data,missing="ML",estimator="MLR")
+
+p2a <- predict(fit_2a)
+
+scores_conf_institucional = as.data.frame(p2a)
+
+# Merge with factor scores
+data = as.data.frame(cbind(data, scores_conf_institucional))
+
+# Check
+data %>% select(conf_institucional)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
+```
+
+## Solidaridad
+```{r}
+cfa_3a <- '
+solidaridad =~ c07_05_w01 + c07_06_w01 + c07_07_w01 + c07_08_w01
+'
+fit_3a <- cfa(cfa_3a,data=data,missing="ML",estimator="MLR")
+
+p3a <- predict(fit_3a)
+
+scores_solidaridad = as.data.frame(p3a)
+
+# Merge with factor scores
+data = as.data.frame(cbind(data, scores_solidaridad))
+
+# Check
+data %>% select(solidaridad)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
+```
+
+## Participación
+```{r}
+cfa_4a <- '
+participacion =~ c08_01_w01 + c08_02_w01 + c08_03_w01 + c08_04_w01
+'
+fit_4a <- cfa(cfa_4a,data=data,missing="ML",estimator="MLR")
+
+p4a <- predict(fit_4a)
+
+scores_participacion = as.data.frame(p4a)
+
+# Merge with factor scores
+data = as.data.frame(cbind(data, scores_participacion))
+
+# Check
+data %>% select(participacion)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
+```
+
+## Cohesion barrial
+
+```{r}
+cfa_5a <- '
+cohesion_barrial =~ t02_01_w01 + t02_02_w01 + t02_03_w01 + t02_04_w01
+'
+fit_5a <- cfa(cfa_5a,data=data,missing="ML",estimator="MLR")
+
+p5a <- predict(fit_5a)
+
+scores_cohesion_barrial = as.data.frame(p5a)
+
+# Merge with factor scores
+data = as.data.frame(cbind(data, scores_cohesion_barrial))
+
+# Check
+data %>% select(cohesion_barrial)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
+```
+
+# Descriptivos variables dependientes
+```{r}
+data %>% select(lazos_w01, conf_interpersonal_w01, diversidad, identificacion_w01, justicia_w01, conf_institucional, solidaridad, participacion, cohesion_barrial)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
+```
+
+# Descriptivos variables independientes
+```{r}
+data %>% select(comuna, m0_edad_w01, m01_w01, quintiles_ingresos_w01, nacion_rec, etnia_rec)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
+```
+
+# Correlaciones variable dep x independientes
+
+## Lazos
+```{r}
+lazos_cor<-
+  data %>%
+  dplyr::select(lazos_w01, m0_edad_w01, m01_w01, quintiles_ingresos_w01, nacion_rec, etnia_rec) %>% na.omit() %>% 
+  lavaan::lavCor(., ordered=names(.))
+diag(lazos_cor) = NA
+rownames(lazos_cor) <- c("A. Lazos",
+                         "B. Edad",
+                         "C. Educacion",
+                         "D. Ingresos",
+                         "E. Nacionalidad",
+                         "F. Etnia")
+colnames(lazos_cor) <-c("(A)", "(B)","(C)", "(D)", "(E)", "(F)")
+
+corrplot::corrplot(lazos_cor,
+  method = "color",
+  addCoef.col = "#000390",
+  type = "upper",
+  tl.col = "black",
+  col=colorRampPalette(c("white","#0068DC"))(12),
+  bg = "white",
+  na.label = "-",
+  lower.col = "black")
+```
+
+## Confianza interpersonal
+```{r}
+conf_interpersonal_cor<-
+  data %>%
+  dplyr::select(conf_interpersonal_w01, m0_edad_w01, m01_w01, quintiles_ingresos_w01, nacion_rec, etnia_rec) %>% na.omit() %>% 
+  lavaan::lavCor(., ordered=names(.))
+diag(conf_interpersonal_cor) = NA
+rownames(conf_interpersonal_cor) <- c("A. Confianza interpersonal",
+                         "B. Edad",
+                         "C. Educacion",
+                         "D. Ingresos",
+                         "E. Nacionalidad",
+                         "F. Etnia")
+colnames(conf_interpersonal_cor) <-c("(A)", "(B)","(C)", "(D)", "(E)", "(F)")
+
+corrplot::corrplot(conf_interpersonal_cor,
+  method = "color",
+  addCoef.col = "#000390",
+  type = "upper",
+  tl.col = "black",
+  col=colorRampPalette(c("white","#0068DC"))(12),
+  bg = "white",
+  na.label = "-",
+  lower.col = "black")
+```
+
+## Diversidad
+```{r}
+diversidad_cor<-
+  data %>%
+  dplyr::select(diversidad, m0_edad_w01, m01_w01, quintiles_ingresos_w01, nacion_rec, etnia_rec) %>% na.omit() %>% 
+  lavaan::lavCor(., ordered=names(.))
+diag(diversidad_cor) = NA
+rownames(diversidad_cor) <- c("A. Diversidad",
+                         "B. Edad",
+                         "C. Educacion",
+                         "D. Ingresos",
+                         "E. Nacionalidad",
+                         "F. Etnia")
+colnames(diversidad_cor) <-c("(A)", "(B)","(C)", "(D)", "(E)", "(F)")
+
+corrplot::corrplot(diversidad_cor,
+  method = "color",
+  addCoef.col = "#000390",
+  type = "upper",
+  tl.col = "black",
+  col=colorRampPalette(c("white","#0068DC"))(12),
+  bg = "white",
+  na.label = "-",
+  lower.col = "black")
+```
+
+## Identificacion
+```{r}
+identificacion_cor<-
+  data %>%
+  dplyr::select(identificacion_w01, m0_edad_w01, m01_w01, quintiles_ingresos_w01, nacion_rec, etnia_rec) %>% na.omit() %>% 
+  lavaan::lavCor(., ordered=names(.))
+diag(identificacion_cor) = NA
+rownames(identificacion_cor) <- c("A. identificacion",
+                         "B. Edad",
+                         "C. Educacion",
+                         "D. Ingresos",
+                         "E. Nacionalidad",
+                         "F. Etnia")
+colnames(identificacion_cor) <-c("(A)", "(B)","(C)", "(D)", "(E)", "(F)")
+
+corrplot::corrplot(identificacion_cor,
+  method = "color",
+  addCoef.col = "#000390",
+  type = "upper",
+  tl.col = "black",
+  col=colorRampPalette(c("white","#0068DC"))(12),
+  bg = "white",
+  na.label = "-",
+  lower.col = "black")
+```
+
+## Justicia
+```{r}
+justicia_cor<-
+  data %>%
+  dplyr::select(justicia_w01, m0_edad_w01, m01_w01, quintiles_ingresos_w01, nacion_rec, etnia_rec) %>% na.omit() %>% 
+  lavaan::lavCor(., ordered=names(.))
+diag(justicia_cor) = NA
+rownames(justicia_cor) <- c("A. Percepcion de justicia",
+                         "B. Edad",
+                         "C. Educacion",
+                         "D. Ingresos",
+                         "E. Nacionalidad",
+                         "F. Etnia")
+colnames(justicia_cor) <-c("(A)", "(B)","(C)", "(D)", "(E)", "(F)")
+
+corrplot::corrplot(justicia_cor,
+  method = "color",
+  addCoef.col = "#000390",
+  type = "upper",
+  tl.col = "black",
+  col=colorRampPalette(c("white","#0068DC"))(12),
+  bg = "white",
+  na.label = "-",
+  lower.col = "black")
+```
+
+## Confianza institucional
+```{r}
+conf_institucional_cor<-
+  data %>%
+  dplyr::select(conf_institucional, m0_edad_w01, m01_w01, quintiles_ingresos_w01, nacion_rec, etnia_rec) %>% na.omit() %>% 
+  lavaan::lavCor(., ordered=names(.))
+diag(conf_institucional_cor) = NA
+rownames(conf_institucional_cor) <- c("A. Confianza institucional",
+                         "B. Edad",
+                         "C. Educacion",
+                         "D. Ingresos",
+                         "E. Nacionalidad",
+                         "F. Etnia")
+colnames(conf_institucional_cor) <-c("(A)", "(B)","(C)", "(D)", "(E)", "(F)")
+
+corrplot::corrplot(conf_institucional_cor,
+  method = "color",
+  addCoef.col = "#000390",
+  type = "upper",
+  tl.col = "black",
+  col=colorRampPalette(c("white","#0068DC"))(12),
+  bg = "white",
+  na.label = "-",
+  lower.col = "black")
+```
+
+## Solidaridad
+```{r}
+solidaridad_cor<-
+  data %>%
+  dplyr::select(solidaridad, m0_edad_w01, m01_w01, quintiles_ingresos_w01, nacion_rec, etnia_rec) %>% na.omit() %>% 
+  lavaan::lavCor(., ordered=names(.))
+diag(solidaridad_cor) = NA
+rownames(solidaridad_cor) <- c("A. Solidaridad",
+                         "B. Edad",
+                         "C. Educacion",
+                         "D. Ingresos",
+                         "E. Nacionalidad",
+                         "F. Etnia")
+colnames(solidaridad_cor) <-c("(A)", "(B)","(C)", "(D)", "(E)", "(F)")
+
+corrplot::corrplot(solidaridad_cor,
+  method = "color",
+  addCoef.col = "#000390",
+  type = "upper",
+  tl.col = "black",
+  col=colorRampPalette(c("white","#0068DC"))(12),
+  bg = "white",
+  na.label = "-",
+  lower.col = "black")
+```
+
+## Participación cívica
+```{r}
+participacion_cor<-
+  data %>%
+  dplyr::select(participacion, m0_edad_w01, m01_w01, quintiles_ingresos_w01, nacion_rec, etnia_rec) %>% na.omit() %>% 
+  lavaan::lavCor(., ordered=names(.))
+diag(participacion_cor) = NA
+rownames(participacion_cor) <- c("A. Participacion",
+                         "B. Edad",
+                         "C. Educacion",
+                         "D. Ingresos",
+                         "E. Nacionalidad",
+                         "F. Etnia")
+colnames(participacion_cor) <-c("(A)", "(B)","(C)", "(D)", "(E)", "(F)")
+
+corrplot::corrplot(participacion_cor,
+  method = "color",
+  addCoef.col = "#000390",
+  type = "upper",
+  tl.col = "black",
+  col=colorRampPalette(c("white","#0068DC"))(12),
+  bg = "white",
+  na.label = "-",
+  lower.col = "black")
+```
+
+## Cohesión barrial
+```{r}
+cohesion_barrial_cor<-
+  data %>%
+  dplyr::select(cohesion_barrial, m0_edad_w01, m01_w01, quintiles_ingresos_w01, nacion_rec, etnia_rec) %>% na.omit() %>% 
+  lavaan::lavCor(., ordered=names(.))
+diag(cohesion_barrial_cor) = NA
+rownames(cohesion_barrial_cor) <- c("A. Cohesion barrial",
+                         "B. Edad",
+                         "C. Educacion",
+                         "D. Ingresos",
+                         "E. Nacionalidad",
+                         "F. Etnia")
+colnames(cohesion_barrial_cor) <-c("(A)", "(B)","(C)", "(D)", "(E)", "(F)")
+
+corrplot::corrplot(cohesion_barrial_cor,
+  method = "color",
+  addCoef.col = "#000390",
+  type = "upper",
+  tl.col = "black",
+  col=colorRampPalette(c("white","#0068DC"))(12),
+  bg = "white",
+  na.label = "-",
+  lower.col = "black")
+```
+
+# Tablas de regresión
+
+## Modelo nulo y correlación intra clase
+
+```{r results='asis'}
+reg_lazos0 <- lme4::lmer(lazos_w01 ~ 1 + (1 | comuna), data=data)
+reg_conf_interpersonal0 <- lme4::lmer(conf_interpersonal_w01 ~ 1 + (1 | comuna), data=data)
+reg_diversidad0 <- lme4::lmer(diversidad ~ 1 + (1 | comuna), data=data)
+reg_identificacion0 <- lme4::lmer(identificacion_w01 ~ 1 + (1 | comuna), data=data)
+reg_justicia0 <- lme4::lmer(justicia_w01 ~ 1 + (1 | comuna), data=data)
+reg_conf_institucional0 <- lme4::lmer(conf_institucional ~ 1 + (1 | comuna), data=data)
+reg_solidaridad0 <- lme4::lmer(solidaridad ~ 1 + (1 | comuna), data=data)
+reg_participacion0 <- lme4::lmer(participacion ~ 1 + (1 | comuna), data=data)
+reg_cohesion_barrial0 <- lme4::lmer(cohesion_barrial ~ 1 + (1 | comuna), data=data)
+
+texreg::htmlreg(list(reg_lazos0, reg_conf_interpersonal0, reg_diversidad0, reg_identificacion0, reg_justicia0, reg_participacion0, reg_solidaridad0, reg_conf_institucional0, reg_cohesion_barrial0), custom.model.names = c("Lazos", "Confianza interpersonal", "Diverisdad", "Identificacion", "Justicia", "Confianza institucional", "Solidaridad", "Participacion", "cohesión territorial"), custom.note = "$***p <$ 0.001, $**p <$ 0.01, $*p <$ 0.05",  custom.coef.names = c("Intercepto"))
+```
+
+```{r}
+reghelper::ICC(reg_lazos0)
+```
+
+```{r}
+reghelper::ICC(reg_conf_interpersonal0)
+```
+
+```{r}
+reghelper::ICC(reg_diversidad0)
+```
+
+```{r}
+reghelper::ICC(reg_identificacion0)
+```
+
+```{r}
+reghelper::ICC(reg_justicia0)
+```
+
+```{r}
+reghelper::ICC(reg_conf_institucional0)
+```
+
+```{r}
+reghelper::ICC(reg_solidaridad0)
+```
+
+```{r}
+reghelper::ICC(reg_participacion0)
+```
+
+```{r}
+reghelper::ICC(reg_cohesion_barrial0)
+```
+
+## Lazos
+```{r results='asis'}
+reg_lazos1 <- lmer(lazos_w01 ~ 1 + m0_edad_w01 + (1 | comuna), data=data)
+reg_lazos2 <- lmer(lazos_w01 ~ 1 + m01_w01 + (1 | comuna), data=data)
+reg_lazos3 <- lmer(lazos_w01 ~ 1 + quintiles_ingresos_w01 + (1 | comuna), data=data)
+reg_lazos4 <- lmer(lazos_w01 ~ 1 + nacion_rec + (1 | comuna), data=data)
+reg_lazos5 <- lmer(lazos_w01 ~ 1 + etnia_rec + (1 | comuna), data=data)
+reg_lazos6 <- lmer(lazos_w01 ~ 1 + m0_edad_w01 + m01_w01 + quintiles_ingresos_w01 + nacion_rec + etnia_rec + (1 | comuna), data=data)
+
+texreg::htmlreg(list(reg_lazos1, reg_lazos2, reg_lazos3, reg_lazos4, reg_lazos5, reg_lazos6), custom.note = "$***p <$ 0.001, $**p <$ 0.01, $*p <$ 0.05",  custom.coef.names = c("Intercepto", "Edad", "Educacion media <br> <i>(Ref. educacion basica)</i>", "Educacion tecnica", "Educacion universitaria", "Q2 <br> <i>(Ref. Q1)</i>", "Q3", "Q4", "Q5", "Ns/Nr", "Otra nacion <br> <i>(Ref. chilena)</i>", "Otra etnia <br> <i>(Ref. ninguna)</i>"))
+```
+
+## Confianza interpersonal
+```{r results='asis'}
+reg_conf_interpersonal1 <- lmer(conf_interpersonal_w01 ~ 1 + m0_edad_w01 + (1 | comuna), data=data)
+reg_conf_interpersonal2 <- lmer(conf_interpersonal_w01 ~ 1 + m01_w01 + (1 | comuna), data=data)
+reg_conf_interpersonal3 <- lmer(conf_interpersonal_w01 ~ 1 + quintiles_ingresos_w01 + (1 | comuna), data=data)
+reg_conf_interpersonal4 <- lmer(conf_interpersonal_w01 ~ 1 + nacion_rec + (1 | comuna), data=data)
+reg_conf_interpersonal5 <- lmer(conf_interpersonal_w01 ~ 1 + etnia_rec + (1 | comuna), data=data)
+reg_conf_interpersonal6 <- lmer(conf_interpersonal_w01 ~ 1 + m0_edad_w01 + m01_w01 + quintiles_ingresos_w01 + nacion_rec + etnia_rec + (1 | comuna), data=data)
+
+texreg::htmlreg(list(reg_conf_interpersonal1, reg_conf_interpersonal2, reg_conf_interpersonal3, reg_conf_interpersonal4, reg_conf_interpersonal5, reg_conf_interpersonal6), custom.note = "$***p <$ 0.001, $**p <$ 0.01, $*p <$ 0.05",  custom.coef.names = c("Intercepto", "Edad", "Educacion media <br> <i>(Ref. educacion basica)</i>", "Educacion tecnica", "Educacion universitaria", "Q2 <br> <i>(Ref. Q1)</i>", "Q3", "Q4", "Q5", "Ns/Nr", "Otra nacion <br> <i>(Ref. chilena)</i>", "Otra etnia <br> <i>(Ref. ninguna)</i>"))
+```
+
+## Diversidad
+```{r results='asis'}
+reg_diversidad1 <- lmer(diversidad ~ 1 + m0_edad_w01 + (1 | comuna), data=data)
+reg_diversidad2 <- lmer(diversidad ~ 1 + m01_w01 + (1 | comuna), data=data)
+reg_diversidad3 <- lmer(diversidad ~ 1 + quintiles_ingresos_w01 + (1 | comuna), data=data)
+reg_diversidad4 <- lmer(diversidad ~ 1 + nacion_rec + (1 | comuna), data=data)
+reg_diversidad5 <- lmer(diversidad ~ 1 + etnia_rec + (1 | comuna), data=data)
+reg_diversidad6 <- lmer(diversidad ~ 1 + m0_edad_w01 + m01_w01 + quintiles_ingresos_w01 + nacion_rec + etnia_rec + (1 | comuna), data=data)
+
+texreg::htmlreg(list(reg_diversidad1, reg_diversidad2, reg_diversidad3, reg_diversidad4, reg_diversidad5, reg_diversidad6), custom.note = "$***p <$ 0.001, $**p <$ 0.01, $*p <$ 0.05",  custom.coef.names = c("Intercepto", "Edad", "Educacion media <br> <i>(Ref. educacion basica)</i>", "Educacion tecnica", "Educacion universitaria", "Q2 <br> <i>(Ref. Q1)</i>", "Q3", "Q4", "Q5", "Ns/Nr", "Otra nacion <br> <i>(Ref. chilena)</i>", "Otra etnia <br> <i>(Ref. ninguna)</i>"))
+```
+
+## Identificacion
+```{r results='asis'}
+reg_identificacion1 <- lmer(identificacion_w01 ~ 1 + m0_edad_w01 + (1 | comuna), data=data)
+reg_identificacion2 <- lmer(identificacion_w01 ~ 1 + m01_w01 + (1 | comuna), data=data)
+reg_identificacion3 <- lmer(identificacion_w01 ~ 1 + quintiles_ingresos_w01 + (1 | comuna), data=data)
+reg_identificacion4 <- lmer(identificacion_w01 ~ 1 + nacion_rec + (1 | comuna), data=data)
+reg_identificacion5 <- lmer(identificacion_w01 ~ 1 + etnia_rec + (1 | comuna), data=data)
+reg_identificacion6 <- lmer(identificacion_w01 ~ 1 + m0_edad_w01 + m01_w01 + quintiles_ingresos_w01 + nacion_rec + etnia_rec + (1 | comuna), data=data)
+
+texreg::htmlreg(list(reg_identificacion1, reg_identificacion2, reg_identificacion3, reg_identificacion4, reg_identificacion5, reg_identificacion6), custom.note = "$***p <$ 0.001, $**p <$ 0.01, $*p <$ 0.05",  custom.coef.names = c("Intercepto", "Edad", "Educacion media <br> <i>(Ref. educacion basica)</i>", "Educacion tecnica", "Educacion universitaria", "Q2 <br> <i>(Ref. Q1)</i>", "Q3", "Q4", "Q5", "Ns/Nr", "Otra nacion <br> <i>(Ref. chilena)</i>", "Otra etnia <br> <i>(Ref. ninguna)</i>"))
+```
+
+## Percepción de justicia
+```{r results='asis'}
+reg_justicia1 <- lmer(justicia_w01 ~ 1 + m0_edad_w01 + (1 | comuna), data=data)
+reg_justicia2 <- lmer(justicia_w01 ~ 1 + m01_w01 + (1 | comuna), data=data)
+reg_justicia3 <- lmer(justicia_w01 ~ 1 + quintiles_ingresos_w01 + (1 | comuna), data=data)
+reg_justicia4 <- lmer(justicia_w01 ~ 1 + nacion_rec + (1 | comuna), data=data)
+reg_justicia5 <- lmer(justicia_w01 ~ 1 + etnia_rec + (1 | comuna), data=data)
+reg_justicia6 <- lmer(justicia_w01 ~ 1 + m0_edad_w01 + m01_w01 + quintiles_ingresos_w01 + nacion_rec + etnia_rec + (1 | comuna), data=data)
+
+texreg::htmlreg(list(reg_justicia1, reg_justicia2, reg_justicia3, reg_justicia4, reg_justicia5, reg_justicia6), custom.note = "$***p <$ 0.001, $**p <$ 0.01, $*p <$ 0.05",  custom.coef.names = c("Intercepto", "Edad", "Educacion media <br> <i>(Ref. educacion basica)</i>", "Educacion tecnica", "Educacion universitaria", "Q2 <br> <i>(Ref. Q1)</i>", "Q3", "Q4", "Q5", "Ns/Nr", "Otra nacion <br> <i>(Ref. chilena)</i>", "Otra etnia <br> <i>(Ref. ninguna)</i>"))
+```
+
+## Confianza institucional
+```{r results='asis'}
+reg_conf_institucional1 <- lmer(conf_institucional ~ 1 + m0_edad_w01 + (1 | comuna), data=data)
+reg_conf_institucional2 <- lmer(conf_institucional ~ 1 + m01_w01 + (1 | comuna), data=data)
+reg_conf_institucional3 <- lmer(conf_institucional ~ 1 + quintiles_ingresos_w01 + (1 | comuna), data=data)
+reg_conf_institucional4 <- lmer(conf_institucional ~ 1 + nacion_rec + (1 | comuna), data=data)
+reg_conf_institucional5 <- lmer(conf_institucional ~ 1 + etnia_rec + (1 | comuna), data=data)
+reg_conf_institucional6 <- lmer(conf_institucional ~ 1 + m0_edad_w01 + m01_w01 + quintiles_ingresos_w01 + nacion_rec + etnia_rec + (1 | comuna), data=data)
+
+texreg::htmlreg(list(reg_conf_institucional1, reg_conf_institucional2, reg_conf_institucional3, reg_conf_institucional4, reg_conf_institucional5, reg_conf_institucional6), custom.note = "$***p <$ 0.001, $**p <$ 0.01, $*p <$ 0.05",  custom.coef.names = c("Intercepto", "Edad", "Educacion media <br> <i>(Ref. educacion basica)</i>", "Educacion tecnica", "Educacion universitaria", "Q2 <br> <i>(Ref. Q1)</i>", "Q3", "Q4", "Q5", "Ns/Nr", "Otra nacion <br> <i>(Ref. chilena)</i>", "Otra etnia <br> <i>(Ref. ninguna)</i>"))
+```
+
+## Solidaridad
+
+```{r results='asis'}
+reg_solidaridad1 <- lmer(solidaridad ~ 1 + m0_edad_w01 + (1 | comuna), data=data)
+reg_solidaridad2 <- lmer(solidaridad ~ 1 + m01_w01 + (1 | comuna), data=data)
+reg_solidaridad3 <- lmer(solidaridad ~ 1 + quintiles_ingresos_w01 + (1 | comuna), data=data)
+reg_solidaridad4 <- lmer(solidaridad ~ 1 + nacion_rec + (1 | comuna), data=data)
+reg_solidaridad5 <- lmer(solidaridad ~ 1 + etnia_rec + (1 | comuna), data=data)
+reg_solidaridad6 <- lmer(solidaridad ~ 1 + m0_edad_w01 + m01_w01 + quintiles_ingresos_w01 + nacion_rec + etnia_rec + (1 | comuna), data=data)
+
+texreg::htmlreg(list(reg_solidaridad1, reg_solidaridad2, reg_solidaridad3, reg_solidaridad4, reg_solidaridad5, reg_solidaridad6), custom.note = "$***p <$ 0.001, $**p <$ 0.01, $*p <$ 0.05",  custom.coef.names = c("Intercepto", "Edad", "Educacion media <br> <i>(Ref. educacion basica)</i>", "Educacion tecnica", "Educacion universitaria", "Q2 <br> <i>(Ref. Q1)</i>", "Q3", "Q4", "Q5", "Ns/Nr", "Otra nacion <br> <i>(Ref. chilena)</i>", "Otra etnia <br> <i>(Ref. ninguna)</i>"))
+```
+
+## Participación cívica
+```{r results='asis'}
+reg_participacion1 <- lmer(participacion ~ 1 + m0_edad_w01 + (1 | comuna), data=data)
+reg_participacion2 <- lmer(participacion ~ 1 + m01_w01 + (1 | comuna), data=data)
+reg_participacion3 <- lmer(participacion ~ 1 + quintiles_ingresos_w01 + (1 | comuna), data=data)
+reg_participacion4 <- lmer(participacion ~ 1 + nacion_rec + (1 | comuna), data=data)
+reg_participacion5 <- lmer(participacion ~ 1 + etnia_rec + (1 | comuna), data=data)
+reg_participacion6 <- lmer(participacion ~ 1 + m0_edad_w01 + m01_w01 + quintiles_ingresos_w01 + nacion_rec + etnia_rec + (1 | comuna), data=data)
+
+texreg::htmlreg(list(reg_participacion1, reg_participacion2, reg_participacion3, reg_participacion4, reg_participacion5, reg_participacion6), custom.note = "$***p <$ 0.001, $**p <$ 0.01, $*p <$ 0.05",  custom.coef.names = c("Intercepto", "Edad", "Educacion media <br> <i>(Ref. educacion basica)</i>", "Educacion tecnica", "Educacion universitaria", "Q2 <br> <i>(Ref. Q1)</i>", "Q3", "Q4", "Q5", "Ns/Nr", "Otra nacion <br> <i>(Ref. chilena)</i>", "Otra etnia <br> <i>(Ref. ninguna)</i>"))
+```
+
+## Cohesión barrial
+```{r results='asis'}
+reg_cohesion_barrial1 <- lmer(cohesion_barrial ~ 1 + m0_edad_w01 + (1 | comuna), data=data)
+reg_cohesion_barrial2 <- lmer(cohesion_barrial ~ 1 + m01_w01 + (1 | comuna), data=data)
+reg_cohesion_barrial3 <- lmer(cohesion_barrial ~ 1 + quintiles_ingresos_w01 + (1 | comuna), data=data)
+reg_cohesion_barrial4 <- lmer(cohesion_barrial ~ 1 + nacion_rec + (1 | comuna), data=data)
+reg_cohesion_barrial5 <- lmer(cohesion_barrial ~ 1 + etnia_rec + (1 | comuna), data=data)
+reg_cohesion_barrial6 <- lmer(cohesion_barrial ~ 1 + m0_edad_w01 + m01_w01 + quintiles_ingresos_w01 + nacion_rec + etnia_rec + (1 | comuna), data=data)
+
+texreg::htmlreg(list(reg_cohesion_barrial1, reg_cohesion_barrial2, reg_cohesion_barrial3, reg_cohesion_barrial4, reg_cohesion_barrial5, reg_cohesion_barrial6), custom.note = "$***p <$ 0.001, $**p <$ 0.01, $*p <$ 0.05",  custom.coef.names = c("Intercepto", "Edad", "Educacion media <br> <i>(Ref. educacion basica)</i>", "Educacion tecnica", "Educacion universitaria", "Q2 <br> <i>(Ref. Q1)</i>", "Q3", "Q4", "Q5", "Ns/Nr", "Otra nacion <br> <i>(Ref. chilena)</i>", "Otra etnia <br> <i>(Ref. ninguna)</i>"))
+```
+

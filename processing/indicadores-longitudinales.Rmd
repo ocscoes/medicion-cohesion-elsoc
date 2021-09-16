@@ -26,9 +26,18 @@ load("input/data/data.RData")
 # Relaciones sociales de igualdad
 
 ## Lazos
-Cantidad de personas con distinta ocupación
 ```{r}
-data %>% select(vol.red_w01, vol.red_w03, vol.red_w05)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
+data <- data %>%
+  rowwise() %>%
+  mutate(lazos_w01 =
+           mean(c(r15_w02, vol.red_w01), na.rm = T))
+data <- data %>%
+  rowwise() %>%
+  mutate(lazos_w03 =
+           mean(c(r15_w04, vol.red_w03), na.rm = T))
+
+
+data %>% select(lazos_w01, lazos_w03, vol.red_w05)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
 ```
 
 ## Confianza interpersonal (w01, w02, w03, w04 & w05)
@@ -263,8 +272,28 @@ data$diversidad_w03<- factor(data$diversidad_w03, levels = c(1, 2, 3, 4, 5), lab
 
 Como resultado, quedan así:
 ```{r}
-sjmisc::frq(data$diversidad_w01)
+data %>% select(diversidad_w01, diversidad_w03)  %>% sjlabelled::as_label(.)  %>%  summarytools::dfSummary(, graph.col = FALSE)
 ```
+
+## Lazos
+```{r}
+data$lazos_w01 <- ifelse((data$lazos_w01<1.5), 1,
+                              ifelse((data$lazos_w01<2.5), 2,
+                                     ifelse((data$lazos_w01<3.5), 3,
+                                            ifelse((data$lazos_w01<4.5), 4,
+                                                   ifelse((data$lazos_w01<=5), 5, NA)))))
+data$lazos_w03 <- ifelse((data$lazos_w03<1.5), 1,
+                              ifelse((data$lazos_w03<2.5), 2,
+                                     ifelse((data$lazos_w03<3.5), 3,
+                                            ifelse((data$lazos_w03<4.5), 4,
+                                                   ifelse((data$lazos_w03<=5), 5, NA)))))
+
+data$lazos_w01<- factor(data$lazos_w01, levels = c(1, 2, 3, 4, 5), labels = c("No tiene", "De 1 a 2", "De 3 a 5", "De 6 a 10", "Mas de 10"))
+data$lazos_w03<- factor(data$lazos_w03, levels = c(1, 2, 3, 4, 5), labels = c("No tiene", "De 1 a 2", "De 3 a 5", "De 6 a 10", "Mas de 10"))
+
+data %>% select(lazos_w01, lazos_w03)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
+```
+
 
 ## Confianza interpersonal
 
@@ -290,6 +319,8 @@ data$conf_interpersonal_w02<- factor(data$conf_interpersonal_w02, levels = c(1, 
 data$conf_interpersonal_w03<- factor(data$conf_interpersonal_w03, levels = c(1, 2, 3), labels = c("No", "Depende", "Si"))
 data$conf_interpersonal_w04<- factor(data$conf_interpersonal_w04, levels = c(1, 2, 3), labels = c("No", "Depende", "Si"))
 data$conf_interpersonal_w05<- factor(data$conf_interpersonal_w05, levels = c(1, 2, 3), labels = c("No", "Depende", "Si"))
+
+data %>% select(conf_interpersonal_w01, conf_interpersonal_w02, conf_interpersonal_w03, conf_interpersonal_w04, conf_interpersonal_w05)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
 ```
 
 ## Identificación con el país
@@ -326,6 +357,8 @@ data$identificacion_w02<- factor(data$identificacion_w02, levels = c(1, 2, 3, 4,
 data$identificacion_w03<- factor(data$identificacion_w03, levels = c(1, 2, 3, 4, 5), labels = c("Totalmente en desacuerdo", "En desacuerdo", "Ni de acuerdo ni en desacuerdo", "De acuerdo", "Totalmente de acuerdo")) 
 data$identificacion_w04<- factor(data$identificacion_w04, levels = c(1, 2, 3, 4, 5), labels = c("Totalmente en desacuerdo", "En desacuerdo", "Ni de acuerdo ni en desacuerdo", "De acuerdo", "Totalmente de acuerdo"))
 data$identificacion_w05<- factor(data$identificacion_w05, levels = c(1, 2, 3, 4, 5), labels = c("Totalmente en desacuerdo", "En desacuerdo", "Ni de acuerdo ni en desacuerdo", "De acuerdo", "Totalmente de acuerdo")) 
+
+data %>% select(identificacion_w01, identificacion_w02, identificacion_w03, identificacion_w04, identificacion_w05)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
 ```
 
 ## justicia
@@ -362,6 +395,8 @@ data$justicia_w02<- factor(data$justicia_w02, levels = c(1, 2, 3, 4, 5), labels 
 data$justicia_w03<- factor(data$justicia_w03, levels = c(1, 2, 3, 4, 5), labels = c("Totalmente en desacuerdo", "En desacuerdo", "Ni de acuerdo ni en desacuerdo", "De acuerdo", "Totalmente de acuerdo")) 
 data$justicia_w04<- factor(data$justicia_w04, levels = c(1, 2, 3, 4, 5), labels = c("Totalmente en desacuerdo", "En desacuerdo", "Ni de acuerdo ni en desacuerdo", "De acuerdo", "Totalmente de acuerdo"))
 data$justicia_w05<- factor(data$justicia_w05, levels = c(1, 2, 3, 4, 5), labels = c("Totalmente en desacuerdo", "En desacuerdo", "Ni de acuerdo ni en desacuerdo", "De acuerdo", "Totalmente de acuerdo")) 
+
+data %>% select(justicia_w01, justicia_w02, justicia_w03, justicia_w04, justicia_w05)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
 ```
 
 ## Confianza institucional
@@ -398,6 +433,8 @@ data$conf_institucional_w02<- factor(data$conf_institucional_w02, levels = c(1, 
 data$conf_institucional_w03<- factor(data$conf_institucional_w03, levels = c(1, 2, 3, 4, 5), labels = c("Nada", "Poco", "Algo", "Bastante", "Mucha")) 
 data$conf_institucional_w04<- factor(data$conf_institucional_w04, levels = c(1, 2, 3, 4, 5), labels = c("Nada", "Poco", "Algo", "Bastante", "Mucha"))
 data$conf_institucional_w05<- factor(data$conf_institucional_w05, levels = c(1, 2, 3, 4, 5), labels = c("Nada", "Poco", "Algo", "Bastante", "Mucha")) 
+
+data %>% select(conf_institucional_w01, conf_institucional_w02, conf_institucional_w03, conf_institucional_w04, conf_institucional_w05)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
 ```
 
 ## Solidaridad
@@ -424,6 +461,8 @@ data$solidaridad_w02<- factor(data$solidaridad_w02, levels = c(1, 2, 3), labels 
 data$solidaridad_w03<- factor(data$solidaridad_w03, levels = c(1, 2, 3), labels = c("Nunca lo hizo", "Lo hizo una o dos veces", "Lo hizo mas de dos veces"))
 data$solidaridad_w04<- factor(data$solidaridad_w04, levels = c(1, 2, 3), labels = c("Nunca lo hizo", "Lo hizo una o dos veces", "Lo hizo mas de dos veces"))
 data$solidaridad_w05<- factor(data$solidaridad_w05, levels = c(1, 2, 3), labels = c("Nunca lo hizo", "Lo hizo una o dos veces", "Lo hizo mas de dos veces"))
+
+data %>% select(solidaridad_w01, solidaridad_w02, solidaridad_w03, solidaridad_w04, solidaridad_w05)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
 ```
 
 ## Participación
@@ -454,6 +493,8 @@ data$participacion_w01<- factor(data$participacion_w01, levels = c(1, 2, 3, 4, 5
 data$participacion_w02<- factor(data$participacion_w02, levels = c(1, 2, 3, 4, 5), labels = c("Nunca", "Casi nunca", "A veces", "Frecuentemente", "Muy frecuentemente")) 
 data$participacion_w03<- factor(data$participacion_w03, levels = c(1, 2, 3, 4, 5), labels = c("Nunca", "Casi nunca", "A veces", "Frecuentemente", "Muy frecuentemente")) 
 data$participacion_w04<- factor(data$participacion_w04, levels = c(1, 2, 3, 4, 5), labels = c("Nunca", "Casi nunca", "A veces", "Frecuentemente", "Muy frecuentemente"))
+
+data %>% select(participacion_w01, participacion_w02, participacion_w03, participacion_w04, participacion_w05)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
 ```
 
 ## Cohesion territorial
@@ -483,6 +524,8 @@ data$cohesion_territorial_w01<- factor(data$cohesion_territorial_w01, levels = c
 data$cohesion_territorial_w02<- factor(data$cohesion_territorial_w02, levels = c(1, 2, 3, 4, 5), labels = c("Totalmente en desacuerdo", "En desacuerdo", "Ni de acuerdo ni en desacuerdo", "De acuerdo", "Totalmente de acuerdo")) 
 data$cohesion_territorial_w03<- factor(data$cohesion_territorial_w03, levels = c(1, 2, 3, 4, 5), labels = c("Totalmente en desacuerdo", "En desacuerdo", "Ni de acuerdo ni en desacuerdo", "De acuerdo", "Totalmente de acuerdo")) 
 data$cohesion_territorial_w04<- factor(data$cohesion_territorial_w04, levels = c(1, 2, 3, 4, 5), labels = c("Totalmente en desacuerdo", "En desacuerdo", "Ni de acuerdo ni en desacuerdo", "De acuerdo", "Totalmente de acuerdo"))
+
+data %>% select(cohesion_territorial_w01, cohesion_territorial_w02, cohesion_territorial_w03, cohesion_territorial_w04)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
 ```
 
 # Guardar base con indicadores recodificados
@@ -496,6 +539,8 @@ save(cohesion_social,file = "input/data/cohesion_social.RData")
 # Visualización de datos
 
 ```{r}
+data$ponderador02_w05 <- data$ponderador02
+
 elsoc_long <- long_panel(data = data, #base de datos formato wide
                          prefix = "_w0", #caracteres antes de la etiqueta de cada ola
                          begin = 1, #etiqueta de la primera ola
@@ -515,6 +560,7 @@ elsoc_long$ola <- sjlabelled::set_label(elsoc_long$ola, label = c("Ola de Medici
 ```{r diseno, echo=TRUE}
 elsoc_diseno <- svydesign(ids = ~segmento, #muestreo por conglomerado a nivel de manzanas (segmento)
                           strata = ~estrato, #muestreo estratificado a nivel ciudad (estato)
+                          weights = ~ponderador02, #ponderador de corte transversal
                           nest = TRUE,
                           data = elsoc_long)
 ```
@@ -523,15 +569,15 @@ elsoc_diseno <- svydesign(ids = ~segmento, #muestreo por conglomerado a nivel de
 
 ```{r}
 #Paso 1
-datos.lazos <- data.frame((svytable(~vol.red + ola + idencuesta, elsoc_diseno, round = F))) %>% dplyr::filter(Freq>0)  %>% group_by(ola) %>% mutate(porcentaje=Freq/sum(Freq)) %>% na.omit()
+datos.lazos <- data.frame((svytable(~lazos + ola + idencuesta, elsoc_diseno, round = F))) %>% dplyr::filter(Freq>0)  %>% group_by(ola) %>% mutate(porcentaje=Freq/sum(Freq)) %>% na.omit()
 
 #Paso 2
-etiquetas.lazos <- data.frame((svytable(~vol.red + ola, elsoc_diseno, round = F))) %>% group_by(ola) %>% mutate(porcentaje=Freq/sum(Freq)) %>% na.omit() %>% 
+etiquetas.lazos <- data.frame((svytable(~lazos + ola, elsoc_diseno, round = F))) %>% group_by(ola) %>% mutate(porcentaje=Freq/sum(Freq)) %>% na.omit() %>% 
   mutate(idencuesta = 1)
 ```
 
 ```{r}
-alluvial_lazos <- ggplot(datos.lazos, aes(x = ola, fill = vol.red, stratum = vol.red,
+alluvial_lazos <- ggplot(datos.lazos, aes(x = ola, fill = lazos, stratum = lazos,
                              alluvium = idencuesta, y = porcentaje))+
     ggalluvial::geom_flow(alpha = .66) + 
     ggalluvial::geom_stratum(linetype = 0) +
