@@ -4,4 +4,126 @@ editor_options:
     wrap: 72
 ---
 
-# Capítulo III ---
+# Capítulo III. Habilitadores e inhibidores de la cohesión social
+
+<div style="text-align: justify">
+
+Cepal comprende la cohesión social como "la capacidad de una sociedad y sus instituciones democráticas de promover relaciones sociales de igualdad y generar un sentido de pertenencia y una orientación hacia el bien común de una forma percibida como legítima por sus miembros". Esta definición se inscribe entre las definiciones mixtas o multidimensionales de cohesión, resaltando la igualdad en las relaciones sociales, el sentido de pertenencia, la orientación hacia el bien común y la legitimidad democrática. La definición no solamente describe un proceso, sino que incorpora un elemento normativo destinado a orientar las políticas públicas, consistente con el marco establecido por la Agenda 2030.
+
+Al definir cohesión social, Cepal discute su vinculación con diversos términos que se encuentran en su vecindario semántico, con el fin de establecer la particularidad de la cohesión. En la discusión sobre inclusión, vale decir la participación social y la mejoría en las condiciones de vida, se establece que este aspecto debiera considerarse más como una condición de la cohesión social que un aspecto de ésta. Baja inclusión probablemente dificulta el logro de la cohesión social, pero tampoco niveles crecientes de inclusión garantizan que se logre cohesión social.
+
+En un sentido más general, la discusión sobre las relaciones entre la inclusión social y la cohesión pueden presentarse como elementos habilitadores de la cohesión social; esto es, condiciones necesarias, pero no suficientes para su logro. De esta forma, los mecanismos habilitadores son aspectos estructurales de la sociedad y sus instituciones que favorecen las relaciones de igualdad, sentido de pertenencia y orientación al bien común. Los elementos habilitadores deben contribuir, por tanto, a la reducción de las brechas de bienestar y a fortalecer la institucionalidad. Específicamente, los elementos habilitadores se refieren a: garantías de bienestar univeral, cultura de la igualdad, reconocimiento, participación, resolución de conflictos, estado de derecho y calidad de la democracia (Cepal).
+
+Este capítulo busca establecer de qué forma y en qué medida los elementos habilitadores inciden en los niveles de cohesión social. En el esquema de Cepal (fc:94) la cohesión social y sus habilitadores de  se refieren a elementos estructurales que caracterizan un país. Ahora bien, puede suponerse que dentro de un país puedan coexistir distintos niveles de cohesión, lo cual podría eventualmente afectar la cohesión global, especialmente si la menor cohesión se encuentra asociada con agregados bien delimitadas como territorios o grupos sociales. Puede hipotetizarse que la cohesión social no es homogénea dentro de un país. Su diversidad guarda relación los distintos niveles de inclusión e integración de individuos o territorios que, en caso que sigan una pauta, irían más allá del error aleatorio que acompaña toda medición.   
+
+En el análisis de los mecanismos habilitadores de la cohesión social se pone atención a las diferencias en los niveles de cohesión para asociarlos con elementos explicativos que corresponden a rasgos estructurales. Los rasgos estructurales se analizan como niveles de acceso individual a recursos disponibles en teoría para todos por igual. Puede hipotetizarse, por ejemplo, que el empleo informal, que es una característica de la inclusión laboral dentro de las garantías de bienestar, haría variar los niveles de cohesión. De esta forma, el capítulo ofrece un tratamiento de los elementos habilitadores reflejados en el acceso individual a estos mecanismos. Los mecanismos habilitadores están concentrados en las garantías de bienestar, dadas las características de los datos disponibles.
+
+## Acceso a Garantías de Bienestar
+
+-   Inclusión laboral
+
+El acceso al mercado de trabajo se encuentra estrechamente asociado con el bienestar de las personas. En efecto, la superación de la pobreza depende en gran medida de la inserción laboral. En América Latina, Chile no es una excepción, las condiciones de trabajo informal, asociadas con pobreza y precariedad comprenden una parte significativa de la fuerza de trabajo. Las inserciones más débiles en el mercado de trabajo podrían afectar negativamente los niveles de cohesión social.
+
+-   Inclusión social
+
+Hay diversas dimensiones en las brechas de participación en las condiciones de vida que una sociedad ofrece a sus integrantes.
+
+-   La etapa de transición demográfica en que se encuentra Chile muestra un peso creciente de los adultos mayores, quienes enfrentan condiciones de vida difíciles, por lo que se podría esperar menores niveles de cohesión social entre ellos.
+
+-   El sexo de las personas afecta sus posibilidades de inclusión atendiendo a las pautas de roles asociadas con una sociedad patriarcal.
+
+-   El acceso a la educación constituye un fuerte principio estructurador en la sociedad chilena, generalmente asociado con el status socioeconómico y, en sus niveles más altos, con la reproducción en los círculos sociales más deseables. En la medida que la fase de expansión en el acceso a la educación universitaria es relativamente reciente, puede esperarse mayor cohesión social entre las personas que hay tenido mayor exposición al sistema forma de educación.
+
+-   Los ingresos de las personas se encuentran estrechamente asociados con los niveles de educación, si bien en niveles menores a la enseñanza superior pueden encontrarse grandes variaciones. Por lo anterior es posible que el nivel de ingresos tenga un efecto independiente de la educación.
+
+-   La segregación territorial, especialmente la que se encuentra asociada con el nivel socioeconómico constituye un rasgo distintivo de los países latinoamericanos, del cual Chile no escapa. Por la naturaleza de los datos, no es posible hacer distinciones entre rural y urbano. Un primer nivel de la segregación se refiere a la dominancia urbana que posee la capital del país, asociada también con acceso a mejores servicios, por lo que se pueden esperar diferentes niveles de cohesión social al comparar Santiago y el resto de las regiones.
+
+-   El concepto de aislamiento social de los territorios fue acuñado por William Julius Wilson para explicar la condición de áreas urbanas de Chicago caracterizadas por concentración de la pobreza, desempleo, bajos niveles de escolaridad y reducida integración en la fuerza de trabajo. Su explicación apunta a que la vida en un vecindario donde la mayor parte de la población se encuentra en una situación de desventaja social constriñe las oportunidades de inclusión social. Los elementos de desventaja social pueden especificarse con el acceso a recursos públicos tales como servicios públicos, conectividad, fuentes de trabajo y centros de consumo. En los territorios limitados en estos aspectos sería más improbable que florezca la cohesión social.
+
+-   La pertenencia a pueblos indígenas ha estado asociado con bajos niveles de inclusión social. Por mucho tiempo invisibilizada, en las últimas dos décadas el estado chileno ha reconocido la existencia de pueblos indígenas acordando diversos beneficios sociales asociados con esta condición. Como contrapartida, el reconocimiento de la condición de indígena ha conllevado a un fortalecimiento de la identidad étnica. Vinculado con lo anterior, en la última década la condición étnica ha sido progresivamente asociada con la condición de los migrantes.
+
+### PARA DISCUTIR ###   
+
+-   Participación y resolución de conflictos
+    -   Araucanía v. resto del país?
+    -   Votación? actividad política
+
+-   Estado de derecho y calidad de la democracia
+    -   Confianza en las instituciones?
+
+## Esquema para el análisis de los habilitadores de la cohesión social
+
+Los procesos que producen cohesión social están lejos de responder a modelos sencillos y requieren análisis detallados. En este capítulo presentamos de forma descriptiva modelos sencillos destinados a comparar los efectos marginales de los factores que se hipotetiza están asociado con la cohesión social. El análisis busca establecer el efecto neto de los factores habilitadores sobre cada una de las 9 subdimensiones de la cohesión social caracterizadas en el primer capítulo. La medida de cohesión social corresponde al puntaje factorial obtenido a partir de los modelos estimados en el primer capítulo. Los factores explicativos están clasificados en seis grupos, a saber: Edad, Educación, Nivel de ingreso, Etnia, Nacionalidad, Aislamiento territorial.
+
+La medida de aislamiento territorial registra las características del área correspondiente a 1km de radio desde el centro de la manzana en que reside el respondente, lo cual puede asimilarse con un barrio. Los datos demográficos provienen del censo 2012 y los de condición urbana a bases de datos del CIT. 
+
+### Faltarían varios: particularmente sector informal ##
+
+-   La edad está medida en años
+-   La educación en 4 grupos: Básica, media, técnica y universitaria #probar años u otra clasificación#
+-   Los niveles de ingreso están medidos en quintiles #no incluir los que no lo reportan. #
+-   Poseer otra nacionalidad
+-   Pertenencia a pueblo indígena
+-   Aislamiento territorial:
+    -   Promedio años escolaridad de sostenedores en 1 km a la redonda #preferir desv estándar#
+    -   Número de trabajadores/as (ocupados??) en 1 km a la redonda #usar también inactivos#
+    -   Número de cesantes en 1 km a la redonda
+    -   Acceso areas verdes en radio de 15 min a pie #aclarar definición# ¿media de la ciudad?
+    -   Acceso a colegios en radio de 15 min a pie #aclarar definición# ¿media de la ciudad?
+    -   Acceso a servicios en radio de 15 min a pie #aclarar definición# ¿media de la ciudad?
+        
+        ### FALTAN##
+-   Viviendas en condición de hacinamiento
+-   Conectividad
+
+## Efecto de las comunas #hacer también por región y Santiago v. resto#
+
+### presentar tabla con ICC para cada subdimensión ##
+
+## Habilitadores de la disponiblidad de lazos sociales
+
+<<Tabla de regresión aquí >>
+
+## Habilitadores de la confianza interpersonal
+
+<<Tabla de regresión aquí >>
+
+## Habilitadores de confianza en minorías visibles
+
+### Falta aclarar lo que se mide aquí y porqué se hace para todos. Creo que se deben seleccionar los grupos ##
+   <<Tabla de regresión aquí >>   
+
+## Habilitadores de la identificación con el país
+
+<<Tabla de regresión aquí >>   
+
+## Habilitadores de la percepción de justicia
+
+<<Tabla de regresión aquí >>  
+
+## Habilitadores de la confianza institucional
+
+<<Tabla de regresión aquí >>   
+
+## Habilitadores de la solidaridad
+
+<<Tabla de regresión aquí >> 
+
+## Habilitadores de la participación cívica
+
+<<Tabla de regresión aquí >> 
+
+## Habilitadores de la cohesión barrial
+
+<<Tabla de regresión aquí >>   
+
+
+
+
+
+
+
+
+
+
+

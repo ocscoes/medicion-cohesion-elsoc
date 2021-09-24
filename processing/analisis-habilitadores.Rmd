@@ -5,6 +5,11 @@ date: "15-09-2021"
 output: html_document
 ---
 
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning=F, message=F)
+```
+
+
 Este código produce los análisis necesarios para el capítulo III del informe CEPAL-COES.
 
 ```{r include=FALSE}
@@ -22,14 +27,8 @@ load("input/data/data.RData")
 ## Lazos
 
 ```{r}
-data <- data %>%
-  rowwise() %>%
-  mutate(lazos_w01 =
-           mean(c(r15_w02, vol.red_w01), na.rm = T))
-data <- data %>%
-  rowwise() %>%
-  mutate(lazos_w03 =
-           mean(c(r15_w04, vol.red_w03), na.rm = T))
+data$lazos_w01 = as.numeric(data$vol.red_w01)
+data$lazos_w03 = as.numeric(data$vol.red_w03)
 
 
 data %>% select(lazos_w01, lazos_w03)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
@@ -509,11 +508,14 @@ reghelper::ICC(reg_cohesion_barrial0)
 reg_lazos1 <- lmer(lazos_w01 ~ 1 + m0_edad_w01 + (1 | comuna), data=data)
 reg_lazos2 <- lmer(lazos_w01 ~ 1 + m01_w01 + (1 | comuna), data=data)
 reg_lazos3 <- lmer(lazos_w01 ~ 1 + quintiles_ingresos_w01 + (1 | comuna), data=data)
-reg_lazos4 <- lmer(lazos_w01 ~ 1 + nacion_rec + (1 | comuna), data=data)
-reg_lazos5 <- lmer(lazos_w01 ~ 1 + etnia_rec + (1 | comuna), data=data)
-reg_lazos6 <- lmer(lazos_w01 ~ 1 + m0_edad_w01 + m01_w01 + quintiles_ingresos_w01 + nacion_rec + etnia_rec + (1 | comuna), data=data)
+reg_lazos4 <- lmer(lazos_w01 ~ 1 + m18_w01 + (1 | comuna), data=data)
+reg_lazos5 <- lmer(lazos_w01 ~ 1 + nacion_rec + (1 | comuna), data=data)
+reg_lazos6 <- lmer(lazos_w01 ~ 1 + etnia_rec + (1 | comuna), data=data)
+reg_lazos7 <- lmer(lazos_w01 ~ 1 + sin.contrato_w01 + sin.inicio_w01 + informal_w01 + (1 | comuna), data= data)
+reg_lazos8 <- lmer(lazos_w01 ~ 1 + sded_mnz + trab_mnz + cesa_mnz + acver_mnz + aced_mnz + accs_mnz + hacin_mnz + (1 | comuna), data=data)
+reg_lazos9 <- lmer(lazos_w01 ~ 1 + m0_edad_w01 + m01_w01 + quintiles_ingresos_w01 + m18_w01 + nacion_rec + etnia_rec + sin.contrato_w01 + sin.inicio_w01 + informal_w01 + sded_mnz + trab_mnz + cesa_mnz + acver_mnz + aced_mnz + accs_mnz + hacin_mnz + (1 | comuna), data=data)
 
-texreg::htmlreg(list(reg_lazos1, reg_lazos2, reg_lazos3, reg_lazos4, reg_lazos5, reg_lazos6), custom.note = "$***p <$ 0.001, $**p <$ 0.01, $*p <$ 0.05",  custom.coef.names = c("Intercepto", "Edad", "Educacion media <br> <i>(Ref. educacion basica)</i>", "Educacion tecnica", "Educacion universitaria", "Q2 <br> <i>(Ref. Q1)</i>", "Q3", "Q4", "Q5", "Ns/Nr", "Otra nacion <br> <i>(Ref. chilena)</i>", "Otra etnia <br> <i>(Ref. ninguna)</i>"))
+texreg::htmlreg(list(reg_lazos1, reg_lazos2, reg_lazos3, reg_lazos4, reg_lazos5, reg_lazos6, reg_lazos7, reg_lazos8, reg_lazos9), custom.note = "$***p <$ 0.001, $**p <$ 0.01, $*p <$ 0.05",  custom.coef.names = c("Intercepto", "Edad", "Educacion media <br> <i>(Ref. educacion basica)</i>", "Educacion tecnica", "Educacion universitaria", "Q2 <br> <i>(Ref. Q1)</i>", "Q3", "Q4", "Q5", "Ns/Nr", "No cotiza <br> <i>(Ref. Si cotiza)</i>", "Otra nacion <br> <i>(Ref. chilena)</i>", "Otra etnia <br> <i>(Ref. ninguna)</i>", "Sin contrato", "Sin inicio", "Informal", "Promedio años escolaridad", "Cantidad de trabajadores/as", "Cantidad de cesantes", "Acceso areas verdes", "Acceso a colegios", "Acceso a servicios", "Condicion de hacinamiento"))
 ```
 
 ## Confianza interpersonal
@@ -521,11 +523,14 @@ texreg::htmlreg(list(reg_lazos1, reg_lazos2, reg_lazos3, reg_lazos4, reg_lazos5,
 reg_conf_interpersonal1 <- lmer(conf_interpersonal_w01 ~ 1 + m0_edad_w01 + (1 | comuna), data=data)
 reg_conf_interpersonal2 <- lmer(conf_interpersonal_w01 ~ 1 + m01_w01 + (1 | comuna), data=data)
 reg_conf_interpersonal3 <- lmer(conf_interpersonal_w01 ~ 1 + quintiles_ingresos_w01 + (1 | comuna), data=data)
-reg_conf_interpersonal4 <- lmer(conf_interpersonal_w01 ~ 1 + nacion_rec + (1 | comuna), data=data)
-reg_conf_interpersonal5 <- lmer(conf_interpersonal_w01 ~ 1 + etnia_rec + (1 | comuna), data=data)
-reg_conf_interpersonal6 <- lmer(conf_interpersonal_w01 ~ 1 + m0_edad_w01 + m01_w01 + quintiles_ingresos_w01 + nacion_rec + etnia_rec + (1 | comuna), data=data)
+reg_conf_interpersonal4 <- lmer(conf_interpersonal_w01 ~ 1 + m18_w01 + (1 | comuna), data=data)
+reg_conf_interpersonal5 <- lmer(conf_interpersonal_w01 ~ 1 + nacion_rec + (1 | comuna), data=data)
+reg_conf_interpersonal6 <- lmer(conf_interpersonal_w01 ~ 1 + etnia_rec + (1 | comuna), data=data)
+reg_conf_interpersonal7 <- lmer(conf_interpersonal_w01 ~ 1 + sin.contrato_w01 + sin.inicio_w01 + informal_w01 + (1 | comuna), data= data)
+reg_conf_interpersonal8 <- lmer(conf_interpersonal_w01 ~ 1 + sded_mnz + trab_mnz + cesa_mnz + acver_mnz + aced_mnz + accs_mnz + hacin_mnz + (1 | comuna), data=data)
+reg_conf_interpersonal9 <- lmer(conf_interpersonal_w01 ~ 1 + m0_edad_w01 + m01_w01 + quintiles_ingresos_w01 + m18_w01 + nacion_rec + etnia_rec + sin.contrato_w01 + sin.inicio_w01 + informal_w01 + sded_mnz + trab_mnz + cesa_mnz + acver_mnz + aced_mnz + accs_mnz + hacin_mnz + (1 | comuna), data=data)
 
-texreg::htmlreg(list(reg_conf_interpersonal1, reg_conf_interpersonal2, reg_conf_interpersonal3, reg_conf_interpersonal4, reg_conf_interpersonal5, reg_conf_interpersonal6), custom.note = "$***p <$ 0.001, $**p <$ 0.01, $*p <$ 0.05",  custom.coef.names = c("Intercepto", "Edad", "Educacion media <br> <i>(Ref. educacion basica)</i>", "Educacion tecnica", "Educacion universitaria", "Q2 <br> <i>(Ref. Q1)</i>", "Q3", "Q4", "Q5", "Ns/Nr", "Otra nacion <br> <i>(Ref. chilena)</i>", "Otra etnia <br> <i>(Ref. ninguna)</i>"))
+texreg::htmlreg(list(reg_conf_interpersonal1, reg_conf_interpersonal2, reg_conf_interpersonal3, reg_conf_interpersonal4, reg_conf_interpersonal5, reg_conf_interpersonal6, reg_conf_interpersonal7, reg_conf_interpersonal8, reg_conf_interpersonal9), custom.note = "$***p <$ 0.001, $**p <$ 0.01, $*p <$ 0.05",  custom.coef.names = c("Intercepto", "Edad", "Educacion media <br> <i>(Ref. educacion basica)</i>", "Educacion tecnica", "Educacion universitaria", "Q2 <br> <i>(Ref. Q1)</i>", "Q3", "Q4", "Q5", "Ns/Nr", "No cotiza <br> <i>(Ref. Si cotiza)</i>", "Otra nacion <br> <i>(Ref. chilena)</i>", "Otra etnia <br> <i>(Ref. ninguna)</i>", "Sin contrato", "Sin inicio", "Informal", "Promedio años escolaridad", "Cantidad de trabajadores/as", "Cantidad de cesantes", "Acceso areas verdes", "Acceso a colegios", "Acceso a servicios", "Condicion de hacinamiento"))
 ```
 
 ## Diversidad
@@ -533,11 +538,14 @@ texreg::htmlreg(list(reg_conf_interpersonal1, reg_conf_interpersonal2, reg_conf_
 reg_diversidad1 <- lmer(diversidad ~ 1 + m0_edad_w01 + (1 | comuna), data=data)
 reg_diversidad2 <- lmer(diversidad ~ 1 + m01_w01 + (1 | comuna), data=data)
 reg_diversidad3 <- lmer(diversidad ~ 1 + quintiles_ingresos_w01 + (1 | comuna), data=data)
-reg_diversidad4 <- lmer(diversidad ~ 1 + nacion_rec + (1 | comuna), data=data)
-reg_diversidad5 <- lmer(diversidad ~ 1 + etnia_rec + (1 | comuna), data=data)
-reg_diversidad6 <- lmer(diversidad ~ 1 + m0_edad_w01 + m01_w01 + quintiles_ingresos_w01 + nacion_rec + etnia_rec + (1 | comuna), data=data)
+reg_diversidad4 <- lmer(diversidad ~ 1 + m18_w01 + (1 | comuna), data=data)
+reg_diversidad5 <- lmer(diversidad ~ 1 + nacion_rec + (1 | comuna), data=data)
+reg_diversidad6 <- lmer(diversidad ~ 1 + etnia_rec + (1 | comuna), data=data)
+reg_diversidad7 <- lmer(diversidad ~ 1 + sin.contrato_w01 + sin.inicio_w01 + informal_w01 + (1 | comuna), data= data)
+reg_diversidad8 <- lmer(diversidad ~ 1 + sded_mnz + trab_mnz + cesa_mnz + acver_mnz + aced_mnz + accs_mnz + hacin_mnz + (1 | comuna), data=data)
+reg_diversidad9 <- lmer(diversidad ~ 1 + m0_edad_w01 + m01_w01 + quintiles_ingresos_w01 + m18_w01 + nacion_rec + etnia_rec + sin.contrato_w01 + sin.inicio_w01 + informal_w01 + sded_mnz + trab_mnz + cesa_mnz + acver_mnz + aced_mnz + accs_mnz + hacin_mnz + (1 | comuna), data=data)
 
-texreg::htmlreg(list(reg_diversidad1, reg_diversidad2, reg_diversidad3, reg_diversidad4, reg_diversidad5, reg_diversidad6), custom.note = "$***p <$ 0.001, $**p <$ 0.01, $*p <$ 0.05",  custom.coef.names = c("Intercepto", "Edad", "Educacion media <br> <i>(Ref. educacion basica)</i>", "Educacion tecnica", "Educacion universitaria", "Q2 <br> <i>(Ref. Q1)</i>", "Q3", "Q4", "Q5", "Ns/Nr", "Otra nacion <br> <i>(Ref. chilena)</i>", "Otra etnia <br> <i>(Ref. ninguna)</i>"))
+texreg::htmlreg(list(reg_diversidad1, reg_diversidad2, reg_diversidad3, reg_diversidad4, reg_diversidad5, reg_diversidad6, reg_diversidad7, reg_diversidad8, reg_diversidad9), custom.note = "$***p <$ 0.001, $**p <$ 0.01, $*p <$ 0.05",  custom.coef.names = c("Intercepto", "Edad", "Educacion media <br> <i>(Ref. educacion basica)</i>", "Educacion tecnica", "Educacion universitaria", "Q2 <br> <i>(Ref. Q1)</i>", "Q3", "Q4", "Q5", "Ns/Nr", "No cotiza <br> <i>(Ref. Si cotiza)</i>", "Otra nacion <br> <i>(Ref. chilena)</i>", "Otra etnia <br> <i>(Ref. ninguna)</i>", "Sin contrato", "Sin inicio", "Informal", "Promedio años escolaridad", "Cantidad de trabajadores/as", "Cantidad de cesantes", "Acceso areas verdes", "Acceso a colegios", "Acceso a servicios", "Condicion de hacinamiento"))
 ```
 
 ## Identificacion
@@ -545,11 +553,14 @@ texreg::htmlreg(list(reg_diversidad1, reg_diversidad2, reg_diversidad3, reg_dive
 reg_identificacion1 <- lmer(identificacion_w01 ~ 1 + m0_edad_w01 + (1 | comuna), data=data)
 reg_identificacion2 <- lmer(identificacion_w01 ~ 1 + m01_w01 + (1 | comuna), data=data)
 reg_identificacion3 <- lmer(identificacion_w01 ~ 1 + quintiles_ingresos_w01 + (1 | comuna), data=data)
-reg_identificacion4 <- lmer(identificacion_w01 ~ 1 + nacion_rec + (1 | comuna), data=data)
-reg_identificacion5 <- lmer(identificacion_w01 ~ 1 + etnia_rec + (1 | comuna), data=data)
-reg_identificacion6 <- lmer(identificacion_w01 ~ 1 + m0_edad_w01 + m01_w01 + quintiles_ingresos_w01 + nacion_rec + etnia_rec + (1 | comuna), data=data)
+reg_identificacion4 <- lmer(identificacion_w01 ~ 1 + m18_w01 + (1 | comuna), data=data)
+reg_identificacion5 <- lmer(identificacion_w01 ~ 1 + nacion_rec + (1 | comuna), data=data)
+reg_identificacion6 <- lmer(identificacion_w01 ~ 1 + etnia_rec + (1 | comuna), data=data)
+reg_identificacion7 <- lmer(identificacion_w01 ~ 1 + sin.contrato_w01 + sin.inicio_w01 + informal_w01 + (1 | comuna), data= data)
+reg_identificacion8 <- lmer(identificacion_w01 ~ 1 + sded_mnz + trab_mnz + cesa_mnz + acver_mnz + aced_mnz + accs_mnz + hacin_mnz + (1 | comuna), data=data)
+reg_identificacion9 <- lmer(identificacion_w01 ~ 1 + m0_edad_w01 + m01_w01 + quintiles_ingresos_w01 + m18_w01 + nacion_rec + etnia_rec + sin.contrato_w01 + sin.inicio_w01 + informal_w01 + sded_mnz + trab_mnz + cesa_mnz + acver_mnz + aced_mnz + accs_mnz + hacin_mnz + (1 | comuna), data=data)
 
-texreg::htmlreg(list(reg_identificacion1, reg_identificacion2, reg_identificacion3, reg_identificacion4, reg_identificacion5, reg_identificacion6), custom.note = "$***p <$ 0.001, $**p <$ 0.01, $*p <$ 0.05",  custom.coef.names = c("Intercepto", "Edad", "Educacion media <br> <i>(Ref. educacion basica)</i>", "Educacion tecnica", "Educacion universitaria", "Q2 <br> <i>(Ref. Q1)</i>", "Q3", "Q4", "Q5", "Ns/Nr", "Otra nacion <br> <i>(Ref. chilena)</i>", "Otra etnia <br> <i>(Ref. ninguna)</i>"))
+texreg::htmlreg(list(reg_identificacion1, reg_identificacion2, reg_identificacion3, reg_identificacion4, reg_identificacion5, reg_identificacion6, reg_identificacion7, reg_identificacion8, reg_identificacion9), custom.note = "$***p <$ 0.001, $**p <$ 0.01, $*p <$ 0.05",  custom.coef.names = c("Intercepto", "Edad", "Educacion media <br> <i>(Ref. educacion basica)</i>", "Educacion tecnica", "Educacion universitaria", "Q2 <br> <i>(Ref. Q1)</i>", "Q3", "Q4", "Q5", "Ns/Nr", "No cotiza <br> <i>(Ref. Si cotiza)</i>", "Otra nacion <br> <i>(Ref. chilena)</i>", "Otra etnia <br> <i>(Ref. ninguna)</i>", "Sin contrato", "Sin inicio", "Informal", "Promedio años escolaridad", "Cantidad de trabajadores/as", "Cantidad de cesantes", "Acceso areas verdes", "Acceso a colegios", "Acceso a servicios", "Condicion de hacinamiento"))
 ```
 
 ## Percepción de justicia
@@ -557,11 +568,14 @@ texreg::htmlreg(list(reg_identificacion1, reg_identificacion2, reg_identificacio
 reg_justicia1 <- lmer(justicia_w01 ~ 1 + m0_edad_w01 + (1 | comuna), data=data)
 reg_justicia2 <- lmer(justicia_w01 ~ 1 + m01_w01 + (1 | comuna), data=data)
 reg_justicia3 <- lmer(justicia_w01 ~ 1 + quintiles_ingresos_w01 + (1 | comuna), data=data)
-reg_justicia4 <- lmer(justicia_w01 ~ 1 + nacion_rec + (1 | comuna), data=data)
-reg_justicia5 <- lmer(justicia_w01 ~ 1 + etnia_rec + (1 | comuna), data=data)
-reg_justicia6 <- lmer(justicia_w01 ~ 1 + m0_edad_w01 + m01_w01 + quintiles_ingresos_w01 + nacion_rec + etnia_rec + (1 | comuna), data=data)
+reg_justicia4 <- lmer(justicia_w01 ~ 1 + m18_w01 + (1 | comuna), data=data)
+reg_justicia5 <- lmer(justicia_w01 ~ 1 + nacion_rec + (1 | comuna), data=data)
+reg_justicia6 <- lmer(justicia_w01 ~ 1 + etnia_rec + (1 | comuna), data=data)
+reg_justicia7 <- lmer(justicia_w01 ~ 1 + sin.contrato_w01 + sin.inicio_w01 + informal_w01 + (1 | comuna), data= data)
+reg_justicia8 <- lmer(justicia_w01 ~ 1 + sded_mnz + trab_mnz + cesa_mnz + acver_mnz + aced_mnz + accs_mnz + hacin_mnz + (1 | comuna), data=data)
+reg_justicia9 <- lmer(justicia_w01 ~ 1 + m0_edad_w01 + m01_w01 + quintiles_ingresos_w01 + m18_w01 + nacion_rec + etnia_rec + sin.contrato_w01 + sin.inicio_w01 + informal_w01 + sded_mnz + trab_mnz + cesa_mnz + acver_mnz + aced_mnz + accs_mnz + hacin_mnz + (1 | comuna), data=data)
 
-texreg::htmlreg(list(reg_justicia1, reg_justicia2, reg_justicia3, reg_justicia4, reg_justicia5, reg_justicia6), custom.note = "$***p <$ 0.001, $**p <$ 0.01, $*p <$ 0.05",  custom.coef.names = c("Intercepto", "Edad", "Educacion media <br> <i>(Ref. educacion basica)</i>", "Educacion tecnica", "Educacion universitaria", "Q2 <br> <i>(Ref. Q1)</i>", "Q3", "Q4", "Q5", "Ns/Nr", "Otra nacion <br> <i>(Ref. chilena)</i>", "Otra etnia <br> <i>(Ref. ninguna)</i>"))
+texreg::htmlreg(list(reg_justicia1, reg_justicia2, reg_justicia3, reg_justicia4, reg_justicia5, reg_justicia6, reg_justicia7, reg_justicia8, reg_justicia9), custom.note = "$***p <$ 0.001, $**p <$ 0.01, $*p <$ 0.05",  custom.coef.names = c("Intercepto", "Edad", "Educacion media <br> <i>(Ref. educacion basica)</i>", "Educacion tecnica", "Educacion universitaria", "Q2 <br> <i>(Ref. Q1)</i>", "Q3", "Q4", "Q5", "Ns/Nr", "No cotiza <br> <i>(Ref. Si cotiza)</i>", "Otra nacion <br> <i>(Ref. chilena)</i>", "Otra etnia <br> <i>(Ref. ninguna)</i>", "Sin contrato", "Sin inicio", "Informal", "Promedio años escolaridad", "Cantidad de trabajadores/as", "Cantidad de cesantes", "Acceso areas verdes", "Acceso a colegios", "Acceso a servicios", "Condicion de hacinamiento"))
 ```
 
 ## Confianza institucional
@@ -569,11 +583,14 @@ texreg::htmlreg(list(reg_justicia1, reg_justicia2, reg_justicia3, reg_justicia4,
 reg_conf_institucional1 <- lmer(conf_institucional ~ 1 + m0_edad_w01 + (1 | comuna), data=data)
 reg_conf_institucional2 <- lmer(conf_institucional ~ 1 + m01_w01 + (1 | comuna), data=data)
 reg_conf_institucional3 <- lmer(conf_institucional ~ 1 + quintiles_ingresos_w01 + (1 | comuna), data=data)
-reg_conf_institucional4 <- lmer(conf_institucional ~ 1 + nacion_rec + (1 | comuna), data=data)
-reg_conf_institucional5 <- lmer(conf_institucional ~ 1 + etnia_rec + (1 | comuna), data=data)
-reg_conf_institucional6 <- lmer(conf_institucional ~ 1 + m0_edad_w01 + m01_w01 + quintiles_ingresos_w01 + nacion_rec + etnia_rec + (1 | comuna), data=data)
+reg_conf_institucional4 <- lmer(conf_institucional ~ 1 + m18_w01 + (1 | comuna), data=data)
+reg_conf_institucional5 <- lmer(conf_institucional ~ 1 + nacion_rec + (1 | comuna), data=data)
+reg_conf_institucional6 <- lmer(conf_institucional ~ 1 + etnia_rec + (1 | comuna), data=data)
+reg_conf_institucional7 <- lmer(conf_institucional ~ 1 + sin.contrato_w01 + sin.inicio_w01 + informal_w01 + (1 | comuna), data= data)
+reg_conf_institucional8 <- lmer(conf_institucional ~ 1 + sded_mnz + trab_mnz + cesa_mnz + acver_mnz + aced_mnz + accs_mnz + hacin_mnz + (1 | comuna), data=data)
+reg_conf_institucional9 <- lmer(conf_institucional ~ 1 + m0_edad_w01 + m01_w01 + quintiles_ingresos_w01 + m18_w01 + nacion_rec + etnia_rec + sin.contrato_w01 + sin.inicio_w01 + informal_w01 + sded_mnz + trab_mnz + cesa_mnz + acver_mnz + aced_mnz + accs_mnz + hacin_mnz + (1 | comuna), data=data)
 
-texreg::htmlreg(list(reg_conf_institucional1, reg_conf_institucional2, reg_conf_institucional3, reg_conf_institucional4, reg_conf_institucional5, reg_conf_institucional6), custom.note = "$***p <$ 0.001, $**p <$ 0.01, $*p <$ 0.05",  custom.coef.names = c("Intercepto", "Edad", "Educacion media <br> <i>(Ref. educacion basica)</i>", "Educacion tecnica", "Educacion universitaria", "Q2 <br> <i>(Ref. Q1)</i>", "Q3", "Q4", "Q5", "Ns/Nr", "Otra nacion <br> <i>(Ref. chilena)</i>", "Otra etnia <br> <i>(Ref. ninguna)</i>"))
+texreg::htmlreg(list(reg_conf_institucional1, reg_conf_institucional2, reg_conf_institucional3, reg_conf_institucional4, reg_conf_institucional5, reg_conf_institucional6, reg_conf_institucional7, reg_conf_institucional8, reg_conf_institucional9), custom.note = "$***p <$ 0.001, $**p <$ 0.01, $*p <$ 0.05",  custom.coef.names = c("Intercepto", "Edad", "Educacion media <br> <i>(Ref. educacion basica)</i>", "Educacion tecnica", "Educacion universitaria", "Q2 <br> <i>(Ref. Q1)</i>", "Q3", "Q4", "Q5", "Ns/Nr", "No cotiza <br> <i>(Ref. Si cotiza)</i>", "Otra nacion <br> <i>(Ref. chilena)</i>", "Otra etnia <br> <i>(Ref. ninguna)</i>", "Sin contrato", "Sin inicio", "Informal", "Promedio años escolaridad", "Cantidad de trabajadores/as", "Cantidad de cesantes", "Acceso areas verdes", "Acceso a colegios", "Acceso a servicios", "Condicion de hacinamiento"))
 ```
 
 ## Solidaridad
@@ -582,11 +599,14 @@ texreg::htmlreg(list(reg_conf_institucional1, reg_conf_institucional2, reg_conf_
 reg_solidaridad1 <- lmer(solidaridad ~ 1 + m0_edad_w01 + (1 | comuna), data=data)
 reg_solidaridad2 <- lmer(solidaridad ~ 1 + m01_w01 + (1 | comuna), data=data)
 reg_solidaridad3 <- lmer(solidaridad ~ 1 + quintiles_ingresos_w01 + (1 | comuna), data=data)
-reg_solidaridad4 <- lmer(solidaridad ~ 1 + nacion_rec + (1 | comuna), data=data)
-reg_solidaridad5 <- lmer(solidaridad ~ 1 + etnia_rec + (1 | comuna), data=data)
-reg_solidaridad6 <- lmer(solidaridad ~ 1 + m0_edad_w01 + m01_w01 + quintiles_ingresos_w01 + nacion_rec + etnia_rec + (1 | comuna), data=data)
+reg_solidaridad4 <- lmer(solidaridad ~ 1 + m18_w01 + (1 | comuna), data=data)
+reg_solidaridad5 <- lmer(solidaridad ~ 1 + nacion_rec + (1 | comuna), data=data)
+reg_solidaridad6 <- lmer(solidaridad ~ 1 + etnia_rec + (1 | comuna), data=data)
+reg_solidaridad7 <- lmer(solidaridad ~ 1 + sin.contrato_w01 + sin.inicio_w01 + informal_w01 + (1 | comuna), data= data)
+reg_solidaridad8 <- lmer(solidaridad ~ 1 + sded_mnz + trab_mnz + cesa_mnz + acver_mnz + aced_mnz + accs_mnz + hacin_mnz + (1 | comuna), data=data)
+reg_solidaridad9 <- lmer(solidaridad ~ 1 + m0_edad_w01 + m01_w01 + quintiles_ingresos_w01 + m18_w01 + nacion_rec + etnia_rec + sin.contrato_w01 + sin.inicio_w01 + informal_w01 + sded_mnz + trab_mnz + cesa_mnz + acver_mnz + aced_mnz + accs_mnz + hacin_mnz + (1 | comuna), data=data)
 
-texreg::htmlreg(list(reg_solidaridad1, reg_solidaridad2, reg_solidaridad3, reg_solidaridad4, reg_solidaridad5, reg_solidaridad6), custom.note = "$***p <$ 0.001, $**p <$ 0.01, $*p <$ 0.05",  custom.coef.names = c("Intercepto", "Edad", "Educacion media <br> <i>(Ref. educacion basica)</i>", "Educacion tecnica", "Educacion universitaria", "Q2 <br> <i>(Ref. Q1)</i>", "Q3", "Q4", "Q5", "Ns/Nr", "Otra nacion <br> <i>(Ref. chilena)</i>", "Otra etnia <br> <i>(Ref. ninguna)</i>"))
+texreg::htmlreg(list(reg_solidaridad1, reg_solidaridad2, reg_solidaridad3, reg_solidaridad4, reg_solidaridad5, reg_solidaridad6, reg_solidaridad7, reg_solidaridad8, reg_solidaridad9), custom.note = "$***p <$ 0.001, $**p <$ 0.01, $*p <$ 0.05",  custom.coef.names = c("Intercepto", "Edad", "Educacion media <br> <i>(Ref. educacion basica)</i>", "Educacion tecnica", "Educacion universitaria", "Q2 <br> <i>(Ref. Q1)</i>", "Q3", "Q4", "Q5", "Ns/Nr", "No cotiza <br> <i>(Ref. Si cotiza)</i>", "Otra nacion <br> <i>(Ref. chilena)</i>", "Otra etnia <br> <i>(Ref. ninguna)</i>", "Sin contrato", "Sin inicio", "Informal", "Promedio años escolaridad", "Cantidad de trabajadores/as", "Cantidad de cesantes", "Acceso areas verdes", "Acceso a colegios", "Acceso a servicios", "Condicion de hacinamiento"))
 ```
 
 ## Participación cívica
@@ -594,11 +614,14 @@ texreg::htmlreg(list(reg_solidaridad1, reg_solidaridad2, reg_solidaridad3, reg_s
 reg_participacion1 <- lmer(participacion ~ 1 + m0_edad_w01 + (1 | comuna), data=data)
 reg_participacion2 <- lmer(participacion ~ 1 + m01_w01 + (1 | comuna), data=data)
 reg_participacion3 <- lmer(participacion ~ 1 + quintiles_ingresos_w01 + (1 | comuna), data=data)
-reg_participacion4 <- lmer(participacion ~ 1 + nacion_rec + (1 | comuna), data=data)
-reg_participacion5 <- lmer(participacion ~ 1 + etnia_rec + (1 | comuna), data=data)
-reg_participacion6 <- lmer(participacion ~ 1 + m0_edad_w01 + m01_w01 + quintiles_ingresos_w01 + nacion_rec + etnia_rec + (1 | comuna), data=data)
+reg_participacion4 <- lmer(participacion ~ 1 + m18_w01 + (1 | comuna), data=data)
+reg_participacion5 <- lmer(participacion ~ 1 + nacion_rec + (1 | comuna), data=data)
+reg_participacion6 <- lmer(participacion ~ 1 + etnia_rec + (1 | comuna), data=data)
+reg_participacion7 <- lmer(participacion ~ 1 + sin.contrato_w01 + sin.inicio_w01 + informal_w01 + (1 | comuna), data= data)
+reg_participacion8 <- lmer(participacion ~ 1 + sded_mnz + trab_mnz + cesa_mnz + acver_mnz + aced_mnz + accs_mnz + hacin_mnz + (1 | comuna), data=data)
+reg_participacion9 <- lmer(participacion ~ 1 + m0_edad_w01 + m01_w01 + quintiles_ingresos_w01 + m18_w01 + nacion_rec + etnia_rec + sin.contrato_w01 + sin.inicio_w01 + informal_w01 + sded_mnz + trab_mnz + cesa_mnz + acver_mnz + aced_mnz + accs_mnz + hacin_mnz + (1 | comuna), data=data)
 
-texreg::htmlreg(list(reg_participacion1, reg_participacion2, reg_participacion3, reg_participacion4, reg_participacion5, reg_participacion6), custom.note = "$***p <$ 0.001, $**p <$ 0.01, $*p <$ 0.05",  custom.coef.names = c("Intercepto", "Edad", "Educacion media <br> <i>(Ref. educacion basica)</i>", "Educacion tecnica", "Educacion universitaria", "Q2 <br> <i>(Ref. Q1)</i>", "Q3", "Q4", "Q5", "Ns/Nr", "Otra nacion <br> <i>(Ref. chilena)</i>", "Otra etnia <br> <i>(Ref. ninguna)</i>"))
+texreg::htmlreg(list(reg_participacion1, reg_participacion2, reg_participacion3, reg_participacion4, reg_participacion5, reg_participacion6, reg_participacion7, reg_participacion8, reg_participacion9), custom.note = "$***p <$ 0.001, $**p <$ 0.01, $*p <$ 0.05",  custom.coef.names = c("Intercepto", "Edad", "Educacion media <br> <i>(Ref. educacion basica)</i>", "Educacion tecnica", "Educacion universitaria", "Q2 <br> <i>(Ref. Q1)</i>", "Q3", "Q4", "Q5", "Ns/Nr", "No cotiza <br> <i>(Ref. Si cotiza)</i>", "Otra nacion <br> <i>(Ref. chilena)</i>", "Otra etnia <br> <i>(Ref. ninguna)</i>", "Sin contrato", "Sin inicio", "Informal", "Promedio años escolaridad", "Cantidad de trabajadores/as", "Cantidad de cesantes", "Acceso areas verdes", "Acceso a colegios", "Acceso a servicios", "Condicion de hacinamiento"))
 ```
 
 ## Cohesión barrial
@@ -606,10 +629,13 @@ texreg::htmlreg(list(reg_participacion1, reg_participacion2, reg_participacion3,
 reg_cohesion_barrial1 <- lmer(cohesion_barrial ~ 1 + m0_edad_w01 + (1 | comuna), data=data)
 reg_cohesion_barrial2 <- lmer(cohesion_barrial ~ 1 + m01_w01 + (1 | comuna), data=data)
 reg_cohesion_barrial3 <- lmer(cohesion_barrial ~ 1 + quintiles_ingresos_w01 + (1 | comuna), data=data)
-reg_cohesion_barrial4 <- lmer(cohesion_barrial ~ 1 + nacion_rec + (1 | comuna), data=data)
-reg_cohesion_barrial5 <- lmer(cohesion_barrial ~ 1 + etnia_rec + (1 | comuna), data=data)
-reg_cohesion_barrial6 <- lmer(cohesion_barrial ~ 1 + m0_edad_w01 + m01_w01 + quintiles_ingresos_w01 + nacion_rec + etnia_rec + (1 | comuna), data=data)
+reg_cohesion_barrial4 <- lmer(cohesion_barrial ~ 1 + m18_w01 + (1 | comuna), data=data)
+reg_cohesion_barrial5 <- lmer(cohesion_barrial ~ 1 + nacion_rec + (1 | comuna), data=data)
+reg_cohesion_barrial6 <- lmer(cohesion_barrial ~ 1 + etnia_rec + (1 | comuna), data=data)
+reg_cohesion_barrial7 <- lmer(cohesion_barrial ~ 1 + sin.contrato_w01 + sin.inicio_w01 + informal_w01 + (1 | comuna), data= data)
+reg_cohesion_barrial8 <- lmer(cohesion_barrial ~ 1 + sded_mnz + trab_mnz + cesa_mnz + acver_mnz + aced_mnz + accs_mnz + hacin_mnz + (1 | comuna), data=data)
+reg_cohesion_barrial9 <- lmer(cohesion_barrial ~ 1 + m0_edad_w01 + m01_w01 + quintiles_ingresos_w01 + m18_w01 + nacion_rec + etnia_rec + sin.contrato_w01 + sin.inicio_w01 + informal_w01 + sded_mnz + trab_mnz + cesa_mnz + acver_mnz + aced_mnz + accs_mnz + hacin_mnz + (1 | comuna), data=data)
 
-texreg::htmlreg(list(reg_cohesion_barrial1, reg_cohesion_barrial2, reg_cohesion_barrial3, reg_cohesion_barrial4, reg_cohesion_barrial5, reg_cohesion_barrial6), custom.note = "$***p <$ 0.001, $**p <$ 0.01, $*p <$ 0.05",  custom.coef.names = c("Intercepto", "Edad", "Educacion media <br> <i>(Ref. educacion basica)</i>", "Educacion tecnica", "Educacion universitaria", "Q2 <br> <i>(Ref. Q1)</i>", "Q3", "Q4", "Q5", "Ns/Nr", "Otra nacion <br> <i>(Ref. chilena)</i>", "Otra etnia <br> <i>(Ref. ninguna)</i>"))
+texreg::htmlreg(list(reg_cohesion_barrial1, reg_cohesion_barrial2, reg_cohesion_barrial3, reg_cohesion_barrial4, reg_cohesion_barrial5, reg_cohesion_barrial6, reg_cohesion_barrial7, reg_cohesion_barrial8, reg_cohesion_barrial9), custom.note = "$***p <$ 0.001, $**p <$ 0.01, $*p <$ 0.05",  custom.coef.names = c("Intercepto", "Edad", "Educacion media <br> <i>(Ref. educacion basica)</i>", "Educacion tecnica", "Educacion universitaria", "Q2 <br> <i>(Ref. Q1)</i>", "Q3", "Q4", "Q5", "Ns/Nr", "No cotiza <br> <i>(Ref. Si cotiza)</i>", "Otra nacion <br> <i>(Ref. chilena)</i>", "Otra etnia <br> <i>(Ref. ninguna)</i>", "Sin contrato", "Sin inicio", "Informal", "Promedio años escolaridad", "Cantidad de trabajadores/as", "Cantidad de cesantes", "Acceso areas verdes", "Acceso a colegios", "Acceso a servicios", "Condicion de hacinamiento"))
 ```
 

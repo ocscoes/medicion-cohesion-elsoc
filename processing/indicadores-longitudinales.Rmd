@@ -27,17 +27,11 @@ load("input/data/data.RData")
 
 ## Lazos
 ```{r}
-data <- data %>%
-  rowwise() %>%
-  mutate(lazos_w01 =
-           mean(c(r15_w02, vol.red_w01), na.rm = T))
-data <- data %>%
-  rowwise() %>%
-  mutate(lazos_w03 =
-           mean(c(r15_w04, vol.red_w03), na.rm = T))
+data$lazos_w01 = as.numeric(data$vol.red_w01)
+data$lazos_w03 = as.numeric(data$vol.red_w03)
+data$lazos_w05 = as.numeric(data$vol.red_w05)
 
-
-data %>% select(lazos_w01, lazos_w03, vol.red_w05)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
+data %>% select(lazos_w01, lazos_w03, lazos_w05)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
 ```
 
 ## Confianza interpersonal (w01, w02, w03, w04 & w05)
@@ -277,21 +271,11 @@ data %>% select(diversidad_w01, diversidad_w03)  %>% sjlabelled::as_label(.)  %>
 
 ## Lazos
 ```{r}
-data$lazos_w01 <- ifelse((data$lazos_w01<1.5), 1,
-                              ifelse((data$lazos_w01<2.5), 2,
-                                     ifelse((data$lazos_w01<3.5), 3,
-                                            ifelse((data$lazos_w01<4.5), 4,
-                                                   ifelse((data$lazos_w01<=5), 5, NA)))))
-data$lazos_w03 <- ifelse((data$lazos_w03<1.5), 1,
-                              ifelse((data$lazos_w03<2.5), 2,
-                                     ifelse((data$lazos_w03<3.5), 3,
-                                            ifelse((data$lazos_w03<4.5), 4,
-                                                   ifelse((data$lazos_w03<=5), 5, NA)))))
-
 data$lazos_w01<- factor(data$lazos_w01, levels = c(1, 2, 3, 4, 5), labels = c("No tiene", "De 1 a 2", "De 3 a 5", "De 6 a 10", "Mas de 10"))
 data$lazos_w03<- factor(data$lazos_w03, levels = c(1, 2, 3, 4, 5), labels = c("No tiene", "De 1 a 2", "De 3 a 5", "De 6 a 10", "Mas de 10"))
+data$lazos_w05<- factor(data$lazos_w05, levels = c(1, 2, 3, 4, 5), labels = c("No tiene", "De 1 a 2", "De 3 a 5", "De 6 a 10", "Mas de 10"))
 
-data %>% select(lazos_w01, lazos_w03)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
+data %>% select(lazos_w01, lazos_w03, lazos_w05)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
 ```
 
 
@@ -528,14 +512,6 @@ data$cohesion_territorial_w04<- factor(data$cohesion_territorial_w04, levels = c
 data %>% select(cohesion_territorial_w01, cohesion_territorial_w02, cohesion_territorial_w03, cohesion_territorial_w04)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
 ```
 
-# Guardar base con indicadores recodificados
-```{r}
-cohesion_social <- data %>% select(vol.red_w01, vol.red_w03, vol.red_w05, conf_interpersonal_w01, conf_interpersonal_w02, conf_interpersonal_w03, conf_interpersonal_w04, conf_interpersonal_w05, diversidad_w01, diversidad_w03, identificacion_w01, identificacion_w02, identificacion_w03, identificacion_w04, identificacion_w05, justicia_w01, justicia_w02, justicia_w03, justicia_w04, justicia_w05, conf_institucional_w01, conf_institucional_w02, conf_institucional_w03, conf_institucional_w04, conf_institucional_w05, solidaridad_w01, solidaridad_w02, solidaridad_w03, solidaridad_w04, solidaridad_w05, participacion_w01, participacion_w02, participacion_w03, participacion_w04, participacion_w05, cohesion_territorial_w01, cohesion_territorial_w02, cohesion_territorial_w03, cohesion_territorial_w04)
-
-save(cohesion_social,file = "input/data/cohesion_social.RData")
-```
-
-
 # Visualización de datos
 
 ```{r}
@@ -596,6 +572,8 @@ alluvial_lazos <- ggplot(datos.lazos, aes(x = ola, fill = lazos, stratum = lazos
   ggtitle('Cambio de frecuencias según año')
 
 alluvial_lazos
+
+ggsave(alluvial_lazos, file = "bookdown-files/output/graphs/alluvial_lazos.svg",device = "svg",width = 25,height = 13,dpi = "retina",units = "cm")
 ```
 
 ## Confianza interpersonal
@@ -630,6 +608,8 @@ alluvial_conf.interpersonal <- ggplot(datos.conf.interpersonal,
   ggtitle('Cambio de frecuencias según año')
 
 alluvial_conf.interpersonal
+
+ggsave(alluvial_conf.interpersonal, file = "bookdown-files/output/graphs/alluvial_conf.interpersonal.svg",device = "svg",width = 25,height = 13,dpi = "retina",units = "cm")
 ```
 
 ## Diversidad
@@ -663,6 +643,8 @@ alluvial_diversidad <- ggplot(datos.diversidad, aes(x = ola, fill = diversidad, 
   ggtitle('Cambio de frecuencias según año')
 
 alluvial_diversidad
+
+ggsave(alluvial_diversidad, file = "bookdown-files/output/graphs/alluvial_diversidad.svg",device = "svg",width = 25,height = 13,dpi = "retina",units = "cm")
 ```
 
 ## Identificación con el país
@@ -695,6 +677,8 @@ alluvial_identificacion <- ggplot(datos.identificacion, aes(x = ola, fill = iden
   ggtitle('Cambio de frecuencias según año')
 
 alluvial_identificacion
+
+ggsave(alluvial_identificacion, file = "bookdown-files/output/graphs/alluvial_identificacion.svg",device = "svg",width = 25,height = 13,dpi = "retina",units = "cm")
 ```
 
 ## Percepcion de justicia
@@ -727,6 +711,8 @@ alluvial_justicia <- ggplot(datos.justicia, aes(x = ola, fill = justicia, stratu
   ggtitle('Cambio de frecuencias según año')
 
 alluvial_justicia
+
+ggsave(alluvial_justicia, file = "bookdown-files/output/graphs/alluvial_justicia.svg",device = "svg",width = 25,height = 13,dpi = "retina",units = "cm")
 ```
 
 ## Confianza institucional
@@ -759,6 +745,8 @@ alluvial_conf.institucional <- ggplot(datos.conf.institucional, aes(x = ola, fil
   ggtitle('Cambio de frecuencias según año')
 
 alluvial_conf.institucional
+
+ggsave(alluvial_conf.institucional, file = "bookdown-files/output/graphs/alluvial_conf.institucional.svg",device = "svg",width = 25,height = 13,dpi = "retina",units = "cm")
 ```
 
 ## Solidaridad
@@ -792,6 +780,8 @@ alluvial_solidaridad <- ggplot(datos.solidaridad, aes(x = ola, fill = solidarida
   ggtitle('Cambio de frecuencias según año')
 
 alluvial_solidaridad
+
+ggsave(alluvial_solidaridad, file = "bookdown-files/output/graphs/alluvial_solidaridad.svg",device = "svg",width = 25,height = 13,dpi = "retina",units = "cm")
 ```
 
 ## Participación cívica
@@ -824,6 +814,8 @@ alluvial_participacion <- ggplot(datos.participacion, aes(x = ola, fill = partic
   ggtitle('Cambio de frecuencias según año')
 
 alluvial_participacion
+
+ggsave(alluvial_participacion, file = "bookdown-files/output/graphs/alluvial_participacion.svg",device = "svg",width = 25,height = 13,dpi = "retina",units = "cm")
 ```
 
 ## Cohesion territorial
@@ -856,6 +848,8 @@ alluvial_cohesion_territorial <- ggplot(datos.cohesion_territorial, aes(x = ola,
   ggtitle('Cambio de frecuencias según año')
 
 alluvial_cohesion_territorial
+
+ggsave(alluvial_cohesion_territorial, file = "bookdown-files/output/graphs/alluvial_cohesion_territorial.svg",device = "svg",width = 25,height = 13,dpi = "retina",units = "cm")
 ```
 
 

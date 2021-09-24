@@ -18,7 +18,7 @@ Los datos corresponden a la base de datos longitudinal de ELSOC 2016-2019. Las v
 
 # Cargar paquetes
 ```{r}
-pacman::p_load(dplyr, car, summarytools, webshot, sjmisc)
+pacman::p_load(dplyr, car, summarytools, webshot, sjmisc, readxl)
 ```
 
 # Cargar base elsoc longitudinal (2016-2019)
@@ -41,6 +41,15 @@ elsoc_2021 <- elsoc_2021 %>% car::recode(., "c(-888, -999)=NA")
 elsoc_2021 <- elsoc_2021 %>% sjlabelled::remove_labels(labels = c("No Responde (no leer)", "No Sabe (no leer)"))
 
 data <- inner_join(data, elsoc_2021, by="idencuesta", copy = FALSE, suffix = c("", "_w05"))
+```
+
+```{r}
+cit <- read_excel("input/data/ELSOC_CIT_Dataset_2016.xlsx")
+
+cit <- cit %>% car::recode(., "c(994,995,996)=NA") # recode missings de no respuesta a NA
+
+# Juntar base con datos CIT
+data <- inner_join(data, cit, by="idencuesta", copy = FALSE, suffix = c("", "_cit"))
 ```
 
 
@@ -1088,6 +1097,92 @@ label(data$etnia_rec) <- "Etnia"
 
 frq(data$etnia_rec)
 ```
+## Sector informal
+
+```{r}
+### 2016 ###
+data$sin.contrato_w01 <- rep(0, length(data[,1]))
+data$sin.contrato_w01 <- ifelse((data$m07_w01==1 | data$m07_w01==2 | data$m07_w01==3 | data$m07_w01==7) & data$m10_w01==3, 1, data$sin.contrato_w01) # asalariados y personal doméstico sin contrato escrito
+table(data$sin.contrato_w01)
+
+data$sin.inicio_w01<- rep(0, length(data[, 1]))
+data$sin.inicio_w01<-ifelse((data$m07_w01==4 | data$m07_w01==5) & data$m11_w01==3, 1, data$sin.inicio_w01) # empleadores y TCP que no dan factura ni boleta
+table(data$sin.inicio_w01)
+
+data$sin.cotizar_w01<- rep(0, length(data[, 1]))
+data$sin.cotizar_w01<-ifelse((data$m07_w01==1 | data$m07_w01==2 | data$m07_w01==3 | data$m07_w01==7) & data$m18_w01==4, 1, data$sin.cotizar_w01) # asalariados y personal doméstico sin cotización previsional
+table(data$sin.cotizar_w01)
+
+data$fnr_w01<- rep(0, length(data[, 1]))
+data$fnr_w01<-ifelse(data$m07_w01==6, 1, data$fnr_w01) # familiar no remunerado
+table(data$fnr_w01)
+
+informales<- data[, c('idencuesta', 'sin.contrato_w01', 'sin.cotizar_w01', 'sin.inicio_w01', 'fnr_w01')]
+
+informales<-informales[order(informales$idencuesta),]
+
+## Informales. cumple cualquiera de las siguientes condiciones
+## catocup 1, 2, 3 o 7 + m10==3 sin contrato escrito
+## FNR catocup== 6
+## catocup 4, 5 + m11 = 3 no da boleta ni factura
+## catocup 1, 2, 3 o 7 + m18==4 no cotiza
+
+informal<- rep(0, length(data[, 1]))
+length(informal)
+informal<- ifelse((data$m07_w01==1 | data$m07_w01==2 | data$m07_w01==3 | data$m07_w01==7) & data$m10_w01==3, 1, informal) # asalariados y personal doméstico sin contrato escrito
+
+informal <- ifelse((data$m07_w01==4 | data$m07_w01==5) & data$m11_w01==3, 1, informal) # empleadores y TCP que no dan factura ni boleta
+
+informal <- ifelse((data$m07_w01==1 | data$m07_w01==2 | data$m07_w01==3 | data$m07_w01==7) & data$m18_w01==4, 1, informal) # asalariados y personal doméstico sin cotización previsional
+
+informal<-ifelse(data$m07_w01==6, 1, informal) # familiar no remunerado
+
+data$informal_w01<-informal
+table(data$informal_w01)
+
+
+### 2018 ####
+data$sin.contrato_w03 <- rep(0, length(data[,1]))
+data$sin.contrato_w03 <- ifelse((data$m07_w03==1 | data$m07_w03==2 | data$m07_w03==3 | data$m07_w03==7) & data$m10_w03==3, 1, data$sin.contrato_w03) # asalariados y personal doméstico sin contrato escrito
+table(data$sin.contrato_w03)
+
+data$sin.inicio_w03<- rep(0, length(data[, 1]))
+data$sin.inicio_w03<-ifelse((data$m07_w03==4 | data$m07_w03==5) & data$m11_w03==3, 1, data$sin.inicio_w03) # empleadores y TCP que no dan factura ni boleta
+table(data$sin.inicio_w03)
+
+data$sin.cotizar_w03<- rep(0, length(data[, 1]))
+data$sin.cotizar_w03<-ifelse((data$m07_w03==1 | data$m07_w03==2 | data$m07_w03==3 | data$m07_w03==7) & data$m18_w03==4, 1, data$sin.cotizar_w03) # asalariados y personal doméstico sin cotización previsional
+table(data$sin.cotizar_w03)
+
+data$fnr_w03<- rep(0, length(data[, 1]))
+data$fnr_w03<-ifelse(data$m07_w03==6, 1, data$fnr_w03) # familiar no remunerado
+table(data$fnr_w03)
+
+informales<- data[, c('idencuesta', 'sin.contrato_w03', 'sin.cotizar_w03', 'sin.inicio_w03', 'fnr_w03')]
+
+informales<-informales[order(informales$idencuesta),]
+
+## Informales. cumple cualquiera de las siguientes condiciones
+## catocup 1, 2, 3 o 7 + m10==3 sin contrato escrito
+## FNR catocup== 6
+## catocup 4, 5 + m11 = 3 no da boleta ni factura
+## catocup 1, 2, 3 o 7 + m18==4 no cotiza
+
+informal<- rep(0, length(data[, 1]))
+length(informal)
+informal<- ifelse((data$m07_w03==1 | data$m07_w03==2 | data$m07_w03==3 | data$m07_w03==7) & data$m10_w03==3, 1, informal) # asalariados y personal doméstico sin contrato escrito
+
+informal <- ifelse((data$m07_w03==4 | data$m07_w03==5) & data$m11_w03==3, 1, informal) # empleadores y TCP que no dan factura ni boleta
+
+informal <- ifelse((data$m07_w03==1 | data$m07_w03==2 | data$m07_w03==3 | data$m07_w03==7) & data$m18_w03==4, 1, informal) # asalariados y personal doméstico sin cotización previsional
+
+informal<-ifelse(data$m07_w03==6, 1, informal) # familiar no remunerado
+
+data$informal_w03<-informal
+table(data$informal_w03)
+```
+
+
 
 # Guardar base
 ```{r}
