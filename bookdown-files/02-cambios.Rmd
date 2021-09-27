@@ -8,80 +8,85 @@ editor_options:
 
 <div style="text-align: justify">
 
+Este capítulo tiene como finalidad analizar la evolución de la opinión de las personas entre 2016 y 2020 respecto de las distintas dimensiones de la cohesión social presentadas en el capítulo 1. A través de este análisis longitudinal, se muestra no sólo la evaluación de la frecuencia de las respuestas, sino que además los cambios de opiniones de los respondentes entre olas. Estos cambios son representados con gráficos fluviales o aluviales. Recordamos que usamos las olas disponibles para cada dimensión de cohesión social construida en base a las variables detalladas en el capítulo anterior.
+
+Recuadro metodológico: ¿Cómo leer un gráfico fluvial?
+
+Este tipo de diagrama muestra el cambio en el tiempo mediante flujos, usando una metáfora visual. Se trata de una representación esquemática y dinámica inspirada en el diagrama de Sankey, usado para dar cuenta de flujos energéticos. Su nombre proviene de los flujos - o clusters para fines de la lectura - que genera el agua y los diferentes arroyos contiguos que se forman de una misma fuente. Cada año funciona como un histograma apilado, donde la altura de cada barra indica el tamaño del cluster. Con la sucesión de los años, se observan los cambios en la composición de los clusters mediante los flujos. La amplitud de los flujos muestra el tamaño de los grupos de personas que cambian de opinión de un año a otro. Permiten a la vez ver la evolución de las categorías, así como los cambios y transiciones entre categorías y años. Los colores permiten visualizar las principales transiciones entre categorías [@rosvall_mapping_2010]. Como no hay personas que salen de la muestra entre las cinco mediciones, no existen pérdidas en este gráfico.
+
 A continuación, se presenta el análisis ordenado por dimensiones y subdimensiones, con una comparación longitudinal entre las olas. Los gráficos fueron realizados solo con los respondentes de la muestra original, quienes han participado en las cinco olas, es decir 1492 casos.
+
 Recordamos a continuación las dimensiones y subdimensiones analizadas:
 
-•	Dimensión relaciones sociales de igualdad
+- Dimensión relaciones sociales de igualdad:
+  - confianza interpersonal
+  - reconocimiento y respecto de la diversidad
+  - lazos
 
--	lazos
--	confianza interpersonal
--	reconocimiento y respecto de la diversidad
+- Dimensión sentido de pertenencia:
+  - identificación con el país
+  - percepción de justicia
+  - confianza institucional
 
-•	Dimensión sentido de pertenencia:
-
--	identificación con el país
--	percepción de justicia
-- confianza institucional
-
-•	Dimensión orientación hacia el bien común:
-
--	solidaridad
--	participación cívica
+- Dimensión orientación hacia el bien común:
+  - solidaridad
+  - participación cívica
 
 ## Relaciones sociales de igualdad
-
-### Lazos (cantidad de personas que se conocen con diferentes ocupaciones)
-
-Indicador (1): Cantidad de personas que se conocen con diferentes ocupaciones 
-
-```{r alluvial-lazos, echo=FALSE, fig.cap="Cambios en la subdimensión Lazos.", fig.align = 'center', out.width = '100%',out.height='100%'}
-knitr::include_graphics(path = "output/graphs/alluvial_lazos.svg")
-```
-
-En general, se observa una importante estabilidad entre los años 2016 y 2020 respecto al número de personas que los respondentes declaran conocer con diferentes ocupaciones, aunque existen variaciones no menores para el año 2018, que no son fáciles de interpretar. Las categorías de más contactos (de 6 a 10 y más de 10) concentran una mayoría de respuestas para los años 2016 y 2020 (alrededor del 57%). Las categorías con menos contactos con diferentes ocupaciones (1 a 2 y 3 a 5) no pasan del 26% para los años 2016 y 2020, mientras la categoría con menos frecuencia corresponde a las personas que no declaran contactos en diferentes ocupaciones en ninguna de las tres olas (menos del 7%).
-
-En cuanto a las variaciones entre olas y entre respondentes, las frecuencias varían significativamente de una ola a otra, salvo para las categorías con mayores contactos en diferentes ocupaciones, que mayoritariamente se mantienen. Los cambios más importante, dentro de la minoría que cambia de respuesta, se da hacia categorías colindantes, sin cambios entre categorías extremas.
-
-En resumen, el número de personas que los respondentes declaran conocer con diferentes ocupaciones es un indicador bastante estable para el período completo, pero con importantes cambios de respuesta entre las mismas personas de una ola a otra.
-
-**Nota: podría valer la pena pasar a 3 categorías en vez de 5.
 
 ### Confianza interpersonal (grado de confianza entre personas)
 
 Indicadores (2):
 
 -	Se puede confiar en la mayoría de las personas
+
 -	La mayoría de las personas tratan de ayudar a las demás
 
-```{r alluvial-conf.interpersonal, echo=FALSE, fig.cap="Cambios en la subdimensión confianza interpersonal.", fig.align = 'center', out.width = '100%',out.height='100%'}
-knitr::include_graphics(path = "output/graphs/alluvial_conf.interpersonal.svg")
+```{r alluvial-conf-interpersonal, echo=FALSE, fig.cap="Cambios en la subdimension confianza interpersonal.", fig.align = 'center', out.width = '100%',out.height='100%'}
+knitr::include_graphics(path = "output/graphs/alluvial_conf_interpersonal.png")
 ```
 
-En general, se observa una importante desconfianza hacia los demás en todas las olas, variando muy levemente entre un 68,3% (2016) a un 71, 4% (2020). Las personas confiadas son absolutamente minoritarias, manteniéndose en menos de un 5% en la primera y la última ola, con un leve aumento en las olas intermedias. En cuanto a la respuesta “depende”, cabría evaluar si colapsarla con el sí, en el sentido que indicaría que en algunas ocasiones sí se podrían confiar. Esta respuesta varía poco en todo caso, manteniéndose alrededor de la cuarta parte de las respuesta para todas las olas, sin mayores variaciones.
+En general, en la Figura \@ref(fig:alluvial-conf-interpersonal) se observa una importante desconfianza hacia los demás en todas las olas, tal como era de esperarse en Chile, variando muy levemente entre un 68,3% (2016) a un 71,4% (2020). Las personas confiadas son absolutamente minoritarias, manteniéndose en menos de un 5% en la primera y la última ola, con un leve aumento en las olas intermedias. Esta respuesta varía poco en todo caso, manteniéndose alrededor de la cuarta parte de las respuestas para todas las olas, sin mayores variaciones.
 
-En cuanto a las variaciones entre olas y entre respondentes, se observan algunos cambios de repuesta, aunque la mayor parte de quienes contestaron no mantiene su opinión a lo largo del período (alrededor de del 50% de los respondentes de la totalidad de la muestra). Los principales cambios son hacia la categoría “depende” con casi ninguna persona que cambie completamente de opinión en cuanto a confianza hacia las otras personas, salvo entre las olas 2016 y 2017, cuando el flujo es un poco más importante que en otros años. En cambio, respecto de las personas que señalan que “depende”, en todos los años, se mantiene una mitad en la misma opción, mientras un grupo importante se cambia al grupo que expresa desconfianza hacia los demás en todos los años.
+En cuanto a las variaciones entre olas y entre respondentes, se observan algunos cambios de respuesta, aunque la mayor parte de quienes contestaron no mantiene su opinión a lo largo del período (alrededor de del 50% de los respondentes de la totalidad de la muestra). Los principales cambios son hacia la categoría “depende”. Casi nadie cambia completamente de opinión en cuanto a confianza hacia las otras personas, salvo entre las olas 2016 y 2017, cuando el flujo es un poco más importante que en otros años. En cambio, respecto de las personas que señalan que “depende”, en todos los años, se mantiene una mitad en la misma opción, mientras un grupo importante se cambia al grupo que expresa desconfianza hacia los demás en todos los años.
 
-El estallido del 2019 no alteró sustancialmente la percepción para el conjunto de la muestra.
-
-**Nota: podría valer la pena pasar a 2 categorías en vez de 3 (sumando depende y sí).
+El estallido del 2019 no alteró sustancialmente la percepción para el conjunto de la muestra en este elemento central de la cohesión social. La alta desconfianza interpersonal en Chile es una dimensión central de la cohesión social y no parece alterarse en el corto plazo, como se indica en este gráfico.
 
 ### Reconocimiento y respeto de la diversidad 
 
 Indicadores (3):
 
 -	Grado de confianza con personas homosexuales
+
 -	Grado de confianza con personas mapuche
+
 -	Grado de confianza con personas inmigrantes
 
-```{r alluvial-diversidad, echo=FALSE, fig.cap="Cambios en la subdimensión reconocimiento y respeto de la diversidad.", fig.align = 'center', out.width = '100%',out.height='100%'}
-knitr::include_graphics(path = "output/graphs/alluvial_diversidad.svg")
+```{r alluvial-diversidad, echo=FALSE, fig.cap="Cambios en la subdimension reconocimiento y respeto de la diversidad.", fig.align = 'center', out.width = '100%',out.height='100%'}
+knitr::include_graphics(path = "output/graphs/alluvial_diversidad.png")
 ```
 
-Contamos solo con dos olas y no se incluye la del 2020, por lo que es poca interpretable en términos longitudinales. De todas formas se realiza el ejercicio de análisis.
+Contamos solo con dos olas y no se incluye la del 2020, por lo que es poco interpretable en términos longitudinales. De todas formas se realiza el ejercicio de análisis.
 
-En general, las respuestas son muy estables en frecuencia entre las dos olas para el reconocimiento y el respeto de la diversidad. La categoría más numerosa es la intermedia, es decir “algo”, del 35% de las respuestas. Si sumamos “nada” y “poca” confianza hacia personas diversas, por un lado, se suma alrededor del 38% de las respuestas en ambas olas, mientras al añadir las respuestas “bastante” y “mucha”, la frecuencia es un poco mayor a las respuestas desconfiadas hacia la diversidad, alrededor del 27%. Observamos por lo tanto casi tres tercios equilibrados y constantes al agrupar las respuestas.
+En general, en la Figura \@ref(fig:alluvial-diversidad) las respuestas son muy estables en frecuencia entre las dos olas para el reconocimiento y el respeto de la diversidad. La categoría más numerosa es la intermedia, es decir “algo”, del 35% de las respuestas, es decir con un grado moderado de confianza hacia personas que la sociedad asume como diferentes. Si sumamos “nada” y “poca” confianza hacia personas diversas, por un lado, se suma alrededor del 38% de las respuestas en ambas olas, mientras al añadir las respuestas “bastante” y “mucha”, la frecuencia es un poco mayor a las respuestas desconfiadas hacia la diversidad, alrededor del 27%. Observamos por lo tanto casi tres tercios equilibrados y constantes al agrupar las respuestas.
 
-En cuanto a las variaciones entre olas y entre respondentes, en general las opiniones se mantienen de forma mayoritaria, salvo para la categoría “nada, que tiende a repartirse en todas las demás categorías, salvo la máxima (“mucha”). Las personas que expresan confianza y respecto hacia la diversidad en la ola 2016 (con las categorías “bastante” o “mucha”) pueden cambiarse a la categoría inferior, pero no al otro extremo.
+En cuanto a las variaciones entre olas y entre respondentes, en general las opiniones se mantienen de forma mayoritaria, salvo para la categoría “nada'', que tiende a repartirse en todas las demás categorías, salvo la máxima (“mucha”). El grupo más estable entre las dos olas corresponde a las personas que expresan “algo” de confianza hacia las personas diversas. Las personas que expresan confianza y respeto hacia la diversidad en la ola 2016 (con las categorías “bastante” o “mucha”) pueden cambiarse a la categoría inferior, pero no al otro extremo.
+
+** Nota: podría valer la pena pasar a 3 categorías en vez de 5.
+
+### Lazos (cantidad de personas que se conocen con diferentes ocupaciones)
+
+Indicador (1): Cantidad de personas que se conocen con diferentes ocupaciones 
+
+```{r alluvial-lazos, echo=FALSE, fig.cap="Cambios en la subdimensión Lazos.", fig.align = 'center', out.width = '100%',out.height='100%'}
+knitr::include_graphics(path = "output/graphs/alluvial_lazos.png")
+```
+
+En general, en la Figura \@ref(fig:alluvial-lazos) se observa una importante estabilidad entre los años 2016 y 2020 respecto al número de personas que los respondentes declaran conocer con diferentes ocupaciones, aunque existen variaciones no menores para el año 2018, que no son fáciles de interpretar. Las categorías de más contactos (de 6 a 10 y más de 10) concentran una mayoría de respuestas para los años 2016 y 2020 (alrededor del 57%). Las categorías con menos contactos con diferentes ocupaciones (1 a 2 y 3 a 5) no pasan del 26% para los años 2016 y 2020, mientras la categoría con menos frecuencia corresponde a las personas que no declaran contactos en diferentes ocupaciones en ninguna de las tres olas (menos del 7%).
+
+En cuanto a las variaciones entre olas y entre respondentes, las frecuencias varían significativamente de una ola a otra, salvo para las categorías con mayores contactos en diferentes ocupaciones, que mayoritariamente se mantienen (de 6 a 10 y más de 10). Los cambios más importantes, dentro de la minoría que cambia de respuesta, se da hacia categorías colindantes, sin cambios entre categorías extremas.
+
+En resumen, el número de personas que los respondentes declaran conocer con diferentes ocupaciones es un indicador bastante estable de cohesión social para el período completo, pero con importantes cambios de respuesta entre las mismas personas de una ola a otra.
 
 **Nota: podría valer la pena pasar a 3 categorías en vez de 5.
 
@@ -90,55 +95,62 @@ En cuanto a las variaciones entre olas y entre respondentes, en general las opin
 ### Identificación con el país
 
 Indicadores (2):
+
 -	Me siento orgulloso de ser chileno
+
 -	Me identifico con Chile
 
-```{r alluvial-identificacion, echo=FALSE, fig.cap="Cambios en la subdimensión identificación con el pais.", fig.align = 'center', out.width = '100%',out.height='100%'}
-knitr::include_graphics(path = "output/graphs/alluvial_identificacion.svg")
+```{r alluvial-identificacion, echo=FALSE, fig.cap="Cambios en la subdimensión identificaci?n con el pais.", fig.align = 'center', out.width = '100%',out.height='100%'}
+knitr::include_graphics(path = "output/graphs/alluvial_identificacion.png")
 ```
 
-En general, en cuanto a la identificación con Chile o el orgullo de ser chileno, para las cinco olas, la cantidad de personas que no se identifican con Chile es mínima (correspondiente a las categorías “totalmente en desacuerdo” y “en desacuerdo”). La categoría intermedia (“ni en desacuerdo ni de acuerdo”) no varía tampoco entre olas y es muy baja (entre el 5% y el 7%). Las respuestas “de acuerdo” y “muy de acuerdo”, que indican una identificación fuerte o muy fuerte con Chile recogen una cantidad abrumadora de respuestas, sumando más del 90% de las opciones en todas las olas. Esto indica una identificación elevada y constante, aunque existen variaciones entre la categoría “muy de acuerdo”, que indica una identificación muy fuerte y la categoría “de acuerdo” entre las distintas olas. 
+En general, en cuanto a la identificación con Chile o el orgullo de ser chileno de la Figura \@ref(fig:alluvial-identificacion), para las cinco olas, la cantidad de personas que no se identifican con Chile es mínima (correspondiente a las categorías “totalmente en desacuerdo” y “en desacuerdo”). La categoría intermedia (“ni en desacuerdo ni de acuerdo”) no varía tampoco entre olas y es muy baja (entre el 5% y el 7%). Las respuestas “de acuerdo” y “muy de acuerdo”, que indican una identificación fuerte o muy fuerte con Chile recogen una cantidad abrumadora de respuestas, sumando más del 90% de las opciones en todas las olas. Esto indica una identificación elevada y constante, aunque existen variaciones entre la categoría “muy de acuerdo”, que indica una identificación muy fuerte y la categoría “de acuerdo” entre las distintas olas. Llama la atención la baja de la categoría “totalmente de acuerdo” en las tres últimas olas, pasando de un 51,9% a un 35%, una de las variaciones más notables en los gráficos analizados en este capítulo.
 
-En cuanto a las variaciones entre olas y entre respondentes, se da sobre todo entre las categorías de mayor identificación con Chile, en proporciones que varían del tercio a la mitad de los respondentes. Existe un leve flujo entre la categoría “ni en desacuerdo ni de acuerdo” y “en desacuerdo”, pero es bastante menor, aunque un poco más elevada entre el 2018 y el 2019, flujo que se revierte al año siguiente.
+En cuanto a las variaciones entre olas y entre respondentes, se da sobre todo entre las categorías de mayor identificación con Chile, en proporciones que varían del tercio a la mitad de los respondentes. La categoría más estable en el tiempo es “ni de acuerdo ni en desacuerdo”. Existe un leve flujo entre la categoría “ni en desacuerdo ni de acuerdo” y “en desacuerdo”, pero es bastante menor, aunque un poco más elevada entre el 2018 y el 2019, flujo que se revierte al año siguiente.
 
-Nuevamente estamos frente a categorías con poca varianza y la identificación con Chile es estable en el tiempo si se miran solo 3 categorías.
+Nuevamente estamos frente a categorías con poca varianza y la identificación con Chile es estable en el tiempo si se miran solo 3 categorías, pero con una interesante baja de la identificación más fuerte en las tres últimas olas hasta un menos comprometido “de acuerdo”.
 
 El estallido del 2019 no alteró sustancialmente la percepción para el conjunto de la muestra, lo que era esperable para la identificación con el país.
 
-**Nota: podría valer la pena pasar a 3 categorías en vez de 5.
+**Nota: mejor dejar 5 categorías que 3, según diagnóstico de Kevin.
 
 ### Percepción de justicia
 
 Indicadores (2):
+
 -	En Chile las personas son recompensadas por sus esfuerzos
+
 -	En Chile las personas son recompensadas por su inteligencia
 
 ```{r alluvial-justicia, echo=FALSE, fig.cap="Cambios en la subdimensión percepcion de justicia.", fig.align = 'center', out.width = '100%',out.height='100%'}
-knitr::include_graphics(path = "output/graphs/alluvial_justicia.svg")
+knitr::include_graphics(path = "output/graphs/alluvial_justicia.png")
 ```
 
-En general, respecto de si la inteligencia y el esfuerzo son recompensados en Chile, las categorías extremas (“totalmente de acuerdo” y “totalmente en desacuerdo”) recogen muy pocas preferencias, con muy pocas variaciones entre olas, sumando menos del 10% en total. Las demás categorías son bastante parecidas en tamaño, con variaciones solo de algunos puntos. La más abultada es “en desacuerdo”, con una frecuencia promedio del 40%, seguida por “ni de acuerdo ni en desacuerdo (alrededor del 28%) y finalmente viene la opción “de acuerdo con alrededor del 22% de las preferencias. Esto indica que en general los respondentes consideran más bien que no se recompensa la inteligencia ni el esfuerzo en Chile.
+En general, respecto de si la inteligencia y el esfuerzo son recompensados en Chile que se observa en la Figura \@ref(fig:alluvial-justicia), las categorías extremas (“totalmente de acuerdo” y “totalmente en desacuerdo”) recogen muy pocas preferencias, con muy pocas variaciones entre olas, sumando menos del 10% en total. Las demás categorías son bastante parecidas en tamaño, con variaciones sólo de algunos puntos. La más abultada es “en desacuerdo”, con una frecuencia promedio del 40%, seguida por “ni de acuerdo ni en desacuerdo (alrededor del 28%) y finalmente viene la opción “de acuerdo con alrededor del 22% de las preferencias. Esto indica que en general los respondentes consideran más bien que no se recompensa la inteligencia ni el esfuerzo en Chile.
 
-En cuanto a las variaciones entre olas y entre respondentes, la mitad de los respondentes mantiene su opción entre olas y los cambios más importantes son en general hacia una categoría contigua. 
+En cuanto a las variaciones entre olas y entre respondentes, la mitad de los respondentes mantiene su opción entre olas y los cambios más importantes son en general hacia una categoría contigua. No son entonces categorías particularmente estables en el tiempo. Se observan variaciones hacia categorías no contiguas, de manera más importante que en otras dimensiones analizadas en este capítulo.
 
-El estallido del 2019 no alteró sustancialmente la percepción para el conjunto de la muestra, lo que llama la atención, porque pudo ser una variable más determinada por el contexto y en especial por la mayor evidencia de la desigualdad y la injusticia en Chile que la anterior por ejemplo (identificación con el país).
+En resumen, el estallido del 2019 no alteró sustancialmente la percepción para el conjunto de la muestra, lo que llama la atención, porque pudo ser una variable más determinada por el contexto y en especial por la mayor evidencia de la desigualdad y la injusticia en Chile que la anterior por ejemplo (identificación con el país). Sin embargo, se trata de una respuesta más volátil entre olas.
 
 **Nota: podría valer la pena pasar a 3 categorías en vez de 5.
 
 ### Confianza institucional
 
 Indicadores (3):
+
 -	Confianza en el gobierno
--	Confianza en el presidente/a de la republica
+
+-	Confianza en el presidente/a de la república
+
 -	Confianza en los partidos políticos
 
-```{r alluvial-conf.institucional, echo=FALSE, fig.cap="Cambios en la subdimensión  confianza institucional.", fig.align = 'center', out.width = '100%',out.height='100%'}
-knitr::include_graphics(path = "output/graphs/alluvial_conf.institucional.svg")
+```{r alluvial-conf-institucional, echo=FALSE, fig.cap="Cambios en la subdimensión confianza institucional.", fig.align = 'center', out.width = '100%',out.height='100%'}
+knitr::include_graphics(path = "output/graphs/alluvial_conf_institucional.png")
 ```
 
-En general, al igual que para el ítem de confianza entre personas, el de confianza institucional es bajo en Chile entre los respondentes, quienes mayoritariamente confían “nada” y “poco” en las instituciones del país, en este caso el gobierno, el presidente o los partidos políticos. “Nada” de confianza es la categoría que recoge más preferencias, con un aumento notorio en el 2019 (62,2%), antes de bajar nuevamente en 2020 (42,5%, muy cercano a la frecuencia de 2016). Podría hipotetizarse que el estallido alivió la sensación de desconfianza total o fuerte en estas tres instituciones. La opción “bastante” varía mucho (entre el 6,6% correspondiente al 2019 y el 23,5% para el año anterior, 2018, mientras se mantiene en torno al 15% para las otras olas). Finalmente, la categoría “mucha” confianza se mantiene muy baja en todas las olas.
+En general, al igual que para el ítem de confianza entre personas, en la Figura \@ref(fig:alluvial-conf-institucional) se observa que el ítem de confianza institucional es muy reducido en Chile entre los respondentes, quienes mayoritariamente confían “nada” y “poco” en las instituciones del país, en este caso el gobierno, el presidente o los partidos políticos. Como era de esperarse, pero corresponde a una de las mayore brechas en la cohesión, “nada” de confianza es la categoría que recoge más preferencias, con un aumento notorio en el 2019 (pasando de 30,4% a un 62,2%), antes de bajar nuevamente en 2020 (42,5%, muy cercano a la frecuencia de 2016). El salto entre 2018 y 2019 es uno de los mayores observados en este capítulo, correspondiente al aumento del malestar de los ciudadanos frente a la ausencia de respuestas frente a sus demandas. Respecto de la baja al año siguiente, podría hipotetizarse que el estallido de 2019 alivió la sensación de desconfianza total o fuerte en estas tres instituciones. La opción “bastante” varía mucho (entre el 6,6% correspondiente al 2019 y el 23,5% para el año anterior, 2018, mientras se mantiene en torno al 15% para las otras olas). Finalmente, la categoría “mucha” confianza se mantiene muy baja en todas las olas.
 
-En cuanto a las variaciones entre olas y entre respondentes, las personas en general mantienen su preferencia de un año a otro, salvo entre el 2019 y el 2020, cuando observamos un flujo importante desde “nada de confianza” hacia la categoría contigua de “poca confianza”, lo que explica la importante variación entre el 2019 y el 2020, que podría deberse al estallido. Como era de esperarse, los cambios son nuevamente hacia categorías contiguas, con muy poco traspaso entre extremos.
+En cuanto a las variaciones entre olas y entre respondentes, las personas en general mantienen su preferencia de un año a otro, salvo entre el 2019 y el 2020, cuando observamos un flujo importante desde “nada de confianza” hacia la categoría contigua de “poca confianza”, lo que explica la importante variación entre el 2019 y el 2020, que podría deberse al estallido. Como era de esperarse, los cambios son nuevamente hacia categorías contiguas, con muy poco traspaso entre extremos. 
 
 **Nota: podría valer la pena pasar a 3 categorías en vez de 5.
 
@@ -147,65 +159,71 @@ En cuanto a las variaciones entre olas y entre respondentes, las personas en gen
 ### Solidaridad
 
 Indicadores (4):
+
 -	Ha donado dinero a una obra social o de caridad
--	Ha prestado una suma de dinero de $10.000.- o mas
+
+-	Ha prestado una suma de dinero de $10.000.- o más
+
 -	Ha conversado con una persona en problemas o deprimida
+
 -	Ha ayudado a alguien a conseguir trabajo
 
 ```{r alluvial-solidaridad, echo=FALSE, fig.cap="Cambios en la subdimensión  solidaridad.", fig.align = 'center', out.width = '100%',out.height='100%'}
-knitr::include_graphics(path = "output/graphs/alluvial_solidaridad.svg")
+knitr::include_graphics(path = "output/graphs/alluvial_solidaridad.png")
 ```
 
-En general, en este indicador que busca dar cuenta de prosocialidad (visitas, donaciones, ayuda hacia otros) entre los respondentes, menos de un cuarto contesta que nunca ha tenido actividades prosociales, lo que se mantiene entre olas. Las categorías que indican una prosocialidad media (“lo hizo una o dos veces”) o alta (“lo hizo más de dos veces”) son casi equivalentes en las cinco olas. Casi no presentan variaciones en su tamaño general a lo largo del período. El estallido no significa un aumento para la ola 2020.
+En general, en el indicador que se observa en la Figura \@ref(fig:alluvial-solidaridad) y que busca dar cuenta de la prosocialidad (visitas, donaciones, ayuda hacia otros) entre los respondentes, menos de un cuarto contesta que nunca ha tenido actividades prosociales, lo que se mantiene entre olas. Las categorías que indican una prosocialidad media (“lo hizo una o dos veces”) o alta (“lo hizo más de dos veces”) son casi equivalentes en las cinco olas. Casi no presentan variaciones en su tamaño general a lo largo del período. El estallido no significa un aumento para la ola 2020.
 
 En cuanto a las variaciones entre olas y entre respondentes, la mayoría de los respondentes contesta lo mismo de una ola a otra, con flujos muy menores entre las dos categorías extremas. Los movimientos más importantes son hacia las categorías contiguas y estos flujos se mantienen muy estables a lo largo del período.
 
 ### Participación cívica
 
 Indicadores (4):
+
 -	Firmado una carta o petición apoyando una causa
--	Asistido a una marcha o manifestación pacifica
+
+-	Asistido a una marcha o manifestación pacífica
+
 -	Participado en una huelga
+
 -	Usado las redes sociales para expresar su opinión en temas públicos
 
 ```{r alluvial-participacion, echo=FALSE, fig.cap="Cambios en la subdimensión participacion civica.", fig.align = 'center', out.width = '100%',out.height='100%'}
-knitr::include_graphics(path = "output/graphs/alluvial_participacion.svg")
+knitr::include_graphics(path = "output/graphs/alluvial_participacion.png")
 ```
 
-En general, en cuanto a la participación cívica (asistir a marchas, participar en huelgas, expresar opiniones por redes sociales y firmar una carta o petición), la mayorá de los respondentes nunca lo ha hecho, con un aumento constante de alrededor de un 55% a un 60% entre el 2017 y el 2018, antes de bajar nuevamente a su nivel inicial en 2019. Al no contar con los datos 2020, no podemos indicar si el estallido significó un cambio en esta nula participación cívica, como se podría esperar. La categoría “casi nunca” es la segunda de mayor importancia algo lago del período con entre una cuarta y una tercera parte de las respuestas. Las opciones de participación cívica “frecuente” o “muy frecuente” son muy bajas, particularmente la última. 
+En general, en la Figura \@ref(fig:alluvial-participacion) se observa que en cuanto a la participación cívica (asistir a marchas, participar en huelgas, expresar opiniones por redes sociales y firmar una carta o petición), la mayoría de los respondentes nunca lo ha hecho, con un aumento constante de alrededor de un 55% a un 60% entre el 2017 y el 2018, antes de bajar nuevamente a su nivel inicial en 2019. Al no contar con los datos 2020, no podemos indicar si el estallido de 2019 significó un cambio en esta nula participación cívica, como se podría esperar. La categoría “casi nunca” es la segunda de mayor importancia a lo largo del período con entre una cuarta y una tercera parte de las respuestas. Las opciones de participación cívica “frecuente” o “muy frecuente” son muy bajas, particularmente la última. 
 
-En cuanto a las variaciones entre olas y entre respondentes, la respuesta “nunca” es muy estable y presenta pocos cambios, siendo estos a la categoría contigua de “caso nunca”. Este flujo aumenta levemente entre 2018 y 2019. Respecto de la categoría “casi nunca”, los principales flujos son para la misma categoría al año siguiente, es decir que las personas mantienen su opinión o hacia la categoría contigua “casi nunca”.
+En cuanto a las variaciones entre olas y entre respondentes, la respuesta “nunca” es muy estable y presenta pocos cambios, siendo estos hacia la categoría contigua de “caso nunca”. Este flujo aumenta levemente entre 2018 y 2019. Respecto de la categoría “casi nunca”, los principales flujos son para la misma categoría al año siguiente, es decir que las personas mantienen su opinión o hacia la categoría contigua “casi nunca”.
 
 En resumen, la participación cívica es muy baja y no varía particularmente entre olas. 
+
+**Nota: mejor dejar 5 categorías que 3, según diagnóstico de Kevin.
 
 ## Cohesion territorial
 
 Indicadores (4): 
+
 -	Este barrio es ideal para mi 
+
 -	Me siento integrado/a en este barrio 
+
 -	Me identifico con la gente de este barrio 
+
 -	Este barrio es parte de mi 
 
 ```{r alluvial-cohesion-territorial, echo=FALSE, fig.cap="Cambios en la subdimensión cohesion territorial.", fig.align = 'center', out.width = '100%',out.height='100%'}
-knitr::include_graphics(path = "output/graphs/alluvial_cohesion_territorial.svg")
+knitr::include_graphics(path = "output/graphs/alluvial_cohesion_territorial.png")
 ```
 
-En general, los respondentes suman una abrumadora mayoría entre “de acuerdo” respecto de su identificación con el barrio en que vive, opción que recoge casi el 60% de las preferencias en todas las olas y “totalmente de acuerdo”, con alrededor del 18% en todas las olas, salvo en el 2016, cuando puntúa solo un 11,5%. Una cantidad mínima de personas no se identifica con su barrio a lo largo de las cuatro olas. No contamos con los datos 2020, por lo que no se puede ver si el estallido tuvo un impacto sobre la identificación con el barrio aunque es esperable que no varíe particularmente. 
+En general, en la Figura \@ref(fig:alluvial-cohesion-territorial) los respondentes suman una abrumadora mayoría entre “de acuerdo” respecto de su identificación con el barrio en que vive, opción que recoge casi el 60% de las preferencias en todas las olas y “totalmente de acuerdo”, con alrededor del 18% en todas las olas, salvo en el 2016, cuando puntúa sólo un 11,5%. Se trata de uno de los indicadores más positivos de cohesión social que analizamos en este capítulo. Una cantidad mínima de personas no se identifica con su barrio a lo largo de las cuatro olas. No contamos con los datos 2020, por lo que no se puede ver si el estallido tuvo un impacto sobre la identificación con el barrio aunque es esperable que no varíe particularmente. 
 
-En cuanto a las variaciones entre olas y entre respondentes, la categoría principal (“de acuerdo”), es decir de mayor identificación con el barrio, no conoce mayores flujos de un año a otro. Las demás categorías son más inestables e indican un mayor cambio de percepción entre olas.
+En cuanto a las variaciones entre olas y entre respondentes, la categoría principal (“de acuerdo”), es decir de mayor identificación con el barrio, no conoce mayores flujos de un año a otro y es muy estable. Las demás categorías son más inestables e indican un mayor cambio de percepción entre olas, nuevamente hacia las categorías contiguas.
 
-En resumen, también se trata de un indicador muy estable en el tiempo, aunque no se cuente con datos del 2020.
+En resumen, también se trata de un indicador muy positivo de cohesión social, además de muy estable en el tiempo, aunque no se cuente con datos del 2020.
 
-**Nota: podría valer la pena pasar a 3 categorías en vez de 5.
+** Nota: podría valer la pena pasar a 3 categorías en vez de 5.
 
-
-
-
-
-
-
-
-
-
+** Falta conclusión del capítulo, a redactar luego de comentarios de CEPAL.
 
 
