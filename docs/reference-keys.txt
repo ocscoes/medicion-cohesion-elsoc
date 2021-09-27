@@ -1,6 +1,5 @@
 fig:esquema-cepal
 tab:descriptivos-cohesion
-fig:cohesion-social-cor
 fig:confianza-interpersonal
 fig:confianza-interpersonal-cor
 fig:prejuicios
@@ -43,7 +42,6 @@ fig:alluvial-solidaridad
 fig:alluvial-participacion
 fig:alluvial-cohesion-territorial
 generación-de-indicadores-de-cohesión-social
-resumen-de-la-propuesta-de-medición-de-la-cohesión-social
 relaciones-sociales-de-igualdad
 sentido-de-pertenencia
 orientación-hacia-el-bien-común

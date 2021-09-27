@@ -1,0 +1,1332 @@
+This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2021) (preloaded format=pdflatex 2021.7.29)  27 SEP 2021 15:58
+entering extended mode
+ restricted \write18 enabled.
+ %&-line parsing enabled.
+**cohesion-cepal-elsoc.tex
+(./cohesion-cepal-elsoc.tex
+LaTeX2e <2021-06-01> patch level 1
+L3 programming layer <2021-07-12> (/home/juank/.TinyTeX/texmf-dist/tex/latex/ba
+se/book.cls
+Document Class: book 2021/02/12 v1.4n Standard LaTeX document class
+(/home/juank/.TinyTeX/texmf-dist/tex/latex/base/bk12.clo
+File: bk12.clo 2021/02/12 v1.4n Standard LaTeX file (size option)
+)
+\c@part=\count182
+\c@chapter=\count183
+\c@section=\count184
+\c@subsection=\count185
+\c@subsubsection=\count186
+\c@paragraph=\count187
+\c@subparagraph=\count188
+\c@figure=\count189
+\c@table=\count190
+\abovecaptionskip=\skip47
+\belowcaptionskip=\skip48
+\bibindent=\dimen138
+) (/home/juank/.TinyTeX/texmf-dist/tex/latex/amsmath/amsmath.sty
+Package: amsmath 2021/04/20 v2.17j AMS math features
+\@mathmargin=\skip49
+For additional information on amsmath, use the `?' option.
+(/home/juank/.TinyTeX/texmf-dist/tex/latex/amsmath/amstext.sty
+Package: amstext 2000/06/29 v2.01 AMS text
+(/home/juank/.TinyTeX/texmf-dist/tex/latex/amsmath/amsgen.sty
+File: amsgen.sty 1999/11/30 v2.0 generic functions
+\@emptytoks=\toks16
+\ex@=\dimen139
+)) (/home/juank/.TinyTeX/texmf-dist/tex/latex/amsmath/amsbsy.sty
+Package: amsbsy 1999/11/29 v1.2d Bold Symbols
+\pmbraise@=\dimen140
+) (/home/juank/.TinyTeX/texmf-dist/tex/latex/amsmath/amsopn.sty
+Package: amsopn 2016/03/08 v2.02 operator names
+)
+\inf@bad=\count191
+LaTeX Info: Redefining \frac on input line 234.
+\uproot@=\count192
+\leftroot@=\count193
+LaTeX Info: Redefining \overline on input line 399.
+\classnum@=\count194
+\DOTSCASE@=\count195
+LaTeX Info: Redefining \ldots on input line 496.
+LaTeX Info: Redefining \dots on input line 499.
+LaTeX Info: Redefining \cdots on input line 620.
+\Mathstrutbox@=\box50
+\strutbox@=\box51
+\big@size=\dimen141
+LaTeX Font Info:    Redeclaring font encoding OML on input line 743.
+LaTeX Font Info:    Redeclaring font encoding OMS on input line 744.
+\macc@depth=\count196
+\c@MaxMatrixCols=\count197
+\dotsspace@=\muskip16
+\c@parentequation=\count198
+\dspbrk@lvl=\count199
+\tag@help=\toks17
+\row@=\count266
+\column@=\count267
+\maxfields@=\count268
+\andhelp@=\toks18
+\eqnshift@=\dimen142
+\alignsep@=\dimen143
+\tagshift@=\dimen144
+\tagwidth@=\dimen145
+\totwidth@=\dimen146
+\lineht@=\dimen147
+\@envbody=\toks19
+\multlinegap=\skip50
+\multlinetaggap=\skip51
+\mathdisplay@stack=\toks20
+LaTeX Info: Redefining \[ on input line 2923.
+LaTeX Info: Redefining \] on input line 2924.
+) (/home/juank/.TinyTeX/texmf-dist/tex/latex/amsfonts/amssymb.sty
+Package: amssymb 2013/01/14 v3.01 AMS font symbols
+(/home/juank/.TinyTeX/texmf-dist/tex/latex/amsfonts/amsfonts.sty
+Package: amsfonts 2013/01/14 v3.01 Basic AMSFonts support
+\symAMSa=\mathgroup4
+\symAMSb=\mathgroup5
+LaTeX Font Info:    Redeclaring math symbol \hbar on input line 98.
+LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
+(Font)                  U/euf/m/n --> U/euf/b/n on input line 106.
+)) (/home/juank/.TinyTeX/texmf-dist/tex/latex/lm/lmodern.sty
+Package: lmodern 2015/05/01 v1.6.1 Latin Modern Fonts
+LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
+(Font)                  OT1/cmr/m/n --> OT1/lmr/m/n on input line 22.
+LaTeX Font Info:    Overwriting symbol font `letters' in version `normal'
+(Font)                  OML/cmm/m/it --> OML/lmm/m/it on input line 23.
+LaTeX Font Info:    Overwriting symbol font `symbols' in version `normal'
+(Font)                  OMS/cmsy/m/n --> OMS/lmsy/m/n on input line 24.
+LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `normal'
+(Font)                  OMX/cmex/m/n --> OMX/lmex/m/n on input line 25.
+LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
+(Font)                  OT1/cmr/bx/n --> OT1/lmr/bx/n on input line 26.
+LaTeX Font Info:    Overwriting symbol font `letters' in version `bold'
+(Font)                  OML/cmm/b/it --> OML/lmm/b/it on input line 27.
+LaTeX Font Info:    Overwriting symbol font `symbols' in version `bold'
+(Font)                  OMS/cmsy/b/n --> OMS/lmsy/b/n on input line 28.
+LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `bold'
+(Font)                  OMX/cmex/m/n --> OMX/lmex/m/n on input line 29.
+LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `normal'
+(Font)                  OT1/cmr/bx/n --> OT1/lmr/bx/n on input line 31.
+LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `normal'
+(Font)                  OT1/cmss/m/n --> OT1/lmss/m/n on input line 32.
+LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `normal'
+(Font)                  OT1/cmr/m/it --> OT1/lmr/m/it on input line 33.
+LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `normal'
+(Font)                  OT1/cmtt/m/n --> OT1/lmtt/m/n on input line 34.
+LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `bold'
+(Font)                  OT1/cmr/bx/n --> OT1/lmr/bx/n on input line 35.
+LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
+(Font)                  OT1/cmss/bx/n --> OT1/lmss/bx/n on input line 36.
+LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
+(Font)                  OT1/cmr/bx/it --> OT1/lmr/bx/it on input line 37.
+LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
+(Font)                  OT1/cmtt/m/n --> OT1/lmtt/m/n on input line 38.
+) (/home/juank/.TinyTeX/texmf-dist/tex/latex/setspace/setspace.sty
+Package: setspace 2011/12/19 v6.7a set line spacing
+) (/home/juank/.TinyTeX/texmf-dist/tex/generic/iftex/iftex.sty
+Package: iftex 2020/03/06 v1.0d TeX engine tests
+) (/home/juank/.TinyTeX/texmf-dist/tex/latex/base/fontenc.sty
+Package: fontenc 2021/04/29 v2.0v Standard LaTeX package
+LaTeX Font Info:    Trying to load font information for T1+lmr on input line 11
+2.
+(/home/juank/.TinyTeX/texmf-dist/tex/latex/lm/t1lmr.fd
+File: t1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
+)) (/home/juank/.TinyTeX/texmf-dist/tex/latex/base/inputenc.sty
+Package: inputenc 2021/02/14 v1.3d Input encoding file
+\inpenc@prehook=\toks21
+\inpenc@posthook=\toks22
+) (/home/juank/.TinyTeX/texmf-dist/tex/latex/base/textcomp.sty
+Package: textcomp 2020/02/02 v2.0n Standard LaTeX package
+) (/home/juank/.TinyTeX/texmf-dist/tex/latex/upquote/upquote.sty
+Package: upquote 2012/04/19 v1.3 upright-quote and grave-accent glyphs in verba
+tim
+) (/home/juank/.TinyTeX/texmf-dist/tex/latex/microtype/microtype.sty
+Package: microtype 2021/03/14 v2.8c Micro-typographical refinements (RS)
+(/home/juank/.TinyTeX/texmf-dist/tex/latex/graphics/keyval.sty
+Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
+\KV@toks@=\toks23
+)
+\MT@toks=\toks24
+\MT@count=\count269
+LaTeX Info: Redefining \textls on input line 790.
+\MT@outer@kern=\dimen148
+LaTeX Info: Redefining \textmicrotypecontext on input line 1374.
+\MT@listname@count=\count270
+(/home/juank/.TinyTeX/texmf-dist/tex/latex/microtype/microtype-pdftex.def
+File: microtype-pdftex.def 2021/03/14 v2.8c Definitions specific to pdftex (RS)
+
+LaTeX Info: Redefining \lsstyle on input line 915.
+LaTeX Info: Redefining \lslig on input line 915.
+\MT@outer@space=\skip52
+)
+Package microtype Info: Loading configuration file microtype.cfg.
+(/home/juank/.TinyTeX/texmf-dist/tex/latex/microtype/microtype.cfg
+File: microtype.cfg 2021/03/14 v2.8c microtype main configuration file (RS)
+)) (/home/juank/.TinyTeX/texmf-dist/tex/latex/xcolor/xcolor.sty
+Package: xcolor 2016/05/11 v2.12 LaTeX color extensions (UK)
+(/home/juank/.TinyTeX/texmf-dist/tex/latex/graphics-cfg/color.cfg
+File: color.cfg 2016/01/02 v1.6 sample color configuration
+)
+Package xcolor Info: Driver file: pdftex.def on input line 225.
+(/home/juank/.TinyTeX/texmf-dist/tex/latex/graphics-def/pdftex.def
+File: pdftex.def 2020/10/05 v1.2a Graphics/color driver for pdftex
+)
+Package xcolor Info: Model `cmy' substituted by `cmy0' on input line 1348.
+Package xcolor Info: Model `hsb' substituted by `rgb' on input line 1352.
+Package xcolor Info: Model `RGB' extended on input line 1364.
+Package xcolor Info: Model `HTML' substituted by `rgb' on input line 1366.
+Package xcolor Info: Model `Hsb' substituted by `hsb' on input line 1367.
+Package xcolor Info: Model `tHsb' substituted by `hsb' on input line 1368.
+Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1369.
+Package xcolor Info: Model `Gray' substituted by `gray' on input line 1370.
+Package xcolor Info: Model `wave' substituted by `hsb' on input line 1371.
+(/home/juank/.TinyTeX/texmf-dist/tex/latex/graphics/dvipsnam.def
+File: dvipsnam.def 2016/06/17 v3.0m Driver-dependent file (DPC,SPQR)
+) (/home/juank/.TinyTeX/texmf-dist/tex/latex/xcolor/svgnam.def
+File: svgnam.def 2016/05/11 v2.12 Predefined colors according to SVG 1.1 (UK)
+) (/home/juank/.TinyTeX/texmf-dist/tex/latex/xcolor/x11nam.def
+File: x11nam.def 2016/05/11 v2.12 Predefined colors according to Unix/X11 (UK)
+)) (/home/juank/.TinyTeX/texmf-dist/tex/latex/bookmark/bookmark.sty
+Package: bookmark 2020-11-06 v1.29 PDF bookmarks (HO)
+(/home/juank/.TinyTeX/texmf-dist/tex/latex/hyperref/hyperref.sty
+Package: hyperref 2021-06-07 v7.00m Hypertext links for LaTeX
+(/home/juank/.TinyTeX/texmf-dist/tex/generic/ltxcmds/ltxcmds.sty
+Package: ltxcmds 2020-05-10 v1.25 LaTeX kernel commands for general use (HO)
+) (/home/juank/.TinyTeX/texmf-dist/tex/generic/pdftexcmds/pdftexcmds.sty
+Package: pdftexcmds 2020-06-27 v0.33 Utility functions of pdfTeX for LuaTeX (HO
+)
+(/home/juank/.TinyTeX/texmf-dist/tex/generic/infwarerr/infwarerr.sty
+Package: infwarerr 2019/12/03 v1.5 Providing info/warning/error messages (HO)
+)
+Package pdftexcmds Info: \pdf@primitive is available.
+Package pdftexcmds Info: \pdf@ifprimitive is available.
+Package pdftexcmds Info: \pdfdraftmode found.
+) (/home/juank/.TinyTeX/texmf-dist/tex/generic/kvsetkeys/kvsetkeys.sty
+Package: kvsetkeys 2019/12/15 v1.18 Key value parser (HO)
+) (/home/juank/.TinyTeX/texmf-dist/tex/generic/kvdefinekeys/kvdefinekeys.sty
+Package: kvdefinekeys 2019-12-19 v1.6 Define keys (HO)
+) (/home/juank/.TinyTeX/texmf-dist/tex/generic/pdfescape/pdfescape.sty
+Package: pdfescape 2019/12/09 v1.15 Implements pdfTeX's escape features (HO)
+) (/home/juank/.TinyTeX/texmf-dist/tex/latex/hycolor/hycolor.sty
+Package: hycolor 2020-01-27 v1.10 Color options for hyperref/bookmark (HO)
+) (/home/juank/.TinyTeX/texmf-dist/tex/latex/letltxmacro/letltxmacro.sty
+Package: letltxmacro 2019/12/03 v1.6 Let assignment for LaTeX macros (HO)
+) (/home/juank/.TinyTeX/texmf-dist/tex/latex/auxhook/auxhook.sty
+Package: auxhook 2019-12-17 v1.6 Hooks for auxiliary files (HO)
+) (/home/juank/.TinyTeX/texmf-dist/tex/latex/kvoptions/kvoptions.sty
+Package: kvoptions 2020-10-07 v3.14 Key value format for package options (HO)
+)
+\@linkdim=\dimen149
+\Hy@linkcounter=\count271
+\Hy@pagecounter=\count272
+(/home/juank/.TinyTeX/texmf-dist/tex/latex/hyperref/pd1enc.def
+File: pd1enc.def 2021-06-07 v7.00m Hyperref: PDFDocEncoding definition (HO)
+Now handling font encoding PD1 ...
+... no UTF-8 mapping file for font encoding PD1
+) (/home/juank/.TinyTeX/texmf-dist/tex/latex/hyperref/hyperref-langpatches.def
+File: hyperref-langpatches.def 2021-06-07 v7.00m Hyperref: patches for babel la
+nguages
+) (/home/juank/.TinyTeX/texmf-dist/tex/generic/intcalc/intcalc.sty
+Package: intcalc 2019/12/15 v1.3 Expandable calculations with integers (HO)
+) (/home/juank/.TinyTeX/texmf-dist/tex/generic/etexcmds/etexcmds.sty
+Package: etexcmds 2019/12/15 v1.7 Avoid name clashes with e-TeX commands (HO)
+)
+\Hy@SavedSpaceFactor=\count273
+(/home/juank/.TinyTeX/texmf-dist/tex/latex/hyperref/puenc.def
+File: puenc.def 2021-06-07 v7.00m Hyperref: PDF Unicode definition (HO)
+Now handling font encoding PU ...
+... no UTF-8 mapping file for font encoding PU
+)
+Package hyperref Info: Option `unicode' set `true' on input line 4073.
+Package hyperref Info: Hyper figures OFF on input line 4192.
+Package hyperref Info: Link nesting OFF on input line 4197.
+Package hyperref Info: Hyper index ON on input line 4200.
+Package hyperref Info: Plain pages OFF on input line 4207.
+Package hyperref Info: Backreferencing OFF on input line 4212.
+Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
+Package hyperref Info: Bookmarks ON on input line 4445.
+\c@Hy@tempcnt=\count274
+(/home/juank/.TinyTeX/texmf-dist/tex/latex/url/url.sty
+\Urlmuskip=\muskip17
+Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
+)
+LaTeX Info: Redefining \url on input line 4804.
+\XeTeXLinkMargin=\dimen150
+(/home/juank/.TinyTeX/texmf-dist/tex/generic/bitset/bitset.sty
+Package: bitset 2019/12/09 v1.3 Handle bit-vector datatype (HO)
+(/home/juank/.TinyTeX/texmf-dist/tex/generic/bigintcalc/bigintcalc.sty
+Package: bigintcalc 2019/12/15 v1.5 Expandable calculations on big integers (HO
+)
+))
+\Fld@menulength=\count275
+\Field@Width=\dimen151
+\Fld@charsize=\dimen152
+Package hyperref Info: Hyper figures OFF on input line 6076.
+Package hyperref Info: Link nesting OFF on input line 6081.
+Package hyperref Info: Hyper index ON on input line 6084.
+Package hyperref Info: backreferencing OFF on input line 6091.
+Package hyperref Info: Link coloring OFF on input line 6096.
+Package hyperref Info: Link coloring with OCG OFF on input line 6101.
+Package hyperref Info: PDF/A mode OFF on input line 6106.
+LaTeX Info: Redefining \ref on input line 6146.
+LaTeX Info: Redefining \pageref on input line 6150.
+(/home/juank/.TinyTeX/texmf-dist/tex/latex/base/atbegshi-ltx.sty
+Package: atbegshi-ltx 2021/01/10 v1.0c Emulation of the original atbegshi
+package with kernel methods
+)
+\Hy@abspage=\count276
+\c@Item=\count277
+\c@Hfootnote=\count278
+)
+Package hyperref Info: Driver (autodetected): hpdftex.
+(/home/juank/.TinyTeX/texmf-dist/tex/latex/hyperref/hpdftex.def
+File: hpdftex.def 2021-06-07 v7.00m Hyperref driver for pdfTeX
+(/home/juank/.TinyTeX/texmf-dist/tex/latex/base/atveryend-ltx.sty
+Package: atveryend-ltx 2020/08/19 v1.0a Emulation of the original atvery packag
+e
+with kernel methods
+)
+\Fld@listcount=\count279
+\c@bookmark@seq@number=\count280
+(/home/juank/.TinyTeX/texmf-dist/tex/latex/rerunfilecheck/rerunfilecheck.sty
+Package: rerunfilecheck 2019/12/05 v1.9 Rerun checks for auxiliary files (HO)
+(/home/juank/.TinyTeX/texmf-dist/tex/generic/uniquecounter/uniquecounter.sty
+Package: uniquecounter 2019/12/15 v1.4 Provide unlimited unique counter (HO)
+)
+Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
+86.
+)
+\Hy@SectionHShift=\skip53
+) (/home/juank/.TinyTeX/texmf-dist/tex/latex/bookmark/bkm-pdftex.def
+File: bkm-pdftex.def 2020-11-06 v1.29 bookmark driver for pdfTeX (HO)
+\BKM@id=\count281
+))
+Package hyperref Info: Option `colorlinks' set `true' on input line 49.
+(/home/juank/.TinyTeX/texmf-dist/tex/latex/geometry/geometry.sty
+Package: geometry 2020/01/02 v5.9 Page Geometry
+(/home/juank/.TinyTeX/texmf-dist/tex/generic/iftex/ifvtex.sty
+Package: ifvtex 2019/10/25 v1.7 ifvtex legacy package. Use iftex instead.
+)
+\Gm@cnth=\count282
+\Gm@cntv=\count283
+\c@Gm@tempcnt=\count284
+\Gm@bindingoffset=\dimen153
+\Gm@wd@mp=\dimen154
+\Gm@odd@mp=\dimen155
+\Gm@even@mp=\dimen156
+\Gm@layoutwidth=\dimen157
+\Gm@layoutheight=\dimen158
+\Gm@layouthoffset=\dimen159
+\Gm@layoutvoffset=\dimen160
+\Gm@dimlist=\toks25
+) (/home/juank/.TinyTeX/texmf-dist/tex/latex/tools/longtable.sty
+Package: longtable 2021-05-07 v4.16 Multi-page Table package (DPC)
+\LTleft=\skip54
+\LTright=\skip55
+\LTpre=\skip56
+\LTpost=\skip57
+\LTchunksize=\count285
+\LTcapwidth=\dimen161
+\LT@head=\box52
+\LT@firsthead=\box53
+\LT@foot=\box54
+\LT@lastfoot=\box55
+\LT@gbox=\box56
+\LT@cols=\count286
+\LT@rows=\count287
+\c@LT@tables=\count288
+\c@LT@chunks=\count289
+\LT@p@ftn=\toks26
+) (/home/juank/.TinyTeX/texmf-dist/tex/latex/booktabs/booktabs.sty
+Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
+\heavyrulewidth=\dimen162
+\lightrulewidth=\dimen163
+\cmidrulewidth=\dimen164
+\belowrulesep=\dimen165
+\belowbottomsep=\dimen166
+\aboverulesep=\dimen167
+\abovetopsep=\dimen168
+\cmidrulesep=\dimen169
+\cmidrulekern=\dimen170
+\defaultaddspace=\dimen171
+\@cmidla=\count290
+\@cmidlb=\count291
+\@aboverulesep=\dimen172
+\@belowrulesep=\dimen173
+\@thisruleclass=\count292
+\@lastruleclass=\count293
+\@thisrulewidth=\dimen174
+) (/home/juank/.TinyTeX/texmf-dist/tex/latex/tools/array.sty
+Package: array 2021/04/20 v2.5e Tabular extension package (FMi)
+\col@sep=\dimen175
+\ar@mcellbox=\box57
+\extrarowheight=\dimen176
+\NC@list=\toks27
+\extratabsurround=\skip58
+\backup@length=\skip59
+\ar@cellbox=\box58
+) (/home/juank/.TinyTeX/texmf-dist/tex/latex/tools/calc.sty
+Package: calc 2017/05/25 v4.3 Infix arithmetic (KKT,FJ)
+\calc@Acount=\count294
+\calc@Bcount=\count295
+\calc@Adimen=\dimen177
+\calc@Bdimen=\dimen178
+\calc@Askip=\skip60
+\calc@Bskip=\skip61
+LaTeX Info: Redefining \setlength on input line 80.
+LaTeX Info: Redefining \addtolength on input line 81.
+\calc@Ccount=\count296
+\calc@Cskip=\skip62
+) (/home/juank/.TinyTeX/texmf-dist/tex/latex/etoolbox/etoolbox.sty
+Package: etoolbox 2020/10/05 v2.5k e-TeX tools for LaTeX (JAW)
+\etb@tempcnta=\count297
+) (/home/juank/.TinyTeX/texmf-dist/tex/latex/mdwtools/footnote.sty
+Package: footnote 1997/01/28 1.13 Save footnotes around boxes
+\fn@notes=\box59
+\fn@width=\dimen179
+) (/home/juank/.TinyTeX/texmf-dist/tex/latex/graphics/graphicx.sty
+Package: graphicx 2020/12/05 v1.2c Enhanced LaTeX Graphics (DPC,SPQR)
+(/home/juank/.TinyTeX/texmf-dist/tex/latex/graphics/graphics.sty
+Package: graphics 2021/03/04 v1.4d Standard LaTeX Graphics (DPC,SPQR)
+(/home/juank/.TinyTeX/texmf-dist/tex/latex/graphics/trig.sty
+Package: trig 2016/01/03 v1.10 sin cos tan (DPC)
+) (/home/juank/.TinyTeX/texmf-dist/tex/latex/graphics-cfg/graphics.cfg
+File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
+)
+Package graphics Info: Driver file: pdftex.def on input line 107.
+)
+\Gin@req@height=\dimen180
+\Gin@req@width=\dimen181
+)
+\cslhangindent=\skip63
+\csllabelwidth=\skip64
+\cslentryspacingunit=\skip65
+(/home/juank/.TinyTeX/texmf-dist/tex/generic/babel/babel.sty
+Package: babel 2021/07/22 3.63 The Babel package
+(/home/juank/.TinyTeX/texmf-dist/tex/generic/babel/babel.def
+File: babel.def 2021/07/22 3.63 Babel common definitions
+\babel@savecnt=\count298
+\U@D=\dimen182
+\l@unhyphenated=\language11
+(/home/juank/.TinyTeX/texmf-dist/tex/generic/babel/txtbabel.def)
+\bbl@readstream=\read2
+)
+\bbl@dirlevel=\count299
+(/home/juank/.TinyTeX/texmf-dist/tex/generic/babel-spanish/spanish.ldf
+Language: spanish.ldf 2021/05/27 v5.0q Spanish support from the babel system
+\es@quottoks=\toks28
+\es@quotdepth=\count300
+Package babel Info: Making " an active character on input line 570.
+Package babel Info: Making . an active character on input line 675.
+Package babel Info: Making < an active character on input line 722.
+Package babel Info: Making > an active character on input line 722.
+)) (/home/juank/.TinyTeX/texmf-dist/tex/latex/babelbib/babelbib.sty
+Package: babelbib 2021/01/06 v1.34 babelbib: multilingual bibliographies
+\c@btxromaniannumeral=\count301
+) (/home/juank/.TinyTeX/texmf-dist/tex/latex/psnfss/times.sty
+Package: times 2020/03/25 PSNFSS-v9.3 (SPQR) 
+) (/home/juank/.TinyTeX/texmf-dist/tex/latex/caption/caption.sty
+Package: caption 2020/10/26 v3.5g Customizing captions (AR)
+(/home/juank/.TinyTeX/texmf-dist/tex/latex/caption/caption3.sty
+Package: caption3 2020/10/21 v2.2e caption3 kernel (AR)
+\captionmargin=\dimen183
+\captionmargin@=\dimen184
+\captionwidth=\dimen185
+\caption@tempdima=\dimen186
+\caption@indent=\dimen187
+\caption@parindent=\dimen188
+\caption@hangindent=\dimen189
+Package caption Info: Standard document class detected.
+)
+\c@caption@flags=\count302
+\c@continuedfloat=\count303
+Package caption Info: hyperref package is loaded.
+Package caption Info: longtable package is loaded.
+(/home/juank/.TinyTeX/texmf-dist/tex/latex/caption/ltcaption.sty
+Package: ltcaption 2020/05/30 v1.4b longtable captions (AR)
+)) (/home/juank/.TinyTeX/texmf-dist/tex/latex/float/float.sty
+Package: float 2001/11/08 v1.3d Float enhancements (AL)
+\c@float@type=\count304
+\float@exts=\toks29
+\float@box=\box60
+\@float@everytoks=\toks30
+\@floatcapt=\box61
+) (/home/juank/.TinyTeX/texmf-dist/tex/latex/multirow/multirow.sty
+Package: multirow 2021/03/15 v2.8 Span multiple rows of a table
+\multirow@colwidth=\skip66
+\multirow@cntb=\count305
+\multirow@dima=\skip67
+\bigstrutjot=\dimen190
+) (/home/juank/.TinyTeX/texmf-dist/tex/latex/wrapfig/wrapfig.sty
+\wrapoverhang=\dimen191
+\WF@size=\dimen192
+\c@WF@wrappedlines=\count306
+\WF@box=\box62
+\WF@everypar=\toks31
+Package: wrapfig 2003/01/31  v 3.6
+) (/home/juank/.TinyTeX/texmf-dist/tex/latex/colortbl/colortbl.sty
+Package: colortbl 2020/01/04 v1.0e Color table columns (DPC)
+\everycr=\toks32
+\minrowclearance=\skip68
+) (/home/juank/.TinyTeX/texmf-dist/tex/latex/pdflscape/pdflscape.sty
+Package: pdflscape 2019/12/05 v0.12 Display of landscape pages in PDF (HO)
+(/home/juank/.TinyTeX/texmf-dist/tex/latex/graphics/lscape.sty
+Package: lscape 2020/05/28 v3.02 Landscape Pages (DPC)
+)
+Package pdflscape Info: Auto-detected driver: pdftex on input line 81.
+) (/home/juank/.TinyTeX/texmf-dist/tex/latex/tabu/tabu.sty
+Package: tabu 2019/01/11 v2.9 - flexible LaTeX tabulars (FC+tabu-fixed)
+(/home/juank/.TinyTeX/texmf-dist/tex/latex/varwidth/varwidth.sty
+Package: varwidth 2009/03/30 ver 0.92;  Variable-width minipages
+\@vwid@box=\box63
+\sift@deathcycles=\count307
+\@vwid@loff=\dimen193
+\@vwid@roff=\dimen194
+)
+\c@taburow=\count308
+\tabu@nbcols=\count309
+\tabu@cnt=\count310
+\tabu@Xcol=\count311
+\tabu@alloc=\count312
+\tabu@nested=\count313
+\tabu@target=\dimen195
+\tabu@spreadtarget=\dimen196
+\tabu@naturalX=\dimen197
+\tabucolX=\dimen198
+\tabu@Xsum=\dimen199
+\extrarowdepth=\dimen256
+\abovetabulinesep=\dimen257
+\belowtabulinesep=\dimen258
+\tabustrutrule=\dimen259
+\tabu@thebody=\toks33
+\tabu@footnotes=\toks34
+\tabu@box=\box64
+\tabu@arstrutbox=\box65
+\tabu@hleads=\box66
+\tabu@vleads=\box67
+\tabu@cellskip=\skip69
+) (/home/juank/.TinyTeX/texmf-dist/tex/latex/threeparttable/threeparttable.sty
+Package: threeparttable 2003/06/13  v 3.0
+\@tempboxb=\box68
+) (/home/juank/.TinyTeX/texmf-dist/tex/latex/pdfpages/pdfpages.sty
+Package: pdfpages 2021/03/06 v0.5t Insert pages of external PDF documents (AM)
+(/home/juank/.TinyTeX/texmf-dist/tex/latex/base/ifthen.sty
+Package: ifthen 2020/11/24 v1.1c Standard LaTeX ifthen package (DPC)
+) (/home/juank/.TinyTeX/texmf-dist/tex/latex/eso-pic/eso-pic.sty
+Package: eso-pic 2020/10/14 v3.0a eso-pic (RN)
+\ESO@tempdima=\dimen260
+\ESO@tempdimb=\dimen261
+)
+\AM@pagewidth=\dimen262
+\AM@pageheight=\dimen263
+\AM@fboxrule=\dimen264
+(/home/juank/.TinyTeX/texmf-dist/tex/latex/pdfpages/pppdftex.def
+File: pppdftex.def 2021/03/06 v0.5t Pdfpages driver for pdfTeX (AM)
+)
+\pdfpages@includegraphics@status=\count314
+\AM@pagebox=\box69
+\AM@global@opts=\toks35
+\AM@pagecnt=\count315
+\AM@toc@title=\toks36
+\c@AM@survey=\count316
+\AM@templatesizebox=\box70
+) (/home/juank/.TinyTeX/texmf-dist/tex/latex/threeparttablex/threeparttablex.st
+y
+Package: threeparttablex 2013/07/23 v0.3 by daleif
+(/home/juank/.TinyTeX/texmf-dist/tex/latex/environ/environ.sty
+Package: environ 2014/05/04 v0.3 A new way to define environments
+(/home/juank/.TinyTeX/texmf-dist/tex/latex/trimspaces/trimspaces.sty
+Package: trimspaces 2009/09/17 v1.1 Trim spaces around a token list
+))
+\TPTL@width=\skip70
+) (/home/juank/.TinyTeX/texmf-dist/tex/generic/ulem/ulem.sty
+\UL@box=\box71
+\UL@hyphenbox=\box72
+\UL@skip=\skip71
+\UL@hook=\toks37
+\UL@height=\dimen265
+\UL@pe=\count317
+\UL@pixel=\dimen266
+\ULC@box=\box73
+Package: ulem 2019/11/18
+\ULdepth=\dimen267
+) (/home/juank/.TinyTeX/texmf-dist/tex/latex/makecell/makecell.sty
+Package: makecell 2009/08/03 V0.1e Managing of Tab Column Heads and Cells
+\rotheadsize=\dimen268
+\c@nlinenum=\count318
+\TeXr@lab=\toks38
+)
+LaTeX Font Info:    Trying to load font information for T1+ptm on input line 16
+2.
+(/home/juank/.TinyTeX/texmf-dist/tex/latex/psnfss/t1ptm.fd
+File: t1ptm.fd 2001/06/04 font definitions for T1/ptm.
+) (/home/juank/.TinyTeX/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
+File: l3backend-pdftex.def 2021-07-12 L3 backend support: PDF output (pdfTeX)
+\l__color_backend_stack_int=\count319
+\l__pdf_internal_box=\box74
+) (./cohesion-cepal-elsoc.aux
+LaTeX Info: Redefining \. on input line 26.
+LaTeX Info: Redefining \% on input line 26.
+)
+\openout1 = `cohesion-cepal-elsoc.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 162.
+LaTeX Font Info:    ... okay on input line 162.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 162.
+LaTeX Font Info:    ... okay on input line 162.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 162.
+LaTeX Font Info:    ... okay on input line 162.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 162.
+LaTeX Font Info:    ... okay on input line 162.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 162.
+LaTeX Font Info:    ... okay on input line 162.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 162.
+LaTeX Font Info:    ... okay on input line 162.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 162.
+LaTeX Font Info:    ... okay on input line 162.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 162.
+LaTeX Font Info:    ... okay on input line 162.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 162.
+LaTeX Font Info:    ... okay on input line 162.
+LaTeX Info: Redefining \microtypecontext on input line 162.
+Package microtype Info: Generating PDF output.
+Package microtype Info: Character protrusion enabled (level 2).
+Package microtype Info: Using protrusion set `basicmath'.
+Package microtype Info: Automatic font expansion enabled (level 2),
+(microtype)             stretch: 20, shrink: 20, step: 1, non-selected.
+Package microtype Info: Using default expansion set `alltext-nott'.
+LaTeX Info: Redefining \showhyphens on input line 162.
+Package microtype Info: No adjustment of tracking.
+Package microtype Info: No adjustment of interword spacing.
+Package microtype Info: No adjustment of character kerning.
+(/home/juank/.TinyTeX/texmf-dist/tex/latex/microtype/mt-ptm.cfg
+File: mt-ptm.cfg 2006/04/20 v1.7 microtype config. file: Times (RS)
+) (/home/juank/.TinyTeX/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
+Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
+Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
+85.
+(/home/juank/.TinyTeX/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
+File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
+e
+))
+Package hyperref Info: Link coloring ON on input line 162.
+(/home/juank/.TinyTeX/texmf-dist/tex/latex/hyperref/nameref.sty
+Package: nameref 2021-04-02 v2.47 Cross-referencing by name of section
+(/home/juank/.TinyTeX/texmf-dist/tex/latex/refcount/refcount.sty
+Package: refcount 2019/12/15 v3.6 Data extraction from label references (HO)
+) (/home/juank/.TinyTeX/texmf-dist/tex/generic/gettitlestring/gettitlestring.st
+y
+Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
+)
+\c@section@level=\count320
+)
+LaTeX Info: Redefining \ref on input line 162.
+LaTeX Info: Redefining \pageref on input line 162.
+LaTeX Info: Redefining \nameref on input line 162.
+*geometry* driver: auto-detecting
+*geometry* detected driver: pdftex
+*geometry* verbose mode - [ preamble ] result:
+* driver: pdftex
+* paper: letterpaper
+* layout: <same size as paper>
+* layoutoffset:(h,v)=(0.0pt,0.0pt)
+* modes: twoside 
+* h-part:(L,W,R)=(56.9055pt, 500.484pt, 56.9055pt)
+* v-part:(T,H,B)=(56.9055pt, 666.9326pt, 71.13188pt)
+* \paperwidth=614.295pt
+* \paperheight=794.96999pt
+* \textwidth=500.484pt
+* \textheight=666.9326pt
+* \oddsidemargin=-15.36449pt
+* \evensidemargin=-15.36449pt
+* \topmargin=-47.23828pt
+* \headheight=12.0pt
+* \headsep=19.8738pt
+* \topskip=12.0pt
+* \footskip=30.0pt
+* \marginparwidth=98.0pt
+* \marginparsep=7.0pt
+* \columnsep=10.0pt
+* \skip\footins=10.8pt plus 4.0pt minus 2.0pt
+* \hoffset=0.0pt
+* \voffset=0.0pt
+* \mag=1000
+* \@twocolumnfalse
+* \@twosidetrue
+* \@mparswitchtrue
+* \@reversemarginfalse
+* (1in=72.27pt=25.4mm, 1cm=28.453pt)
+
+LaTeX Info: Redefining \. on input line 162.
+LaTeX Info: Redefining \% on input line 162.
+babelbib: Set bibliography fall-back language to spanish
+babelbib: spanish.bdf loaded because language spanish defined.
+(/home/juank/.TinyTeX/texmf-dist/tex/latex/babelbib/spanish.bdf
+File: spanish.bdf 2021/01/06 v1.34 babelbib: multilingual bibliographies
+babelbib extension \btxifchangecaseoff added to \extrasspanish
+)
+babelbib: Load BibTeX extensions \bibsspanish for spanish
+babelbib: Set language for keywords in the bibliography fixed to spanish
+Package caption Info: Begin \AtBeginDocument code.
+Package caption Info: float package is loaded.
+Package caption Info: threeparttable package is loaded.
+Package caption Info: wrapfig package is loaded.
+Package caption Info: End \AtBeginDocument code.
+LaTeX Font Info:    Trying to load font information for OT1+lmr on input line 1
+64.
+(/home/juank/.TinyTeX/texmf-dist/tex/latex/lm/ot1lmr.fd
+File: ot1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
+) (/home/juank/.TinyTeX/texmf-dist/tex/latex/microtype/mt-cmr.cfg
+File: mt-cmr.cfg 2013/05/19 v2.2 microtype config. file: Computer Modern Roman 
+(RS)
+)
+LaTeX Font Info:    Trying to load font information for OML+lmm on input line 1
+64.
+(/home/juank/.TinyTeX/texmf-dist/tex/latex/lm/omllmm.fd
+File: omllmm.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
+)
+LaTeX Font Info:    Trying to load font information for OMS+lmsy on input line 
+164.
+(/home/juank/.TinyTeX/texmf-dist/tex/latex/lm/omslmsy.fd
+File: omslmsy.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
+)
+LaTeX Font Info:    Trying to load font information for OMX+lmex on input line 
+164.
+(/home/juank/.TinyTeX/texmf-dist/tex/latex/lm/omxlmex.fd
+File: omxlmex.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
+)
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <14.4> on input line 164.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <10> on input line 164.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <7> on input line 164.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 164
+.
+(/home/juank/.TinyTeX/texmf-dist/tex/latex/amsfonts/umsa.fd
+File: umsa.fd 2013/01/14 v3.01 AMS symbols A
+) (/home/juank/.TinyTeX/texmf-dist/tex/latex/microtype/mt-msa.cfg
+File: mt-msa.cfg 2006/02/04 v1.1 microtype config. file: AMS symbols (a) (RS)
+)
+LaTeX Font Info:    Trying to load font information for U+msb on input line 164
+.
+(/home/juank/.TinyTeX/texmf-dist/tex/latex/amsfonts/umsb.fd
+File: umsb.fd 2013/01/14 v3.01 AMS symbols B
+) (/home/juank/.TinyTeX/texmf-dist/tex/latex/microtype/mt-msb.cfg
+File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
+) [1
+
+
+{/home/juank/.TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] [2
+
+] (./cohesion-cepal-elsoc.toc
+LaTeX Info: Redefining \. on input line 1.
+LaTeX Info: Redefining \% on input line 1.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <12> on input line 5.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <8> on input line 5.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <6> on input line 5.
+)
+\tf@toc=\write3
+\openout3 = `cohesion-cepal-elsoc.toc'.
+
+[3]
+LaTeX Info: Redefining \. on input line 170.
+LaTeX Info: Redefining \% on input line 170.
+[4
+
+] (./cohesion-cepal-elsoc.lof
+LaTeX Info: Redefining \. on input line 1.
+LaTeX Info: Redefining \% on input line 1.
+[5])
+\tf@lof=\write4
+\openout4 = `cohesion-cepal-elsoc.lof'.
+
+LaTeX Info: Redefining \. on input line 171.
+LaTeX Info: Redefining \% on input line 171.
+[6] (./cohesion-cepal-elsoc.lot
+LaTeX Info: Redefining \. on input line 1.
+LaTeX Info: Redefining \% on input line 1.
+)
+\tf@lot=\write5
+\openout5 = `cohesion-cepal-elsoc.lot'.
+
+[7
+
+]
+LaTeX Info: Redefining \. on input line 174.
+LaTeX Info: Redefining \% on input line 174.
+[8
+
+] [9]
+LaTeX Info: Redefining \. on input line 194.
+LaTeX Info: Redefining \% on input line 194.
+[10
+
+] [11]
+LaTeX Info: Redefining \. on input line 210.
+LaTeX Info: Redefining \% on input line 210.
+[12]
+Cap\'{\i }tulo 1.
+<images/dimensiones-cepal.jpg, id=196, 374.90062pt x 224.33812pt>
+File: images/dimensiones-cepal.jpg Graphic file (type jpg)
+<use images/dimensiones-cepal.jpg>
+Package pdftex.def Info: images/dimensiones-cepal.jpg  used on input line 216.
+(pdftex.def)             Requested size: 500.5165pt x 299.50584pt.
+[13
+
+ <./images/dimensiones-cepal.jpg>]
+LaTeX Info: Redefining \. on input line 233.
+LaTeX Info: Redefining \% on input line 233.
+[14] [15]
+LaTeX Font Info:    Trying to load font information for TS1+ptm on input line 2
+64.
+(/home/juank/.TinyTeX/texmf-dist/tex/latex/psnfss/ts1ptm.fd
+File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
+)
+LaTeX Info: Redefining \. on input line 295.
+LaTeX Info: Redefining \% on input line 295.
+[16] [17]
+LaTeX Info: Redefining \. on input line 374.
+LaTeX Info: Redefining \% on input line 374.
+[18]
+
+LaTeX Warning: Reference `fig:cohesion-social-cor' on page 19 undefined on inpu
+t line 410.
+
+[19]
+<output/graphs/confianza-interpersonal.png, id=240, 711.18198pt x 369.70622pt>
+File: output/graphs/confianza-interpersonal.png Graphic file (type png)
+<use output/graphs/confianza-interpersonal.png>
+Package pdftex.def Info: output/graphs/confianza-interpersonal.png  used on inp
+ut line 427.
+(pdftex.def)             Requested size: 500.49352pt x 260.18033pt.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+LaTeX Info: Redefining \. on input line 433.
+LaTeX Info: Redefining \% on input line 433.
+[20]
+<output/graphs/confianza-interpersonal_cor.png, id=246, 602.25pt x 301.125pt>
+File: output/graphs/confianza-interpersonal_cor.png Graphic file (type png)
+<use output/graphs/confianza-interpersonal_cor.png>
+Package pdftex.def Info: output/graphs/confianza-interpersonal_cor.png  used on
+ input line 438.
+(pdftex.def)             Requested size: 500.50145pt x 250.25072pt.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+LaTeX Info: Redefining \. on input line 444.
+LaTeX Info: Redefining \% on input line 444.
+[21 <./output/graphs/confianza-interpersonal.png>]
+LaTeX Info: Redefining \. on input line 450.
+LaTeX Info: Redefining \% on input line 450.
+[22 <./output/graphs/confianza-interpersonal_cor.png>]
+<output/graphs/prejuicios.png, id=261, 711.18198pt x 369.70622pt>
+File: output/graphs/prejuicios.png Graphic file (type png)
+<use output/graphs/prejuicios.png>
+Package pdftex.def Info: output/graphs/prejuicios.png  used on input line 453.
+(pdftex.def)             Requested size: 500.49352pt x 260.18033pt.
+<output/graphs/diversidad.png, id=262, 711.18198pt x 369.70622pt>
+File: output/graphs/diversidad.png Graphic file (type png)
+<use output/graphs/diversidad.png>
+Package pdftex.def Info: output/graphs/diversidad.png  used on input line 462.
+(pdftex.def)             Requested size: 500.49352pt x 260.18033pt.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+LaTeX Info: Redefining \. on input line 468.
+LaTeX Info: Redefining \% on input line 468.
+[23 <./output/graphs/prejuicios.png (PNG copy)>]
+<output/graphs/diversidad_cor.png, id=267, 602.25pt x 301.125pt>
+File: output/graphs/diversidad_cor.png Graphic file (type png)
+<use output/graphs/diversidad_cor.png>
+Package pdftex.def Info: output/graphs/diversidad_cor.png  used on input line 4
+71.
+(pdftex.def)             Requested size: 500.50145pt x 250.25072pt.
+
+Overfull \hbox (101.84492pt too wide) in alignment at lines 480--483
+ [] 
+ []
+
+<output/tables/div_fa.png, id=269, 451.6875pt x 268.00125pt>
+File: output/tables/div_fa.png Graphic file (type png)
+<use output/tables/div_fa.png>
+Package pdftex.def Info: output/tables/div_fa.png  used on input line 484.
+(pdftex.def)             Requested size: 602.32892pt x 357.3818pt.
+
+Overfull \hbox (101.84492pt too wide) in alignment at lines 483--486
+ [] 
+ []
+
+LaTeX Info: Redefining \. on input line 486.
+LaTeX Info: Redefining \% on input line 486.
+[24 <./output/graphs/diversidad.png (PNG copy)> <./output/graphs/diversidad_cor
+.png (PNG copy)>]
+LaTeX Info: Redefining \. on input line 491.
+LaTeX Info: Redefining \% on input line 491.
+[25 <./output/tables/div_fa.png>]
+<output/graphs/relaciones_cor.png, id=284, 602.25pt x 301.125pt>
+File: output/graphs/relaciones_cor.png Graphic file (type png)
+<use output/graphs/relaciones_cor.png>
+Package pdftex.def Info: output/graphs/relaciones_cor.png  used on input line 4
+96.
+(pdftex.def)             Requested size: 500.50145pt x 250.25072pt.
+LaTeX Info: Redefining \. on input line 508.
+LaTeX Info: Redefining \% on input line 508.
+[26 <./output/graphs/relaciones_cor.png>]
+<output/graphs/lazos.png, id=293, 711.18198pt x 369.70622pt>
+File: output/graphs/lazos.png Graphic file (type png)
+<use output/graphs/lazos.png>
+Package pdftex.def Info: output/graphs/lazos.png  used on input line 511.
+(pdftex.def)             Requested size: 500.49352pt x 260.18033pt.
+<output/graphs/lazos_cor.png, id=294, 602.25pt x 301.125pt>
+File: output/graphs/lazos_cor.png Graphic file (type png)
+<use output/graphs/lazos_cor.png>
+Package pdftex.def Info: output/graphs/lazos_cor.png  used on input line 520.
+(pdftex.def)             Requested size: 500.50145pt x 250.25072pt.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+LaTeX Info: Redefining \. on input line 526.
+LaTeX Info: Redefining \% on input line 526.
+[27 <./output/graphs/lazos.png (PNG copy)>]
+LaTeX Info: Redefining \. on input line 533.
+LaTeX Info: Redefining \% on input line 533.
+[28 <./output/graphs/lazos_cor.png>]
+<output/graphs/identificacion.png, id=312, 711.18198pt x 369.70622pt>
+File: output/graphs/identificacion.png Graphic file (type png)
+<use output/graphs/identificacion.png>
+Package pdftex.def Info: output/graphs/identificacion.png  used on input line 5
+44.
+(pdftex.def)             Requested size: 500.49352pt x 260.18033pt.
+LaTeX Info: Redefining \. on input line 553.
+LaTeX Info: Redefining \% on input line 553.
+[29 <./output/graphs/identificacion.png (PNG copy)>]
+<output/graphs/justicia.png, id=319, 711.18198pt x 369.70622pt>
+File: output/graphs/justicia.png Graphic file (type png)
+<use output/graphs/justicia.png>
+Package pdftex.def Info: output/graphs/justicia.png  used on input line 561.
+(pdftex.def)             Requested size: 500.49352pt x 260.18033pt.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+LaTeX Info: Redefining \. on input line 567.
+LaTeX Info: Redefining \% on input line 567.
+[30]
+<output/graphs/confianza-institucional.png, id=328, 711.18198pt x 369.70622pt>
+File: output/graphs/confianza-institucional.png Graphic file (type png)
+<use output/graphs/confianza-institucional.png>
+Package pdftex.def Info: output/graphs/confianza-institucional.png  used on inp
+ut line 576.
+(pdftex.def)             Requested size: 500.49352pt x 260.18033pt.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+LaTeX Info: Redefining \. on input line 582.
+LaTeX Info: Redefining \% on input line 582.
+[31 <./output/graphs/justicia.png (PNG copy)>]
+<output/graphs/confianza-institucional_cor.png, id=334, 602.25pt x 301.125pt>
+File: output/graphs/confianza-institucional_cor.png Graphic file (type png)
+<use output/graphs/confianza-institucional_cor.png>
+Package pdftex.def Info: output/graphs/confianza-institucional_cor.png  used on
+ input line 585.
+(pdftex.def)             Requested size: 500.50145pt x 250.25072pt.
+
+Overfull \hbox (101.84492pt too wide) in alignment at lines 594--597
+ [] 
+ []
+
+<output/tables/inst_fa.png, id=336, 451.6875pt x 228.855pt>
+File: output/tables/inst_fa.png Graphic file (type png)
+<use output/tables/inst_fa.png>
+Package pdftex.def Info: output/tables/inst_fa.png  used on input line 598.
+(pdftex.def)             Requested size: 602.32892pt x 305.17998pt.
+
+Overfull \hbox (101.84492pt too wide) in alignment at lines 597--600
+ [] 
+ []
+
+LaTeX Info: Redefining \. on input line 600.
+LaTeX Info: Redefining \% on input line 600.
+[32 <./output/graphs/confianza-institucional.png (PNG copy)> <./output/graphs/c
+onfianza-institucional_cor.png>]
+<output/graphs/pertenencia_cor.png, id=344, 602.25pt x 301.125pt>
+File: output/graphs/pertenencia_cor.png Graphic file (type png)
+<use output/graphs/pertenencia_cor.png>
+Package pdftex.def Info: output/graphs/pertenencia_cor.png  used on input line 
+608.
+(pdftex.def)             Requested size: 500.50145pt x 250.25072pt.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+LaTeX Info: Redefining \. on input line 614.
+LaTeX Info: Redefining \% on input line 614.
+[33 <./output/tables/inst_fa.png>]
+<output/graphs/solidaridad.png, id=354, 711.18198pt x 369.70622pt>
+File: output/graphs/solidaridad.png Graphic file (type png)
+<use output/graphs/solidaridad.png>
+Package pdftex.def Info: output/graphs/solidaridad.png  used on input line 628.
+
+(pdftex.def)             Requested size: 500.49352pt x 260.18033pt.
+LaTeX Info: Redefining \. on input line 633.
+LaTeX Info: Redefining \% on input line 633.
+[34 <./output/graphs/pertenencia_cor.png>]
+<output/graphs/solidaridad_cor.png, id=361, 602.25pt x 301.125pt>
+File: output/graphs/solidaridad_cor.png Graphic file (type png)
+<use output/graphs/solidaridad_cor.png>
+Package pdftex.def Info: output/graphs/solidaridad_cor.png  used on input line 
+637.
+(pdftex.def)             Requested size: 500.50145pt x 250.25072pt.
+
+Overfull \hbox (101.84492pt too wide) in alignment at lines 646--649
+ [] 
+ []
+
+<output/tables/solidaridad_fa.png, id=363, 451.6875pt x 289.08pt>
+File: output/tables/solidaridad_fa.png Graphic file (type png)
+<use output/tables/solidaridad_fa.png>
+Package pdftex.def Info: output/tables/solidaridad_fa.png  used on input line 6
+50.
+(pdftex.def)             Requested size: 602.32892pt x 385.4905pt.
+
+Overfull \hbox (101.84492pt too wide) in alignment at lines 649--652
+ [] 
+ []
+
+LaTeX Info: Redefining \. on input line 652.
+LaTeX Info: Redefining \% on input line 652.
+[35 <./output/graphs/solidaridad.png> <./output/graphs/solidaridad_cor.png>]
+LaTeX Info: Redefining \. on input line 655.
+LaTeX Info: Redefining \% on input line 655.
+[36 <./output/tables/solidaridad_fa.png>]
+<output/graphs/participacion-civica.png, id=382, 711.18198pt x 369.70622pt>
+File: output/graphs/participacion-civica.png Graphic file (type png)
+<use output/graphs/participacion-civica.png>
+Package pdftex.def Info: output/graphs/participacion-civica.png  used on input 
+line 664.
+(pdftex.def)             Requested size: 500.49352pt x 260.18033pt.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+LaTeX Info: Redefining \. on input line 670.
+LaTeX Info: Redefining \% on input line 670.
+[37]
+<output/graphs/participacion-civica_cor.png, id=388, 602.25pt x 301.125pt>
+File: output/graphs/participacion-civica_cor.png Graphic file (type png)
+<use output/graphs/participacion-civica_cor.png>
+Package pdftex.def Info: output/graphs/participacion-civica_cor.png  used on in
+put line 673.
+(pdftex.def)             Requested size: 500.50145pt x 250.25072pt.
+<output/graphs/participacion-organizaciones.png, id=389, 711.18198pt x 369.7062
+2pt>
+File: output/graphs/participacion-organizaciones.png Graphic file (type png)
+<use output/graphs/participacion-organizaciones.png>
+Package pdftex.def Info: output/graphs/participacion-organizaciones.png  used o
+n input line 684.
+(pdftex.def)             Requested size: 500.49352pt x 260.18033pt.
+
+Underfull \vbox (badness 1803) has occurred while \output is active []
+
+LaTeX Info: Redefining \. on input line 690.
+LaTeX Info: Redefining \% on input line 690.
+[38 <./output/graphs/participacion-civica.png (PNG copy)> <./output/graphs/part
+icipacion-civica_cor.png>]
+<output/graphs/participacion-organizaciones_cor.png, id=395, 602.25pt x 301.125
+pt>
+File: output/graphs/participacion-organizaciones_cor.png Graphic file (type png
+)
+<use output/graphs/participacion-organizaciones_cor.png>
+Package pdftex.def Info: output/graphs/participacion-organizaciones_cor.png  us
+ed on input line 693.
+(pdftex.def)             Requested size: 500.50145pt x 250.25072pt.
+<output/graphs/participacion-electoral.png, id=396, 711.18198pt x 369.70622pt>
+File: output/graphs/participacion-electoral.png Graphic file (type png)
+<use output/graphs/participacion-electoral.png>
+Package pdftex.def Info: output/graphs/participacion-electoral.png  used on inp
+ut line 704.
+(pdftex.def)             Requested size: 500.49352pt x 260.18033pt.
+
+Underfull \vbox (badness 1803) has occurred while \output is active []
+
+LaTeX Info: Redefining \. on input line 710.
+LaTeX Info: Redefining \% on input line 710.
+[39 <./output/graphs/participacion-organizaciones.png (PNG copy)> <./output/gra
+phs/participacion-organizaciones_cor.png>]
+Overfull \hbox (101.84492pt too wide) in alignment at lines 713--716
+ [] 
+ []
+
+<output/tables/participacion_fa.png, id=403, 451.6875pt x 364.36125pt>
+File: output/tables/participacion_fa.png Graphic file (type png)
+<use output/tables/participacion_fa.png>
+Package pdftex.def Info: output/tables/participacion_fa.png  used on input line
+ 717.
+(pdftex.def)             Requested size: 602.32892pt x 485.87866pt.
+
+Overfull \hbox (101.84492pt too wide) in alignment at lines 716--719
+ [] 
+ []
+
+LaTeX Info: Redefining \. on input line 719.
+LaTeX Info: Redefining \% on input line 719.
+[40 <./output/graphs/participacion-electoral.png>]
+LaTeX Info: Redefining \. on input line 722.
+LaTeX Info: Redefining \% on input line 722.
+[41 <./output/tables/participacion_fa.png>]
+<output/graphs/confianza-vecinos.png, id=416, 711.18198pt x 369.70622pt>
+File: output/graphs/confianza-vecinos.png Graphic file (type png)
+<use output/graphs/confianza-vecinos.png>
+Package pdftex.def Info: output/graphs/confianza-vecinos.png  used on input lin
+e 736.
+(pdftex.def)             Requested size: 500.49352pt x 260.18033pt.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+LaTeX Info: Redefining \. on input line 742.
+LaTeX Info: Redefining \% on input line 742.
+[42]
+<output/graphs/cohesion-barrial.png, id=424, 711.18198pt x 369.70622pt>
+File: output/graphs/cohesion-barrial.png Graphic file (type png)
+<use output/graphs/cohesion-barrial.png>
+Package pdftex.def Info: output/graphs/cohesion-barrial.png  used on input line
+ 749.
+(pdftex.def)             Requested size: 500.49352pt x 260.18033pt.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+LaTeX Info: Redefining \. on input line 755.
+LaTeX Info: Redefining \% on input line 755.
+[43 <./output/graphs/confianza-vecinos.png (PNG copy)>]
+<output/graphs/cohesion-barrial_cor.png, id=431, 602.25pt x 301.125pt>
+File: output/graphs/cohesion-barrial_cor.png Graphic file (type png)
+<use output/graphs/cohesion-barrial_cor.png>
+Package pdftex.def Info: output/graphs/cohesion-barrial_cor.png  used on input 
+line 758.
+(pdftex.def)             Requested size: 500.50145pt x 250.25072pt.
+LaTeX Info: Redefining \. on input line 768.
+LaTeX Info: Redefining \% on input line 768.
+[44 <./output/graphs/cohesion-barrial.png (PNG copy)> <./output/graphs/cohesion
+-barrial_cor.png>]
+<output/graphs/sociabilidad-barrial.png, id=439, 711.18198pt x 369.70622pt>
+File: output/graphs/sociabilidad-barrial.png Graphic file (type png)
+<use output/graphs/sociabilidad-barrial.png>
+Package pdftex.def Info: output/graphs/sociabilidad-barrial.png  used on input 
+line 771.
+(pdftex.def)             Requested size: 500.49352pt x 260.18033pt.
+<output/graphs/sociabilidad-barrial_cor.png, id=440, 602.25pt x 301.125pt>
+File: output/graphs/sociabilidad-barrial_cor.png Graphic file (type png)
+<use output/graphs/sociabilidad-barrial_cor.png>
+Package pdftex.def Info: output/graphs/sociabilidad-barrial_cor.png  used on in
+put line 780.
+(pdftex.def)             Requested size: 500.50145pt x 250.25072pt.
+LaTeX Info: Redefining \. on input line 790.
+LaTeX Info: Redefining \% on input line 790.
+[45 <./output/graphs/sociabilidad-barrial.png (PNG copy)> <./output/graphs/soci
+abilidad-barrial_cor.png>]
+<output/graphs/satisfaccion-residencial.png, id=448, 711.18198pt x 369.70622pt>
+
+File: output/graphs/satisfaccion-residencial.png Graphic file (type png)
+<use output/graphs/satisfaccion-residencial.png>
+Package pdftex.def Info: output/graphs/satisfaccion-residencial.png  used on in
+put line 793.
+(pdftex.def)             Requested size: 500.49352pt x 260.18033pt.
+<output/graphs/satisfaccion-residencial_cor.png, id=449, 602.25pt x 301.125pt>
+File: output/graphs/satisfaccion-residencial_cor.png Graphic file (type png)
+<use output/graphs/satisfaccion-residencial_cor.png>
+Package pdftex.def Info: output/graphs/satisfaccion-residencial_cor.png  used o
+n input line 802.
+(pdftex.def)             Requested size: 500.50145pt x 250.25072pt.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+LaTeX Info: Redefining \. on input line 808.
+LaTeX Info: Redefining \% on input line 808.
+[46 <./output/graphs/satisfaccion-residencial.png (PNG copy)>]
+Overfull \hbox (101.84492pt too wide) in alignment at lines 811--814
+ [] 
+ []
+
+<output/tables/cohesion_territorial_fa.png, id=455, 451.6875pt x 466.74374pt>
+File: output/tables/cohesion_territorial_fa.png Graphic file (type png)
+<use output/tables/cohesion_territorial_fa.png>
+Package pdftex.def Info: output/tables/cohesion_territorial_fa.png  used on inp
+ut line 815.
+(pdftex.def)             Requested size: 602.32892pt x 622.40654pt.
+
+Overfull \hbox (101.84492pt too wide) in alignment at lines 814--817
+ [] 
+ []
+
+LaTeX Info: Redefining \. on input line 817.
+LaTeX Info: Redefining \% on input line 817.
+[47 <./output/graphs/satisfaccion-residencial_cor.png>]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+LaTeX Info: Redefining \. on input line 820.
+LaTeX Info: Redefining \% on input line 820.
+[48 <./output/tables/cohesion_territorial_fa.png>]
+Cap\'{\i }tulo 2.
+[49
+
+]
+<output/graphs/alluvial_conf_interpersonal.png, id=474, 711.18198pt x 369.70622
+pt>
+File: output/graphs/alluvial_conf_interpersonal.png Graphic file (type png)
+<use output/graphs/alluvial_conf_interpersonal.png>
+Package pdftex.def Info: output/graphs/alluvial_conf_interpersonal.png  used on
+ input line 887.
+(pdftex.def)             Requested size: 500.49352pt x 260.18033pt.
+LaTeX Info: Redefining \. on input line 893.
+LaTeX Info: Redefining \% on input line 893.
+[50]
+LaTeX Info: Redefining \. on input line 907.
+LaTeX Info: Redefining \% on input line 907.
+[51 <./output/graphs/alluvial_conf_interpersonal.png (PNG copy)>]
+<output/graphs/alluvial_diversidad.png, id=488, 711.18198pt x 369.70622pt>
+File: output/graphs/alluvial_diversidad.png Graphic file (type png)
+<use output/graphs/alluvial_diversidad.png>
+Package pdftex.def Info: output/graphs/alluvial_diversidad.png  used on input l
+ine 916.
+(pdftex.def)             Requested size: 500.49352pt x 260.18033pt.
+LaTeX Info: Redefining \. on input line 928.
+LaTeX Info: Redefining \% on input line 928.
+[52 <./output/graphs/alluvial_diversidad.png (PNG copy)>]
+<output/graphs/alluvial_lazos.png, id=495, 711.18198pt x 369.70622pt>
+File: output/graphs/alluvial_lazos.png Graphic file (type png)
+<use output/graphs/alluvial_lazos.png>
+Package pdftex.def Info: output/graphs/alluvial_lazos.png  used on input line 9
+38.
+(pdftex.def)             Requested size: 500.49352pt x 260.18033pt.
+LaTeX Info: Redefining \. on input line 946.
+LaTeX Info: Redefining \% on input line 946.
+[53 <./output/graphs/alluvial_lazos.png (PNG copy)>]
+<output/graphs/alluvial_identificacion.png, id=503, 711.18198pt x 369.70622pt>
+File: output/graphs/alluvial_identificacion.png Graphic file (type png)
+<use output/graphs/alluvial_identificacion.png>
+Package pdftex.def Info: output/graphs/alluvial_identificacion.png  used on inp
+ut line 970.
+(pdftex.def)             Requested size: 500.49352pt x 260.18033pt.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+LaTeX Info: Redefining \. on input line 976.
+LaTeX Info: Redefining \% on input line 976.
+[54]
+LaTeX Info: Redefining \. on input line 982.
+LaTeX Info: Redefining \% on input line 982.
+[55 <./output/graphs/alluvial_identificacion.png (PNG copy)>]
+<output/graphs/alluvial_justicia.png, id=517, 711.18198pt x 369.70622pt>
+File: output/graphs/alluvial_justicia.png Graphic file (type png)
+<use output/graphs/alluvial_justicia.png>
+Package pdftex.def Info: output/graphs/alluvial_justicia.png  used on input lin
+e 1001.
+(pdftex.def)             Requested size: 500.49352pt x 260.18033pt.
+LaTeX Info: Redefining \. on input line 1009.
+LaTeX Info: Redefining \% on input line 1009.
+[56 <./output/graphs/alluvial_justicia.png (PNG copy)>]
+<output/graphs/alluvial_conf_institucional.png, id=525, 711.18198pt x 369.70622
+pt>
+File: output/graphs/alluvial_conf_institucional.png Graphic file (type png)
+<use output/graphs/alluvial_conf_institucional.png>
+Package pdftex.def Info: output/graphs/alluvial_conf_institucional.png  used on
+ input line 1032.
+(pdftex.def)             Requested size: 500.49352pt x 260.18033pt.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+LaTeX Info: Redefining \. on input line 1038.
+LaTeX Info: Redefining \% on input line 1038.
+[57]
+LaTeX Info: Redefining \. on input line 1043.
+LaTeX Info: Redefining \% on input line 1043.
+[58 <./output/graphs/alluvial_conf_institucional.png (PNG copy)>]
+<output/graphs/alluvial_solidaridad.png, id=537, 711.18198pt x 369.70622pt>
+File: output/graphs/alluvial_solidaridad.png Graphic file (type png)
+<use output/graphs/alluvial_solidaridad.png>
+Package pdftex.def Info: output/graphs/alluvial_solidaridad.png  used on input 
+line 1066.
+(pdftex.def)             Requested size: 500.49352pt x 260.18033pt.
+LaTeX Info: Redefining \. on input line 1074.
+LaTeX Info: Redefining \% on input line 1074.
+[59 <./output/graphs/alluvial_solidaridad.png (PNG copy)>]
+<output/graphs/alluvial_participacion.png, id=546, 711.18198pt x 369.70622pt>
+File: output/graphs/alluvial_participacion.png Graphic file (type png)
+<use output/graphs/alluvial_participacion.png>
+Package pdftex.def Info: output/graphs/alluvial_participacion.png  used on inpu
+t line 1095.
+(pdftex.def)             Requested size: 500.49352pt x 260.18033pt.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+LaTeX Info: Redefining \. on input line 1101.
+LaTeX Info: Redefining \% on input line 1101.
+[60]
+Underfull \vbox (badness 3623) has occurred while \output is active []
+
+LaTeX Info: Redefining \. on input line 1117.
+LaTeX Info: Redefining \% on input line 1117.
+[61 <./output/graphs/alluvial_participacion.png (PNG copy)>]
+<output/graphs/alluvial_cohesion_territorial.png, id=561, 711.18198pt x 369.706
+22pt>
+File: output/graphs/alluvial_cohesion_territorial.png Graphic file (type png)
+<use output/graphs/alluvial_cohesion_territorial.png>
+Package pdftex.def Info: output/graphs/alluvial_cohesion_territorial.png  used 
+on input line 1128.
+(pdftex.def)             Requested size: 500.49352pt x 260.18033pt.
+LaTeX Info: Redefining \. on input line 1138.
+LaTeX Info: Redefining \% on input line 1138.
+[62 <./output/graphs/alluvial_cohesion_territorial.png (PNG copy)>]
+LaTeX Info: Redefining \. on input line 1146.
+LaTeX Info: Redefining \% on input line 1146.
+[63]
+LaTeX Info: Redefining \. on input line 1146.
+LaTeX Info: Redefining \% on input line 1146.
+[64
+
+]
+Cap\'{\i }tulo 3.
+[65]
+LaTeX Info: Redefining \. on input line 1149.
+LaTeX Info: Redefining \% on input line 1149.
+[66
+
+]
+
+Package caption Warning: Unused \captionsetup[figure] on input line \caption@op
+t@figure@lineno .
+See the caption package documentation for explanation.
+
+
+Package caption Warning: Unused \captionsetup[ table] on input line \caption@op
+t@ table@lineno .
+See the caption package documentation for explanation.
+
+[67] (./cohesion-cepal-elsoc.aux
+LaTeX Info: Redefining \. on input line 26.
+LaTeX Info: Redefining \% on input line 26.
+)
+
+LaTeX Warning: There were undefined references.
+
+ ) 
+Here is how much of TeX's memory you used:
+ 18948 strings out of 480374
+ 302103 string characters out of 5895199
+ 672125 words of memory out of 5000000
+ 35867 multiletter control sequences out of 15000+600000
+ 469670 words of font info for 224 fonts, out of 8000000 for 9000
+ 59 hyphenation exceptions out of 8191
+ 74i,10n,80p,2182b,644s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/home/juank/.TinyTeX/texmf-dist/fonts/enc/dvips/base/8r.enc}</home/juank/.Ti
+nyTeX/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></home/juank/.TinyTeX/texmf-d
+ist/fonts/type1/urw/times/utmr8a.pfb></home/juank/.TinyTeX/texmf-dist/fonts/typ
+e1/urw/times/utmr8a.pfb></home/juank/.TinyTeX/texmf-dist/fonts/type1/urw/times/
+utmri8a.pfb>
+Output written on cohesion-cepal-elsoc.pdf (67 pages, 2994072 bytes).
+PDF statistics:
+ 694 PDF objects out of 1000 (max. 8388607)
+ 550 compressed objects within 6 object streams
+ 163 named destinations out of 1000 (max. 500000)
+ 43331 words of extra memory for PDF output out of 51595 (max. 10000000)
+
