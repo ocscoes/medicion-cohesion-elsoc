@@ -1,0 +1,339 @@
+---
+title: "Latent profile Analysis"
+author: "Kevin Carrasco"
+date: "30-09-2021"
+output: html_document
+---
+
+# Latent profile Analysis
+
+Latent profile Analysis (LPA) is a type of latent variable model that can be use to identify latent classes or mixtures in a dataset, based on a set of continuous input variables (Gibson, 1959; Oberski, 2016).
+
+```{r}
+pacman::p_load(dplyr, summarytools, car, mclust, tidyLPA, reshape2, tidyverse, plotly, semPlot, semTools, lavaan, texreg, lme4)
+```
+
+```{r}
+load("input/data/data.RData")
+```
+
+
+## Confianza interpersonal
+
+**Estimación utilizando la media de las cinco olas por cada indicador**
+
+```{r}
+conf <- data %>% 
+  dplyr::select(c02_rec_w01, c02_rec_w02, c02_rec_w03, c02_rec_w04, c02_rec_w05, 
+                c03_rec_w01, c03_rec_w02, c03_rec_w03, c03_rec_w04, c03_rec_w05) %>% 
+  rowwise() %>%
+  mutate(conf1 = mean(c(c02_rec_w01, c02_rec_w02, c02_rec_w03, c02_rec_w04, c02_rec_w05), na.rm=T),
+         conf2 = mean(c(c03_rec_w01, c03_rec_w02, c03_rec_w03, c03_rec_w04, c03_rec_w05), na.rm=T))
+
+conf <- conf %>% dplyr::select(conf1, conf2)
+
+
+conf %>% dplyr::select(conf1, conf2)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
+```
+
+```{r}
+BIC <- mclustBIC(conf)
+plot(BIC)
+```
+
+```{r}
+summary(BIC)
+```
+
+```{r}
+mod1 <- Mclust(conf, modelNames = "EEV", G = 3, x = BIC)
+summary(mod1)
+```
+
+```{r}
+ICL <- mclustICL(conf)
+plot(ICL)
+```
+
+```{r}
+summary(ICL)
+```
+
+# Visualización
+
+```{r}
+means <- data.frame(mod1$parameters$mean, stringsAsFactors = FALSE) %>%
+  rownames_to_column() %>%
+  rename(Interest = rowname) %>%
+  melt(id.vars = "Interest", variable.name = "Profile", value.name = "Mean") %>%
+  mutate(Mean = round(Mean, 2))
+```
+
+```{r}
+p <- means %>%
+  ggplot(aes(Interest, Mean, group = Profile, color = Profile)) +
+  geom_point(size = 2.25) +
+  geom_line(size = 1.25) +
+  labs(x = NULL, y = "Standardized mean") +
+  theme_bw(base_size = 14) +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1), legend.position = "top")
+
+```
+
+```{r}
+ggplotly(p, tooltip = c("Interest", "Mean")) %>%
+  layout(legend = list(orientation = "h", y = 1.2))
+```
+
+## Diversidad
+
+```{r}
+conf <- data %>% 
+  dplyr::select(c02_rec_w01, c02_rec_w02, c02_rec_w03, c02_rec_w04, c02_rec_w05, 
+                c03_rec_w01, c03_rec_w02, c03_rec_w03, c03_rec_w04, c03_rec_w05) %>% 
+  rowwise() %>%
+  mutate(conf1 = mean(c(c02_rec_w01, c02_rec_w02, c02_rec_w03, c02_rec_w04, c02_rec_w05), na.rm=T),
+         conf2 = mean(c(c03_rec_w01, c03_rec_w02, c03_rec_w03, c03_rec_w04, c03_rec_w05), na.rm=T))
+
+conf <- conf %>% dplyr::select(conf1, conf2)
+
+
+conf %>% dplyr::select(conf1, conf2)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
+```
+
+```{r}
+diversidad <- data %>% 
+  dplyr::select(c06_04_w01, c06_04_w03, 
+                c06_05_w01, c06_05_w03,
+                c06_06_w01, c06_06_w03) %>% 
+  rowwise() %>%
+  mutate(div1 = mean(c(c06_04_w01, c06_04_w03), na.rm=T),
+         div2 = mean(c(c06_05_w01, c06_05_w03), na.rm=T),
+         div3 = mean(c(c06_06_w01, c06_06_w03), na.rm=T))
+
+diversidad <- diversidad %>% dplyr::select(div1, div2, div3) %>% na.omit()
+
+diversidad %>% select(div1, div2, div3)  %>% sjlabelled::as_label(.)  %>%  summarytools::dfSummary(, graph.col = FALSE)
+```
+
+```{r}
+BIC <- mclustBIC(diversidad)
+plot(BIC)
+```
+
+```{r}
+summary(BIC)
+```
+
+```{r}
+mod1 <- Mclust(diversidad, modelNames = "EEV", G = 3, x = BIC)
+summary(mod1)
+```
+
+```{r}
+ICL <- mclustICL(diversidad)
+plot(ICL)
+```
+
+```{r}
+summary(ICL)
+```
+
+
+# Visualización
+
+```{r}
+means <- data.frame(mod1$parameters$mean, stringsAsFactors = FALSE) %>%
+  rownames_to_column() %>%
+  rename(Interest = rowname) %>%
+  melt(id.vars = "Interest", variable.name = "Profile", value.name = "Mean") %>%
+  mutate(Mean = round(Mean, 2))
+```
+
+```{r}
+p <- means %>%
+  ggplot(aes(Interest, Mean, group = Profile, color = Profile)) +
+  geom_point(size = 2.25) +
+  geom_line(size = 1.25) +
+  labs(x = NULL, y = "Standardized mean") +
+  theme_bw(base_size = 14) +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1), legend.position = "top")
+
+```
+
+```{r}
+ggplotly(p, tooltip = c("Interest", "Mean")) %>%
+  layout(legend = list(orientation = "h", y = 1.2))
+```
+
+## Reestimación utilizando la media del indicador en cada ola (o puntajes factoriales)
+
+```{r}
+data <- data %>%
+  rowwise() %>%
+  mutate(conf_interpersonal_w01 =
+           mean(c(c02_rec_w01, c03_rec_w01), na.rm = T))
+data <- data %>%
+  rowwise() %>%
+  mutate(conf_interpersonal_w02 =
+           mean(c(c02_rec_w02, c03_rec_w02), na.rm = T))
+data <- data %>%
+  rowwise() %>%
+  mutate(conf_interpersonal_w03 =
+           mean(c(c02_rec_w03, c03_rec_w03), na.rm = T))
+data <- data %>%
+  rowwise() %>%
+  mutate(conf_interpersonal_w04 =
+           mean(c(c02_rec_w04, c03_rec_w04), na.rm = T))
+data <- data %>%
+  rowwise() %>%
+  mutate(conf_interpersonal_w05 =
+           mean(c(c02_rec_w05, c03_rec_w05), na.rm = T))
+
+conf <- data %>% dplyr::select(conf_interpersonal_w01, conf_interpersonal_w02, conf_interpersonal_w03, conf_interpersonal_w04, conf_interpersonal_w05) %>% na.omit()
+
+
+```
+
+
+```{r}
+BIC <- mclustBIC(conf)
+plot(BIC)
+```
+
+```{r}
+summary(BIC)
+```
+
+```{r}
+mod1 <- Mclust(conf, modelNames = "EEV", G = 3, x = BIC)
+summary(mod1)
+```
+
+```{r}
+ICL <- mclustICL(conf)
+plot(ICL)
+```
+
+```{r}
+summary(ICL)
+```
+
+# Visualización
+
+```{r}
+means <- data.frame(mod1$parameters$mean, stringsAsFactors = FALSE) %>%
+  rownames_to_column() %>%
+  rename(Interest = rowname) %>%
+  melt(id.vars = "Interest", variable.name = "Profile", value.name = "Mean") %>%
+  mutate(Mean = round(Mean, 2))
+```
+
+```{r}
+p <- means %>%
+  ggplot(aes(Interest, Mean, group = Profile, color = Profile)) +
+  geom_point(size = 2.25) +
+  geom_line(size = 1.25) +
+  labs(x = NULL, y = "Standardized mean") +
+  theme_bw(base_size = 14) +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1), legend.position = "top")
+
+```
+
+```{r}
+ggplotly(p, tooltip = c("Interest", "Mean")) %>%
+  layout(legend = list(orientation = "h", y = 1.2))
+```
+
+
+### Diversidad
+
+```{r}
+cfa_1 <- '
+diversidad_w01 =~ c06_04_w01 + c06_05_w01 + c06_06_w01
+'
+cfa_2 <- '
+diversidad_w03 =~ c06_04_w03 + c06_05_w03 + c06_06_w03
+'
+
+fit_1 <- cfa(cfa_1,data=data,missing="ML",estimator="MLR")
+fit_2 <- cfa(cfa_2,data=data,missing="ML",estimator="MLR")
+
+p1 <- predict(fit_1)
+p2 <- predict(fit_2)
+
+scores_diversidad = as.data.frame(p1)
+scores_diversidad2 = as.data.frame(p2)
+# Merge with factor scores
+data = as.data.frame(cbind(data, scores_diversidad, scores_diversidad2))
+
+diversidad <- data %>% select(diversidad_w01, diversidad_w03) %>% na.omit()
+
+# Check
+diversidad %>% dplyr::select(diversidad_w01, diversidad_w03)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
+```
+
+```{r}
+BIC <- mclustBIC(diversidad)
+plot(BIC)
+```
+
+```{r}
+summary(BIC)
+```
+
+```{r}
+mod1 <- Mclust(diversidad, modelNames = "EVI", G = 3, x = BIC)
+summary(mod1)
+```
+
+```{r}
+ICL <- mclustICL(diversidad)
+plot(ICL)
+```
+
+```{r}
+summary(ICL)
+```
+
+
+# Visualización
+
+```{r}
+means <- data.frame(mod1$parameters$mean, stringsAsFactors = FALSE) %>%
+  rownames_to_column() %>%
+  rename(Interest = rowname) %>%
+  melt(id.vars = "Interest", variable.name = "Profile", value.name = "Mean") %>%
+  mutate(Mean = round(Mean, 2))
+```
+
+```{r}
+p <- means %>%
+  ggplot(aes(Interest, Mean, group = Profile, color = Profile)) +
+  geom_point(size = 2.25) +
+  geom_line(size = 1.25) +
+  labs(x = NULL, y = "Standardized mean") +
+  theme_bw(base_size = 14) +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1), legend.position = "top")
+```
+
+```{r}
+ggplotly(p, tooltip = c("Interest", "Mean")) %>%
+  layout(legend = list(orientation = "h", y = 1.2))
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

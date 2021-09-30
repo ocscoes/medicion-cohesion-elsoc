@@ -1,0 +1,233 @@
+---
+title: "analisis clases latentes"
+author: "Kevin Carrasco"
+date: "30-09-2021"
+output: html_document
+---
+
+# Análisis de clases latentes
+
+# recodificacion de indicadores
+
+Este documento genera, en primer lugar, los indicadores necesarios para realizar el análisis y posteriormente se realiza el análisis de clases latentes. Los indicadores son pasados a tres categorías según corresponda y sobre estas categorías se estima la moda de cada item según su frecuencia en las distintas olas de ELSOC
+
+```{r}
+load("input/data/data.RData")
+
+pacman::p_load(dplyr, 
+               summarytools, 
+               poLCA,
+               psych,
+               foreign,
+               gdata, # rename vars 
+               stargazer,
+               xtable,
+               lavaan,
+               vcd,
+               vcdExtra,
+               readstata13,
+               skimr,
+               ggplot2,
+               sjPlot,
+               sjmisc,
+               car)
+```
+
+
+
+```{r}
+## ¿r base no tiene función para estimar la moda?
+
+getmode <- function(v) {
+ uniqv <- unique(v)
+ uniqv[which.max(tabulate(match(v, uniqv)))]
+}
+```
+
+
+## Confianza interpersonal
+
+```{r}
+conf <- data %>% 
+  dplyr::select(c02_rec_w01, c02_rec_w02, c02_rec_w03, c02_rec_w04, c02_rec_w05, 
+                c03_rec_w01, c03_rec_w02, c03_rec_w03, c03_rec_w04, c03_rec_w05) %>% 
+  rowwise() %>%
+  mutate(conf1 = getmode(c(c02_rec_w01, c02_rec_w02, c02_rec_w03, c02_rec_w04, c02_rec_w05)),
+         conf2 = getmode(c(c03_rec_w01, c03_rec_w02, c03_rec_w03, c03_rec_w04, c03_rec_w05)))
+
+conf <- conf %>% dplyr::select(conf1, conf2) %>% na.omit()
+
+
+conf %>% dplyr::select(conf1, conf2)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
+```
+## Explorar patrones de respuesta
+```{r}
+patterns=table(apply(conf, 1, paste, collapse=""))
+patterns
+patterns_m=as.data.frame(patterns)
+patterns_m <- patterns_m[order(-patterns_m$Freq),] 
+patterns_m
+```
+
+## Estimar modelo
+```{r}
+f <- cbind(conf1, conf2)~1
+
+set.seed(1234)
+
+  
+lca3 <- poLCA(f,conf, nclass=3,graphs=F)
+poLCA.entropy(lca3)
+  
+  
+  
+  ## Entropía relativa (4 clases)
+##Numerator:
+nume.E <- -sum(lca3$posterior * log(lca3$posterior))
+##Denominator (n*log(K)): ## n is a sample size, and K is a number of class
+deno.E <- 1490*log(4)
+##Relative Entropy
+Entro <- 1-(nume.E/deno.E)
+Entro
+```
+
+##  Estadísticos de ajuste (todos los modelos)
+```{r}
+
+AIC <-as.numeric(lca3$aic)
+
+
+BIC <-as.numeric(lca3$bic)
+
+
+llik <-as.numeric(lca3$llik)
+
+chisq <- as.numeric(lca3$Chisq)
+
+G <- as.numeric(lca3$Gsq)
+
+n.obs <- as.numeric(lca3$Nobs)
+
+Modelos <- c("3 clases")
+  
+  #CREACIÓN TABLA ESTADÍSTICOS DE AJUSTE MODELOS TODAS LAS VARIABLES
+fit.indices <- data.frame(Modelos,AIC,BIC,llik,chisq,G,n.obs)
+fit.indices
+```
+
+## Ordenar las clases
+```{r}
+  #Extraer valores de inicio (modelo seleccionado)
+probs.start<-lca3$probs.start
+  #lca5$probs.start
+
+  #Reanalizar con gráficos
+lca3<-poLCA(f, conf, nclass=3, probs.start=probs.start,graphs=TRUE, na.rm=TRUE, maxiter=3000)
+  
+  #Reordnar clases, si es necesario
+  #new.probs.start<-poLCA.reorder(probs.start, c(2,1,3,4))
+  
+  #Re-estimar para nuevo orden
+  #lca4<-poLCA(f, elsoc, nclass=4, probs.start=new.probs.start, graphs=TRUE, na.rm=TRUE)
+```
+
+## Diversidad
+
+```{r}
+## Las variables de confianza en grupos se recodifican de cinco a tres categorías: Nada y poco = 1; algo =2; Bastante y mucha = 3
+
+data$c06_04_w01 <- car::recode(data$c06_04_w01, "c(1,2)=1; 3=2; c(4,5)=3")
+data$c06_04_w03 <- car::recode(data$c06_04_w03, "c(1,2)=1; 3=2; c(4,5)=3")
+
+data$c06_05_w01 <- car::recode(data$c06_05_w01, "c(1,2)=1; 3=2; c(4,5)=3")
+data$c06_05_w03 <- car::recode(data$c06_05_w03, "c(1,2)=1; 3=2; c(4,5)=3")
+
+data$c06_06_w01 <- car::recode(data$c06_06_w01, "c(1,2)=1; 3=2; c(4,5)=3")
+data$c06_06_w03 <- car::recode(data$c06_06_w03, "c(1,2)=1; 3=2; c(4,5)=3")
+
+## Se calcula la moda de todas las olas
+diversidad <- data %>% 
+  dplyr::select(c06_04_w01, c06_04_w03, 
+                c06_05_w01, c06_05_w03,
+                c06_06_w01, c06_06_w03) %>% 
+  rowwise() %>%
+  mutate(div1 = getmode(c(c06_04_w01, c06_04_w03)),
+         div2 = getmode(c(c06_05_w01, c06_05_w03)),
+         div3 = getmode(c(c06_06_w01, c06_06_w03)))
+
+## Se seleccionan las tres variables de intereses y se eliminan casos perdidos
+diversidad <- diversidad %>% dplyr::select(div1, div2, div3) %>% na.omit()
+
+
+diversidad %>% dplyr::select(div1, div2, div3)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
+```
+## Explorar patrones de respuesta
+```{r}
+patterns=table(apply(diversidad, 1, paste, collapse=""))
+patterns
+patterns_m=as.data.frame(patterns)
+patterns_m <- patterns_m[order(-patterns_m$Freq),] 
+patterns_m
+```
+
+## Estimar modelo
+```{r}
+f <- cbind(div1, div2, div3)~1
+
+set.seed(1234)
+
+  
+lca3 <- poLCA(f,diversidad, nclass=3,graphs=F)
+poLCA.entropy(lca3)
+  
+  
+  
+  ## Entropía relativa (4 clases)
+##Numerator:
+nume.E <- -sum(lca3$posterior * log(lca3$posterior))
+##Denominator (n*log(K)): ## n is a sample size, and K is a number of class
+deno.E <- 1490*log(4)
+##Relative Entropy
+Entro <- 1-(nume.E/deno.E)
+Entro
+```
+
+##  Estadísticos de ajuste (todos los modelos)
+```{r}
+
+AIC <-as.numeric(lca3$aic)
+
+
+BIC <-as.numeric(lca3$bic)
+
+
+llik <-as.numeric(lca3$llik)
+
+chisq <- as.numeric(lca3$Chisq)
+
+G <- as.numeric(lca3$Gsq)
+
+n.obs <- as.numeric(lca3$Nobs)
+
+Modelos <- c("3 clases")
+  
+  #CREACIÓN TABLA ESTADÍSTICOS DE AJUSTE MODELOS TODAS LAS VARIABLES
+fit.indices <- data.frame(Modelos,AIC,BIC,llik,chisq,G,n.obs)
+fit.indices
+```
+
+## Ordenar las clases
+```{r}
+  #Extraer valores de inicio (modelo seleccionado)
+probs.start<-lca3$probs.start
+  #lca5$probs.start
+
+  #Reanalizar con gráficos
+lca3<-poLCA(f, diversidad, nclass=3, probs.start=probs.start,graphs=TRUE, na.rm=TRUE, maxiter=3000)
+  
+  #Reordnar clases, si es necesario
+new.probs.start<-poLCA.reorder(probs.start, c(2,1,3))
+  
+  #Re-estimar para nuevo orden
+lca4<-poLCA(f, diversidad, nclass=3, probs.start=new.probs.start, graphs=TRUE, na.rm=TRUE)
+````
