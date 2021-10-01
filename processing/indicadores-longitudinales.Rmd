@@ -1,8 +1,12 @@
 ---
 title: "Indicadores longitudinales"
-author: "Kevin Carrasco"
+author: "Equipo CEPAL-COES"
 date: "11-09-2021"
-output: html_document
+output:
+  html_document:
+    number_sections: true
+    toc: true
+    toc_float: true
 ---
 
 # Indicadores longitudinales
