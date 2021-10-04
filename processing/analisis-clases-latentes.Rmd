@@ -1,451 +1,11 @@
----
-title: "analisis clases latentes"
-author: "Equipo CEPAL-COES"
-date: "30-09-2021"
-output:
-  html_document:
-    number_sections: true
-    toc: true
-    toc_float: true
----
-
-# recodificacion de indicadores
-
-Este documento genera, en primer lugar, los indicadores necesarios para realizar el análisis y posteriormente se realiza el análisis de clases latentes. 
-
-Los indicadores son recodificados de la siguiente forma:
-
-1) En cada ola de la encuesta ELSOC se estiman las medias de los indicadores (que fueron seleccionados según los criterios del capítulo I) para cada subdimension. El resultado es tener el promedio simple de cada subdimensión en todas las olas que estos indicadores están presentes
-
-2) Se estima la media general de cada subdimensión según las medias estimadas en el paso anterior. El resultado es tener 9 promedios simples, uno por cada subdimensión.
-
-3) Para categorizar las variables en dos categorías de respuestas y realizar el análisis de clases latentes, se establece como criterio de corte la mediana* de cada variable. Los valores menores o iguales a la mediana se consideran como "1" y los valores mayores a la mediana se consideran como "2".
-
-* Para probar, también se estableció como criterio la media
-
-
-```{r}
-pacman::p_load(dplyr, 
-               summarytools, 
-               poLCA,
-               sjPlot,
-               sjmisc)
-```
-
-```{r}
-load("input/data/data.RData")
-```
-
-## Relaciones sociales de igualdad
-### Confianza interpersonal (w01, w02, w03, w04 & w05)
-```{r}
-### estimar promedio simple de cada subdimensión en todas las olas que estos indicadores están presentes
-data <- data %>%
-  rowwise() %>%
-  mutate(conf_interpersonal_w01 =
-           mean(c(c02_rec_w01, c03_rec_w01), na.rm = T))
-data <- data %>%
-  rowwise() %>%
-  mutate(conf_interpersonal_w02 =
-           mean(c(c02_rec_w02, c03_rec_w02), na.rm = T))
-data <- data %>%
-  rowwise() %>%
-  mutate(conf_interpersonal_w03 =
-           mean(c(c02_rec_w03, c03_rec_w03), na.rm = T))
-data <- data %>%
-  rowwise() %>%
-  mutate(conf_interpersonal_w04 =
-           mean(c(c02_rec_w04, c03_rec_w04), na.rm = T))
-data <- data %>%
-  rowwise() %>%
-  mutate(conf_interpersonal_w05 =
-           mean(c(c02_rec_w05, c03_rec_w05), na.rm = T))
-
-data %>% dplyr::select(conf_interpersonal_w01, conf_interpersonal_w02, conf_interpersonal_w03, conf_interpersonal_w04, conf_interpersonal_w05) %>%  dfSummary(, graph.col = FALSE)
-```
-
-```{r}
-### Estimar el promedio general de todas las olas
-data <- data %>% 
-  rowwise() %>%
-  mutate(conf_interpersonal = mean(c(conf_interpersonal_w01, 
-                        conf_interpersonal_w02, 
-                        conf_interpersonal_w03, 
-                        conf_interpersonal_w04, 
-                        conf_interpersonal_w05), na.rm=T))
-
-data %>% dplyr::select(conf_interpersonal) %>% dfSummary(, graph.col = FALSE)
-```
-
-```{r}
-data$conf_interpersonal_med <- ifelse(data$conf_interpersonal <= median(data$conf_interpersonal, na.rm = T), 1, 2)
-data$conf_interpersonal_mean <- ifelse(data$conf_interpersonal <= mean(data$conf_interpersonal, na.rm = T), 1, 2)
-
-
-data %>% dplyr::select(conf_interpersonal_med, conf_interpersonal_mean) %>% dfSummary(, graph.col = FALSE)
-```
-
-### Reconocimiento y respeto de la diversidad (w01, w02, w03, w04 & w05)
-
-```{r}
-### estimar promedio simple de cada subdimensión en todas las olas que estos indicadores están presentes
-data <- data %>%
-  rowwise() %>%
-  mutate(diversidad_w01 =
-           mean(c(c06_04_w01, c06_05_w01, c06_06_w01), na.rm = T))
-data <- data %>%
-  rowwise() %>%
-  mutate(diversidad_w03 =
-           mean(c(c06_04_w03, c06_05_w03, c06_06_w03), na.rm = T))
-
-data %>% dplyr::select(diversidad_w01, diversidad_w03) %>%  summarytools::dfSummary(, graph.col = FALSE)
-```
-
-```{r}
-### Estimar el promedio general de todas las olas
-data <- data %>% 
-  rowwise() %>%
-  mutate(diversidad = mean(c(diversidad_w01, diversidad_w03), na.rm=T))
-
-
-# Check
-data %>% dplyr::select(diversidad) %>%  dfSummary(, graph.col = FALSE)
-```
-
-```{r}
-data$diversidad_med <- ifelse(data$diversidad <= median(data$diversidad, na.rm = T), 1, 2)
-data$diversidad_mean <- ifelse(data$diversidad <= mean(data$diversidad, na.rm = T), 1, 2)
-
-
-data %>% dplyr::select(diversidad_med, diversidad_mean) %>% dfSummary(, graph.col = FALSE)
-```
-
-### Lazos
-```{r}
-### Pasar la variable a numérica
-data$lazos_w01 = as.numeric(data$vol.red_w01)
-data$lazos_w03 = as.numeric(data$vol.red_w03)
-
-
-data %>% dplyr::select(lazos_w01, lazos_w03)  %>%  dfSummary(, graph.col = FALSE)
-```
-
-```{r}
-### Estimar el promedio general de todas las olas
-data <- data %>% 
-  rowwise() %>%
-  mutate(lazos = mean(c(lazos_w01, lazos_w03), na.rm=T))
-
-# Check
-data %>% dplyr::select(lazos) %>%  dfSummary(, graph.col = FALSE)
-```
-
-```{r}
-data$lazos_med <- ifelse(data$lazos <= median(data$lazos, na.rm = T), 1, 2)
-data$lazos_mean <- ifelse(data$lazos <= mean(data$lazos, na.rm = T), 1, 2)
-
-
-data %>% dplyr::select(lazos_med, lazos_mean) %>% dfSummary(, graph.col = FALSE)
-
-```
-
-## Sentido de pertenencia
-### Identificación con el país
-```{r}
-### estimar promedio simple de cada subdimensión en todas las olas que estos indicadores están presentes
-data <- data %>%
-  rowwise() %>%
-  mutate(identificacion_w01 =
-           mean(c(c32_01_w01, c32_02_w01), na.rm = T))
-data <- data %>%
-  rowwise() %>%
-  mutate(identificacion_w02 =
-           mean(c(c32_01_w02, c32_02_w02), na.rm = T))
-data <- data %>%
-  rowwise() %>%
-  mutate(identificacion_w03 =
-           mean(c(c32_01_w03, c32_02_w03), na.rm = T))
-data <- data %>%
-  rowwise() %>%
-  mutate(identificacion_w04 =
-           mean(c(c32_01_w04, c32_02_w04), na.rm = T))
-data <- data %>%
-  rowwise() %>%
-  mutate(identificacion_w05 =
-           mean(c(c32_01_w05, c32_02_w05), na.rm = T))
-
-data %>% dplyr::select(identificacion_w01, identificacion_w02, identificacion_w03, identificacion_w04, identificacion_w05) %>%  dfSummary(, graph.col = FALSE)
-```
-
-```{r}
-### Estimar el promedio general de todas las olas
-data <- data %>% 
-  rowwise() %>%
-  mutate(identificacion = mean(c(identificacion_w01, 
-                                 identificacion_w02, 
-                                 identificacion_w03, 
-                                 identificacion_w04, 
-                                 identificacion_w05), na.rm=T))
-
-data %>% dplyr::select(identificacion)  %>%  dfSummary(, graph.col = FALSE)
-```
-
-```{r}
-data$identificacion_med <- ifelse(data$identificacion <= median(data$identificacion, na.rm = T), 1, 2)
-data$identificacion_mean <- ifelse(data$identificacion <= mean(data$identificacion, na.rm = T), 1, 2)
-
-
-data %>% dplyr::select(identificacion_med, identificacion_mean) %>% dfSummary(, graph.col = FALSE)
-```
-
-
-### Percepción de justicia
-```{r}
-### estimar promedio simple de cada subdimensión en todas las olas que estos indicadores están presentes
-data <- data %>%
-  rowwise() %>%
-  mutate(justicia_w01 =
-           mean(c(c18_09_w01, c18_10_w01), na.rm = T))
-data <- data %>%
-  rowwise() %>%
-  mutate(justicia_w02 =
-           mean(c(c18_09_w02, c18_10_w02), na.rm = T))
-data <- data %>%
-  rowwise() %>%
-  mutate(justicia_w03 =
-           mean(c(c18_09_w03, c18_10_w03), na.rm = T))
-data <- data %>%
-  rowwise() %>%
-  mutate(justicia_w04 =
-           mean(c(c18_09_w04, c18_10_w04), na.rm = T))
-data <- data %>%
-  rowwise() %>%
-  mutate(justicia_w05 =
-           mean(c(c18_09_w05, c18_10_w05), na.rm = T))
-
-data %>% dplyr::select(justicia_w01, justicia_w02, justicia_w03, justicia_w04, justicia_w05) %>%  dfSummary(, graph.col = FALSE)
-```
-
-```{r}
-### Estimar el promedio general de todas las olas
-data <- data %>% 
-  rowwise() %>%
-  mutate(justicia = mean(c(justicia_w01, 
-                           justicia_w02, 
-                           justicia_w03, 
-                           justicia_w04, 
-                           justicia_w05), na.rm=T))
-
-data %>% dplyr::select(justicia)  %>%  dfSummary(, graph.col = FALSE)
-```
-
-```{r}
-data$justicia_med <- ifelse(data$justicia <= median(data$justicia, na.rm = T), 1, 2)
-data$justicia_mean <- ifelse(data$justicia <= mean(data$justicia, na.rm = T), 1, 2)
-
-
-data %>% dplyr::select(justicia_med, justicia_mean) %>% dfSummary(, graph.col = FALSE)
-```
-
-### Confianza institucional
-```{r}
-### estimar promedio simple de cada subdimensión en todas las olas que estos indicadores están presentes
-data <- data %>%
-  rowwise() %>%
-  mutate(conf_institucional_w01 =
-           mean(c(c05_01_w01, c05_08_w01, c05_02_w01), na.rm = T))
-data <- data %>%
-  rowwise() %>%
-  mutate(conf_institucional_w02 =
-           mean(c(c05_01_w02, c05_08_w02, c05_02_w02), na.rm = T))
-data <- data %>%
-  rowwise() %>%
-  mutate(conf_institucional_w03 =
-           mean(c(c05_01_w03, c05_08_w03, c05_02_w03), na.rm = T))
-data <- data %>%
-  rowwise() %>%
-  mutate(conf_institucional_w04 =
-           mean(c(c05_01_w04, c05_08_w04, c05_02_w04), na.rm = T))
-data <- data %>%
-  rowwise() %>%
-  mutate(conf_institucional_w05 =
-           mean(c(c05_01_w05, c05_08_w05, c05_02_w05), na.rm = T))
-
-data %>% dplyr::select(conf_institucional_w01, conf_institucional_w02, conf_institucional_w03, conf_institucional_w04, conf_institucional_w05)  %>%  dfSummary(, graph.col = FALSE)
-```
-
-```{r}
-### Estimar el promedio general de todas las olas
-data <- data %>% 
-  rowwise() %>%
-  mutate(conf_institucional = mean(c(conf_institucional_w01, 
-                                     conf_institucional_w02, 
-                                     conf_institucional_w03,
-                                     conf_institucional_w04,
-                                     conf_institucional_w05), na.rm=T))
-
-data %>% dplyr::select(conf_institucional)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
-```
-
-```{r}
-data$conf_institucional_med <- ifelse(data$conf_institucional <= median(data$conf_institucional, na.rm = T), 1, 2)
-data$conf_institucional_mean <- ifelse(data$conf_institucional <= mean(data$conf_institucional, na.rm = T), 1, 2)
-
-
-data %>% dplyr::select(conf_institucional_med, conf_institucional_mean) %>% dfSummary(, graph.col = FALSE)
-```
-
-
-## Orientación hacia el bien comun
-### solidaridad
-```{r}
-### estimar promedio simple de cada subdimensión en todas las olas que estos indicadores están presentes
-data <- data %>%
-  rowwise() %>%
-  mutate(solidaridad_w01 =
-           mean(c(c07_05_w01, c07_06_w01, c07_07_w01, c07_08_w01), na.rm = T))
-data <- data %>%
-  rowwise() %>%
-  mutate(solidaridad_w02 =
-           mean(c(c07_05_w02, c07_06_w02, c07_07_w02, c07_08_w02), na.rm = T))
-data <- data %>%
-  rowwise() %>%
-  mutate(solidaridad_w03 =
-           mean(c(c07_05_w03, c07_06_w03, c07_07_w03, c07_08_w03), na.rm = T))
-data <- data %>%
-  rowwise() %>%
-  mutate(solidaridad_w04 =
-           mean(c(c07_05_w04, c07_06_w04, c07_07_w04, c07_08_w04), na.rm = T))
-data <- data %>%
-  rowwise() %>%
-  mutate(solidaridad_w05 =
-           mean(c(c07_05_w05, c07_06_w05, c07_07_w05, c07_08_w05), na.rm = T))
-
-data %>% dplyr::select(solidaridad_w01, solidaridad_w02, solidaridad_w03, solidaridad_w04, solidaridad_w05) %>%  dfSummary(, graph.col = FALSE)
-```
-
-```{r}
-### Estimar el promedio general de todas las olas
-data <- data %>% 
-  rowwise() %>%
-  mutate(solidaridad = mean(c(solidaridad_w01, 
-                              solidaridad_w02, 
-                              solidaridad_w03, 
-                              solidaridad_w04, 
-                              solidaridad_w05), na.rm=T))
-
-data %>% dplyr::select(solidaridad)  %>%  dfSummary(, graph.col = FALSE)
-```
-
-```{r}
-data$solidaridad_med <- ifelse(data$solidaridad <= median(data$solidaridad, na.rm = T), 1, 2)
-data$solidaridad_mean <- ifelse(data$solidaridad <= mean(data$solidaridad, na.rm = T), 1, 2)
-
-
-data %>% dplyr::select(solidaridad_med, solidaridad_mean) %>% dfSummary(, graph.col = FALSE)
-```
-
-## Participación cívica
-```{r}
-### estimar promedio simple de cada subdimensión en todas las olas que estos indicadores están presentes
-data <- data %>%
-  rowwise() %>%
-  mutate(participacion_w01 =
-           mean(c(c08_01_w01, c08_02_w01, c08_03_w01, c08_04_w01), na.rm = T))
-data <- data %>%
-  rowwise() %>%
-  mutate(participacion_w02 =
-           mean(c(c08_01_w02, c08_02_w02, c08_03_w02, c08_04_w02), na.rm = T))
-data <- data %>%
-  rowwise() %>%
-  mutate(participacion_w03 =
-           mean(c(c08_01_w03, c08_02_w03, c08_03_w03, c08_04_w03), na.rm = T))
-data <- data %>%
-  rowwise() %>%
-  mutate(participacion_w04 =
-           mean(c(c08_01_w04, c08_02_w04, c08_03_w04, c08_04_w04), na.rm = T))
-
-data %>% dplyr::select(participacion_w01, participacion_w02, participacion_w03, participacion_w04) %>%  dfSummary(, graph.col = FALSE)
-```
-
-```{r}
-### Estimar el promedio general de todas las olas
-data <- data %>% 
-  rowwise() %>%
-  mutate(participacion = mean(c(participacion_w01, 
-                                participacion_w02, 
-                                participacion_w03,
-                                participacion_w04), na.rm=T))
-
-data %>% dplyr::select(participacion) %>%  dfSummary(, graph.col = FALSE)
-```
-
-```{r}
-data$participacion_med <- ifelse(data$participacion <= median(data$participacion, na.rm = T), 1, 2)
-data$participacion_mean <- ifelse(data$participacion <= mean(data$participacion, na.rm = T), 1, 2)
-
-
-data %>% dplyr::select(participacion_med, participacion_mean) %>% dfSummary(, graph.col = FALSE)
-```
-
-
-## Cohesión territorial
-```{r}
-### estimar promedio simple de cada subdimensión en todas las olas que estos indicadores están presentes
-data <- data %>%
-  rowwise() %>%
-  mutate(cohesion_territorial_w01 =
-           mean(c(t02_01_w01, t02_02_w01, t02_03_w01, t02_04_w01), na.rm = T))
-data <- data %>%
-  rowwise() %>%
-  mutate(cohesion_territorial_w02 =
-           mean(c(t02_01_w02, t02_02_w02, t02_03_w02, t02_04_w02), na.rm = T))
-data <- data %>%
-  rowwise() %>%
-  mutate(cohesion_territorial_w03 =
-           mean(c(t02_01_w03, t02_02_w03, t02_03_w03, t02_04_w03), na.rm = T))
-data <- data %>%
-  rowwise() %>%
-  mutate(cohesion_territorial_w04 =
-           mean(c(t02_01_w04, t02_02_w04, t02_03_w04, t02_04_w04), na.rm = T))
-
-data %>% dplyr::select(cohesion_territorial_w01, cohesion_territorial_w02, cohesion_territorial_w03, cohesion_territorial_w04) %>%  dfSummary(, graph.col = FALSE)
-```
-
-
-```{r}
-### Estimar el promedio general de todas las olas
-data <- data %>% 
-  rowwise() %>%
-  mutate(cohesion_territorial = mean(c(cohesion_territorial_w01, 
-                                       cohesion_territorial_w02, 
-                                       cohesion_territorial_w03, 
-                                       cohesion_territorial_w04), na.rm=T))
-
-data %>% dplyr::select(cohesion_territorial)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
-```
-
-```{r}
-data$cohesion_territorial_med <- ifelse(data$cohesion_territorial <= median(data$cohesion_territorial, na.rm = T), 1, 2)
-data$cohesion_territorial_mean <- ifelse(data$cohesion_territorial <= mean(data$cohesion_territorial, na.rm = T), 1, 2)
-
-
-data %>% dplyr::select(cohesion_territorial_med, cohesion_territorial_mean) %>% dfSummary(, graph.col = FALSE)
-```
-
-
-```{r}
-## Crear nueva base que contiene las variables categorizadas
-cohesion_med <- data %>% dplyr::select(conf_interpersonal_med, diversidad_med, lazos_med, identificacion_med, justicia_med, conf_institucional_med, solidaridad_med, participacion_med, cohesion_territorial_med) %>% na.omit()
-
-cohesion_mean <- data %>% dplyr::select(conf_interpersonal_mean, diversidad_mean, lazos_mean, identificacion_mean, justicia_mean, conf_institucional_mean, solidaridad_mean, participacion_mean, cohesion_territorial_mean) %>% na.omit()
-
-cohesion_med %>% dfSummary(, graph.col = FALSE)
-cohesion_mean %>% dfSummary(, graph.col = FALSE)
-```
-
+# Análisis clases latentes #
+############################
 
 # Analisis de clases latentes (mediana)
+
+```{r}
+load("input/data/proc/cohesion-med-LCA.RData")
+```
 
 ## Explorar patrones de respuesta
 ```{r, include = FALSE}
@@ -462,14 +22,14 @@ f <- cbind(conf_interpersonal_med, diversidad_med, lazos_med, identificacion_med
 
 set.seed(1234)
 
-lca1 <- poLCA(f,cohesion_med, nclass=1,graphs=F)
-lca2 <- poLCA(f,cohesion_med, nclass=2,graphs=F) 
-lca3 <- poLCA(f,cohesion_med, nclass=3,graphs=F)
-lca4 <- poLCA(f,cohesion_med, nclass=4,graphs=F)
-lca5 <- poLCA(f,cohesion_med, nclass=5,graphs=F)
-lca6 <- poLCA(f,cohesion_med, nclass=6,graphs=F)
-  
-  ## Entropía relativa (4 clases)
+lca1 <- poLCA(f,cohesion_med, nclass=1,graphs=F, verbose = FALSE)
+lca2 <- poLCA(f,cohesion_med, nclass=2,graphs=F, verbose = FALSE) 
+lca3 <- poLCA(f,cohesion_med, nclass=3,graphs=F, verbose = FALSE)
+lca4 <- poLCA(f,cohesion_med, nclass=4,graphs=F, verbose = FALSE)
+lca5 <- poLCA(f,cohesion_med, nclass=5,graphs=F, verbose = FALSE)
+lca6 <- poLCA(f,cohesion_med, nclass=6,graphs=F, verbose = FALSE)
+
+## Entropía relativa (4 clases)
 ##Numerator:
 #nume.E <- -sum(lca3$posterior * log(lca3$posterior))
 ##Denominator (n*log(K)): ## n is a sample size, and K is a number of class
@@ -487,43 +47,43 @@ AIC.3 <-as.numeric(lca3$aic)
 AIC.4 <-as.numeric(lca4$aic)
 AIC.5 <-as.numeric(lca5$aic)
 AIC.6 <-as.numeric(lca6$aic)
-  
+
 BIC.1 <-as.numeric(lca1$bic)
 BIC.2 <-as.numeric(lca2$bic)
 BIC.3 <-as.numeric(lca3$bic)
 BIC.4 <-as.numeric(lca4$bic)
 BIC.5 <-as.numeric(lca5$bic)
 BIC.6 <-as.numeric(lca6$bic)
-  
+
 llik.1 <-as.numeric(lca1$llik)
 llik.2 <-as.numeric(lca2$llik)
 llik.3 <-as.numeric(lca3$llik)
 llik.4 <-as.numeric(lca4$llik)
 llik.5 <-as.numeric(lca5$llik)
 llik.6 <-as.numeric(lca6$llik)
-  
+
 chisq.1 <- as.numeric(lca1$Chisq)
 chisq.2 <- as.numeric(lca2$Chisq)
 chisq.3 <- as.numeric(lca3$Chisq)
 chisq.4 <- as.numeric(lca4$Chisq)
 chisq.5 <- as.numeric(lca5$Chisq)
 chisq.6 <- as.numeric(lca6$Chisq)
-  
+
 G.1 <- as.numeric(lca1$Gsq)
 G.2 <- as.numeric(lca2$Gsq)
 G.3 <- as.numeric(lca3$Gsq)
 G.4 <- as.numeric(lca4$Gsq)
 G.5 <- as.numeric(lca5$Gsq)
 G.6 <- as.numeric(lca6$Gsq)
-  
+
 n.obs1 <- as.numeric(lca1$Nobs)
 n.obs2 <- as.numeric(lca2$Nobs)
 n.obs3 <- as.numeric(lca3$Nobs)
 n.obs4 <- as.numeric(lca4$Nobs)
 n.obs5 <- as.numeric(lca5$Nobs)
 n.obs6 <- as.numeric(lca6$Nobs)
-  
-  #Creación de Vectores para TABLA DE COMPARACIÓN
+
+#Creación de Vectores para TABLA DE COMPARACIÓN
 AIC <- c(AIC.1, AIC.2,AIC.3,AIC.4,AIC.5, AIC.6)
 BIC <- c(BIC.1, BIC.2,BIC.3,BIC.4,BIC.5, BIC.6)
 llik <- c(llik.1, llik.2,llik.3,llik.4,llik.5, llik.6)
@@ -531,26 +91,84 @@ chi.cuadrado <- c(chisq.1, chisq.2,chisq.3,chisq.4,chisq.5, chisq.6)
 G2 <- c(G.1, G.2,G.3,G.4,G.5, G.6)
 N <- c(n.obs1, n.obs2,n.obs3,n.obs4,n.obs5, n.obs6)
 Modelos <- c("1 clase", "2 clases", "3 clases", "4 clases", "5 clases", "6 clases")
-  
-  #CREACIÓN TABLA ESTADÍSTICOS DE AJUSTE MODELOS TODAS LAS VARIABLES
+
+#CREACIÓN TABLA ESTADÍSTICOS DE AJUSTE MODELOS TODAS LAS VARIABLES
 fit.indices <- data.frame(Modelos,AIC,BIC,llik,chi.cuadrado,G2,N)
 fit.indices
 ```
 
 ## Ordenar las clases
 ```{r}
-  #Extraer valores de inicio (modelo seleccionado)
+#Extraer valores de inicio (modelo seleccionado)
 probs.start<-lca4$probs.start
-  #lca5$probs.start
+#lca5$probs.start
 
-  #Reanalizar con gráficos
-lca4<-poLCA(f, cohesion_med, nclass=4, probs.start=probs.start,graphs=TRUE, na.rm=TRUE, maxiter=3000)
+#Reanalizar con gráficos
+# lca4<-poLCA(f, cohesion_med, nclass=4, probs.start=probs.start,graphs=TRUE, na.rm=TRUE, maxiter=3000)
+
+  # Graph latent classes, 3 clases
+  lca3_probs=as.data.frame(lca3$probs)
+  dim(lca3_probs)
+  names(lca3_probs)
+  datlca_tot_par=lca3_probs[c(2,4,6,8,10,12,14,16,18)] #dejar solo prob "si"
+  datlca_tot_par$class=c(1:3) # añadir número de clase
+  library(reshape2)
+  datlca_tot_parl=melt(datlca_tot_par, id=c("class") )
+  str(datlca_tot_parl)
+  print(levels(datlca_tot_parl$variable))
   
-  #Reordnar clases, si es necesario
-  #new.probs.start<-poLCA.reorder(probs.start, c(2,1,3,4))
+    # Relabel factors
+    datlca_tot_parl$variable=factor(datlca_tot_parl$variable, labels=c("Confianza", "Diversidad", "Lazos", "Identificación", "Justicia", "Conf. Instituciones","Solidaridad", "Participación", "Vecinal"))
+    lca3$P # class size
+    datlca_tot_parl$class=factor(datlca_tot_parl$class,labels=c("Clase 1 (32%)", "Clase 2 (42%)", "Clase 3 (26%)"))
+
+    library(ggplot2)
+lca3_graph <-ggplot(data = datlca_tot_parl, aes(x=variable, y=value, group=class, shape=class)) + 
+      geom_line(aes(linetype=class)) + geom_point(size = 2) +
+      ggtitle("Clases latentes de Cohesión Social") + 
+      xlab("Indicadores Cohesión") + 
+      ylab("Probabilidades condicionales")
+    
+lca3_graph
+    
+ggsave("output/graphs/lca3.jpg", plot = lca3_graph, height=4, width=10, units="in", dpi=350 )
+
+
+
+
+
+  # Graph latent classes, 4 clases
+  lca4_probs=as.data.frame(lca4$probs)
+  dim(lca4_probs)
+  names(lca4_probs)
+  datlca_tot_par=lca4_probs[c(2,4,6,8,10,12,14,16,18)] #dejar solo prob "si"
+  datlca_tot_par$class=c(1:4) # añadir número de clase
+  library(reshape2)
+  datlca_tot_parl=melt(datlca_tot_par, id=c("class") )
+  str(datlca_tot_parl)
+  print(levels(datlca_tot_parl$variable))
   
-  #Re-estimar para nuevo orden
-  #lca4<-poLCA(f, elsoc, nclass=4, probs.start=new.probs.start, graphs=TRUE, na.rm=TRUE)
+    # Relabel factors
+    datlca_tot_parl$variable=factor(datlca_tot_parl$variable, labels=c("Confianza", "Diversidad", "Lazos", "Identificación", "Justicia", "Conf. Instituciones","Solidaridad", "Participación", "Vecinal"))
+    lca4$P # class size
+    datlca_tot_parl$class=factor(datlca_tot_parl$class,labels=c("Clase 1 (25%)", "Clase 2 (21%)", "Clase 3 (28%)", "Clase 4 (26%)"))
+
+    library(ggplot2)
+lca4_graph <-ggplot(data = datlca_tot_parl, aes(x=variable, y=value, group=class, shape=class)) + 
+      geom_line(aes(linetype=class)) + geom_point(size = 2) +
+      ggtitle("Clases latentes de Cohesión Social") + 
+      xlab("Indicadores Cohesión") + 
+      ylab("Probabilidades condicionales")
+    
+lca4_graph
+    
+ggsave("output/graphs/lca4.jpg", plot = lca4_graph, height=4, width=10, units="in", dpi=350 )
+
+#Reordnar clases, si es necesario
+#new.probs.start<-poLCA.reorder(probs.start, c(2,1,3,4))
+
+#Re-estimar para nuevo orden
+#lca4<-poLCA(f, elsoc, nclass=4, probs.start=new.probs.start, graphs=TRUE, na.rm=TRUE)
 ```
 
 ```{r}
@@ -584,8 +202,8 @@ lca3 <- poLCA(f,cohesion_mean, nclass=3,graphs=F)
 lca4 <- poLCA(f,cohesion_mean, nclass=4,graphs=F)
 lca5 <- poLCA(f,cohesion_mean, nclass=5,graphs=F)
 lca6 <- poLCA(f,cohesion_mean, nclass=6,graphs=F)
-  
-  ## Entropía relativa (4 clases)
+
+## Entropía relativa (4 clases)
 ##Numerator:
 #nume.E <- -sum(lca3$posterior * log(lca3$posterior))
 ##Denominator (n*log(K)): ## n is a sample size, and K is a number of class
@@ -603,43 +221,43 @@ AIC.3 <-as.numeric(lca3$aic)
 AIC.4 <-as.numeric(lca4$aic)
 AIC.5 <-as.numeric(lca5$aic)
 AIC.6 <-as.numeric(lca6$aic)
-  
+
 BIC.1 <-as.numeric(lca1$bic)
 BIC.2 <-as.numeric(lca2$bic)
 BIC.3 <-as.numeric(lca3$bic)
 BIC.4 <-as.numeric(lca4$bic)
 BIC.5 <-as.numeric(lca5$bic)
 BIC.6 <-as.numeric(lca6$bic)
-  
+
 llik.1 <-as.numeric(lca1$llik)
 llik.2 <-as.numeric(lca2$llik)
 llik.3 <-as.numeric(lca3$llik)
 llik.4 <-as.numeric(lca4$llik)
 llik.5 <-as.numeric(lca5$llik)
 llik.6 <-as.numeric(lca6$llik)
-  
+
 chisq.1 <- as.numeric(lca1$Chisq)
 chisq.2 <- as.numeric(lca2$Chisq)
 chisq.3 <- as.numeric(lca3$Chisq)
 chisq.4 <- as.numeric(lca4$Chisq)
 chisq.5 <- as.numeric(lca5$Chisq)
 chisq.6 <- as.numeric(lca6$Chisq)
-  
+
 G.1 <- as.numeric(lca1$Gsq)
 G.2 <- as.numeric(lca2$Gsq)
 G.3 <- as.numeric(lca3$Gsq)
 G.4 <- as.numeric(lca4$Gsq)
 G.5 <- as.numeric(lca5$Gsq)
 G.6 <- as.numeric(lca6$Gsq)
-  
+
 n.obs1 <- as.numeric(lca1$Nobs)
 n.obs2 <- as.numeric(lca2$Nobs)
 n.obs3 <- as.numeric(lca3$Nobs)
 n.obs4 <- as.numeric(lca4$Nobs)
 n.obs5 <- as.numeric(lca5$Nobs)
 n.obs6 <- as.numeric(lca6$Nobs)
-  
-  #Creación de Vectores para TABLA DE COMPARACIÓN
+
+#Creación de Vectores para TABLA DE COMPARACIÓN
 AIC <- c(AIC.1, AIC.2,AIC.3,AIC.4,AIC.5, AIC.6)
 BIC <- c(BIC.1, BIC.2,BIC.3,BIC.4,BIC.5, BIC.6)
 llik <- c(llik.1, llik.2,llik.3,llik.4,llik.5, llik.6)
@@ -647,26 +265,26 @@ chi.cuadrado <- c(chisq.1, chisq.2,chisq.3,chisq.4,chisq.5, chisq.6)
 G2 <- c(G.1, G.2,G.3,G.4,G.5, G.6)
 N <- c(n.obs1, n.obs2,n.obs3,n.obs4,n.obs5, n.obs6)
 Modelos <- c("1 clase", "2 clases", "3 clases", "4 clases", "5 clases", "6 clases")
-  
-  #CREACIÓN TABLA ESTADÍSTICOS DE AJUSTE MODELOS TODAS LAS VARIABLES
+
+#CREACIÓN TABLA ESTADÍSTICOS DE AJUSTE MODELOS TODAS LAS VARIABLES
 fit.indices <- data.frame(Modelos,AIC,BIC,llik,chi.cuadrado,G2,N)
 fit.indices
 ```
 
 ## Ordenar las clases
 ```{r}
-  #Extraer valores de inicio (modelo seleccionado)
+#Extraer valores de inicio (modelo seleccionado)
 probs.start<-lca4$probs.start
-  #lca5$probs.start
+#lca5$probs.start
 
-  #Reanalizar con gráficos
+#Reanalizar con gráficos
 lca4<-poLCA(f, cohesion_mean, nclass=4, probs.start=probs.start,graphs=TRUE, na.rm=TRUE, maxiter=3000)
-  
-  #Reordnar clases, si es necesario
-  #new.probs.start<-poLCA.reorder(probs.start, c(2,1,3,4))
-  
-  #Re-estimar para nuevo orden
-  #lca4<-poLCA(f, elsoc, nclass=4, probs.start=new.probs.start, graphs=TRUE, na.rm=TRUE)
+
+#Reordnar clases, si es necesario
+#new.probs.start<-poLCA.reorder(probs.start, c(2,1,3,4))
+
+#Re-estimar para nuevo orden
+#lca4<-poLCA(f, elsoc, nclass=4, probs.start=new.probs.start, graphs=TRUE, na.rm=TRUE)
 ```
 
 ```{r}
