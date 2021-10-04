@@ -19,7 +19,9 @@ Los indicadores son recodificados de la siguiente forma:
 
 2) Se estima la media general de cada subdimensión según las medias estimadas en el paso anterior. El resultado es tener 9 promedios simples, uno por cada subdimensión.
 
-3) Para categorizar las variables en dos categorías de respuestas y realizar el análisis de clases latentes, se establece como criterio de corte la mediana de cada variable. Los valores menores o iguales a la mediana se consideran como "1" y los valores mayores a la mediana se consideran como "2".
+3) Para categorizar las variables en dos categorías de respuestas y realizar el análisis de clases latentes, se establece como criterio de corte la mediana* de cada variable. Los valores menores o iguales a la mediana se consideran como "1" y los valores mayores a la mediana se consideran como "2".
+
+* Para probar, también se estableció como criterio la media
 
 
 ```{r}
@@ -76,10 +78,11 @@ data %>% dplyr::select(conf_interpersonal) %>% dfSummary(, graph.col = FALSE)
 ```
 
 ```{r}
-# La mediana es 1.2
-data <- data %>% mutate(conf_interpersonal = ifelse(conf_interpersonal<=1.2, 1, 2))
+data$conf_interpersonal_med <- ifelse(data$conf_interpersonal <= median(data$conf_interpersonal, na.rm = T), 1, 2)
+data$conf_interpersonal_mean <- ifelse(data$conf_interpersonal <= mean(data$conf_interpersonal, na.rm = T), 1, 2)
 
-data %>% dplyr::select(conf_interpersonal) %>% dfSummary(, graph.col = FALSE)
+
+data %>% dplyr::select(conf_interpersonal_med, conf_interpersonal_mean) %>% dfSummary(, graph.col = FALSE)
 ```
 
 ### Reconocimiento y respeto de la diversidad (w01, w02, w03, w04 & w05)
@@ -110,10 +113,11 @@ data %>% dplyr::select(diversidad) %>%  dfSummary(, graph.col = FALSE)
 ```
 
 ```{r}
-# La mediana es 2.8
-data <- data %>% mutate(diversidad = ifelse(diversidad<=2.8, 1, 2))
+data$diversidad_med <- ifelse(data$diversidad <= median(data$diversidad, na.rm = T), 1, 2)
+data$diversidad_mean <- ifelse(data$diversidad <= mean(data$diversidad, na.rm = T), 1, 2)
 
-data %>% dplyr::select(diversidad) %>% dfSummary(, graph.col = FALSE)
+
+data %>% dplyr::select(diversidad_med, diversidad_mean) %>% dfSummary(, graph.col = FALSE)
 ```
 
 ### Lazos
@@ -137,10 +141,12 @@ data %>% dplyr::select(lazos) %>%  dfSummary(, graph.col = FALSE)
 ```
 
 ```{r}
-# La mediana es 4
-data <- data %>% mutate(lazos = ifelse(lazos<=4, 1, 2))
+data$lazos_med <- ifelse(data$lazos <= median(data$lazos, na.rm = T), 1, 2)
+data$lazos_mean <- ifelse(data$lazos <= mean(data$lazos, na.rm = T), 1, 2)
 
-data %>% dplyr::select(lazos) %>% dfSummary(, graph.col = FALSE)
+
+data %>% dplyr::select(lazos_med, lazos_mean) %>% dfSummary(, graph.col = FALSE)
+
 ```
 
 ## Sentido de pertenencia
@@ -185,10 +191,11 @@ data %>% dplyr::select(identificacion)  %>%  dfSummary(, graph.col = FALSE)
 ```
 
 ```{r}
-# La mediana es 4.4
-data <- data %>% mutate(identificacion = ifelse(identificacion<=4.4, 1, 2))
+data$identificacion_med <- ifelse(data$identificacion <= median(data$identificacion, na.rm = T), 1, 2)
+data$identificacion_mean <- ifelse(data$identificacion <= mean(data$identificacion, na.rm = T), 1, 2)
 
-data %>% dplyr::select(identificacion) %>% dfSummary(, graph.col = FALSE)
+
+data %>% dplyr::select(identificacion_med, identificacion_mean) %>% dfSummary(, graph.col = FALSE)
 ```
 
 
@@ -233,10 +240,11 @@ data %>% dplyr::select(justicia)  %>%  dfSummary(, graph.col = FALSE)
 ```
 
 ```{r}
-# La mediana es 2.6
-data <- data %>% mutate(justicia = ifelse(justicia<=2.6, 1, 2))
+data$justicia_med <- ifelse(data$justicia <= median(data$justicia, na.rm = T), 1, 2)
+data$justicia_mean <- ifelse(data$justicia <= mean(data$justicia, na.rm = T), 1, 2)
 
-data %>% dplyr::select(justicia) %>% dfSummary(, graph.col = FALSE)
+
+data %>% dplyr::select(justicia_med, justicia_mean) %>% dfSummary(, graph.col = FALSE)
 ```
 
 ### Confianza institucional
@@ -280,10 +288,11 @@ data %>% dplyr::select(conf_institucional)  %>% sjlabelled::as_label(.)  %>%  df
 ```
 
 ```{r}
-# La mediana es 1.7
-data <- data %>% mutate(conf_institucional = ifelse(conf_institucional<=1.7, 1, 2))
+data$conf_institucional_med <- ifelse(data$conf_institucional <= median(data$conf_institucional, na.rm = T), 1, 2)
+data$conf_institucional_mean <- ifelse(data$conf_institucional <= mean(data$conf_institucional, na.rm = T), 1, 2)
 
-data %>% dplyr::select(conf_institucional) %>% dfSummary(, graph.col = FALSE)
+
+data %>% dplyr::select(conf_institucional_med, conf_institucional_mean) %>% dfSummary(, graph.col = FALSE)
 ```
 
 
@@ -329,10 +338,11 @@ data %>% dplyr::select(solidaridad)  %>%  dfSummary(, graph.col = FALSE)
 ```
 
 ```{r}
-# La mediana es 2.1
-data <- data %>% mutate(solidaridad = ifelse(solidaridad<=2.1, 1, 2))
+data$solidaridad_med <- ifelse(data$solidaridad <= median(data$solidaridad, na.rm = T), 1, 2)
+data$solidaridad_mean <- ifelse(data$solidaridad <= mean(data$solidaridad, na.rm = T), 1, 2)
 
-data %>% dplyr::select(solidaridad) %>% dfSummary(, graph.col = FALSE)
+
+data %>% dplyr::select(solidaridad_med, solidaridad_mean) %>% dfSummary(, graph.col = FALSE)
 ```
 
 ## Participación cívica
@@ -371,10 +381,11 @@ data %>% dplyr::select(participacion) %>%  dfSummary(, graph.col = FALSE)
 ```
 
 ```{r}
-# La mediana es 1.2
-data <- data %>% mutate(participacion = ifelse(participacion<=1.2, 1, 2))
+data$participacion_med <- ifelse(data$participacion <= median(data$participacion, na.rm = T), 1, 2)
+data$participacion_mean <- ifelse(data$participacion <= mean(data$participacion, na.rm = T), 1, 2)
 
-data %>% dplyr::select(participacion) %>% dfSummary(, graph.col = FALSE)
+
+data %>% dplyr::select(participacion_med, participacion_mean) %>% dfSummary(, graph.col = FALSE)
 ```
 
 
@@ -415,26 +426,30 @@ data %>% dplyr::select(cohesion_territorial)  %>% sjlabelled::as_label(.)  %>%  
 ```
 
 ```{r}
-# La mediana es 3.9
-data <- data %>% mutate(cohesion_territorial = ifelse(cohesion_territorial<=3.9, 1, 2))
+data$cohesion_territorial_med <- ifelse(data$cohesion_territorial <= median(data$cohesion_territorial, na.rm = T), 1, 2)
+data$cohesion_territorial_mean <- ifelse(data$cohesion_territorial <= mean(data$cohesion_territorial, na.rm = T), 1, 2)
 
-data %>% dplyr::select(cohesion_territorial) %>% dfSummary(, graph.col = FALSE)
+
+data %>% dplyr::select(cohesion_territorial_med, cohesion_territorial_mean) %>% dfSummary(, graph.col = FALSE)
 ```
 
 
 ```{r}
-## Crear nueva base que contiene el promedio general de cada subdimensión
-cohesion <- data %>% dplyr::select(conf_interpersonal, diversidad, lazos, identificacion, justicia, conf_institucional, solidaridad, participacion, cohesion_territorial) %>% na.omit()
+## Crear nueva base que contiene las variables categorizadas
+cohesion_med <- data %>% dplyr::select(conf_interpersonal_med, diversidad_med, lazos_med, identificacion_med, justicia_med, conf_institucional_med, solidaridad_med, participacion_med, cohesion_territorial_med) %>% na.omit()
 
-cohesion %>% dfSummary(, graph.col = FALSE)
+cohesion_mean <- data %>% dplyr::select(conf_interpersonal_mean, diversidad_mean, lazos_mean, identificacion_mean, justicia_mean, conf_institucional_mean, solidaridad_mean, participacion_mean, cohesion_territorial_mean) %>% na.omit()
+
+cohesion_med %>% dfSummary(, graph.col = FALSE)
+cohesion_mean %>% dfSummary(, graph.col = FALSE)
 ```
 
 
-# Analisis de clases latentes
+# Analisis de clases latentes (mediana)
 
 ## Explorar patrones de respuesta
-```{r}
-patterns=table(apply(cohesion, 1, paste, collapse=""))
+```{r, include = FALSE}
+patterns=table(apply(cohesion_med, 1, paste, collapse=""))
 patterns
 patterns_m=as.data.frame(patterns)
 patterns_m <- patterns_m[order(-patterns_m$Freq),] 
@@ -442,47 +457,94 @@ patterns_m
 ```
 
 ## Estimar modelo
-```{r}
-f <- cbind(conf_interpersonal, diversidad, lazos, identificacion, justicia, conf_institucional, solidaridad, participacion, cohesion_territorial)~1
+```{r, include = FALSE}
+f <- cbind(conf_interpersonal_med, diversidad_med, lazos_med, identificacion_med, justicia_med, conf_institucional_med, solidaridad_med, participacion_med, cohesion_territorial_med)~1
 
 set.seed(1234)
-  
-lca3 <- poLCA(f,cohesion, nclass=3,graphs=F)
-poLCA.entropy(lca3)
+
+lca1 <- poLCA(f,cohesion_med, nclass=1,graphs=F)
+lca2 <- poLCA(f,cohesion_med, nclass=2,graphs=F) 
+lca3 <- poLCA(f,cohesion_med, nclass=3,graphs=F)
+lca4 <- poLCA(f,cohesion_med, nclass=4,graphs=F)
+lca5 <- poLCA(f,cohesion_med, nclass=5,graphs=F)
+lca6 <- poLCA(f,cohesion_med, nclass=6,graphs=F)
   
   ## Entropía relativa (4 clases)
 ##Numerator:
-nume.E <- -sum(lca3$posterior * log(lca3$posterior))
+#nume.E <- -sum(lca3$posterior * log(lca3$posterior))
 ##Denominator (n*log(K)): ## n is a sample size, and K is a number of class
-deno.E <- 1490*log(4)
+#deno.E <- 1490*log(4)
 ##Relative Entropy
-Entro <- 1-(nume.E/deno.E)
-Entro
+#Entro <- 1-(nume.E/deno.E)
+#Entro
 ```
 
 ##  Estadísticos de ajuste
 ```{r}
-AIC <-as.numeric(lca3$aic)
-BIC <-as.numeric(lca3$bic)
-llik <-as.numeric(lca3$llik)
-chisq <- as.numeric(lca3$Chisq)
-G <- as.numeric(lca3$Gsq)
-n.obs <- as.numeric(lca3$Nobs)
-Modelos <- c("3 clases")
+AIC.1 <-as.numeric(lca1$aic)
+AIC.2 <-as.numeric(lca2$aic)
+AIC.3 <-as.numeric(lca3$aic)
+AIC.4 <-as.numeric(lca4$aic)
+AIC.5 <-as.numeric(lca5$aic)
+AIC.6 <-as.numeric(lca6$aic)
+  
+BIC.1 <-as.numeric(lca1$bic)
+BIC.2 <-as.numeric(lca2$bic)
+BIC.3 <-as.numeric(lca3$bic)
+BIC.4 <-as.numeric(lca4$bic)
+BIC.5 <-as.numeric(lca5$bic)
+BIC.6 <-as.numeric(lca6$bic)
+  
+llik.1 <-as.numeric(lca1$llik)
+llik.2 <-as.numeric(lca2$llik)
+llik.3 <-as.numeric(lca3$llik)
+llik.4 <-as.numeric(lca4$llik)
+llik.5 <-as.numeric(lca5$llik)
+llik.6 <-as.numeric(lca6$llik)
+  
+chisq.1 <- as.numeric(lca1$Chisq)
+chisq.2 <- as.numeric(lca2$Chisq)
+chisq.3 <- as.numeric(lca3$Chisq)
+chisq.4 <- as.numeric(lca4$Chisq)
+chisq.5 <- as.numeric(lca5$Chisq)
+chisq.6 <- as.numeric(lca6$Chisq)
+  
+G.1 <- as.numeric(lca1$Gsq)
+G.2 <- as.numeric(lca2$Gsq)
+G.3 <- as.numeric(lca3$Gsq)
+G.4 <- as.numeric(lca4$Gsq)
+G.5 <- as.numeric(lca5$Gsq)
+G.6 <- as.numeric(lca6$Gsq)
+  
+n.obs1 <- as.numeric(lca1$Nobs)
+n.obs2 <- as.numeric(lca2$Nobs)
+n.obs3 <- as.numeric(lca3$Nobs)
+n.obs4 <- as.numeric(lca4$Nobs)
+n.obs5 <- as.numeric(lca5$Nobs)
+n.obs6 <- as.numeric(lca6$Nobs)
+  
+  #Creación de Vectores para TABLA DE COMPARACIÓN
+AIC <- c(AIC.1, AIC.2,AIC.3,AIC.4,AIC.5, AIC.6)
+BIC <- c(BIC.1, BIC.2,BIC.3,BIC.4,BIC.5, BIC.6)
+llik <- c(llik.1, llik.2,llik.3,llik.4,llik.5, llik.6)
+chi.cuadrado <- c(chisq.1, chisq.2,chisq.3,chisq.4,chisq.5, chisq.6)
+G2 <- c(G.1, G.2,G.3,G.4,G.5, G.6)
+N <- c(n.obs1, n.obs2,n.obs3,n.obs4,n.obs5, n.obs6)
+Modelos <- c("1 clase", "2 clases", "3 clases", "4 clases", "5 clases", "6 clases")
   
   #CREACIÓN TABLA ESTADÍSTICOS DE AJUSTE MODELOS TODAS LAS VARIABLES
-fit.indices <- data.frame(Modelos,AIC,BIC,llik,chisq,G,n.obs)
+fit.indices <- data.frame(Modelos,AIC,BIC,llik,chi.cuadrado,G2,N)
 fit.indices
 ```
 
 ## Ordenar las clases
 ```{r}
   #Extraer valores de inicio (modelo seleccionado)
-probs.start<-lca3$probs.start
+probs.start<-lca4$probs.start
   #lca5$probs.start
 
   #Reanalizar con gráficos
-lca3<-poLCA(f, cohesion, nclass=3, probs.start=probs.start,graphs=TRUE, na.rm=TRUE, maxiter=3000)
+lca4<-poLCA(f, cohesion_med, nclass=4, probs.start=probs.start,graphs=TRUE, na.rm=TRUE, maxiter=3000)
   
   #Reordnar clases, si es necesario
   #new.probs.start<-poLCA.reorder(probs.start, c(2,1,3,4))
@@ -491,3 +553,124 @@ lca3<-poLCA(f, cohesion, nclass=3, probs.start=probs.start,graphs=TRUE, na.rm=TR
   #lca4<-poLCA(f, elsoc, nclass=4, probs.start=new.probs.start, graphs=TRUE, na.rm=TRUE)
 ```
 
+```{r}
+probs.start<-lca5$probs.start
+
+lca5<-poLCA(f, cohesion_med, nclass=5, probs.start=probs.start,graphs=TRUE, na.rm=TRUE, maxiter=3000)
+```
+
+
+
+# Analisis de clases latentes (media)
+
+## Explorar patrones de respuesta
+```{r, include = FALSE}
+patterns=table(apply(cohesion_mean, 1, paste, collapse=""))
+patterns
+patterns_m=as.data.frame(patterns)
+patterns_m <- patterns_m[order(-patterns_m$Freq),] 
+patterns_m
+```
+
+## Estimar modelo
+```{r, include = FALSE}
+f <- cbind(conf_interpersonal_mean, diversidad_mean, lazos_mean, identificacion_mean, justicia_mean, conf_institucional_mean, solidaridad_mean, participacion_mean, cohesion_territorial_mean)~1
+
+set.seed(1234)
+
+lca1 <- poLCA(f,cohesion_mean, nclass=1,graphs=F)
+lca2 <- poLCA(f,cohesion_mean, nclass=2,graphs=F) 
+lca3 <- poLCA(f,cohesion_mean, nclass=3,graphs=F)
+lca4 <- poLCA(f,cohesion_mean, nclass=4,graphs=F)
+lca5 <- poLCA(f,cohesion_mean, nclass=5,graphs=F)
+lca6 <- poLCA(f,cohesion_mean, nclass=6,graphs=F)
+  
+  ## Entropía relativa (4 clases)
+##Numerator:
+#nume.E <- -sum(lca3$posterior * log(lca3$posterior))
+##Denominator (n*log(K)): ## n is a sample size, and K is a number of class
+#deno.E <- 1490*log(4)
+##Relative Entropy
+#Entro <- 1-(nume.E/deno.E)
+#Entro
+```
+
+##  Estadísticos de ajuste
+```{r}
+AIC.1 <-as.numeric(lca1$aic)
+AIC.2 <-as.numeric(lca2$aic)
+AIC.3 <-as.numeric(lca3$aic)
+AIC.4 <-as.numeric(lca4$aic)
+AIC.5 <-as.numeric(lca5$aic)
+AIC.6 <-as.numeric(lca6$aic)
+  
+BIC.1 <-as.numeric(lca1$bic)
+BIC.2 <-as.numeric(lca2$bic)
+BIC.3 <-as.numeric(lca3$bic)
+BIC.4 <-as.numeric(lca4$bic)
+BIC.5 <-as.numeric(lca5$bic)
+BIC.6 <-as.numeric(lca6$bic)
+  
+llik.1 <-as.numeric(lca1$llik)
+llik.2 <-as.numeric(lca2$llik)
+llik.3 <-as.numeric(lca3$llik)
+llik.4 <-as.numeric(lca4$llik)
+llik.5 <-as.numeric(lca5$llik)
+llik.6 <-as.numeric(lca6$llik)
+  
+chisq.1 <- as.numeric(lca1$Chisq)
+chisq.2 <- as.numeric(lca2$Chisq)
+chisq.3 <- as.numeric(lca3$Chisq)
+chisq.4 <- as.numeric(lca4$Chisq)
+chisq.5 <- as.numeric(lca5$Chisq)
+chisq.6 <- as.numeric(lca6$Chisq)
+  
+G.1 <- as.numeric(lca1$Gsq)
+G.2 <- as.numeric(lca2$Gsq)
+G.3 <- as.numeric(lca3$Gsq)
+G.4 <- as.numeric(lca4$Gsq)
+G.5 <- as.numeric(lca5$Gsq)
+G.6 <- as.numeric(lca6$Gsq)
+  
+n.obs1 <- as.numeric(lca1$Nobs)
+n.obs2 <- as.numeric(lca2$Nobs)
+n.obs3 <- as.numeric(lca3$Nobs)
+n.obs4 <- as.numeric(lca4$Nobs)
+n.obs5 <- as.numeric(lca5$Nobs)
+n.obs6 <- as.numeric(lca6$Nobs)
+  
+  #Creación de Vectores para TABLA DE COMPARACIÓN
+AIC <- c(AIC.1, AIC.2,AIC.3,AIC.4,AIC.5, AIC.6)
+BIC <- c(BIC.1, BIC.2,BIC.3,BIC.4,BIC.5, BIC.6)
+llik <- c(llik.1, llik.2,llik.3,llik.4,llik.5, llik.6)
+chi.cuadrado <- c(chisq.1, chisq.2,chisq.3,chisq.4,chisq.5, chisq.6)
+G2 <- c(G.1, G.2,G.3,G.4,G.5, G.6)
+N <- c(n.obs1, n.obs2,n.obs3,n.obs4,n.obs5, n.obs6)
+Modelos <- c("1 clase", "2 clases", "3 clases", "4 clases", "5 clases", "6 clases")
+  
+  #CREACIÓN TABLA ESTADÍSTICOS DE AJUSTE MODELOS TODAS LAS VARIABLES
+fit.indices <- data.frame(Modelos,AIC,BIC,llik,chi.cuadrado,G2,N)
+fit.indices
+```
+
+## Ordenar las clases
+```{r}
+  #Extraer valores de inicio (modelo seleccionado)
+probs.start<-lca4$probs.start
+  #lca5$probs.start
+
+  #Reanalizar con gráficos
+lca4<-poLCA(f, cohesion_mean, nclass=4, probs.start=probs.start,graphs=TRUE, na.rm=TRUE, maxiter=3000)
+  
+  #Reordnar clases, si es necesario
+  #new.probs.start<-poLCA.reorder(probs.start, c(2,1,3,4))
+  
+  #Re-estimar para nuevo orden
+  #lca4<-poLCA(f, elsoc, nclass=4, probs.start=new.probs.start, graphs=TRUE, na.rm=TRUE)
+```
+
+```{r}
+probs.start<-lca5$probs.start
+
+lca5<-poLCA(f, cohesion_mean, nclass=5, probs.start=probs.start,graphs=TRUE, na.rm=TRUE, maxiter=3000)
+```
