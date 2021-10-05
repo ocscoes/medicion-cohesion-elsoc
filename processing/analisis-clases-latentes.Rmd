@@ -5,6 +5,7 @@
 
 ```{r}
 load("input/data/proc/cohesion-med-LCA.RData")
+library(poLCA)
 ```
 
 ## Explorar patrones de respuesta
@@ -180,6 +181,13 @@ lca5<-poLCA(f, cohesion_med, nclass=5, probs.start=probs.start,graphs=TRUE, na.r
 
 
 # Analisis de clases latentes (media)
+
+
+```{r}
+load("input/data/proc/cohesion-mean-LCA.RData")
+```
+
+
 
 ## Explorar patrones de respuesta
 ```{r, include = FALSE}
