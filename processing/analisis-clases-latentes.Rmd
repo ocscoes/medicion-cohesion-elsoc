@@ -106,6 +106,12 @@ probs.start<-lca4$probs.start
 
 #Reanalizar con gráficos
 # lca4<-poLCA(f, cohesion_med, nclass=4, probs.start=probs.start,graphs=TRUE, na.rm=TRUE, maxiter=3000)
+```
+
+## Gráfico 3 clases
+
+```{r, fig.width=10, fig.height=4}
+
 
   # Graph latent classes, 3 clases
   lca3_probs=as.data.frame(lca3$probs)
@@ -134,10 +140,12 @@ lca3_graph
     
 ggsave("output/graphs/lca3.jpg", plot = lca3_graph, height=4, width=10, units="in", dpi=350 )
 
+```
 
 
+# Gráfico 4 clases
 
-
+```{r, fig.width=10, fig.height=4 }
   # Graph latent classes, 4 clases
   lca4_probs=as.data.frame(lca4$probs)
   dim(lca4_probs)
@@ -170,12 +178,6 @@ ggsave("output/graphs/lca4.jpg", plot = lca4_graph, height=4, width=10, units="i
 
 #Re-estimar para nuevo orden
 #lca4<-poLCA(f, elsoc, nclass=4, probs.start=new.probs.start, graphs=TRUE, na.rm=TRUE)
-```
-
-```{r}
-probs.start<-lca5$probs.start
-
-lca5<-poLCA(f, cohesion_med, nclass=5, probs.start=probs.start,graphs=TRUE, na.rm=TRUE, maxiter=3000)
 ```
 
 
