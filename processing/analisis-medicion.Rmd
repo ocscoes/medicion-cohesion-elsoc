@@ -20,7 +20,7 @@ pacman::p_load(dplyr, car, summarytools, webshot, knitr, kableExtra, corrplot, g
 
 ```{r include=FALSE}
 # Cargar base elsoc longitudinal (2016-2019) creada en "preparacion"
-load("input/data/data.RData")
+load("input/data/proc/data.RData")
 
 ```
 

@@ -33,7 +33,7 @@ pacman::p_load(dplyr,
 ```
 
 ```{r}
-load("input/data/data.RData")
+load("input/data/proc/data.RData")
 ```
 
 ## Relaciones sociales de igualdad

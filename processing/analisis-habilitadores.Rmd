@@ -19,7 +19,7 @@ pacman::p_load(dplyr, car, summarytools, webshot, knitr, kableExtra, corrplot, g
 
 ```{r}
 # Cargar base de datos
-load("input/data/data.RData")
+load("input/data/proc/data.RData")
 ```
 
 # Estimación de puntuaciones factoriales y promedios simples según análisis medición

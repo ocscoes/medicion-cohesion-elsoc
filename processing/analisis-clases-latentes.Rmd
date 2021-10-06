@@ -18,26 +18,22 @@ patterns_m
 ```
 
 ## Estimar modelo
-```{r, include = FALSE}
+```{r}
 f <- cbind(conf_interpersonal_med, diversidad_med, lazos_med, identificacion_med, justicia_med, conf_institucional_med, solidaridad_med, participacion_med, cohesion_territorial_med)~1
 
 set.seed(1234)
-
 lca1 <- poLCA(f,cohesion_med, nclass=1,graphs=F, verbose = FALSE)
-lca2 <- poLCA(f,cohesion_med, nclass=2,graphs=F, verbose = FALSE) 
+set.seed(1234)
+lca2 <- poLCA(f,cohesion_med, nclass=2,graphs=F, verbose = FALSE)
+set.seed(1234)
 lca3 <- poLCA(f,cohesion_med, nclass=3,graphs=F, verbose = FALSE)
+set.seed(1234)
 lca4 <- poLCA(f,cohesion_med, nclass=4,graphs=F, verbose = FALSE)
+set.seed(1234)
 lca5 <- poLCA(f,cohesion_med, nclass=5,graphs=F, verbose = FALSE)
+set.seed(1234)
 lca6 <- poLCA(f,cohesion_med, nclass=6,graphs=F, verbose = FALSE)
 
-## Entropía relativa (4 clases)
-##Numerator:
-#nume.E <- -sum(lca3$posterior * log(lca3$posterior))
-##Denominator (n*log(K)): ## n is a sample size, and K is a number of class
-#deno.E <- 1490*log(4)
-##Relative Entropy
-#Entro <- 1-(nume.E/deno.E)
-#Entro
 ```
 
 ##  Estadísticos de ajuste
@@ -96,16 +92,6 @@ Modelos <- c("1 clase", "2 clases", "3 clases", "4 clases", "5 clases", "6 clase
 #CREACIÓN TABLA ESTADÍSTICOS DE AJUSTE MODELOS TODAS LAS VARIABLES
 fit.indices <- data.frame(Modelos,AIC,BIC,llik,chi.cuadrado,G2,N)
 fit.indices
-```
-
-## Ordenar las clases
-```{r}
-#Extraer valores de inicio (modelo seleccionado)
-probs.start<-lca4$probs.start
-#lca5$probs.start
-
-#Reanalizar con gráficos
-# lca4<-poLCA(f, cohesion_med, nclass=4, probs.start=probs.start,graphs=TRUE, na.rm=TRUE, maxiter=3000)
 ```
 
 ## Gráfico 3 clases

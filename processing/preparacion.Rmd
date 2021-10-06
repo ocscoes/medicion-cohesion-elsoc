@@ -1186,5 +1186,5 @@ table(data$informal_w03)
 
 # Guardar base
 ```{r}
-save(data,file = "input/data/data.RData")
+save(data,file = "input/data/proc/data.RData")
 ```
