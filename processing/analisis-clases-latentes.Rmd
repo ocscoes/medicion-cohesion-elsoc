@@ -4,6 +4,7 @@
 # Analisis de clases latentes (mediana)
 
 ```{r}
+load("input/data/proc/data.RData")
 load("input/data/proc/cohesion-med-LCA.RData")
 library(poLCA)
 ```
@@ -113,7 +114,7 @@ fit.indices
     # Relabel factors
     datlca_tot_parl$variable=factor(datlca_tot_parl$variable, labels=c("Confianza", "Diversidad", "Lazos", "Identificación", "Justicia", "Conf. Instituciones","Solidaridad", "Participación", "Vecinal"))
     lca3$P # class size
-    datlca_tot_parl$class=factor(datlca_tot_parl$class,labels=c("Clase 1 (32%)", "Clase 2 (42%)", "Clase 3 (26%)"))
+    datlca_tot_parl$class=factor(datlca_tot_parl$class,labels=c("Clase 1 (42%)", "Clase 2 (32%)", "Clase 3 (26%)"))
 
     library(ggplot2)
 lca3_graph <-ggplot(data = datlca_tot_parl, aes(x=variable, y=value, group=class, shape=class)) + 
@@ -167,124 +168,16 @@ ggsave("output/graphs/lca4.jpg", plot = lca4_graph, height=4, width=10, units="i
 ```
 
 
-
-# Analisis de clases latentes (media)
-
-
 ```{r}
-load("input/data/proc/cohesion-mean-LCA.RData")
+library(dplyr)
+
+elsoc_lca3<- cbind(cohesion_med, "lclass" = lca3$predclass)
+elsoc_lca3<- as.data.frame(dplyr::select(elsoc_lca3, idencuesta, lclass))
+
+data <- dplyr::left_join(data, elsoc_lca3, by="idencuesta")
+data$lclass <- factor(data$lclass, levels = c(1,2,3), labels = c("Institucional", "Movilizado", "Atomizado"))
+
+save(data, file = "input/data/proc/data_clases.RData")
 ```
 
 
-
-## Explorar patrones de respuesta
-```{r, include = FALSE}
-patterns=table(apply(cohesion_mean, 1, paste, collapse=""))
-patterns
-patterns_m=as.data.frame(patterns)
-patterns_m <- patterns_m[order(-patterns_m$Freq),] 
-patterns_m
-```
-
-## Estimar modelo
-```{r, include = FALSE}
-f <- cbind(conf_interpersonal_mean, diversidad_mean, lazos_mean, identificacion_mean, justicia_mean, conf_institucional_mean, solidaridad_mean, participacion_mean, cohesion_territorial_mean)~1
-
-set.seed(1234)
-
-lca1 <- poLCA(f,cohesion_mean, nclass=1,graphs=F)
-lca2 <- poLCA(f,cohesion_mean, nclass=2,graphs=F) 
-lca3 <- poLCA(f,cohesion_mean, nclass=3,graphs=F)
-lca4 <- poLCA(f,cohesion_mean, nclass=4,graphs=F)
-lca5 <- poLCA(f,cohesion_mean, nclass=5,graphs=F)
-lca6 <- poLCA(f,cohesion_mean, nclass=6,graphs=F)
-
-## Entropía relativa (4 clases)
-##Numerator:
-#nume.E <- -sum(lca3$posterior * log(lca3$posterior))
-##Denominator (n*log(K)): ## n is a sample size, and K is a number of class
-#deno.E <- 1490*log(4)
-##Relative Entropy
-#Entro <- 1-(nume.E/deno.E)
-#Entro
-```
-
-##  Estadísticos de ajuste
-```{r}
-AIC.1 <-as.numeric(lca1$aic)
-AIC.2 <-as.numeric(lca2$aic)
-AIC.3 <-as.numeric(lca3$aic)
-AIC.4 <-as.numeric(lca4$aic)
-AIC.5 <-as.numeric(lca5$aic)
-AIC.6 <-as.numeric(lca6$aic)
-
-BIC.1 <-as.numeric(lca1$bic)
-BIC.2 <-as.numeric(lca2$bic)
-BIC.3 <-as.numeric(lca3$bic)
-BIC.4 <-as.numeric(lca4$bic)
-BIC.5 <-as.numeric(lca5$bic)
-BIC.6 <-as.numeric(lca6$bic)
-
-llik.1 <-as.numeric(lca1$llik)
-llik.2 <-as.numeric(lca2$llik)
-llik.3 <-as.numeric(lca3$llik)
-llik.4 <-as.numeric(lca4$llik)
-llik.5 <-as.numeric(lca5$llik)
-llik.6 <-as.numeric(lca6$llik)
-
-chisq.1 <- as.numeric(lca1$Chisq)
-chisq.2 <- as.numeric(lca2$Chisq)
-chisq.3 <- as.numeric(lca3$Chisq)
-chisq.4 <- as.numeric(lca4$Chisq)
-chisq.5 <- as.numeric(lca5$Chisq)
-chisq.6 <- as.numeric(lca6$Chisq)
-
-G.1 <- as.numeric(lca1$Gsq)
-G.2 <- as.numeric(lca2$Gsq)
-G.3 <- as.numeric(lca3$Gsq)
-G.4 <- as.numeric(lca4$Gsq)
-G.5 <- as.numeric(lca5$Gsq)
-G.6 <- as.numeric(lca6$Gsq)
-
-n.obs1 <- as.numeric(lca1$Nobs)
-n.obs2 <- as.numeric(lca2$Nobs)
-n.obs3 <- as.numeric(lca3$Nobs)
-n.obs4 <- as.numeric(lca4$Nobs)
-n.obs5 <- as.numeric(lca5$Nobs)
-n.obs6 <- as.numeric(lca6$Nobs)
-
-#Creación de Vectores para TABLA DE COMPARACIÓN
-AIC <- c(AIC.1, AIC.2,AIC.3,AIC.4,AIC.5, AIC.6)
-BIC <- c(BIC.1, BIC.2,BIC.3,BIC.4,BIC.5, BIC.6)
-llik <- c(llik.1, llik.2,llik.3,llik.4,llik.5, llik.6)
-chi.cuadrado <- c(chisq.1, chisq.2,chisq.3,chisq.4,chisq.5, chisq.6)
-G2 <- c(G.1, G.2,G.3,G.4,G.5, G.6)
-N <- c(n.obs1, n.obs2,n.obs3,n.obs4,n.obs5, n.obs6)
-Modelos <- c("1 clase", "2 clases", "3 clases", "4 clases", "5 clases", "6 clases")
-
-#CREACIÓN TABLA ESTADÍSTICOS DE AJUSTE MODELOS TODAS LAS VARIABLES
-fit.indices <- data.frame(Modelos,AIC,BIC,llik,chi.cuadrado,G2,N)
-fit.indices
-```
-
-## Ordenar las clases
-```{r}
-#Extraer valores de inicio (modelo seleccionado)
-probs.start<-lca4$probs.start
-#lca5$probs.start
-
-#Reanalizar con gráficos
-lca4<-poLCA(f, cohesion_mean, nclass=4, probs.start=probs.start,graphs=TRUE, na.rm=TRUE, maxiter=3000)
-
-#Reordnar clases, si es necesario
-#new.probs.start<-poLCA.reorder(probs.start, c(2,1,3,4))
-
-#Re-estimar para nuevo orden
-#lca4<-poLCA(f, elsoc, nclass=4, probs.start=new.probs.start, graphs=TRUE, na.rm=TRUE)
-```
-
-```{r}
-probs.start<-lca5$probs.start
-
-lca5<-poLCA(f, cohesion_mean, nclass=5, probs.start=probs.start,graphs=TRUE, na.rm=TRUE, maxiter=3000)
-```

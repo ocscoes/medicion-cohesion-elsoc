@@ -4,7 +4,148 @@ editor_options:
     wrap: 72
 ---
 
-# Capítulo III. Habilitadores e inhibidores de la cohesión social
+```{r include=F}
+pacman::p_load(dplyr, sjPlot)
+load("../input/data/proc/data_clases.RData")
+```
+
+# Habilitadores e inhibidores de la cohesión social
 
 <div style="text-align: justify">
 
+## Versión 2. Perfiles de la cohesión social
+
+Los capítulos anteriores entregaron una versión operacional de la cohesión social y mostraron su evolución en el tiempo. Este capítulo ofrece una visión sintética de la cohesión social a partir de las similitudes entre individuos. A tal fin se comparan los niveles individuales en las subdimensiones de la cohesión para establecer grupos a partir de sus similitudes.  
+
+La cohesión social y sus habilitadores se refieren a elementos estructurales que caracterizan un país. No obstante, dentro de un país puedan coexistir distintos niveles de cohesión, lo cual podría eventualmente afectar la cohesión global. La variación de la cohesión social dentro de un país refleja los diversos niveles de inclusión e integración de agrupaciones sociales &#x2013;individuos o territorios&#x2013; que pueden ir más allá del error aleatorio que acompaña toda medición.   
+
+
+### Procedimiento. Tipología de clases latentes a partir de subdimensiones de cohesión
+
+El análisis de la variación en los niveles de cohesión social dentro de la muestra utiliza los niveles individuales de las subdimensiones que componen la medida de cohesión social. Al tratarse de datos provenientes de encuestas debe existir una variación producto del error estadístico en la medida. Puede ocurrir, sin embargo, que algunos perfiles se desvíen más allá de lo esperable por el error en la medida, lo cual indica niveles de cohesión significativamente diferentes. El resultado del análisis consiste en la agrupación de individuos semejantes entre sí, pero diferentes de otros, por lo que reflejan niveles o formas de cohesión diversas. Este procedimiento se diferencia de las comparaciones de la posición en un índice sintético porque se construye a partir de la diferencia en los niveles de las subdimensiones, vale decir, considerando la estructura de respuesta. 
+
+Los procedimientos de clasificación automática comparan sistemáticamente los niveles de respuesta entre individuos utilizando una medida de distancia para su similitud. El análisis de clases latentes (ACL) supone que los niveles observados corresponden a una variable subyacente con dos o más categorías. El ACL ubica la clasificación en el marco de los modelos de ecuaciones estructurales, modelando las covarianzas y proveyendo parámetros para el error de medida o varianza de los indicadores. Otros procedimientos de clasificación automática no diferencian varianza y covarianza lo cual puede llevar a resultados menos estables.   
+
+Aclarar cómo se cortan las clases. 
+
+
+### Descripción. Mapeo en Chile de niveles de cohesión por regiones (mapas de calor)
+
+Las agrupaciones obtenidas a partir del ACL será representada en los territorios de forma que se pueda apreciar la pauta predominante en cada región del país.  
+
+
+### Análisis. Tablas con niveles de cohesión por elementos habilitadores
+
+Los procesos que producen cohesión social están lejos de responder a modelos sencillos y requieren análisis detallados #FALTAN REFERENCIAS#. En este capítulo presentamos de forma descriptiva tabulaciones sencillas destinados a mostrar los efectos directos de los factores que se hipotetiza están asociado con la cohesión social. El análisis busca establecer el efecto de los factores habilitadores sobre la tipología de cohesión social presentada en la primera parte del capítulo. Los factores habilitadores están clasificados en seis grupos, a saber: Edad, Educación, Nivel de ingreso, Etnia, Nacionalidad, Aislamiento territorial.
+
+La medida de aislamiento territorial registra las características del área correspondiente a 1km de radio desde el centro de la manzana en que reside el respondente, lo cual puede asimilarse con un barrio. Los datos demográficos provienen del censo 2012 y los de condición urbana a bases de datos del CIT. 
+
+
+#### Inclusión laboral
+
+El acceso al mercado de trabajo se encuentra estrechamente asociado con el bienestar de las personas. En efecto, la superación de la pobreza depende en gran medida de la inserción laboral. En América Latina, Chile no es una excepción, las condiciones de trabajo informal, asociadas con pobreza y precariedad comprenden una parte significativa de la fuerza de trabajo. Las inserciones más débiles en el mercado de trabajo podrían afectar negativamente los niveles de cohesión social.
+
+
+
+```{r echo=F, warning=F, message=F}
+data$informal <- factor(data$informal_w03, levels = c(0,1), labels = c("Formal", "Informal"))
+clase.informal = sjPlot::sjt.xtab(data$lclass, data$informal,
+                              var.labels = c("Clases de cohesion social", "Tipo de empleo"),
+                              show.obs = F,
+                              show.col.prc = T,
+                              show.summary = F,
+                              prc.sign = "", string.total="N=100%")
+clase.informal
+```
+
+
+#### Inclusión social
+
+Hay diversas dimensiones en las brechas de participación en las condiciones de vida que una sociedad ofrece a sus integrantes.
+
+-   La etapa de **transición demográfica** en que se encuentra Chile muestra un peso creciente de los adultos mayores, quienes enfrentan condiciones de vida difíciles, por lo que se podría esperar menores niveles de cohesión social entre ellos.
+    -   La edad está medida en años
+
+```{r echo=F, warning=F, message=F}
+data$m0_edad_w03 <- car::recode(data$m0_edad_w03, "18:29=1; 30:39=2; 40:49=3; 50:59=4; 60:83=5")
+data$edad <- factor(data$m0_edad_w03, levels = c(1,2,3,4,5), labels = c("Entre 18 y 29", "Entre 30 y 39", "Entre 40:49", "Entre 50:59", "Mas de 60"))
+clase.edad = sjPlot::sjt.xtab(data$lclass, data$edad,
+                              var.labels = c("Clases de cohesion social", "Edad en tramos"),
+                              show.obs = F,
+                              show.col.prc = T,
+                              show.summary = F,
+                              prc.sign = "", string.total="N=100%")
+clase.edad
+```
+-   El **sexo** de las personas afecta sus posibilidades de inclusión atendiendo a las pautas de roles asociadas con una sociedad patriarcal.
+
+```{r echo=F, warning=F, message=F}
+clase.sexo = sjPlot::sjt.xtab(data$lclass, data$m0_sexo_w03,
+                              var.labels = c("Clases de cohesion social", "Sexo"),
+                              show.obs = F,
+                              show.col.prc = T,
+                              show.summary = F,
+                              prc.sign = "", string.total="N=100%")
+clase.sexo
+```
+
+
+-   El **acceso a la educación** constituye un fuerte principio estructurador en la sociedad chilena, generalmente asociado con el status socioeconómico y, en sus niveles más altos, con la reproducción en los círculos sociales más deseables. En la medida que la fase de expansión en el acceso a la educación universitaria es relativamente reciente, puede esperarse mayor cohesión social entre las personas que hay tenido mayor exposición al sistema forma de educación.
+    -   La educación en 4 grupos: Básica, media, técnica y universitaria #probar años u otra clasificación#
+
+```{r echo=F, warning=F, message=F}
+clase.educacion = sjPlot::sjt.xtab(data$lclass,data$m01_w03,
+                           var.labels = c("Clases de cohesión social", "Nivel educacional"),
+                           show.obs = F,
+                           show.col.prc=T,
+                           show.summary=F,
+                           prc.sign = "", string.total="N=100%")
+clase.educacion
+```
+
+-   Los **ingresos** de las personas se encuentran estrechamente asociados con los niveles de educación, si bien en niveles menores a la enseñanza superior pueden encontrarse grandes variaciones. Por lo anterior es posible que el nivel de ingresos tenga un efecto independiente de la educación.
+    -   Los niveles de ingreso están medidos en quintiles #no incluir los que no lo reportan. #
+
+```{r echo=F, warning=F, message=F}
+clase.ingreso = sjPlot::sjt.xtab(data$lclass,data$quintiles_ingresos_w03,
+                           var.labels = c("Clases de cohesión social", "Quintiles de ingresos"),
+                           show.obs = F,
+                           show.col.prc=T,
+                           show.summary=F,
+                           prc.sign = "", string.total="N=100%")
+clase.ingreso
+```
+
+-   La **segregación territorial**, especialmente la que se encuentra asociada con el nivel socioeconómico constituye un rasgo distintivo de los países latinoamericanos, del cual Chile no escapa. Por la naturaleza de los datos, no es posible hacer distinciones entre rural y urbano. Un primer nivel de la segregación se refiere a la dominancia urbana que posee la capital del país, asociada también con acceso a mejores servicios, por lo que se pueden esperar diferentes niveles de cohesión social al comparar Santiago y el resto de las regiones.
+
+-   El concepto de **aislamiento social de los territorios** fue acuñado por William Julius Wilson para explicar la condición de áreas urbanas de Chicago caracterizadas por concentración de la pobreza, desempleo, bajos niveles de escolaridad y reducida integración en la fuerza de trabajo. Su explicación apunta a que la vida en un vecindario donde la mayor parte de la población se encuentra en una situación de desventaja social constriñe las oportunidades de inclusión social. Los elementos de desventaja social pueden especificarse con el acceso a recursos públicos tales como servicios públicos, conectividad, fuentes de trabajo y centros de consumo. En los territorios limitados en estos aspectos sería más improbable que florezca la cohesión social.
+    -   Promedio años escolaridad de sostenedores en 1 km a la redonda #preferir desv estándar#
+    -   Número de trabajadores/as (ocupados??) en 1 km a la redonda #usar también inactivos#
+    -   Número de cesantes en 1 km a la redonda
+    -   Acceso areas verdes en radio de 15 min a pie #aclarar definición# ¿media de la ciudad?
+    -   Acceso a colegios en radio de 15 min a pie #aclarar definición# ¿media de la ciudad?
+    -   Acceso a servicios en radio de 15 min a pie #aclarar definición# ¿media de la ciudad?
+
+-   La **pertenencia a pueblos indígenas** ha estado asociado con bajos niveles de inclusión social. Por mucho tiempo invisibilizada, en las últimas dos décadas el estado chileno ha reconocido la existencia de pueblos indígenas acordando diversos beneficios sociales asociados con esta condición. Como contrapartida, el reconocimiento de la condición de indígena ha conllevado a un fortalecimiento de la identidad étnica.
+
+```{r echo=F, warning=F, message=F}
+clase.etnia = sjPlot::sjt.xtab(data$lclass,data$etnia_rec,
+                           var.labels = c("Clases de cohesión social", "Etnia"),
+                           show.obs = F,
+                           show.col.prc=T,
+                           show.summary=F,
+                           prc.sign = "", string.total="N=100%")
+clase.etnia
+```
+
+-   Vinculado con lo anterior, en la última década la condición étnica ha sido progresivamente asociada con la **condición de migrante**.
+
+```{r echo=F, warning=F, message=F}
+clase.nacion = sjPlot::sjt.xtab(data$lclass,data$nacion_rec,
+                           var.labels = c("Clases de cohesión social", "Nacion"),
+                           show.obs = F,
+                           show.col.prc=T,
+                           show.summary=F,
+                           prc.sign = "", string.total="N=100%")
+clase.nacion
+```

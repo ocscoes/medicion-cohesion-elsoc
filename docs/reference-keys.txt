@@ -59,4 +59,10 @@ orientación-hacia-el-bien-común-1
 solidaridad
 participación-cívica
 cohesion-territorial
-capítulo-iii.-habilitadores-e-inhibidores-de-la-cohesión-social
+habilitadores-e-inhibidores-de-la-cohesión-social
+versión-2.-perfiles-de-la-cohesión-social
+procedimiento.-tipología-de-clases-latentes-a-partir-de-subdimensiones-de-cohesión
+descripción.-mapeo-en-chile-de-niveles-de-cohesión-por-regiones-mapas-de-calor
+análisis.-tablas-con-niveles-de-cohesión-por-elementos-habilitadores
+inclusión-laboral
+inclusión-social

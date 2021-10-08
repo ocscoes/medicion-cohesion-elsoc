@@ -8,7 +8,7 @@ editor_options:
 
 <div style="text-align: justify">
 
-Este capítulo tiene como finalidad analizar la evolución de la opinión de las personas entre 2016 y 2020 respecto de las distintas dimensiones d  e la cohesión social presentadas en el capítulo 1. A través de este análisis longitudinal, se muestra no sólo la evaluación de la frecuencia de las respuestas, sino que además los cambios de opiniones de los respondentes entre olas. Estos cambios son representados con gráficos fluviales o aluviales. Recordamos que usamos las olas disponibles para cada dimensión de cohesión social construida en base a los indicadores detallados en el capítulo anterior.
+Este capítulo tiene como finalidad analizar la evolución de la opinión de las personas entre 2016 y 2020 respecto de las distintas dimensiones de la cohesión social presentadas en el capítulo 1. A través de este análisis longitudinal, se muestra no sólo la evaluación de la frecuencia de las respuestas, sino que además los cambios de opiniones de los respondentes entre olas. Estos cambios son representados con gráficos fluviales o aluviales. Recordamos que usamos las olas disponibles para cada dimensión de cohesión social construida en base a los indicadores detallados en el capítulo anterior.
 
 ***
 _Recuadro metodológico: ¿Cómo leer un gráfico fluvial?_
@@ -16,6 +16,8 @@ _Recuadro metodológico: ¿Cómo leer un gráfico fluvial?_
 Este tipo de diagrama muestra el cambio en el tiempo mediante flujos, usando una metáfora visual. Se trata de una representación esquemática y dinámica inspirada en el diagrama de Sankey, usado para dar cuenta de flujos energéticos. Su nombre proviene de los flujos - o clusters para fines de la lectura - que genera el agua y los diferentes arroyos contiguos que se forman de una misma fuente. Cada año funciona como un histograma apilado, donde la altura de cada barra indica el tamaño del cluster. Con la sucesión de los años, se observan los cambios en la composición de los clusters mediante los flujos. La amplitud de los flujos muestra el tamaño de los grupos de personas que cambian de opinión de un año a otro. Permiten a la vez ver la evolución de las categorías, así como los cambios y transiciones entre categorías y años. Los colores permiten visualizar las principales transiciones entre categorías [@rosvall_mapping_2010]. Como no hay personas que salen de la muestra entre las cinco mediciones, no existen pérdidas en este gráfico.
 
 ***
+
+El análisis presentado a continuación es de tipo descriptivo y de resumen, antes de pasar a la tercera parte del informe, que aborda los habilitadores e inhabilitadores de la cohesión social de manera más explicativa. Aquí no ahondamos en determinantes de la cohesión social, sino que presentamos información resumida en el tiempo para cerrar la primera parte del informe.
 
 A continuación, se presenta el análisis ordenado por dimensiones y subdimensiones, con una comparación longitudinal entre las olas. Los gráficos fueron realizados solo con los respondentes de la muestra original, quienes han participado en las cinco olas, es decir 1492 casos.
 
@@ -36,6 +38,10 @@ Recordamos a continuación las dimensiones y subdimensiones analizadas:
   - participación cívica
 
 - Cohesión territorial
+
+Como podremos observar, existe poca varianza en los indicadores descritos a continuación en términos del tamaño de las categorías, pero pondremos el foco en quienes cambian de opinión de una ola a otra. La finalidad de esta sección no es presentar gatilladores del estallido social, tarea explicativa de una envergadura superior a lo que los datos permiten decir, sino que mostrar la evolución general en los últimos cinco años de las expresiones constitutivas del sentido de pertenencia en Chile.
+
+También señalamos que estos gráficos resumen una gran cantidad de información, la descrita en las secciones anteriores y la presenta gráficamente en una dimensión de tiempo, por lo que su meta es mostrar tendencias generales. Este tipo de gráfico es de uso reciente en Chile (ELSOC, 2020).
 
 ## Relaciones sociales de igualdad
 
@@ -229,4 +235,4 @@ En resumen, también se trata de un indicador muy positivo de cohesión social, 
 
 ** Nota: podría valer la pena pasar a 3 categorías en vez de 5.
 
-** Falta conclusión del capítulo, a redactar luego de comentarios de CEPAL.
+En conclusión, se observa una varianza baja en las expresiones constitutivas de la cohesión social, desglosadas aquí en cuatro dimensiones principales (relaciones sociales de igualdad, sentido de pertenencia, orientación hacia el bien común, cohesión territorial). Se puede hipotetizar que la cohesión social cambia poco, pues de lo contrario no sostendría la sociedad, ni en tiempos de estallido social. 

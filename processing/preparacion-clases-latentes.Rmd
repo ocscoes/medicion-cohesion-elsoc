@@ -436,9 +436,9 @@ data %>% dplyr::select(cohesion_territorial_med, cohesion_territorial_mean) %>% 
 
 ```{r}
 ## Crear nueva base que contiene las variables categorizadas
-cohesion_med <- data %>% dplyr::select(conf_interpersonal_med, diversidad_med, lazos_med, identificacion_med, justicia_med, conf_institucional_med, solidaridad_med, participacion_med, cohesion_territorial_med) %>% na.omit()
+cohesion_med <- data %>% dplyr::select(idencuesta, conf_interpersonal_med, diversidad_med, lazos_med, identificacion_med, justicia_med, conf_institucional_med, solidaridad_med, participacion_med, cohesion_territorial_med) %>% na.omit()
 
-cohesion_mean <- data %>% dplyr::select(conf_interpersonal_mean, diversidad_mean, lazos_mean, identificacion_mean, justicia_mean, conf_institucional_mean, solidaridad_mean, participacion_mean, cohesion_territorial_mean) %>% na.omit()
+cohesion_mean <- data %>% dplyr::select(idencuesta, conf_interpersonal_mean, diversidad_mean, lazos_mean, identificacion_mean, justicia_mean, conf_institucional_mean, solidaridad_mean, participacion_mean, cohesion_territorial_mean)
 
 cohesion_med %>% dfSummary(, graph.col = FALSE)
 cohesion_mean %>% dfSummary(, graph.col = FALSE)

@@ -35,7 +35,7 @@ data <- data %>% dplyr::filter(tipo_atricion==1 & tipo_caso !=2)
 
 # Cargar base de datos elsoc 2020
 ```{r}
-load("input/data/ELSOC_W05_v1.0_R.RData")
+load("input/data/original/ELSOC_W05_v1.0_R.RData")
 
 elsoc_2021 <- elsoc_2021 %>% car::recode(., "c(-888, -999)=NA")
 elsoc_2021 <- elsoc_2021 %>% sjlabelled::remove_labels(labels = c("No Responde (no leer)", "No Sabe (no leer)"))
@@ -44,7 +44,7 @@ data <- inner_join(data, elsoc_2021, by="idencuesta", copy = FALSE, suffix = c("
 ```
 
 ```{r}
-cit <- read_excel("input/data/ELSOC_CIT_Dataset_2016.xlsx")
+cit <- read_excel("input/data/original/ELSOC_CIT_Dataset_2016.xlsx")
 
 cit <- cit %>% car::recode(., "c(994,995,996)=NA") # recode missings de no respuesta a NA
 
@@ -911,7 +911,7 @@ data$m01_w05 <- car::recode(data$m01_w05, "c(1,2,3)=1;c(4,5)=2;c(6,7)=3;c(8,9,10
 
 data$m01_w01 <- factor(data$m01_w01, levels = c("1", "2", "3", "4"), labels=c( "Educacion basica o menos", "Educacion media", "Educacion tecnica superior", "Educacion universitaria y Postgrado"))
 data$m01_w02 <- factor(data$m01_w02, levels = c("1", "2", "3", "4"), labels=c( "Educacion basica o menos", "Educacion media", "Educacion tecnica superior", "Educacion universitaria y Postgrado"))
-data$m01_w03 <- factor(data$m01_w03, levels = c("1", "2", "3", "4"), labels=c( "Educacion basica o menos", "Educacion media", "Educacion tecnica superior", "Educacion universitaria y Postgrado"))
+data$m01_w03 <- factor(data$m01_w03, levels = c("1", "2", "3", "4"), labels=c( "Educacion basica", "Educacion media", "tecnica superior", "universitaria y Postgrado"))
 data$m01_w04 <- factor(data$m01_w04, levels = c("1", "2", "3", "4"), labels=c( "Educacion basica o menos", "Educacion media", "Educacion tecnica superior", "Educacion universitaria y Postgrado"))
 data$m01_w05 <- factor(data$m01_w05, levels = c("1", "2", "3", "4"), labels=c( "Educacion basica o menos", "Educacion media", "Educacion tecnica superior", "Educacion universitaria y Postgrado"))
 
@@ -1056,25 +1056,20 @@ data %>% select (m29_w01, m29_w02, m29_w03, m29_w04, m29_w05)  %>% sjlabelled::a
 
 ## Ingresos en quintiles
 ```{r}
-data <- data %>% mutate(quintiles_ingresos_w01 = ntile(m29_w01, 5))
+data <- data %>% dplyr::mutate(quintiles_ingresos_w01 = ntile(m29_w01, 5))
 data <- data %>% mutate(quintiles_ingresos_w02 = ntile(m29_w02, 5))
 data <- data %>% mutate(quintiles_ingresos_w03 = ntile(m29_w03, 5))
 data <- data %>% mutate(quintiles_ingresos_w04 = ntile(m29_w04, 5))
 data <- data %>% mutate(quintiles_ingresos_w05 = ntile(m29_w05, 5))
-## Recuperar NA
-data$quintiles_ingresos_w01[is.na(data$quintiles_ingresos_w01)] <- 99
-data$quintiles_ingresos_w02[is.na(data$quintiles_ingresos_w02)] <- 99
-data$quintiles_ingresos_w03[is.na(data$quintiles_ingresos_w03)] <- 99
-data$quintiles_ingresos_w04[is.na(data$quintiles_ingresos_w04)] <- 99
-data$quintiles_ingresos_w05[is.na(data$quintiles_ingresos_w05)] <- 99
-# Construcción ingresos quintiles factor
-data$quintiles_ingresos_w01 <- factor(data$quintiles_ingresos_w01, levels = c(1,2,3,4,5,99), labels = c("Quintil 1", "Quintil 2", "Quintil 3", "Quintil 4", "Quintil 5", "Ns/Nr"))
-data$quintiles_ingresos_w02 <- factor(data$quintiles_ingresos_w02, levels = c(1,2,3,4,5,99), labels = c("Quintil 1", "Quintil 2", "Quintil 3", "Quintil 4", "Quintil 5", "Ns/Nr"))
-data$quintiles_ingresos_w03 <- factor(data$quintiles_ingresos_w03, levels = c(1,2,3,4,5,99), labels = c("Quintil 1", "Quintil 2", "Quintil 3", "Quintil 4", "Quintil 5", "Ns/Nr"))
-data$quintiles_ingresos_w04 <- factor(data$quintiles_ingresos_w04, levels = c(1,2,3,4,5,99), labels = c("Quintil 1", "Quintil 2", "Quintil 3", "Quintil 4", "Quintil 5", "Ns/Nr"))
-data$quintiles_ingresos_w05 <- factor(data$quintiles_ingresos_w05, levels = c(1,2,3,4,5,99), labels = c("Quintil 1", "Quintil 2", "Quintil 3", "Quintil 4", "Quintil 5", "Ns/Nr"))
 
-data %>% select(quintiles_ingresos_w01, quintiles_ingresos_w02, quintiles_ingresos_w03, quintiles_ingresos_w04, quintiles_ingresos_w05) %>% sjlabelled::as_label(.) %>% dfSummary(, graph.col = FALSE)
+# Construcción ingresos quintiles factor
+data$quintiles_ingresos_w01 <- factor(data$quintiles_ingresos_w01, levels = c(1,2,3,4,5), labels = c("Quintil 1", "Quintil 2", "Quintil 3", "Quintil 4", "Quintil 5"))
+data$quintiles_ingresos_w02 <- factor(data$quintiles_ingresos_w02, levels = c(1,2,3,4,5), labels = c("Quintil 1", "Quintil 2", "Quintil 3", "Quintil 4", "Quintil 5"))
+data$quintiles_ingresos_w03 <- factor(data$quintiles_ingresos_w03, levels = c(1,2,3,4,5), labels = c("Quintil 1", "Quintil 2", "Quintil 3", "Quintil 4", "Quintil 5"))
+data$quintiles_ingresos_w04 <- factor(data$quintiles_ingresos_w04, levels = c(1,2,3,4,5), labels = c("Quintil 1", "Quintil 2", "Quintil 3", "Quintil 4", "Quintil 5"))
+data$quintiles_ingresos_w05 <- factor(data$quintiles_ingresos_w05, levels = c(1,2,3,4,5), labels = c("Quintil 1", "Quintil 2", "Quintil 3", "Quintil 4", "Quintil 5"))
+
+data %>% select(quintiles_ingresos_w01, quintiles_ingresos_w02, quintiles_ingresos_w03, quintiles_ingresos_w04, quintiles_ingresos_w05) %>% sjlabelled::as_label(.) %>% summarytools::dfSummary(, graph.col = FALSE)
 ```
 
 
@@ -1182,6 +1177,11 @@ data$informal_w03<-informal
 table(data$informal_w03)
 ```
 
+### Region
+```{r}
+data$region <- ifelse(data$region_w03=="Metropolitana", 1, 2)
+data$region <- factor(data$region, levels = c(1,2), labels = c("Metropolitana", "Otra region"))
+```
 
 
 # Guardar base
