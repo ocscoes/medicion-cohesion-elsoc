@@ -12,3 +12,7 @@ trackdown::download_file(file = "02-cambios.Rmd",
                          gpath = "cap2-cohesion")
 
 ## Ojo, problemas. No se copian los tildes, negritas, cursivas.
+
+# Actualiza el drive con los cambios del rmd
+trackdown::update_file(file = "02-cambios.Rmd",
+                       gpath = "cap2-cohesion")

@@ -19,7 +19,7 @@ knitr::opts_chunk$set(echo = TRUE, warning=F, message=F)
 
 ```{r include=FALSE}
 # Cargar paquetes
-pacman::p_load(dplyr, panelr, survey, ggplot2, summarytools)
+pacman::p_load(dplyr, panelr, survey, ggplot2, summarytools, shadowtext)
 ```
 
 ```{r include=FALSE}
@@ -35,7 +35,7 @@ data$lazos_w01 = as.numeric(data$vol.red_w01)
 data$lazos_w03 = as.numeric(data$vol.red_w03)
 data$lazos_w05 = as.numeric(data$vol.red_w05)
 
-data %>% select(lazos_w01, lazos_w03, lazos_w05)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
+data %>% select(lazos_w01, lazos_w03, lazos_w05)  %>%  dfSummary(, graph.col = FALSE)
 ```
 
 ## Confianza interpersonal (w01, w02, w03, w04 & w05)
@@ -61,7 +61,7 @@ data <- data %>%
   mutate(conf_interpersonal_w05 =
            mean(c(c02_rec_w05, c03_rec_w05), na.rm = T))
 
-data %>% select(conf_interpersonal_w01, conf_interpersonal_w02, conf_interpersonal_w03, conf_interpersonal_w04, conf_interpersonal_w05)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
+data %>% select(conf_interpersonal_w01, conf_interpersonal_w02, conf_interpersonal_w03, conf_interpersonal_w04, conf_interpersonal_w05)  %>%  dfSummary(, graph.col = FALSE)
 ```
 
 ## Reconocimiento y respeto de la diversidad (w01, w02, w03, w04 & w05)
@@ -76,7 +76,7 @@ data <- data %>%
   mutate(diversidad_w03 =
            mean(c(c06_04_w03, c06_05_w03, c06_06_w03), na.rm = T))
 
-data %>% select(diversidad_w01, diversidad_w03)  %>% sjlabelled::as_label(.)  %>%  summarytools::dfSummary(, graph.col = FALSE)
+data %>% select(diversidad_w01, diversidad_w03)  %>%  summarytools::dfSummary(, graph.col = FALSE)
 ```
 
 # Sentido de pertenencia
@@ -103,7 +103,7 @@ data <- data %>%
   mutate(identificacion_w05 =
            mean(c(c32_01_w05, c32_02_w05), na.rm = T))
 
-data %>% select(identificacion_w01, identificacion_w02, identificacion_w03, identificacion_w04, identificacion_w05)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
+data %>% select(identificacion_w01, identificacion_w02, identificacion_w03, identificacion_w04, identificacion_w05)  %>%  dfSummary(, graph.col = FALSE)
 ```
 
 ## Percepción de justicia
@@ -129,7 +129,7 @@ data <- data %>%
   mutate(justicia_w05 =
            mean(c(c18_09_w05, c18_10_w05), na.rm = T))
 
-data %>% select(justicia_w01, justicia_w02, justicia_w03, justicia_w04, justicia_w05)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
+data %>% select(justicia_w01, justicia_w02, justicia_w03, justicia_w04, justicia_w05)  %>%  dfSummary(, graph.col = FALSE)
 ```
 
 ## Confianza institucional
@@ -155,7 +155,7 @@ data <- data %>%
   mutate(conf_institucional_w05 =
            mean(c(c05_01_w05, c05_08_w05, c05_02_w05), na.rm = T))
 
-data %>% select(conf_institucional_w01, conf_institucional_w02, conf_institucional_w03, conf_institucional_w04, conf_institucional_w05)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
+data %>% select(conf_institucional_w01, conf_institucional_w02, conf_institucional_w03, conf_institucional_w04, conf_institucional_w05)  %>%  dfSummary(, graph.col = FALSE)
 ```
 
 # Orientación hacia el bien comun
@@ -182,7 +182,7 @@ data <- data %>%
   mutate(solidaridad_w05 =
            mean(c(c07_05_w05, c07_06_w05, c07_07_w05, c07_08_w05), na.rm = T))
 
-data %>% select(solidaridad_w01, solidaridad_w02, solidaridad_w03, solidaridad_w04, solidaridad_w05)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
+data %>% select(solidaridad_w01, solidaridad_w02, solidaridad_w03, solidaridad_w04, solidaridad_w05)  %>%  dfSummary(, graph.col = FALSE)
 ```
 
 ## Participación cívica
@@ -208,7 +208,7 @@ data <- data %>%
   mutate(participacion_w05 =
            mean(c(c08_02_w05, c08_04_w05), na.rm = T))
 
-data %>% select(participacion_w01, participacion_w02, participacion_w03, participacion_w04, participacion_w05)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
+data %>% select(participacion_w01, participacion_w02, participacion_w03, participacion_w04, participacion_w05) %>%  dfSummary(, graph.col = FALSE)
 ```
 
 # Cohesión territorial
@@ -230,7 +230,7 @@ data <- data %>%
   mutate(cohesion_territorial_w04 =
            mean(c(t02_01_w04, t02_02_w04, t02_03_w04, t02_04_w04), na.rm = T))
 
-data %>% select(cohesion_territorial_w01, cohesion_territorial_w02, cohesion_territorial_w03, cohesion_territorial_w04)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
+data %>% select(cohesion_territorial_w01, cohesion_territorial_w02, cohesion_territorial_w03, cohesion_territorial_w04) %>% dfSummary(, graph.col = FALSE)
 ```
 
 # Reescalar variables
@@ -377,12 +377,18 @@ data$justicia_w05 <- ifelse((data$justicia_w05<1.5), 1,
                                      ifelse((data$justicia_w05<3.5), 3,
                                             ifelse((data$justicia_w05<4.5), 4,
                                                    ifelse((data$justicia_w05<=5), 5, NA)))))
+
+data$justicia_w01 <- car::recode(data$justicia_w01, "c(1,2)=1; 3=2; c(4,5)=3")
+data$justicia_w02 <- car::recode(data$justicia_w02, "c(1,2)=1; 3=2; c(4,5)=3")
+data$justicia_w03 <- car::recode(data$justicia_w03, "c(1,2)=1; 3=2; c(4,5)=3")
+data$justicia_w04 <- car::recode(data$justicia_w04, "c(1,2)=1; 3=2; c(4,5)=3")
+data$justicia_w05 <- car::recode(data$justicia_w05, "c(1,2)=1; 3=2; c(4,5)=3")
                                      
-data$justicia_w01<- factor(data$justicia_w01, levels = c(1, 2, 3, 4, 5), labels = c("Totalmente en desacuerdo", "En desacuerdo", "Ni de acuerdo ni en desacuerdo", "De acuerdo", "Totalmente de acuerdo"))  
-data$justicia_w02<- factor(data$justicia_w02, levels = c(1, 2, 3, 4, 5), labels = c("Totalmente en desacuerdo", "En desacuerdo", "Ni de acuerdo ni en desacuerdo", "De acuerdo", "Totalmente de acuerdo")) 
-data$justicia_w03<- factor(data$justicia_w03, levels = c(1, 2, 3, 4, 5), labels = c("Totalmente en desacuerdo", "En desacuerdo", "Ni de acuerdo ni en desacuerdo", "De acuerdo", "Totalmente de acuerdo")) 
-data$justicia_w04<- factor(data$justicia_w04, levels = c(1, 2, 3, 4, 5), labels = c("Totalmente en desacuerdo", "En desacuerdo", "Ni de acuerdo ni en desacuerdo", "De acuerdo", "Totalmente de acuerdo"))
-data$justicia_w05<- factor(data$justicia_w05, levels = c(1, 2, 3, 4, 5), labels = c("Totalmente en desacuerdo", "En desacuerdo", "Ni de acuerdo ni en desacuerdo", "De acuerdo", "Totalmente de acuerdo")) 
+data$justicia_w01<- factor(data$justicia_w01, levels = c(1, 2, 3), labels = c("En desacuerdo", "Ni de acuerdo ni en desacuerdo", "De acuerdo"))    
+data$justicia_w02<- factor(data$justicia_w02, levels = c(1, 2, 3), labels = c("En desacuerdo", "Ni de acuerdo ni en desacuerdo", "De acuerdo"))  
+data$justicia_w03<- factor(data$justicia_w03, levels = c(1, 2, 3), labels = c("En desacuerdo", "Ni de acuerdo ni en desacuerdo", "De acuerdo"))   
+data$justicia_w04<- factor(data$justicia_w04, levels = c(1, 2, 3), labels = c("En desacuerdo", "Ni de acuerdo ni en desacuerdo", "De acuerdo"))  
+data$justicia_w05<- factor(data$justicia_w05, levels = c(1, 2, 3), labels = c("En desacuerdo", "Ni de acuerdo ni en desacuerdo", "De acuerdo"))   
 
 data %>% select(justicia_w01, justicia_w02, justicia_w03, justicia_w04, justicia_w05)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
 ```
@@ -415,12 +421,18 @@ data$conf_institucional_w05 <- ifelse((data$conf_institucional_w05<1.5), 1,
                                      ifelse((data$conf_institucional_w05<3.5), 3,
                                             ifelse((data$conf_institucional_w05<4.5), 4,
                                                    ifelse((data$conf_institucional_w05<=5), 5, NA)))))
+
+data$conf_institucional_w01 <- car::recode(data$conf_institucional_w01, "c(1,2)=1; 3=2; c(4,5)=3")
+data$conf_institucional_w02 <- car::recode(data$conf_institucional_w02, "c(1,2)=1; 3=2; c(4,5)=3")
+data$conf_institucional_w03 <- car::recode(data$conf_institucional_w03, "c(1,2)=1; 3=2; c(4,5)=3")
+data$conf_institucional_w04 <- car::recode(data$conf_institucional_w04, "c(1,2)=1; 3=2; c(4,5)=3")
+data$conf_institucional_w05 <- car::recode(data$conf_institucional_w05, "c(1,2)=1; 3=2; c(4,5)=3")
                                      
-data$conf_institucional_w01<- factor(data$conf_institucional_w01, levels = c(1, 2, 3, 4, 5), labels = c("Nada", "Poco", "Algo", "Bastante", "Mucha"))  
-data$conf_institucional_w02<- factor(data$conf_institucional_w02, levels = c(1, 2, 3, 4, 5), labels = c("Nada", "Poco", "Algo", "Bastante", "Mucha")) 
-data$conf_institucional_w03<- factor(data$conf_institucional_w03, levels = c(1, 2, 3, 4, 5), labels = c("Nada", "Poco", "Algo", "Bastante", "Mucha")) 
-data$conf_institucional_w04<- factor(data$conf_institucional_w04, levels = c(1, 2, 3, 4, 5), labels = c("Nada", "Poco", "Algo", "Bastante", "Mucha"))
-data$conf_institucional_w05<- factor(data$conf_institucional_w05, levels = c(1, 2, 3, 4, 5), labels = c("Nada", "Poco", "Algo", "Bastante", "Mucha")) 
+data$conf_institucional_w01<- factor(data$conf_institucional_w01, levels = c(1, 2, 3), labels = c("Nada o Poca", "Algo", "Bastante o Mucha"))     
+data$conf_institucional_w02<- factor(data$conf_institucional_w02, levels = c(1, 2, 3), labels = c("Nada o Poca", "Algo", "Bastante o Mucha"))   
+data$conf_institucional_w03<- factor(data$conf_institucional_w03, levels = c(1, 2, 3), labels = c("Nada o Poca", "Algo", "Bastante o Mucha"))   
+data$conf_institucional_w04<- factor(data$conf_institucional_w04, levels = c(1, 2, 3), labels = c("Nada o Poca", "Algo", "Bastante o Mucha"))   
+data$conf_institucional_w05<- factor(data$conf_institucional_w05, levels = c(1, 2, 3), labels = c("Nada o Poca", "Algo", "Bastante o Mucha"))   
 
 data %>% select(conf_institucional_w01, conf_institucional_w02, conf_institucional_w03, conf_institucional_w04, conf_institucional_w05)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
 ```
@@ -482,7 +494,7 @@ data$participacion_w02<- factor(data$participacion_w02, levels = c(1, 2, 3, 4, 5
 data$participacion_w03<- factor(data$participacion_w03, levels = c(1, 2, 3, 4, 5), labels = c("Nunca", "Casi nunca", "A veces", "Frecuentemente", "Muy frecuentemente")) 
 data$participacion_w04<- factor(data$participacion_w04, levels = c(1, 2, 3, 4, 5), labels = c("Nunca", "Casi nunca", "A veces", "Frecuentemente", "Muy frecuentemente"))
 
-data %>% select(participacion_w01, participacion_w02, participacion_w03, participacion_w04, participacion_w05)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
+data %>% select(participacion_w01, participacion_w02, participacion_w03, participacion_w04)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
 ```
 
 ## Cohesion territorial
@@ -557,6 +569,7 @@ etiquetas.lazos <- data.frame((svytable(~lazos + ola, elsoc_diseno, round = F)))
 ```
 
 ```{r}
+windowsFonts("Arial" = windowsFont("Arial"))
 alluvial_lazos <- ggplot(datos.lazos, aes(x = ola, fill = lazos, stratum = lazos,
                              alluvium = idencuesta, y = porcentaje))+
     ggalluvial::geom_flow(alpha = .66) + 
@@ -565,15 +578,20 @@ alluvial_lazos <- ggplot(datos.lazos, aes(x = ola, fill = lazos, stratum = lazos
     ylab(label = NULL) +
     xlab(label = NULL) + 
     theme(legend.position = 'top',
-          legend.title = element_blank()) +
+          legend.title = element_blank(),
+          plot.caption = element_text(hjust = 0)) +
     scale_fill_viridis_d(begin = 0, end = .95, direction = -1, option = 'viridis') +
-    geom_text(data = etiquetas.lazos, 
+    geom_shadowtext(data = etiquetas.lazos, 
               aes(label = ifelse(porcentaje > 0.03 , scales::percent(porcentaje, accuracy = .1),"")),
               position = position_stack(vjust = .5),
               show.legend = FALSE,
-              size = 2,
-              color = rep('white'))+
-  ggtitle('Cambio de frecuencias según año')
+              size = 5,
+              color = rep('white')) +
+  ggtitle('Cambio de frecuencias segun año') +
+  labs(caption = "Fuente: elaboracion propia en base a datos de ELSOC 2016-2020
+  
+Nota: El indicador de Cuantas personas se conocen con profesiones distintas solo esta disponible 
+para los años 2016, 2018 y 2020")
 
 alluvial_lazos
 
@@ -601,15 +619,17 @@ alluvial_conf.interpersonal <- ggplot(datos.conf.interpersonal,
     ylab(label = NULL) +
     xlab(label = NULL) + 
     theme(legend.position = 'top',
-          legend.title = element_blank()) +
+          legend.title = element_blank(),
+          plot.caption = element_text(hjust = 0)) +
     scale_fill_viridis_d(begin = 0, end = .95, direction = -1, option = 'viridis') +
-    geom_text(data = etiquetas.conf.interpersonal, 
+    geom_shadowtext(data = etiquetas.conf.interpersonal, 
               aes(label = ifelse(porcentaje > 0.03 , scales::percent(porcentaje, accuracy = .1),"")),
               position = position_stack(vjust = .5),
               show.legend = FALSE,
-              size = 2,
+              size = 5,
               color = rep('white'))+
-  ggtitle('Cambio de frecuencias según año')
+  ggtitle('Cambio de frecuencias segun año') +
+  labs(caption = "Fuente: elaboracion propia en base a datos de ELSOC 2016-2020")
 
 alluvial_conf.interpersonal
 
@@ -635,16 +655,22 @@ alluvial_diversidad <- ggplot(datos.diversidad, aes(x = ola, fill = diversidad, 
     scale_y_continuous(labels = scales::percent) + 
     ylab(label = NULL) +
     xlab(label = NULL) + 
-    theme(legend.position = 'top',
-          legend.title = element_blank()) +
+    theme(text=element_text(family="Arial", size=12),
+          legend.position = 'top',
+          legend.title = element_blank(),
+          plot.caption = element_text(hjust = 0)) +
     scale_fill_viridis_d(begin = 0, end = .95, direction = -1, option = 'viridis') +
-    geom_text(data = etiquetas.diversidad, 
+    geom_shadowtext(data = etiquetas.diversidad, 
               aes(label = ifelse(porcentaje > 0.03 , scales::percent(porcentaje, accuracy = .1),"")),
               position = position_stack(vjust = .5),
               show.legend = FALSE,
-              size = 2,
+              size = 5,
               color = rep('white'))+
-  ggtitle('Cambio de frecuencias según año')
+  ggtitle('Cambio de frecuencias segun año') +
+  labs(caption = "Fuente: elaboracion propia en base a datos de ELSOC 2016-2020
+  
+Nota: Los indicadores de Grado de confianza en personas mapuche, inmigrantes y homosexuales
+solo estan disponibles para los años 2016 y 2018")
 
 alluvial_diversidad
 
@@ -670,15 +696,17 @@ alluvial_identificacion <- ggplot(datos.identificacion, aes(x = ola, fill = iden
     ylab(label = NULL) +
     xlab(label = NULL) + 
     theme(legend.position = 'top',
-          legend.title = element_blank()) +
+          legend.title = element_blank(),
+          plot.caption = element_text(hjust = 0)) +
     scale_fill_viridis_d(begin = 0, end = .95, direction = -1, option = 'viridis') +
-    geom_text(data = etiquetas.identificacion, 
+    geom_shadowtext(data = etiquetas.identificacion, 
               aes(label = ifelse(porcentaje > 0.03 , scales::percent(porcentaje, accuracy = .1),"")),
               position = position_stack(vjust = .5),
               show.legend = FALSE,
-              size = 2,
+              size = 5,
               color = rep('white'))+
-  ggtitle('Cambio de frecuencias según año')
+  ggtitle('Cambio de frecuencias segun año') +
+  labs(caption = "Fuente: elaboracion propia en base a datos de ELSOC 2016-2020")
 
 alluvial_identificacion
 
@@ -704,15 +732,17 @@ alluvial_justicia <- ggplot(datos.justicia, aes(x = ola, fill = justicia, stratu
     ylab(label = NULL) +
     xlab(label = NULL) + 
     theme(legend.position = 'top',
-          legend.title = element_blank()) +
+          legend.title = element_blank(),
+          plot.caption = element_text(hjust = 0)) +
     scale_fill_viridis_d(begin = 0, end = .95, direction = -1, option = 'viridis') +
-    geom_text(data = etiquetas.justicia, 
+    geom_shadowtext(data = etiquetas.justicia, 
               aes(label = ifelse(porcentaje > 0.03 , scales::percent(porcentaje, accuracy = .1),"")),
               position = position_stack(vjust = .5),
               show.legend = FALSE,
-              size = 2,
+              size = 5,
               color = rep('white'))+
-  ggtitle('Cambio de frecuencias según año')
+  ggtitle('Cambio de frecuencias segun año') +
+  labs(caption = "Fuente: elaboracion propia en base a datos de ELSOC 2016-2020")
 
 alluvial_justicia
 
@@ -738,15 +768,17 @@ alluvial_conf.institucional <- ggplot(datos.conf.institucional, aes(x = ola, fil
     ylab(label = NULL) +
     xlab(label = NULL) + 
     theme(legend.position = 'top',
-          legend.title = element_blank()) +
+          legend.title = element_blank(),
+          plot.caption = element_text(hjust = 0)) +
     scale_fill_viridis_d(begin = 0, end = .95, direction = -1, option = 'viridis') +
-    geom_text(data = etiquetas.conf.institucional, 
+    geom_shadowtext(data = etiquetas.conf.institucional, 
               aes(label = ifelse(porcentaje > 0.03 , scales::percent(porcentaje, accuracy = .1),"")),
               position = position_stack(vjust = .5),
               show.legend = FALSE,
-              size = 2,
+              size = 5,
               color = rep('white'))+
-  ggtitle('Cambio de frecuencias según año')
+  ggtitle('Cambio de frecuencias segun año') +
+  labs(caption = "Fuente: elaboracion propia en base a datos de ELSOC 2016-2020")
 
 alluvial_conf.institucional
 
@@ -773,15 +805,17 @@ alluvial_solidaridad <- ggplot(datos.solidaridad, aes(x = ola, fill = solidarida
     ylab(label = NULL) +
     xlab(label = NULL) + 
     theme(legend.position = 'top',
-          legend.title = element_blank()) +
+          legend.title = element_blank(),
+          plot.caption = element_text(hjust = 0)) +
     scale_fill_viridis_d(begin = 0, end = .95, direction = -1, option = 'viridis') +
-    geom_text(data = etiquetas.solidaridad, 
+    geom_shadowtext(data = etiquetas.solidaridad, 
               aes(label = ifelse(porcentaje > 0.03 , scales::percent(porcentaje, accuracy = .1),"")),
               position = position_stack(vjust = .5),
               show.legend = FALSE,
-              size = 2,
+              size = 5,
               color = rep('white'))+
-  ggtitle('Cambio de frecuencias según año')
+  ggtitle('Cambio de frecuencias segun año') +
+  labs(caption = "Fuente: elaboracion propia en base a datos de ELSOC 2016-2020")
 
 alluvial_solidaridad
 
@@ -807,15 +841,20 @@ alluvial_participacion <- ggplot(datos.participacion, aes(x = ola, fill = partic
     ylab(label = NULL) +
     xlab(label = NULL) + 
     theme(legend.position = 'top',
-          legend.title = element_blank()) +
+          legend.title = element_blank(),
+          plot.caption = element_text(hjust = 0)) +
     scale_fill_viridis_d(begin = 0, end = .95, direction = -1, option = 'viridis') +
-    geom_text(data = etiquetas.participacion, 
+    geom_shadowtext(data = etiquetas.participacion, 
               aes(label = ifelse(porcentaje > 0.03 , scales::percent(porcentaje, accuracy = .1),"")),
               position = position_stack(vjust = .5),
               show.legend = FALSE,
-              size = 2,
+              size = 5,
               color = rep('white'))+
-  ggtitle('Cambio de frecuencias según año')
+  ggtitle('Cambio de frecuencias segun año') +
+  labs(caption = "Fuente: elaboracion propia en base a datos de ELSOC 2016-2020
+  
+Nota: Los item Firma una carta o peticion apoyando una causa y Participa en huelgas no se 
+encuentran disponibles para el año 2020, por lo que no se estimo este indicador en dicho año")
 
 alluvial_participacion
 
@@ -841,18 +880,22 @@ alluvial_cohesion_territorial <- ggplot(datos.cohesion_territorial, aes(x = ola,
     ylab(label = NULL) +
     xlab(label = NULL) + 
     theme(legend.position = 'top',
-          legend.title = element_blank()) +
+          legend.title = element_blank(),
+          plot.caption = element_text(hjust = 0)) +
     scale_fill_viridis_d(begin = 0, end = .95, direction = -1, option = 'viridis') +
-    geom_text(data = etiquetas.cohesion_territorial, 
+    geom_shadowtext(data = etiquetas.cohesion_territorial, 
               aes(label = ifelse(porcentaje > 0.03 , scales::percent(porcentaje, accuracy = .1),"")),
               position = position_stack(vjust = .5),
               show.legend = FALSE,
-              size = 2,
+              size = 5,
               color = rep('white'))+
-  ggtitle('Cambio de frecuencias según año')
+  ggtitle('Cambio de frecuencias segun año') +
+  labs(caption = "Fuente: elaboracion propia en base a datos de ELSOC 2016-2020
+       
+Nota: Los item Este barrio es ideal para mi, Me siento integrado/a en este barrio, Me identifico con la
+gente de este barrio y Este barrio es parte de mi solo están disponibles para los años 2016-2019")
 
 alluvial_cohesion_territorial
-
 ggsave(alluvial_cohesion_territorial, file = "bookdown-files/output/graphs/alluvial_cohesion_territorial.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
 ```
 

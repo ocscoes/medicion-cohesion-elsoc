@@ -23,7 +23,6 @@ load("input/data/proc/data_clases.RData")
 ```
 
 ```{r}
-data$lclass <- factor(data$lclass, levels = c(1,2,3), labels = c("Institucional", "Movilizado", "Atomizado"))
 table(data$lclass)
 ```
 
@@ -35,7 +34,7 @@ table(data$lclass)
 - Ingresos
 - Segregación territorial (Santiago vs otras regiones)
 - Aislamiento territorial:
-    - Promedio años escolaridad de sostenedores en 1 km a la redonda #preferir desv estándar#
+    -   Promedio años escolaridad de sostenedores en 1 km a la redonda #preferir desv estándar#
     -   Número de trabajadores/as (ocupados??) en 1 km a la redonda #usar también inactivos#
     -   Número de cesantes en 1 km a la redonda
     -   Acceso areas verdes en radio de 15 min a pie #aclarar definición# ¿media de la ciudad?
@@ -49,11 +48,13 @@ table(data$lclass)
 data$informal <- factor(data$informal_w03, levels = c(0,1), labels = c("Formal", "Informal"))
 clase.informal = sjPlot::sjt.xtab(data$lclass, data$informal,
                               var.labels = c("Clases de cohesion social", "Tipo de empleo"),
-                              show.obs = F,
+                              show.obs = T,
                               show.col.prc = T,
                               show.summary = F,
                               prc.sign = "", string.total="N=100%")
 clase.informal
+
+
 ```
 
 
@@ -160,3 +161,97 @@ clase.nacion
 
 ```
 
+## Habilitadores territoriales
+
+- SD del promedio de años de escolaridad de sostenedor del hogar 1km a la redonda
+
+```{r}
+windowsFonts("Arial" = windowsFont("Arial"))
+clase.sdeduc <- data  %>% filter(lclass!=is.na(lclass)) %>% 
+  ggplot(aes(lclass, sded_1k)) +
+  geom_boxplot(fill = "lightgray", color = "darkred") +
+  stat_summary(fun = mean, geom = "point", size = 3, color = "steelblue") +
+     theme(plot.caption = element_text(hjust = 0)) +
+  labs(caption = "Fuente: elaboracion propia en base a datos de ELSOC 2016-2020",
+       x="Clases de cohesion social", y= "Desviacion estandar del promedio de años de escolaridad
+de sostenedores del hogar 1km a la redonda")
+clase.sdeduc
+
+ggsave(clase.sdeduc, file = "bookdown-files/output/graphs/clase-sdeduc.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
+```
+
+- Número de trabajadores/as (ocupados??) en 1 km a la redonda  trab_1k
+```{r}
+windowsFonts("Arial" = windowsFont("Arial"))
+clase.trab <- data  %>% filter(lclass!=is.na(lclass)) %>% 
+  ggplot(aes(lclass, trab_1k)) +
+  geom_boxplot(fill = "lightgray", color = "darkred") +
+  stat_summary(fun = mean, geom = "point", size = 3, color = "steelblue") +
+     theme(plot.caption = element_text(hjust = 0)) +
+  labs(caption = "Fuente: elaboracion propia en base a datos de ELSOC 2016-2020",
+       x="Clases de cohesion social", y= "Cantidad de trabajadores ocupados 
+en 1km a la redonda")
+clase.trab
+
+ggsave(clase.trab, file = "bookdown-files/output/graphs/clase-trab.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
+```
+
+Número de cesantes en 1 km a la redonda cesa_1k
+```{r}
+windowsFonts("Arial" = windowsFont("Arial"))
+clase.cesantes <- data  %>% filter(lclass!=is.na(lclass)) %>% 
+  ggplot(aes(lclass, cesa_1k)) +
+  geom_boxplot(fill = "lightgray", color = "darkred") +
+  stat_summary(fun = mean, geom = "point", size = 3, color = "steelblue") +
+     theme(plot.caption = element_text(hjust = 0)) +
+  labs(caption = "Fuente: elaboracion propia en base a datos de ELSOC 2016-2020",
+       x="Clases de cohesion social", y= "Cantidad de cesantes en 1km a la redonda")
+clase.cesantes
+
+ggsave(clase.cesantes, file = "bookdown-files/output/graphs/clase-cesantes.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
+```
+Acceso areas verdes en radio de 15 min a pie #aclarar definición# ¿media de la ciudad? acver_mnz
+```{r}
+windowsFonts("Arial" = windowsFont("Arial"))
+clase.acver <- data  %>% filter(lclass!=is.na(lclass)) %>% 
+  ggplot(aes(lclass, acver_mnz)) +
+  geom_boxplot(fill = "lightgray", color = "darkred") +
+  stat_summary(fun = mean, geom = "point", size = 3, color = "steelblue") +
+     theme(plot.caption = element_text(hjust = 0)) +
+  labs(caption = "Fuente: elaboracion propia en base a datos de ELSOC 2016-2020",
+       x="Clases de cohesion social", y= "Acceso a areas verdes en un radio
+de 15min a pie")
+clase.acver
+
+ggsave(clase.acver, file = "bookdown-files/output/graphs/clase-acver.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
+```
+Acceso a colegios en radio de 15 min a pie #aclarar definición# ¿media de la ciudad? aced_com
+```{r}
+windowsFonts("Arial" = windowsFont("Arial"))
+clase.aced <- data  %>% filter(lclass!=is.na(lclass)) %>% 
+  ggplot(aes(lclass, aced_com)) +
+  geom_boxplot(fill = "lightgray", color = "darkred") +
+  stat_summary(fun = mean, geom = "point", size = 3, color = "steelblue") +
+     theme(plot.caption = element_text(hjust = 0)) +
+  labs(caption = "Fuente: elaboracion propia en base a datos de ELSOC 2016-2020",
+       x="Clases de cohesion social", y= "Acceso a colegios en un radio
+de 15min a pie a nivel de comuna")
+clase.aced
+
+ggsave(clase.aced, file = "bookdown-files/output/graphs/clase-aced.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
+```
+Acceso a servicios en radio de 15 min a pie #aclarar definición# ¿media de la ciudad? accs_mnz
+```{r}
+windowsFonts("Arial" = windowsFont("Arial"))
+clase.accs <- data  %>% filter(lclass!=is.na(lclass)) %>% 
+  ggplot(aes(lclass, accs_mnz)) +
+  geom_boxplot(fill = "lightgray", color = "darkred") +
+  stat_summary(fun = mean, geom = "point", size = 3, color = "steelblue") +
+     theme(plot.caption = element_text(hjust = 0)) +
+  labs(caption = "Fuente: elaboracion propia en base a datos de ELSOC 2016-2020",
+       x="Clases de cohesion social", y= "Acceso a servicios en un radio
+de 15min a pie")
+clase.accs
+
+ggsave(clase.accs, file = "bookdown-files/output/graphs/clase-accs.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
+```

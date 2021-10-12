@@ -28,10 +28,16 @@ Los procedimientos de clasificación automática comparan sistemáticamente los 
 
 Aclarar cómo se cortan las clases. 
 
+```{r echo=FALSE, fig.align = 'center', out.width = '100%',out.height='100%'}
+
+knitr::include_graphics(path = "output/graphs/lca3.jpg")
+
+```
+
 
 ### Descripción. Mapeo en Chile de niveles de cohesión por regiones (mapas de calor)
 
-Las agrupaciones obtenidas a partir del ACL será representada en los territorios de forma que se pueda apreciar la pauta predominante en cada región del país.  
+Las agrupaciones obtenidas a partir del ACL será representada en los territorios de forma que se pueda apreciar la pauta predominante en cada región del país.
 
 
 ### Análisis. Tablas con niveles de cohesión por elementos habilitadores
@@ -54,7 +60,7 @@ clase.informal = sjPlot::sjt.xtab(data$lclass, data$informal,
                               show.obs = F,
                               show.col.prc = T,
                               show.summary = F,
-                              prc.sign = "", string.total="N=100%")
+                              prc.sign = "", string.total="N=906")
 clase.informal
 ```
 
@@ -68,13 +74,13 @@ Hay diversas dimensiones en las brechas de participación en las condiciones de 
 
 ```{r echo=F, warning=F, message=F}
 data$m0_edad_w03 <- car::recode(data$m0_edad_w03, "18:29=1; 30:39=2; 40:49=3; 50:59=4; 60:83=5")
-data$edad <- factor(data$m0_edad_w03, levels = c(1,2,3,4,5), labels = c("Entre 18 y 29", "Entre 30 y 39", "Entre 40:49", "Entre 50:59", "Mas de 60"))
+data$edad <- factor(data$m0_edad_w03, levels = c(1,2,3,4,5), labels = c("Entre 18 y 29", "Entre 30 y 39", "Entre 40 y 49", "Entre 50 y 59", "Mas de 60"))
 clase.edad = sjPlot::sjt.xtab(data$lclass, data$edad,
                               var.labels = c("Clases de cohesion social", "Edad en tramos"),
                               show.obs = F,
                               show.col.prc = T,
                               show.summary = F,
-                              prc.sign = "", string.total="N=100%")
+                              prc.sign = "", string.total="N=1490")
 clase.edad
 ```
 -   El **sexo** de las personas afecta sus posibilidades de inclusión atendiendo a las pautas de roles asociadas con una sociedad patriarcal.
@@ -85,7 +91,7 @@ clase.sexo = sjPlot::sjt.xtab(data$lclass, data$m0_sexo_w03,
                               show.obs = F,
                               show.col.prc = T,
                               show.summary = F,
-                              prc.sign = "", string.total="N=100%")
+                              prc.sign = "", string.total="N=1490")
 clase.sexo
 ```
 
@@ -99,7 +105,7 @@ clase.educacion = sjPlot::sjt.xtab(data$lclass,data$m01_w03,
                            show.obs = F,
                            show.col.prc=T,
                            show.summary=F,
-                           prc.sign = "", string.total="N=100%")
+                           prc.sign = "", string.total="N=1489")
 clase.educacion
 ```
 
@@ -112,7 +118,7 @@ clase.ingreso = sjPlot::sjt.xtab(data$lclass,data$quintiles_ingresos_w03,
                            show.obs = F,
                            show.col.prc=T,
                            show.summary=F,
-                           prc.sign = "", string.total="N=100%")
+                           prc.sign = "", string.total="N=1426")
 clase.ingreso
 ```
 
@@ -120,11 +126,41 @@ clase.ingreso
 
 -   El concepto de **aislamiento social de los territorios** fue acuñado por William Julius Wilson para explicar la condición de áreas urbanas de Chicago caracterizadas por concentración de la pobreza, desempleo, bajos niveles de escolaridad y reducida integración en la fuerza de trabajo. Su explicación apunta a que la vida en un vecindario donde la mayor parte de la población se encuentra en una situación de desventaja social constriñe las oportunidades de inclusión social. Los elementos de desventaja social pueden especificarse con el acceso a recursos públicos tales como servicios públicos, conectividad, fuentes de trabajo y centros de consumo. En los territorios limitados en estos aspectos sería más improbable que florezca la cohesión social.
     -   Promedio años escolaridad de sostenedores en 1 km a la redonda #preferir desv estándar#
+```{r echo=FALSE, fig.align = 'center', out.width = '100%',out.height='100%'}
+
+knitr::include_graphics(path = "output/graphs/clase-sdeduc.png")
+
+```
     -   Número de trabajadores/as (ocupados??) en 1 km a la redonda #usar también inactivos#
+```{r echo=FALSE, fig.align = 'center', out.width = '100%',out.height='100%'}
+
+knitr::include_graphics(path = "output/graphs/clase-trab.png")
+
+```
     -   Número de cesantes en 1 km a la redonda
+```{r echo=FALSE, fig.align = 'center', out.width = '100%',out.height='100%'}
+
+knitr::include_graphics(path = "output/graphs/clase-cesantes.png")
+
+```
     -   Acceso areas verdes en radio de 15 min a pie #aclarar definición# ¿media de la ciudad?
+```{r echo=FALSE, fig.align = 'center', out.width = '100%',out.height='100%'}
+
+knitr::include_graphics(path = "output/graphs/clase-acver.png")
+
+```
     -   Acceso a colegios en radio de 15 min a pie #aclarar definición# ¿media de la ciudad?
+```{r echo=FALSE, fig.align = 'center', out.width = '100%',out.height='100%'}
+
+knitr::include_graphics(path = "output/graphs/clase-aced.png")
+
+```
     -   Acceso a servicios en radio de 15 min a pie #aclarar definición# ¿media de la ciudad?
+```{r echo=FALSE, fig.align = 'center', out.width = '100%',out.height='100%'}
+
+knitr::include_graphics(path = "output/graphs/clase-accs.png")
+
+```
 
 -   La **pertenencia a pueblos indígenas** ha estado asociado con bajos niveles de inclusión social. Por mucho tiempo invisibilizada, en las últimas dos décadas el estado chileno ha reconocido la existencia de pueblos indígenas acordando diversos beneficios sociales asociados con esta condición. Como contrapartida, el reconocimiento de la condición de indígena ha conllevado a un fortalecimiento de la identidad étnica.
 
@@ -134,7 +170,7 @@ clase.etnia = sjPlot::sjt.xtab(data$lclass,data$etnia_rec,
                            show.obs = F,
                            show.col.prc=T,
                            show.summary=F,
-                           prc.sign = "", string.total="N=100%")
+                           prc.sign = "", string.total="N=1472")
 clase.etnia
 ```
 
@@ -146,6 +182,6 @@ clase.nacion = sjPlot::sjt.xtab(data$lclass,data$nacion_rec,
                            show.obs = F,
                            show.col.prc=T,
                            show.summary=F,
-                           prc.sign = "", string.total="N=100%")
+                           prc.sign = "", string.total="N=1490")
 clase.nacion
 ```

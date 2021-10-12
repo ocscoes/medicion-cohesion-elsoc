@@ -911,7 +911,7 @@ data$m01_w05 <- car::recode(data$m01_w05, "c(1,2,3)=1;c(4,5)=2;c(6,7)=3;c(8,9,10
 
 data$m01_w01 <- factor(data$m01_w01, levels = c("1", "2", "3", "4"), labels=c( "Educacion basica o menos", "Educacion media", "Educacion tecnica superior", "Educacion universitaria y Postgrado"))
 data$m01_w02 <- factor(data$m01_w02, levels = c("1", "2", "3", "4"), labels=c( "Educacion basica o menos", "Educacion media", "Educacion tecnica superior", "Educacion universitaria y Postgrado"))
-data$m01_w03 <- factor(data$m01_w03, levels = c("1", "2", "3", "4"), labels=c( "Educacion basica", "Educacion media", "tecnica superior", "universitaria y Postgrado"))
+data$m01_w03 <- factor(data$m01_w03, levels = c("1", "2", "3", "4"), labels=c( "Educacion basica o menos", "Educacion media", "Educacion tecnica superior", "Educacion universitaria y Postgrado"))
 data$m01_w04 <- factor(data$m01_w04, levels = c("1", "2", "3", "4"), labels=c( "Educacion basica o menos", "Educacion media", "Educacion tecnica superior", "Educacion universitaria y Postgrado"))
 data$m01_w05 <- factor(data$m01_w05, levels = c("1", "2", "3", "4"), labels=c( "Educacion basica o menos", "Educacion media", "Educacion tecnica superior", "Educacion universitaria y Postgrado"))
 
