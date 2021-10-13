@@ -1524,19 +1524,34 @@ elsoc_2021 &lt;- elsoc_2021 %&gt;% car::recode(., &quot;c(-888, -999)=NA&quot;)
 elsoc_2021 &lt;- elsoc_2021 %&gt;% sjlabelled::remove_labels(labels = c(&quot;No Responde (no leer)&quot;, &quot;No Sabe (no leer)&quot;))
 
 data &lt;- inner_join(data, elsoc_2021, by=&quot;idencuesta&quot;, copy = FALSE, suffix = c(&quot;&quot;, &quot;_w05&quot;))</code></pre>
+</div>
+<div id="cargar-datos-territoriales-elsoc-2018" class="section level1">
+<h1><span class="header-section-number">4</span> Cargar datos territoriales ELSOC 2018</h1>
+<pre class="r"><code>data_territorial &lt;- read_excel(&quot;input/data/original/BASE_2018_COD.xlsx&quot;)
+
+data_territorial &lt;- data_territorial %&gt;% dplyr::select(idencuesta, trabaja, cesante, inactivo, jh_esc_sd) %&gt;% as.data.frame(.)
+
+data_territorial &lt;- data_territorial %&gt;%  set_na(trabaja, cesante, inactivo, jh_esc_sd, na = -995, drop.levels = TRUE, as.tag = FALSE) # recode missings de no respuesta a NA
+
+data &lt;- inner_join(data, data_territorial, by=&quot;idencuesta&quot;, copy = FALSE, suffix = c(&quot;&quot;, &quot;_ter&quot;))</code></pre>
+</div>
+<div id="cargar-datos-territoriales-cit-2016" class="section level1">
+<h1><span class="header-section-number">5</span> Cargar datos territoriales CIT 2016</h1>
 <pre class="r"><code>cit &lt;- read_excel(&quot;input/data/original/ELSOC_CIT_Dataset_2016.xlsx&quot;)
 
-cit &lt;- cit %&gt;% car::recode(., &quot;c(994,995,996)=NA&quot;) # recode missings de no respuesta a NA
+cit &lt;- cit %&gt;% dplyr::select(idencuesta, acver_mnz, aced_com, accs_mnz) %&gt;% as.data.frame()
+
+cit &lt;- cit %&gt;% set_na(acver_mnz, aced_com, accs_mnz, na = c(994, 995,996), drop.levels = TRUE, as.tag = FALSE) # recode missings de no respuesta a NA
 
 # Juntar base con datos CIT
 data &lt;- inner_join(data, cit, by=&quot;idencuesta&quot;, copy = FALSE, suffix = c(&quot;&quot;, &quot;_cit&quot;))</code></pre>
 </div>
 <div id="relaciones-sociales-de-igualdad" class="section level1">
-<h1><span class="header-section-number">4</span> Relaciones sociales de igualdad</h1>
+<h1><span class="header-section-number">6</span> Relaciones sociales de igualdad</h1>
 <div id="lazos" class="section level2">
-<h2><span class="header-section-number">4.1</span> Lazos</h2>
+<h2><span class="header-section-number">6.1</span> Lazos</h2>
 <div id="r15-cantidad-de-amigos-cercanos-w02-w04" class="section level3">
-<h3><span class="header-section-number">4.1.1</span> R15: Cantidad de amigos cercanos (w02 &amp; w04)</h3>
+<h3><span class="header-section-number">6.1.1</span> R15: Cantidad de amigos cercanos (w02 &amp; w04)</h3>
 <pre class="r"><code>data$r15_w02&lt;- factor(data$r15_w02, levels = c(1, 2, 3, 4, 5), labels = c(&quot;No tiene&quot;, &quot;De 1 a 2&quot;, &quot;De 3 a 5&quot;, &quot;De 6 a 10&quot;, &quot;Mas de 10&quot;))
 data$r15_w04&lt;- factor(data$r15_w04, levels = c(1, 2, 3, 4, 5), labels = c(&quot;No tiene&quot;, &quot;De 1 a 2&quot;, &quot;De 3 a 5&quot;, &quot;De 6 a 10&quot;, &quot;Mas de 10&quot;))
 
@@ -1566,7 +1581,7 @@ data %&gt;% select (r15_w02,r15_w04)  %&gt;% sjlabelled::as_label(.)  %&gt;%  df
 ## ---------------------------------------------------------------------------------------------------------------</code></pre>
 </div>
 <div id="r13_nredes-tamaño-de-red-cercana" class="section level3">
-<h3><span class="header-section-number">4.1.2</span> R13_nredes: Tamaño de red cercana</h3>
+<h3><span class="header-section-number">6.1.2</span> R13_nredes: Tamaño de red cercana</h3>
 <pre class="r"><code>data$r13_nredes_w02&lt;- factor(data$r13_nredes_w02, levels = c(1, 2, 3, 4, 5), labels = c(&quot;No tiene&quot;, &quot;De 1 a 2&quot;, &quot;De 3 a 5&quot;, &quot;De 6 a 10&quot;, &quot;Mas de 10&quot;))
 data$r13_nredes_w04&lt;- factor(data$r13_nredes_w04, levels = c(1, 2, 3, 4, 5), labels = c(&quot;No tiene&quot;, &quot;De 1 a 2&quot;, &quot;De 3 a 5&quot;, &quot;De 6 a 10&quot;, &quot;Mas de 10&quot;))
 
@@ -1596,7 +1611,7 @@ data %&gt;% select (r13_nredes_w02,r13_nredes_w04)  %&gt;% sjlabelled::as_label(
 ## ---------------------------------------------------------------------------------------------------------------</code></pre>
 </div>
 <div id="r13_relacion-numero-de-parientes-red-cercana" class="section level3">
-<h3><span class="header-section-number">4.1.3</span> R13_relacion: Numero de parientes red cercana</h3>
+<h3><span class="header-section-number">6.1.3</span> R13_relacion: Numero de parientes red cercana</h3>
 <pre class="r"><code>data$numkin_w02 &lt;- apply(data[, c(&#39;r13_relacion_01_w02&#39;,&#39;r13_relacion_02_w02&#39;,&#39;r13_relacion_03_w02&#39;,&#39;r13_relacion_04_w02&#39;,&#39;r13_relacion_05_w02&#39;)], 1, function(x) sum(x&gt;0 &amp; x&lt;4, na.rm=TRUE))
 
 data$numkin_w04 &lt;- apply(data[, c(&#39;r13_relacion_01_w04&#39;,&#39;r13_relacion_02_w04&#39;,&#39;r13_relacion_03_w04&#39;,&#39;r13_relacion_04_w04&#39;,&#39;r13_relacion_05_w04&#39;)], 1, function(x) sum(x&gt;0 &amp; x&lt;4, na.rm=TRUE))
@@ -1630,7 +1645,7 @@ data %&gt;% select(numkin_w02, numkin_w04)  %&gt;% sjlabelled::as_label(.)  %&gt
 ## ----------------------------------------------------------------------------------------------------------------------------</code></pre>
 </div>
 <div id="r01-generador-posicional-variedad-de-la-red" class="section level3">
-<h3><span class="header-section-number">4.1.4</span> R01: generador posicional (variedad de la red)</h3>
+<h3><span class="header-section-number">6.1.4</span> R01: generador posicional (variedad de la red)</h3>
 <pre class="r"><code># Ocupaciones correspondientes a 13 posiciones del generador de posiciones
 
 # (&#39;CEO&#39;, &#39;Vend.Ambulante&#39;, &#39;Secretario/a&#39;, &#39;Mec.Autos&#39;, &#39;Vend.Tienda&#39;, &#39;Abogado&#39;, &#39;Aseador.of&#39;, &#39;Médico&#39;, &#39;Parvularia&#39;, &#39;Chofer.Taxi&#39;, &#39;Camarero/a&#39;, &#39;Contador/a&#39;, &#39;Prof.Univ&#39;)
@@ -1692,7 +1707,7 @@ data %&gt;% select(vol.red_w01, vol.red_w03, vol.red_w05)  %&gt;% sjlabelled::as
 </div>
 </div>
 <div id="confianza-interpersonal" class="section level2">
-<h2><span class="header-section-number">4.2</span> Confianza interpersonal</h2>
+<h2><span class="header-section-number">6.2</span> Confianza interpersonal</h2>
 <p>C02: Se puede confiar en la mayoría de las personas o hay que tener cuidado al tratar con ellas (w01, w02, w03, w04 &amp; w05)</p>
 <pre class="r"><code>data &lt;- data %&gt;%
   mutate(c02_rec_w01 = car::recode(data$c02_w01, c(&quot;1=3; 2=1; 3=2&quot;)),
@@ -1836,7 +1851,7 @@ data %&gt;% select (c04_rec_w01, c04_rec_w02, c04_rec_w03, c04_rec_w04, c04_rec_
 ## -----------------------------------------------------------------------------------------------------------------------</code></pre>
 </div>
 <div id="reconocimiento-y-respeto-de-la-diversidad" class="section level2">
-<h2><span class="header-section-number">4.3</span> Reconocimiento y respeto de la diversidad</h2>
+<h2><span class="header-section-number">6.3</span> Reconocimiento y respeto de la diversidad</h2>
 <p>R12_03: Chile pierde su identidad con la llegada de inmigrantes (w01, w02, w03 &amp; w04)</p>
 <pre class="r"><code>label(data$r12_03_w01) &lt;- &quot;Chile pierde su identidad con la llegada de inmigrantes (2016).&quot;
 label(data$r12_03_w02) &lt;- &quot;Chile pierde su identidad con la llegada de inmigrantes (2017).&quot;
@@ -2034,9 +2049,9 @@ data %&gt;% select (c06_06_w01, c06_06_w03)  %&gt;% sjlabelled::as_label(.)  %&g
 </div>
 </div>
 <div id="sentido-de-pertenencia" class="section level1">
-<h1><span class="header-section-number">5</span> Sentido de pertenencia</h1>
+<h1><span class="header-section-number">7</span> Sentido de pertenencia</h1>
 <div id="identificación-con-el-país" class="section level2">
-<h2><span class="header-section-number">5.1</span> Identificación con el país</h2>
+<h2><span class="header-section-number">7.1</span> Identificación con el país</h2>
 <p>C32_01: Me siento orgulloso de ser chileno (w01, w02, w03 &amp; w04)</p>
 <pre class="r"><code>label(data$c32_01_w01) &lt;- &quot;Me siento orgulloso de ser chileno (2016).&quot;
 label(data$c32_01_w02) &lt;- &quot;Me siento orgulloso de ser chileno (2017).&quot;
@@ -2133,7 +2148,7 @@ data %&gt;% select (c32_02_w01, c32_02_w02, c32_02_w03, c32_02_w04, c32_02_w05) 
 ## ---------------------------------------------------------------------------------------------------------------------------</code></pre>
 </div>
 <div id="percepción-de-justicia" class="section level2">
-<h2><span class="header-section-number">5.2</span> Percepción de justicia</h2>
+<h2><span class="header-section-number">7.2</span> Percepción de justicia</h2>
 <p>C18_09: En Chile las personas son recompensadas por sus esfuerzos (w01, w02, w03, w04 &amp; w05)</p>
 <pre class="r"><code>label(data$c18_09_w01) &lt;- &quot;En Chile las personas son recompensadas por sus esfuerzos (2016).&quot;
 label(data$c18_09_w02) &lt;- &quot;En Chile las personas son recompensadas por sus esfuerzos (2017).&quot;
@@ -2230,7 +2245,7 @@ data %&gt;% select (c18_10_w01, c18_10_w02, c18_10_w03, c18_10_w04, c18_10_w05) 
 ## -----------------------------------------------------------------------------------------------------------------------------------</code></pre>
 </div>
 <div id="confianza-institucional" class="section level2">
-<h2><span class="header-section-number">5.3</span> Confianza institucional</h2>
+<h2><span class="header-section-number">7.3</span> Confianza institucional</h2>
 <p>C05_01: Grado de confianza en el gobierno (w01, w02, w03, w04 &amp; w05)</p>
 <pre class="r"><code>label(data$c05_01_w01) &lt;- &quot;Confianza en el gobierno (2016).&quot;
 label(data$c05_01_w02) &lt;- &quot;Confianza en el gobierno (2017).&quot;
@@ -2594,9 +2609,9 @@ data %&gt;% select (c05_08_w01, c05_08_w02, c05_08_w03, c05_08_w04, c05_08_w05) 
 </div>
 </div>
 <div id="orientación-hacia-el-bien-común" class="section level1">
-<h1><span class="header-section-number">6</span> Orientación hacia el bien común</h1>
+<h1><span class="header-section-number">8</span> Orientación hacia el bien común</h1>
 <div id="solidaridad" class="section level2">
-<h2><span class="header-section-number">6.1</span> Solidaridad</h2>
+<h2><span class="header-section-number">8.1</span> Solidaridad</h2>
 <p>C07_01: Ha visitado la casa de algún vecino (w01, w02, w03, w04 &amp; w05)</p>
 <pre class="r"><code>label(data$c07_01_w01) &lt;- &quot;Ha visitado la casa de algun vecino (2016).&quot;
 label(data$c07_01_w02) &lt;- &quot;Ha visitado la casa de algun vecino (2017).&quot;
@@ -2895,7 +2910,7 @@ data %&gt;% select (c07_08_w01, c07_08_w02, c07_08_w03, c07_08_w04, c07_08_w05) 
 ## -----------------------------------------------------------------------------------------------------------------------------------</code></pre>
 </div>
 <div id="participación-cívica" class="section level2">
-<h2><span class="header-section-number">6.2</span> Participación cívica</h2>
+<h2><span class="header-section-number">8.2</span> Participación cívica</h2>
 <p>C08_01: Firmado una carta o petición apoyando una causa (w01, w02, w03 &amp; w04)</p>
 <pre class="r"><code>label(data$c08_01_w01) &lt;- &quot;Firmado una carta o peticion apoyando una causa (2016).&quot;
 label(data$c08_01_w02) &lt;- &quot;Firmado una carta o peticion apoyando una causa (2017).&quot;
@@ -3070,7 +3085,7 @@ data %&gt;% select (c08_04_w01, c08_04_w02, c08_04_w03, c08_04_w04, c08_04_w05) 
 ## ----------------------------------------------------------------------------------------------------------------------------</code></pre>
 </div>
 <div id="participación-en-organizaciones" class="section level2">
-<h2><span class="header-section-number">6.3</span> Participación en organizaciones</h2>
+<h2><span class="header-section-number">8.3</span> Participación en organizaciones</h2>
 <p>C12_01: Junta de vecinos u otra organización vecinal (w01 &amp; w03)</p>
 <pre class="r"><code>label(data$c12_01_w01) &lt;- &quot;Junta de vecinos u otra organizacion (2016).&quot;
 label(data$c12_01_w03) &lt;- &quot;Junta de vecinos u otra organizacion (2018).&quot;
@@ -3241,7 +3256,7 @@ data %&gt;% select (c12_08_w01, c12_08_w03)  %&gt;% sjlabelled::as_label(.)  %&g
 ## -------------------------------------------------------------------------------------------------------------------------</code></pre>
 </div>
 <div id="participación-electoral" class="section level2">
-<h2><span class="header-section-number">6.4</span> Participación electoral</h2>
+<h2><span class="header-section-number">8.4</span> Participación electoral</h2>
 <p>C11: Voto en elecciones (w01 &amp; w03)</p>
 <pre class="r"><code>label(data$c11_w01) &lt;- &quot;Voto en elecciones (2016).&quot;
 label(data$c11_w03) &lt;- &quot;Voto en elecciones (2018).&quot;
@@ -3266,9 +3281,9 @@ data %&gt;% select (c11_w01, c11_w03)  %&gt;% sjlabelled::as_label(.)  %&gt;%  d
 </div>
 </div>
 <div id="cohesión-territorial" class="section level1">
-<h1><span class="header-section-number">7</span> Cohesión territorial</h1>
+<h1><span class="header-section-number">9</span> Cohesión territorial</h1>
 <div id="confianza-en-vecinos" class="section level2">
-<h2><span class="header-section-number">7.1</span> Confianza en vecinos</h2>
+<h2><span class="header-section-number">9.1</span> Confianza en vecinos</h2>
 <p>T01: Confianza en vecinos (w01, w02, w03, w04 &amp; w05)</p>
 <pre class="r"><code>label(data$t01_w01) &lt;- &quot;Confianza en vecinos (2016).&quot;
 label(data$t01_w02) &lt;- &quot;Confianza en vecinos (2017).&quot;
@@ -3318,7 +3333,7 @@ data %&gt;% select (t01_w01, t01_w02, t01_w03, t01_w04, t01_w05)  %&gt;% sjlabel
 ## --------------------------------------------------------------------------------------------------------</code></pre>
 </div>
 <div id="cohesión-barrial" class="section level2">
-<h2><span class="header-section-number">7.2</span> Cohesión barrial</h2>
+<h2><span class="header-section-number">9.2</span> Cohesión barrial</h2>
 <p>T02_01: Este barrio es ideal para mi (w01, w02, w03 &amp; w04)</p>
 <pre class="r"><code>label(data$t02_01_w01) &lt;- &quot;Este barrio es ideal para mi (2016).&quot;
 label(data$t02_01_w02) &lt;- &quot;Este barrio es ideal para mi (2017).&quot;
@@ -3477,7 +3492,7 @@ data %&gt;% select (t02_04_w01, t02_04_w02, t02_04_w03, t02_04_w04)  %&gt;% sjla
 ## -------------------------------------------------------------------------------------------------------------------------------</code></pre>
 </div>
 <div id="sociabilidad-barrial" class="section level2">
-<h2><span class="header-section-number">7.3</span> Sociabilidad barrial</h2>
+<h2><span class="header-section-number">9.3</span> Sociabilidad barrial</h2>
 <p>T03_01: En este barrio es facil hacer amigos (w01, w02, w03 &amp; w04)</p>
 <pre class="r"><code>label(data$t03_01_w01) &lt;- &quot;En este barrio es facil hacer amigos (2016).&quot;
 label(data$t03_01_w02) &lt;- &quot;En este barrio es facil hacer amigos (2017).&quot;
@@ -3636,7 +3651,7 @@ data %&gt;% select (t03_04_w01, t03_04_w02, t03_04_w03, t03_04_w04)  %&gt;% sjla
 ## -----------------------------------------------------------------------------------------------------------------------------------</code></pre>
 </div>
 <div id="satisfacción-barrial" class="section level2">
-<h2><span class="header-section-number">7.4</span> Satisfacción barrial</h2>
+<h2><span class="header-section-number">9.4</span> Satisfacción barrial</h2>
 <p>T06_01: Seguridad del barrio (w01, w02, w03 &amp; w04)</p>
 <pre class="r"><code>label(data$t06_01_w01) &lt;- &quot;Seguridad del barrio (2016).&quot;
 label(data$t06_01_w02) &lt;- &quot;Seguridad del barrio (2017).&quot;
@@ -3952,9 +3967,9 @@ data %&gt;% select (t06_08_w01, t06_08_w02, t06_08_w03, t06_08_w04)  %&gt;% sjla
 </div>
 </div>
 <div id="habilitadores-e-inhibidores-de-la-cohesión-social" class="section level1">
-<h1><span class="header-section-number">8</span> Habilitadores e inhibidores de la cohesión social</h1>
+<h1><span class="header-section-number">10</span> Habilitadores e inhibidores de la cohesión social</h1>
 <div id="regiones-y-comunas" class="section level2">
-<h2><span class="header-section-number">8.1</span> Regiones y comunas</h2>
+<h2><span class="header-section-number">10.1</span> Regiones y comunas</h2>
 <pre class="r"><code>frq(data$region_w01)</code></pre>
 <pre><code>## 
 ## Region (2016) (x) &lt;character&gt;
@@ -4106,7 +4121,7 @@ data %&gt;% select (t06_08_w01, t06_08_w02, t06_08_w03, t06_08_w04)  %&gt;% sjla
 <pre class="r"><code>label(data$comuna) &lt;- &quot;Comuna&quot;</code></pre>
 </div>
 <div id="edad" class="section level2">
-<h2><span class="header-section-number">8.2</span> Edad</h2>
+<h2><span class="header-section-number">10.2</span> Edad</h2>
 <pre class="r"><code>data$m0_edad_w05 &lt;- data$m0_edad
 label(data$m0_edad_w01) &lt;- &quot;Edad (2016)&quot;
 label(data$m0_edad_w02) &lt;- &quot;Edad (2017)&quot;
@@ -4150,7 +4165,7 @@ data %&gt;% select (m0_edad_w01, m0_edad_w02, m0_edad_w03, m0_edad_w04, m0_edad_
 ## ----------------------------------------------------------------------------------------------------</code></pre>
 </div>
 <div id="educacion" class="section level2">
-<h2><span class="header-section-number">8.3</span> Educacion</h2>
+<h2><span class="header-section-number">10.3</span> Educacion</h2>
 <pre class="r"><code>data$m01_w05 &lt;- data$m01
 
 data$m01_w01 &lt;- car::recode(data$m01_w01, &quot;c(1,2,3)=1;c(4,5)=2;c(6,7)=3;c(8,9,10)=4&quot;)
@@ -4207,7 +4222,7 @@ data %&gt;% select (m01_w01, m01_w02, m01_w03, m01_w04, m01_w05)  %&gt;% sjlabel
 ## -------------------------------------------------------------------------------------------------------------------</code></pre>
 </div>
 <div id="ingresos-hogar" class="section level2">
-<h2><span class="header-section-number">8.4</span> Ingresos hogar</h2>
+<h2><span class="header-section-number">10.4</span> Ingresos hogar</h2>
 <pre class="r"><code>data$m29_w05 &lt;- data$m29
 
 data %&gt;% select(m29_w01, m29_w02, m29_w03, m29_w04, m29_w05)  %&gt;% sjlabelled::as_label(.)  %&gt;%  dfSummary(, graph.col = FALSE)</code></pre>
@@ -4246,7 +4261,7 @@ data %&gt;% select(m29_w01, m29_w02, m29_w03, m29_w04, m29_w05)  %&gt;% sjlabell
 ## ------------------------------------------------------------------------------------------------------------------------------</code></pre>
 </div>
 <div id="ingresos-hogar-por-tramos" class="section level2">
-<h2><span class="header-section-number">8.5</span> Ingresos hogar por tramos</h2>
+<h2><span class="header-section-number">10.5</span> Ingresos hogar por tramos</h2>
 <pre class="r"><code>data$m30_w05 &lt;- data$m30
 
 data %&gt;% select(m30_w01, m30_w02, m30_w03, m30_w04, m30_w05)  %&gt;% sjlabelled::as_label(.)  %&gt;%  dfSummary(, graph.col = FALSE)</code></pre>
@@ -4320,7 +4335,7 @@ data %&gt;% select(m30_w01, m30_w02, m30_w03, m30_w04, m30_w05)  %&gt;% sjlabell
 ## ------------------------------------------------------------------------------------------------------------------------------</code></pre>
 </div>
 <div id="imputación-ingresos" class="section level2">
-<h2><span class="header-section-number">8.6</span> Imputación ingresos</h2>
+<h2><span class="header-section-number">10.6</span> Imputación ingresos</h2>
 <pre class="r"><code># 2016
 data$m30_w01[data$m30_w01==1] &lt;-(       220000 )    # [1]  &quot;Menos de $220.000 mensuales liquidos&quot;          
 data$m30_w01[data$m30_w01==2] &lt;-(220001 +280000 )/2 # [2]  &quot;De $220.001 a $280.000 mensuales liquidos&quot;       
@@ -4465,7 +4480,7 @@ data %&gt;% select (m29_w01, m29_w02, m29_w03, m29_w04, m29_w05)  %&gt;% sjlabel
 ## ------------------------------------------------------------------------------------------------------------------------</code></pre>
 </div>
 <div id="ingresos-en-quintiles" class="section level2">
-<h2><span class="header-section-number">8.7</span> Ingresos en quintiles</h2>
+<h2><span class="header-section-number">10.7</span> Ingresos en quintiles</h2>
 <pre class="r"><code>data &lt;- data %&gt;% dplyr::mutate(quintiles_ingresos_w01 = ntile(m29_w01, 5))
 data &lt;- data %&gt;% mutate(quintiles_ingresos_w02 = ntile(m29_w02, 5))
 data &lt;- data %&gt;% mutate(quintiles_ingresos_w03 = ntile(m29_w03, 5))
@@ -4520,7 +4535,7 @@ data %&gt;% select(quintiles_ingresos_w01, quintiles_ingresos_w02, quintiles_ing
 ## ---------------------------------------------------------------------------------------</code></pre>
 </div>
 <div id="nación" class="section level2">
-<h2><span class="header-section-number">8.8</span> Nación</h2>
+<h2><span class="header-section-number">10.8</span> Nación</h2>
 <pre class="r"><code>frq(data$m45_w01)</code></pre>
 <pre><code>## 
 ## Nacionalidad del entrevistado (2016) (x) &lt;numeric&gt;
@@ -4553,7 +4568,7 @@ frq(data$nacion_rec)</code></pre>
 ## &lt;NA&gt;                 |    0 |  0.00 |    &lt;NA&gt; |   &lt;NA&gt;</code></pre>
 </div>
 <div id="etnia" class="section level2">
-<h2><span class="header-section-number">8.9</span> Etnia</h2>
+<h2><span class="header-section-number">10.9</span> Etnia</h2>
 <pre class="r"><code>frq(data$m53_w02)</code></pre>
 <pre><code>## 
 ## Pertenencia a pueblo indigena (2017) (x) &lt;numeric&gt;
@@ -4589,7 +4604,7 @@ frq(data$etnia_rec)</code></pre>
 ## &lt;NA&gt;                  |   18 |  1.21 |    &lt;NA&gt; |   &lt;NA&gt;</code></pre>
 </div>
 <div id="sector-informal" class="section level2">
-<h2><span class="header-section-number">8.10</span> Sector informal</h2>
+<h2><span class="header-section-number">10.10</span> Sector informal</h2>
 <pre class="r"><code>### 2016 ###
 data$sin.contrato_w01 &lt;- rep(0, length(data[,1]))
 data$sin.contrato_w01 &lt;- ifelse((data$m07_w01==1 | data$m07_w01==2 | data$m07_w01==3 | data$m07_w01==7) &amp; data$m10_w01==3, 1, data$sin.contrato_w01) # asalariados y personal doméstico sin contrato escrito
@@ -4693,14 +4708,14 @@ table(data$informal_w03)</code></pre>
 ##   0   1 
 ## 593 314</code></pre>
 <div id="region" class="section level3">
-<h3><span class="header-section-number">8.10.1</span> Region</h3>
+<h3><span class="header-section-number">10.10.1</span> Region</h3>
 <pre class="r"><code>data$region &lt;- ifelse(data$region_w03==&quot;Metropolitana&quot;, 1, 2)
 data$region &lt;- factor(data$region, levels = c(1,2), labels = c(&quot;Metropolitana&quot;, &quot;Otra region&quot;))</code></pre>
 </div>
 </div>
 </div>
 <div id="guardar-base" class="section level1">
-<h1><span class="header-section-number">9</span> Guardar base</h1>
+<h1><span class="header-section-number">11</span> Guardar base</h1>
 <pre class="r"><code>save(data,file = &quot;input/data/proc/data.RData&quot;)</code></pre>
 </div>
 

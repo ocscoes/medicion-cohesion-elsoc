@@ -43,10 +43,24 @@ elsoc_2021 <- elsoc_2021 %>% sjlabelled::remove_labels(labels = c("No Responde (
 data <- inner_join(data, elsoc_2021, by="idencuesta", copy = FALSE, suffix = c("", "_w05"))
 ```
 
+# Cargar datos territoriales ELSOC 2018
+```{r}
+data_territorial <- read_excel("input/data/original/BASE_2018_COD.xlsx")
+
+data_territorial <- data_territorial %>% dplyr::select(idencuesta, trabaja, cesante, inactivo, jh_esc_sd) %>% as.data.frame(.)
+
+data_territorial <- data_territorial %>%  set_na(trabaja, cesante, inactivo, jh_esc_sd, na = -995, drop.levels = TRUE, as.tag = FALSE) # recode missings de no respuesta a NA
+
+data <- inner_join(data, data_territorial, by="idencuesta", copy = FALSE, suffix = c("", "_ter"))
+```
+
+# Cargar datos territoriales CIT 2016
 ```{r}
 cit <- read_excel("input/data/original/ELSOC_CIT_Dataset_2016.xlsx")
 
-cit <- cit %>% car::recode(., "c(994,995,996)=NA") # recode missings de no respuesta a NA
+cit <- cit %>% dplyr::select(idencuesta, acver_mnz, aced_com, accs_mnz) %>% as.data.frame()
+
+cit <- cit %>% set_na(acver_mnz, aced_com, accs_mnz, na = c(994, 995,996), drop.levels = TRUE, as.tag = FALSE) # recode missings de no respuesta a NA
 
 # Juntar base con datos CIT
 data <- inner_join(data, cit, by="idencuesta", copy = FALSE, suffix = c("", "_cit"))
@@ -929,7 +943,7 @@ data %>% select (m01_w01, m01_w02, m01_w03, m01_w04, m01_w05)  %>% sjlabelled::a
 ```{r}
 data$m29_w05 <- data$m29
 
-data %>% select(m29_w01, m29_w02, m29_w03, m29_w04, m29_w05)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
+data %>% select(m29_w01, m29_w02, m29_w03, m29_w04, m29_w05)  %>%  dfSummary(, graph.col = FALSE)
 ```
 
 ## Ingresos hogar por tramos

@@ -5,7 +5,7 @@ editor_options:
 ---
 
 ```{r include=F}
-pacman::p_load(dplyr, sjPlot)
+pacman::p_load(dplyr, sjPlot, kableExtra)
 load("../input/data/proc/data_clases.RData")
 ```
 
@@ -39,6 +39,60 @@ knitr::include_graphics(path = "output/graphs/lca3.jpg")
 
 Las agrupaciones obtenidas a partir del ACL será representada en los territorios de forma que se pueda apreciar la pauta predominante en cada región del país.
 
+```{r include=F}
+data$informal <- factor(data$informal_w03, levels = c(0,1), labels = c("Formal", "Informal"))
+tabla1 <- addmargins(table(data$region_w03, data$lclass))
+tabla1 <- as.data.frame(tabla1)
+tabla2 <- round(prop.table(table(data$region_w03, data$lclass)),3)*100
+tabla2 <- as.data.frame(tabla2)
+
+tablae1 <- tabla2 %>% filter(Var2=="Institucional") %>% select(Freq)
+tablae1tot <- tabla1 %>% filter(Var1=="Sum" & Var2=="Institucional") %>% select(Freq)
+tablae1 <- rbind(tablae1, tablae1tot)
+
+tablae2 <- tabla2 %>% filter(Var2=="Movilizado") %>% select(Freq)
+tablae2tot <- tabla1 %>% filter(Var1=="Sum" & Var2=="Movilizado") %>% select(Freq)
+tablae2 <- rbind(tablae2, tablae2tot)
+
+tablae3 <- tabla2 %>% filter(Var2=="Atomizado") %>% select(Freq)
+tablae3tot <- tabla1 %>% filter(Var1=="Sum" & Var2=="Atomizado") %>% select(Freq)
+tablae3 <- rbind(tablae3, tablae3tot)
+
+tablatotal <- tabla1 %>% filter(Var2=="Sum") %>% select(Freq)
+
+collapse_rows_cohesion <-
+    data.frame(vars = c("Antofagasta",
+                            "Araucania",
+                            "Atacama",
+                            "Aysen",
+                            "Bio Bio",
+                            "Coquimbo",
+                            "Lib. Gral. B. Ohiggins",
+                            "Los Lagos",
+                            "Los Rios",
+                            "Maule",
+                            "Metropolitana",
+                            "Tarapaca",
+                            "Valparaiso",
+                        "Total"),
+               tablae1, 
+               tablae2,
+               tablae3,
+               tablatotal)
+
+```
+
+```{r echo=FALSE, fig.align = 'center', out.width = '100%',out.height='100%'}
+knitr::kable(collapse_rows_cohesion, "html",
+             col.names =  c("Clases de cohesión social",
+                            "Institucional",
+                        "Movilizado",
+                        "Atomizado",
+                            "Total"
+                            )) %>%
+  kable_styling(bootstrap_options = c("striped", "hover")) %>% 
+  kableExtra::add_header_above(header = c(" "=1, "Region"= 4))
+```
 
 ### Análisis. Tablas con niveles de cohesión por elementos habilitadores
 
@@ -52,16 +106,42 @@ La medida de aislamiento territorial registra las características del área cor
 El acceso al mercado de trabajo se encuentra estrechamente asociado con el bienestar de las personas. En efecto, la superación de la pobreza depende en gran medida de la inserción laboral. En América Latina, Chile no es una excepción, las condiciones de trabajo informal, asociadas con pobreza y precariedad comprenden una parte significativa de la fuerza de trabajo. Las inserciones más débiles en el mercado de trabajo podrían afectar negativamente los niveles de cohesión social.
 
 
+```{r include=F}
+tabla1 <- addmargins(table(data$lclass, data$informal))
+tabla1 <- as.data.frame(tabla1)
+tabla2 <- round(prop.table(table(data$lclass, data$informal)),3)*100
+tabla2 <- as.data.frame(tabla2)
 
-```{r echo=F, warning=F, message=F}
-data$informal <- factor(data$informal_w03, levels = c(0,1), labels = c("Formal", "Informal"))
-clase.informal = sjPlot::sjt.xtab(data$lclass, data$informal,
-                              var.labels = c("Clases de cohesion social", "Tipo de empleo"),
-                              show.obs = F,
-                              show.col.prc = T,
-                              show.summary = F,
-                              prc.sign = "", string.total="N=906")
-clase.informal
+tablaformal <- tabla2 %>% filter(Var2=="Formal") %>% select(Freq)
+tablaformaltot <- tabla1 %>% filter(Var1=="Sum" & Var2=="Formal") %>% select(Freq)
+tablaformal <- rbind(tablaformal, tablaformaltot)
+
+tablainformal <- tabla2 %>% filter(Var2=="Informal") %>% select(Freq)
+tablainformaltot <- tabla1 %>% filter(Var1=="Sum" & Var2=="Informal") %>% select(Freq)
+tablainformal <- rbind(tablainformal, tablainformaltot)
+
+tablatotal <- tabla1 %>% filter(Var2=="Sum") %>% select(Freq)
+
+collapse_rows_cohesion <-
+    data.frame(vars = c("Institucional",
+                        "Movilizado",
+                        "Atomizado",
+                        "Total"),
+               tablaformal, 
+               tablainformal,
+               tablatotal)
+
+```
+
+```{r echo=FALSE, fig.align = 'center', out.width = '100%',out.height='100%'}
+knitr::kable(collapse_rows_cohesion, "html",
+             col.names =  c("Clases de cohesión social",
+                            "Formal",
+                            "Informal",
+                            "Total"
+                            )) %>%
+  kable_styling(bootstrap_options = c("striped", "hover")) %>% 
+  kableExtra::add_header_above(header = c(" "=1, "Tipo de empleo"= 3))
 ```
 
 
@@ -72,54 +152,214 @@ Hay diversas dimensiones en las brechas de participación en las condiciones de 
 -   La etapa de **transición demográfica** en que se encuentra Chile muestra un peso creciente de los adultos mayores, quienes enfrentan condiciones de vida difíciles, por lo que se podría esperar menores niveles de cohesión social entre ellos.
     -   La edad está medida en años
 
-```{r echo=F, warning=F, message=F}
+```{r include=F}
 data$m0_edad_w03 <- car::recode(data$m0_edad_w03, "18:29=1; 30:39=2; 40:49=3; 50:59=4; 60:83=5")
 data$edad <- factor(data$m0_edad_w03, levels = c(1,2,3,4,5), labels = c("Entre 18 y 29", "Entre 30 y 39", "Entre 40 y 49", "Entre 50 y 59", "Mas de 60"))
-clase.edad = sjPlot::sjt.xtab(data$lclass, data$edad,
-                              var.labels = c("Clases de cohesion social", "Edad en tramos"),
-                              show.obs = F,
-                              show.col.prc = T,
-                              show.summary = F,
-                              prc.sign = "", string.total="N=1490")
-clase.edad
+tabla1 <- addmargins(table(data$lclass, data$edad))
+tabla1 <- as.data.frame(tabla1)
+tabla2 <- round(prop.table(table(data$lclass, data$edad)),3)*100
+tabla2 <- as.data.frame(tabla2)
+
+tablae1 <- tabla2 %>% filter(Var2=="Entre 18 y 29") %>% select(Freq)
+tablae1tot <- tabla1 %>% filter(Var1=="Sum" & Var2=="Entre 18 y 29") %>% select(Freq)
+tablae1 <- rbind(tablae1, tablae1tot)
+
+tablae2 <- tabla2 %>% filter(Var2=="Entre 30 y 39") %>% select(Freq)
+tablae2tot <- tabla1 %>% filter(Var1=="Sum" & Var2=="Entre 30 y 39") %>% select(Freq)
+tablae2 <- rbind(tablae2, tablae2tot)
+
+tablae3 <- tabla2 %>% filter(Var2=="Entre 40 y 49") %>% select(Freq)
+tablae3tot <- tabla1 %>% filter(Var1=="Sum" & Var2=="Entre 40 y 49") %>% select(Freq)
+tablae3 <- rbind(tablae3, tablae3tot)
+
+tablae4 <- tabla2 %>% filter(Var2=="Entre 50 y 59") %>% select(Freq)
+tablae4tot <- tabla1 %>% filter(Var1=="Sum" & Var2=="Entre 50 y 59") %>% select(Freq)
+tablae4 <- rbind(tablae4, tablae4tot)
+
+tablae5 <- tabla2 %>% filter(Var2=="Mas de 60") %>% select(Freq)
+tablae5tot <- tabla1 %>% filter(Var1=="Sum" & Var2=="Mas de 60") %>% select(Freq)
+tablae5 <- rbind(tablae5, tablae5tot)
+
+tablatotal <- tabla1 %>% filter(Var2=="Sum") %>% select(Freq)
+
+collapse_rows_cohesion <-
+    data.frame(vars = c("Institucional",
+                        "Movilizado",
+                        "Atomizado",
+                        "Total"),
+               tablae1, 
+               tablae2,
+               tablae3, 
+               tablae4, 
+               tablae5, 
+               tablatotal)
+
+```
+
+```{r echo=FALSE, fig.align = 'center', out.width = '100%',out.height='100%'}
+knitr::kable(collapse_rows_cohesion, "html",
+             col.names =  c("Clases de cohesión social",
+                            "Entre 18 y 29",
+                            "Entre 30 y 39",
+                            "Entre 40 y 49",
+                            "Entre 50 y 59",
+                            "Mas de 60",
+                            "Total"
+                            )) %>%
+  kable_styling(bootstrap_options = c("striped", "hover")) %>% 
+  kableExtra::add_header_above(header = c(" "=1, "Grupos de edad"= 6))
 ```
 -   El **sexo** de las personas afecta sus posibilidades de inclusión atendiendo a las pautas de roles asociadas con una sociedad patriarcal.
 
-```{r echo=F, warning=F, message=F}
-clase.sexo = sjPlot::sjt.xtab(data$lclass, data$m0_sexo_w03,
-                              var.labels = c("Clases de cohesion social", "Sexo"),
-                              show.obs = F,
-                              show.col.prc = T,
-                              show.summary = F,
-                              prc.sign = "", string.total="N=1490")
-clase.sexo
+```{r include=F}
+tabla1 <- addmargins(table(data$lclass, data$m0_sexo_w03))
+tabla1 <- as.data.frame(tabla1)
+tabla2 <- round(prop.table(table(data$lclass, data$m0_sexo_w03)),3)*100
+tabla2 <- as.data.frame(tabla2)
+
+tablah <- tabla2 %>% filter(Var2==1) %>% select(Freq)
+tablahtot <- tabla1 %>% filter(Var1=="Sum" & Var2==1) %>% select(Freq)
+tablah <- rbind(tablah, tablahtot)
+
+tablam <- tabla2 %>% filter(Var2==2) %>% select(Freq)
+tablamtot <- tabla1 %>% filter(Var1=="Sum" & Var2==2) %>% select(Freq)
+tablam <- rbind(tablam, tablamtot)
+
+tablatotal <- tabla1 %>% filter(Var2=="Sum") %>% select(Freq)
+
+collapse_rows_cohesion <-
+    data.frame(vars = c("Institucional",
+                        "Movilizado",
+                        "Atomizado",
+                        "Total"),
+               tablah, 
+               tablam,
+               tablatotal)
+
+```
+
+```{r echo=FALSE, fig.align = 'center', out.width = '100%',out.height='100%'}
+knitr::kable(collapse_rows_cohesion, "html",
+             col.names =  c("Clases de cohesión social",
+                            "Hombre",
+                            "Mujer",
+                            "Total"
+                            )) %>%
+  kable_styling(bootstrap_options = c("striped", "hover")) %>% 
+  kableExtra::add_header_above(header = c(" "=1, "Sexo"= 3))
 ```
 
 
 -   El **acceso a la educación** constituye un fuerte principio estructurador en la sociedad chilena, generalmente asociado con el status socioeconómico y, en sus niveles más altos, con la reproducción en los círculos sociales más deseables. En la medida que la fase de expansión en el acceso a la educación universitaria es relativamente reciente, puede esperarse mayor cohesión social entre las personas que hay tenido mayor exposición al sistema forma de educación.
     -   La educación en 4 grupos: Básica, media, técnica y universitaria #probar años u otra clasificación#
 
-```{r echo=F, warning=F, message=F}
-clase.educacion = sjPlot::sjt.xtab(data$lclass,data$m01_w03,
-                           var.labels = c("Clases de cohesión social", "Nivel educacional"),
-                           show.obs = F,
-                           show.col.prc=T,
-                           show.summary=F,
-                           prc.sign = "", string.total="N=1489")
-clase.educacion
+```{r include=F}
+tabla1 <- addmargins(table(data$lclass, data$m01_w03))
+tabla1 <- as.data.frame(tabla1)
+tabla2 <- round(prop.table(table(data$lclass, data$m01_w03)),3)*100
+tabla2 <- as.data.frame(tabla2)
+
+tablae1 <- tabla2 %>% filter(Var2=="Educacion basica o menos") %>% select(Freq)
+tablae1tot <- tabla1 %>% filter(Var1=="Sum" & Var2=="Educacion basica o menos") %>% select(Freq)
+tablae1 <- rbind(tablae1, tablae1tot)
+
+tablae2 <- tabla2 %>% filter(Var2=="Educacion media") %>% select(Freq)
+tablae2tot <- tabla1 %>% filter(Var1=="Sum" & Var2=="Educacion media") %>% select(Freq)
+tablae2 <- rbind(tablae2, tablae2tot)
+
+tablae3 <- tabla2 %>% filter(Var2=="Educacion tecnica superior") %>% select(Freq)
+tablae3tot <- tabla1 %>% filter(Var1=="Sum" & Var2=="Educacion tecnica superior") %>% select(Freq)
+tablae3 <- rbind(tablae3, tablae3tot)
+
+tablae4 <- tabla2 %>% filter(Var2=="Educacion universitaria y Postgrado") %>% select(Freq)
+tablae4tot <- tabla1 %>% filter(Var1=="Sum" & Var2=="Educacion universitaria y Postgrado") %>% select(Freq)
+tablae4 <- rbind(tablae4, tablae4tot)
+
+tablatotal <- tabla1 %>% filter(Var2=="Sum") %>% select(Freq)
+
+collapse_rows_cohesion <-
+    data.frame(vars = c("Institucional",
+                        "Movilizado",
+                        "Atomizado",
+                        "Total"),
+               tablae1, 
+               tablae2,
+               tablae3, 
+               tablae4, 
+               tablatotal)
+
+```
+
+```{r echo=FALSE, fig.align = 'center', out.width = '100%',out.height='100%'}
+knitr::kable(collapse_rows_cohesion, "html",
+             col.names =  c("Clases de cohesión social",
+                            "Educacion basica o menos",
+                            "Educacion media",
+                            "Educacion tecnica superior",
+                            "Educacion universitaria o Postgrado",
+                            "Total"
+                            )) %>%
+  kable_styling(bootstrap_options = c("striped", "hover")) %>% 
+  kableExtra::add_header_above(header = c(" "=1, "Nivel educacional"= 5))
 ```
 
 -   Los **ingresos** de las personas se encuentran estrechamente asociados con los niveles de educación, si bien en niveles menores a la enseñanza superior pueden encontrarse grandes variaciones. Por lo anterior es posible que el nivel de ingresos tenga un efecto independiente de la educación.
     -   Los niveles de ingreso están medidos en quintiles #no incluir los que no lo reportan. #
 
-```{r echo=F, warning=F, message=F}
-clase.ingreso = sjPlot::sjt.xtab(data$lclass,data$quintiles_ingresos_w03,
-                           var.labels = c("Clases de cohesión social", "Quintiles de ingresos"),
-                           show.obs = F,
-                           show.col.prc=T,
-                           show.summary=F,
-                           prc.sign = "", string.total="N=1426")
-clase.ingreso
+```{r include=F}
+tabla1 <- addmargins(table(data$lclass, data$quintiles_ingresos_w03))
+tabla1 <- as.data.frame(tabla1)
+tabla2 <- round(prop.table(table(data$lclass, data$quintiles_ingresos_w03)),3)*100
+tabla2 <- as.data.frame(tabla2)
+
+tablae1 <- tabla2 %>% filter(Var2=="Quintil 1") %>% select(Freq)
+tablae1tot <- tabla1 %>% filter(Var1=="Sum" & Var2=="Quintil 1") %>% select(Freq)
+tablae1 <- rbind(tablae1, tablae1tot)
+
+tablae2 <- tabla2 %>% filter(Var2=="Quintil 2") %>% select(Freq)
+tablae2tot <- tabla1 %>% filter(Var1=="Sum" & Var2=="Quintil 2") %>% select(Freq)
+tablae2 <- rbind(tablae2, tablae2tot)
+
+tablae3 <- tabla2 %>% filter(Var2=="Quintil 3") %>% select(Freq)
+tablae3tot <- tabla1 %>% filter(Var1=="Sum" & Var2=="Quintil 3") %>% select(Freq)
+tablae3 <- rbind(tablae3, tablae3tot)
+
+tablae4 <- tabla2 %>% filter(Var2=="Quintil 4") %>% select(Freq)
+tablae4tot <- tabla1 %>% filter(Var1=="Sum" & Var2=="Quintil 4") %>% select(Freq)
+tablae4 <- rbind(tablae4, tablae4tot)
+
+tablae5 <- tabla2 %>% filter(Var2=="Quintil 5") %>% select(Freq)
+tablae5tot <- tabla1 %>% filter(Var1=="Sum" & Var2=="Quintil 5") %>% select(Freq)
+tablae5 <- rbind(tablae5, tablae5tot)
+
+tablatotal <- tabla1 %>% filter(Var2=="Sum") %>% select(Freq)
+
+collapse_rows_cohesion <-
+    data.frame(vars = c("Institucional",
+                        "Movilizado",
+                        "Atomizado",
+                        "Total"),
+               tablae1, 
+               tablae2,
+               tablae3, 
+               tablae4, 
+               tablae5, 
+               tablatotal)
+
+```
+
+```{r echo=FALSE, fig.align = 'center', out.width = '100%',out.height='100%'}
+knitr::kable(collapse_rows_cohesion, "html",
+             col.names =  c("Clases de cohesión social",
+                            "Quintil 1",
+                            "Quintil 2",
+                            "Quintil 3",
+                            "Quintil 4",
+                            "Quintil 5",
+                            "Total"
+                            )) %>%
+  kable_styling(bootstrap_options = c("striped", "hover")) %>% 
+  kableExtra::add_header_above(header = c(" "=1, "Quintiles de ingresos"= 6))
 ```
 
 -   La **segregación territorial**, especialmente la que se encuentra asociada con el nivel socioeconómico constituye un rasgo distintivo de los países latinoamericanos, del cual Chile no escapa. Por la naturaleza de los datos, no es posible hacer distinciones entre rural y urbano. Un primer nivel de la segregación se refiere a la dominancia urbana que posee la capital del país, asociada también con acceso a mejores servicios, por lo que se pueden esperar diferentes niveles de cohesión social al comparar Santiago y el resto de las regiones.
@@ -164,24 +404,80 @@ knitr::include_graphics(path = "output/graphs/clase-accs.png")
 
 -   La **pertenencia a pueblos indígenas** ha estado asociado con bajos niveles de inclusión social. Por mucho tiempo invisibilizada, en las últimas dos décadas el estado chileno ha reconocido la existencia de pueblos indígenas acordando diversos beneficios sociales asociados con esta condición. Como contrapartida, el reconocimiento de la condición de indígena ha conllevado a un fortalecimiento de la identidad étnica.
 
-```{r echo=F, warning=F, message=F}
-clase.etnia = sjPlot::sjt.xtab(data$lclass,data$etnia_rec,
-                           var.labels = c("Clases de cohesión social", "Etnia"),
-                           show.obs = F,
-                           show.col.prc=T,
-                           show.summary=F,
-                           prc.sign = "", string.total="N=1472")
-clase.etnia
+```{r include=F}
+tabla1 <- addmargins(table(data$lclass, data$etnia_rec))
+tabla1 <- as.data.frame(tabla1)
+tabla2 <- round(prop.table(table(data$lclass, data$etnia_rec)),3)*100
+tabla2 <- as.data.frame(tabla2)
+
+tablah <- tabla2 %>% filter(Var2=="Ninguna") %>% select(Freq)
+tablahtot <- tabla1 %>% filter(Var1=="Sum" & Var2=="Ninguna") %>% select(Freq)
+tablah <- rbind(tablah, tablahtot)
+
+tablam <- tabla2 %>% filter(Var2=="Pertenece a una etnia") %>% select(Freq)
+tablamtot <- tabla1 %>% filter(Var1=="Sum" & Var2=="Pertenece a una etnia") %>% select(Freq)
+tablam <- rbind(tablam, tablamtot)
+
+tablatotal <- tabla1 %>% filter(Var2=="Sum") %>% select(Freq)
+
+collapse_rows_cohesion <-
+    data.frame(vars = c("Institucional",
+                        "Movilizado",
+                        "Atomizado",
+                        "Total"),
+               tablah, 
+               tablam,
+               tablatotal)
+
+```
+
+```{r echo=FALSE, fig.align = 'center', out.width = '100%',out.height='100%'}
+knitr::kable(collapse_rows_cohesion, "html",
+             col.names =  c("Clases de cohesión social",
+                            "Ninguna",
+                            "Pertenece a una etnia",
+                            "Total"
+                            )) %>%
+  kable_styling(bootstrap_options = c("striped", "hover")) %>% 
+  kableExtra::add_header_above(header = c(" "=1, "Etnia"= 3))
 ```
 
 -   Vinculado con lo anterior, en la última década la condición étnica ha sido progresivamente asociada con la **condición de migrante**.
 
-```{r echo=F, warning=F, message=F}
-clase.nacion = sjPlot::sjt.xtab(data$lclass,data$nacion_rec,
-                           var.labels = c("Clases de cohesión social", "Nacion"),
-                           show.obs = F,
-                           show.col.prc=T,
-                           show.summary=F,
-                           prc.sign = "", string.total="N=1490")
-clase.nacion
+```{r include=F}
+tabla1 <- addmargins(table(data$lclass, data$nacion_rec))
+tabla1 <- as.data.frame(tabla1)
+tabla2 <- round(prop.table(table(data$lclass, data$nacion_rec)),3)*100
+tabla2 <- as.data.frame(tabla2)
+
+tablah <- tabla2 %>% filter(Var2=="Nacionalidad chilena") %>% select(Freq)
+tablahtot <- tabla1 %>% filter(Var1=="Sum" & Var2=="Nacionalidad chilena") %>% select(Freq)
+tablah <- rbind(tablah, tablahtot)
+
+tablam <- tabla2 %>% filter(Var2=="Otra nacionalidad") %>% select(Freq)
+tablamtot <- tabla1 %>% filter(Var1=="Sum" & Var2=="Otra nacionalidad") %>% select(Freq)
+tablam <- rbind(tablam, tablamtot)
+
+tablatotal <- tabla1 %>% filter(Var2=="Sum") %>% select(Freq)
+
+collapse_rows_cohesion <-
+    data.frame(vars = c("Institucional",
+                        "Movilizado",
+                        "Atomizado",
+                        "Total"),
+               tablah, 
+               tablam,
+               tablatotal)
+
+```
+
+```{r echo=FALSE, fig.align = 'center', out.width = '100%',out.height='100%'}
+knitr::kable(collapse_rows_cohesion, "html",
+             col.names =  c("Clases de cohesión social",
+                            "Nacionalidad chilena",
+                            "Otra nacionalidad",
+                            "Total"
+                            )) %>%
+  kable_styling(bootstrap_options = c("striped", "hover")) %>% 
+  kableExtra::add_header_above(header = c(" "=1, "Nacionalidad"= 3))
 ```

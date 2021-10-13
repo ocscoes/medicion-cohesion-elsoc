@@ -49,33 +49,122 @@ data$informal <- factor(data$informal_w03, levels = c(0,1), labels = c("Formal",
 clase.informal = sjPlot::sjt.xtab(data$lclass, data$informal,
                               var.labels = c("Clases de cohesion social", "Tipo de empleo"),
                               show.obs = T,
-                              show.col.prc = T,
+                              show.cell.prc = T,
                               show.summary = F,
                               prc.sign = "", string.total="N=100%")
 clase.informal
 
+```
+
+```{r include=F}
+tabla1 <- addmargins(table(data$lclass, data$informal))
+tabla1 <- as.data.frame(tabla1)
+tabla2 <- round(prop.table(table(data$lclass, data$informal)),3)*100
+tabla2 <- as.data.frame(tabla2)
+
+tablaformal <- tabla2 %>% filter(Var2=="Formal") %>% select(Freq)
+tablaformaltot <- tabla1 %>% filter(Var1=="Sum" & Var2=="Formal") %>% select(Freq)
+tablaformal <- rbind(tablaformal, tablaformaltot)
+
+tablainformal <- tabla2 %>% filter(Var2=="Informal") %>% select(Freq)
+tablainformaltot <- tabla1 %>% filter(Var1=="Sum" & Var2=="Informal") %>% select(Freq)
+tablainformal <- rbind(tablainformal, tablainformaltot)
+
+tablatotal <- tabla1 %>% filter(Var2=="Sum") %>% select(Freq)
+
+collapse_rows_cohesion <-
+    data.frame(vars = c("Institucional",
+                        "Movilizado",
+                        "Atomizado",
+                        "Total"),
+               tablaformal, 
+               tablainformal,
+               tablatotal)
 
 ```
 
-
+```{r echo=FALSE, fig.align = 'center', out.width = '100%',out.height='100%'}
+knitr::kable(collapse_rows_cohesion, "html",
+             col.names =  c("Clases de cohesión social",
+                            "Formal",
+                            "Informal",
+                            "Total"
+                            )) %>%
+  kable_styling(bootstrap_options = c("striped", "hover")) %>% 
+  kableExtra::add_header_above(header = c(" "=1, "Tipo de empleo"= 3))
+```
 
 ## Edad
-```{r}
-frq(data$m0_edad_w03)
-
+```{r include=F}
 data$m0_edad_w03 <- car::recode(data$m0_edad_w03, "18:29=1; 30:39=2; 40:49=3; 50:59=4; 60:83=5")
-data$edad <- factor(data$m0_edad_w03, levels = c(1,2,3,4,5), labels = c("Entre 18 y 29", "Entre 30 y 39", "Entre 40:49", "Entre 50:59", "Mas de 60"))
+data$edad <- factor(data$m0_edad_w03, levels = c(1,2,3,4,5), labels = c("Entre 18 y 29", "Entre 30 y 39", "Entre 40 y 49", "Entre 50 y 59", "Mas de 60"))
 table(data$edad)
 ```
 
 ```{r}
 clase.edad = sjPlot::sjt.xtab(data$lclass, data$edad,
                               var.labels = c("Clases de cohesion social", "Edad en tramos"),
-                              show.obs = F,
-                              show.col.prc = T,
+                              show.obs = T,
+                              show.cell.prc = T,
                               show.summary = F,
                               prc.sign = "", string.total="N=100%")
 clase.edad
+```
+
+```{r include=F}
+tabla1 <- addmargins(table(data$lclass, data$edad))
+tabla1 <- as.data.frame(tabla1)
+tabla2 <- round(prop.table(table(data$lclass, data$edad)),3)*100
+tabla2 <- as.data.frame(tabla2)
+
+tablae1 <- tabla2 %>% filter(Var2=="Entre 18 y 29") %>% select(Freq)
+tablae1tot <- tabla1 %>% filter(Var1=="Sum" & Var2=="Entre 18 y 29") %>% select(Freq)
+tablae1 <- rbind(tablae1, tablae1tot)
+
+tablae2 <- tabla2 %>% filter(Var2=="Entre 30 y 39") %>% select(Freq)
+tablae2tot <- tabla1 %>% filter(Var1=="Sum" & Var2=="Entre 30 y 39") %>% select(Freq)
+tablae2 <- rbind(tablae2, tablae2tot)
+
+tablae3 <- tabla2 %>% filter(Var2=="Entre 40 y 49") %>% select(Freq)
+tablae3tot <- tabla1 %>% filter(Var1=="Sum" & Var2=="Entre 40 y 49") %>% select(Freq)
+tablae3 <- rbind(tablae3, tablae3tot)
+
+tablae4 <- tabla2 %>% filter(Var2=="Entre 50 y 59") %>% select(Freq)
+tablae4tot <- tabla1 %>% filter(Var1=="Sum" & Var2=="Entre 50 y 59") %>% select(Freq)
+tablae4 <- rbind(tablae4, tablae4tot)
+
+tablae5 <- tabla2 %>% filter(Var2=="Mas de 60") %>% select(Freq)
+tablae5tot <- tabla1 %>% filter(Var1=="Sum" & Var2=="Mas de 60") %>% select(Freq)
+tablae5 <- rbind(tablae5, tablae5tot)
+
+tablatotal <- tabla1 %>% filter(Var2=="Sum") %>% select(Freq)
+
+collapse_rows_cohesion <-
+    data.frame(vars = c("Institucional",
+                        "Movilizado",
+                        "Atomizado",
+                        "Total"),
+               tablae1, 
+               tablae2,
+               tablae3, 
+               tablae4, 
+               tablae5, 
+               tablatotal)
+
+```
+
+```{r echo=FALSE, fig.align = 'center', out.width = '100%',out.height='100%'}
+knitr::kable(collapse_rows_cohesion, "html",
+             col.names =  c("Clases de cohesión social",
+                            "Entre 18 y 29",
+                            "Entre 30 y 39",
+                            "Entre 40 y 49",
+                            "Entre 50 y 59",
+                            "Mas de 60",
+                            "Total"
+                            )) %>%
+  kable_styling(bootstrap_options = c("striped", "hover")) %>% 
+  kableExtra::add_header_above(header = c(" "=1, "Grupos de edad"= 6))
 ```
 
 ## Sexo
@@ -83,8 +172,8 @@ clase.edad
 ```{r}
 clase.sexo = sjPlot::sjt.xtab(data$lclass, data$m0_sexo_w03,
                               var.labels = c("Clases de cohesion social", "Sexo"),
-                              show.obs = F,
-                              show.col.prc = T,
+                              show.obs = T,
+                              show.cell.prc = T,
                               show.summary = F,
                               prc.sign = "", string.total="N=100%")
 clase.sexo
@@ -92,17 +181,104 @@ clase.sexo
 
 ```
 
+```{r include=F}
+tabla1 <- addmargins(table(data$lclass, data$m0_sexo_w03))
+tabla1 <- as.data.frame(tabla1)
+tabla2 <- round(prop.table(table(data$lclass, data$m0_sexo_w03)),3)*100
+tabla2 <- as.data.frame(tabla2)
+
+tablah <- tabla2 %>% filter(Var2==1) %>% select(Freq)
+tablahtot <- tabla1 %>% filter(Var1=="Sum" & Var2==1) %>% select(Freq)
+tablah <- rbind(tablah, tablahtot)
+
+tablam <- tabla2 %>% filter(Var2==2) %>% select(Freq)
+tablamtot <- tabla1 %>% filter(Var1=="Sum" & Var2==2) %>% select(Freq)
+tablam <- rbind(tablam, tablamtot)
+
+tablatotal <- tabla1 %>% filter(Var2=="Sum") %>% select(Freq)
+
+collapse_rows_cohesion <-
+    data.frame(vars = c("Institucional",
+                        "Movilizado",
+                        "Atomizado",
+                        "Total"),
+               tablah, 
+               tablam,
+               tablatotal)
+
+```
+
+```{r echo=FALSE, fig.align = 'center', out.width = '100%',out.height='100%'}
+knitr::kable(collapse_rows_cohesion, "html",
+             col.names =  c("Clases de cohesión social",
+                            "Hombre",
+                            "Mujer",
+                            "Total"
+                            )) %>%
+  kable_styling(bootstrap_options = c("striped", "hover")) %>% 
+  kableExtra::add_header_above(header = c(" "=1, "Sexo"= 3))
+```
 
 ## Nivel educacional
 ```{r}
 clase.educacion = sjPlot::sjt.xtab(data$lclass,data$m01_w03,
                            var.labels = c("Clases de cohesión social", "Nivel educacional"),
-                           show.obs = F,
-                           show.col.prc=T,
+                           show.obs = T,
+                           show.cell.prc=T,
                            show.summary=F,
                            prc.sign = "", string.total="N=100%")
 clase.educacion
 
+```
+
+```{r include=F}
+tabla1 <- addmargins(table(data$lclass, data$m01_w03))
+tabla1 <- as.data.frame(tabla1)
+tabla2 <- round(prop.table(table(data$lclass, data$m01_w03)),3)*100
+tabla2 <- as.data.frame(tabla2)
+
+tablae1 <- tabla2 %>% filter(Var2=="Educacion basica o menos") %>% select(Freq)
+tablae1tot <- tabla1 %>% filter(Var1=="Sum" & Var2=="Educacion basica o menos") %>% select(Freq)
+tablae1 <- rbind(tablae1, tablae1tot)
+
+tablae2 <- tabla2 %>% filter(Var2=="Educacion media") %>% select(Freq)
+tablae2tot <- tabla1 %>% filter(Var1=="Sum" & Var2=="Educacion media") %>% select(Freq)
+tablae2 <- rbind(tablae2, tablae2tot)
+
+tablae3 <- tabla2 %>% filter(Var2=="Educacion tecnica superior") %>% select(Freq)
+tablae3tot <- tabla1 %>% filter(Var1=="Sum" & Var2=="Educacion tecnica superior") %>% select(Freq)
+tablae3 <- rbind(tablae3, tablae3tot)
+
+tablae4 <- tabla2 %>% filter(Var2=="Educacion universitaria y Postgrado") %>% select(Freq)
+tablae4tot <- tabla1 %>% filter(Var1=="Sum" & Var2=="Educacion universitaria y Postgrado") %>% select(Freq)
+tablae4 <- rbind(tablae4, tablae4tot)
+
+tablatotal <- tabla1 %>% filter(Var2=="Sum") %>% select(Freq)
+
+collapse_rows_cohesion <-
+    data.frame(vars = c("Institucional",
+                        "Movilizado",
+                        "Atomizado",
+                        "Total"),
+               tablae1, 
+               tablae2,
+               tablae3, 
+               tablae4, 
+               tablatotal)
+
+```
+
+```{r echo=FALSE, fig.align = 'center', out.width = '100%',out.height='100%'}
+knitr::kable(collapse_rows_cohesion, "html",
+             col.names =  c("Clases de cohesión social",
+                            "Educacion basica o menos",
+                            "Educacion media",
+                            "Educacion tecnica superior",
+                            "Educacion universitaria o Postgrado",
+                            "Total"
+                            )) %>%
+  kable_styling(bootstrap_options = c("striped", "hover")) %>% 
+  kableExtra::add_header_above(header = c(" "=1, "Nivel educacional"= 5))
 ```
 
 ## Ingresos del hogar en quintiles
@@ -110,30 +286,133 @@ clase.educacion
 clase.ingreso = sjPlot::sjt.xtab(data$lclass,data$quintiles_ingresos_w03,
                            var.labels = c("Clases de cohesión social", "Quintiles de ingresos"),
                            show.obs = T,
-                           show.col.prc=T,
+                           show.cell.prc=T,
                            show.summary=F,
                            prc.sign = "", string.total="N=100%")
 clase.ingreso
+```
 
+```{r include=F}
+tabla1 <- addmargins(table(data$lclass, data$quintiles_ingresos_w03))
+tabla1 <- as.data.frame(tabla1)
+tabla2 <- round(prop.table(table(data$lclass, data$quintiles_ingresos_w03)),3)*100
+tabla2 <- as.data.frame(tabla2)
 
+tablae1 <- tabla2 %>% filter(Var2=="Quintil 1") %>% select(Freq)
+tablae1tot <- tabla1 %>% filter(Var1=="Sum" & Var2=="Quintil 1") %>% select(Freq)
+tablae1 <- rbind(tablae1, tablae1tot)
+
+tablae2 <- tabla2 %>% filter(Var2=="Quintil 2") %>% select(Freq)
+tablae2tot <- tabla1 %>% filter(Var1=="Sum" & Var2=="Quintil 2") %>% select(Freq)
+tablae2 <- rbind(tablae2, tablae2tot)
+
+tablae3 <- tabla2 %>% filter(Var2=="Quintil 3") %>% select(Freq)
+tablae3tot <- tabla1 %>% filter(Var1=="Sum" & Var2=="Quintil 3") %>% select(Freq)
+tablae3 <- rbind(tablae3, tablae3tot)
+
+tablae4 <- tabla2 %>% filter(Var2=="Quintil 4") %>% select(Freq)
+tablae4tot <- tabla1 %>% filter(Var1=="Sum" & Var2=="Quintil 4") %>% select(Freq)
+tablae4 <- rbind(tablae4, tablae4tot)
+
+tablae5 <- tabla2 %>% filter(Var2=="Quintil 5") %>% select(Freq)
+tablae5tot <- tabla1 %>% filter(Var1=="Sum" & Var2=="Quintil 5") %>% select(Freq)
+tablae5 <- rbind(tablae5, tablae5tot)
+
+tablatotal <- tabla1 %>% filter(Var2=="Sum") %>% select(Freq)
+
+collapse_rows_cohesion <-
+    data.frame(vars = c("Institucional",
+                        "Movilizado",
+                        "Atomizado",
+                        "Total"),
+               tablae1, 
+               tablae2,
+               tablae3, 
+               tablae4, 
+               tablae5, 
+               tablatotal)
+
+```
+
+```{r echo=FALSE, fig.align = 'center', out.width = '100%',out.height='100%'}
+knitr::kable(collapse_rows_cohesion, "html",
+             col.names =  c("Clases de cohesión social",
+                            "Quintil 1",
+                            "Quintil 2",
+                            "Quintil 3",
+                            "Quintil 4",
+                            "Quintil 5",
+                            "Total"
+                            )) %>%
+  kable_styling(bootstrap_options = c("striped", "hover")) %>% 
+  kableExtra::add_header_above(header = c(" "=1, "Quintiles de ingresos"= 6))
 ```
 
 ## Segregación territorial
 ```{r}
-table(data$region) 
-data$region <- ifelse(data$region_w03=="Metropolitana", 1, 2)
-data$region <- factor(data$region, levels = c(1,2), labels = c("Metropolitana", "Otra region"))
-
-clase.region = sjPlot::sjt.xtab(data$lclass,data$region,
+clase.region = sjPlot::sjt.xtab(data$lclass,data$region_w03,
                            var.labels = c("Clases de cohesión social", "Region"),
-                           show.obs = F,
-                           show.col.prc=T,
+                           show.obs = T,
+                           show.cell.prc=T,
                            show.summary=F,
                            prc.sign = "", string.total="N=100%")
 clase.region
+```
 
+```{r include=F}
+tabla1 <- addmargins(table(data$region_w03, data$lclass))
+tabla1 <- as.data.frame(tabla1)
+tabla2 <- round(prop.table(table(data$region_w03, data$lclass)),3)*100
+tabla2 <- as.data.frame(tabla2)
+
+tablae1 <- tabla2 %>% filter(Var2=="Institucional") %>% select(Freq)
+tablae1tot <- tabla1 %>% filter(Var1=="Sum" & Var2=="Institucional") %>% select(Freq)
+tablae1 <- rbind(tablae1, tablae1tot)
+
+tablae2 <- tabla2 %>% filter(Var2=="Movilizado") %>% select(Freq)
+tablae2tot <- tabla1 %>% filter(Var1=="Sum" & Var2=="Movilizado") %>% select(Freq)
+tablae2 <- rbind(tablae2, tablae2tot)
+
+tablae3 <- tabla2 %>% filter(Var2=="Atomizado") %>% select(Freq)
+tablae3tot <- tabla1 %>% filter(Var1=="Sum" & Var2=="Atomizado") %>% select(Freq)
+tablae3 <- rbind(tablae3, tablae3tot)
+
+tablatotal <- tabla1 %>% filter(Var2=="Sum") %>% select(Freq)
+
+collapse_rows_cohesion <-
+    data.frame(vars = c("Antofagasta",
+                            "Araucania",
+                            "Atacama",
+                            "Aysen",
+                            "Bio Bio",
+                            "Coquimbo",
+                            "Lib. Gral. B. Ohiggins",
+                            "Los Lagos",
+                            "Los Rios",
+                            "Maule",
+                            "Metropolitana",
+                            "Tarapaca",
+                            "Valparaiso",
+                        "Total"),
+               tablae1, 
+               tablae2,
+               tablae3,
+               tablatotal)
 
 ```
+
+```{r echo=FALSE, fig.align = 'center', out.width = '100%',out.height='100%'}
+knitr::kable(collapse_rows_cohesion, "html",
+             col.names =  c("Clases de cohesión social",
+                            "Institucional",
+                        "Movilizado",
+                        "Atomizado",
+                            "Total"
+                            )) %>%
+  kable_styling(bootstrap_options = c("striped", "hover")) %>% 
+  kableExtra::add_header_above(header = c(" "=1, "Region"= 4))
+```
+
 
 ## Etnia
 
@@ -145,8 +424,44 @@ clase.etnia = sjPlot::sjt.xtab(data$lclass,data$etnia_rec,
                            show.summary=F,
                            prc.sign = "", string.total="N=100%")
 clase.etnia
+```
 
+```{r include=F}
+tabla1 <- addmargins(table(data$lclass, data$etnia_rec))
+tabla1 <- as.data.frame(tabla1)
+tabla2 <- round(prop.table(table(data$lclass, data$etnia_rec)),3)*100
+tabla2 <- as.data.frame(tabla2)
 
+tablah <- tabla2 %>% filter(Var2=="Ninguna") %>% select(Freq)
+tablahtot <- tabla1 %>% filter(Var1=="Sum" & Var2=="Ninguna") %>% select(Freq)
+tablah <- rbind(tablah, tablahtot)
+
+tablam <- tabla2 %>% filter(Var2=="Pertenece a una etnia") %>% select(Freq)
+tablamtot <- tabla1 %>% filter(Var1=="Sum" & Var2=="Pertenece a una etnia") %>% select(Freq)
+tablam <- rbind(tablam, tablamtot)
+
+tablatotal <- tabla1 %>% filter(Var2=="Sum") %>% select(Freq)
+
+collapse_rows_cohesion <-
+    data.frame(vars = c("Institucional",
+                        "Movilizado",
+                        "Atomizado",
+                        "Total"),
+               tablah, 
+               tablam,
+               tablatotal)
+
+```
+
+```{r echo=FALSE, fig.align = 'center', out.width = '100%',out.height='100%'}
+knitr::kable(collapse_rows_cohesion, "html",
+             col.names =  c("Clases de cohesión social",
+                            "Ninguna",
+                            "Pertenece a una etnia",
+                            "Total"
+                            )) %>%
+  kable_styling(bootstrap_options = c("striped", "hover")) %>% 
+  kableExtra::add_header_above(header = c(" "=1, "Etnia"= 3))
 ```
 
 ## Condicion de migracion
@@ -161,6 +476,44 @@ clase.nacion
 
 ```
 
+```{r include=F}
+tabla1 <- addmargins(table(data$lclass, data$nacion_rec))
+tabla1 <- as.data.frame(tabla1)
+tabla2 <- round(prop.table(table(data$lclass, data$nacion_rec)),3)*100
+tabla2 <- as.data.frame(tabla2)
+
+tablah <- tabla2 %>% filter(Var2=="Nacionalidad chilena") %>% select(Freq)
+tablahtot <- tabla1 %>% filter(Var1=="Sum" & Var2=="Nacionalidad chilena") %>% select(Freq)
+tablah <- rbind(tablah, tablahtot)
+
+tablam <- tabla2 %>% filter(Var2=="Otra nacionalidad") %>% select(Freq)
+tablamtot <- tabla1 %>% filter(Var1=="Sum" & Var2=="Otra nacionalidad") %>% select(Freq)
+tablam <- rbind(tablam, tablamtot)
+
+tablatotal <- tabla1 %>% filter(Var2=="Sum") %>% select(Freq)
+
+collapse_rows_cohesion <-
+    data.frame(vars = c("Institucional",
+                        "Movilizado",
+                        "Atomizado",
+                        "Total"),
+               tablah, 
+               tablam,
+               tablatotal)
+
+```
+
+```{r echo=FALSE, fig.align = 'center', out.width = '100%',out.height='100%'}
+knitr::kable(collapse_rows_cohesion, "html",
+             col.names =  c("Clases de cohesión social",
+                            "Nacionalidad chilena",
+                            "Otra nacionalidad",
+                            "Total"
+                            )) %>%
+  kable_styling(bootstrap_options = c("striped", "hover")) %>% 
+  kableExtra::add_header_above(header = c(" "=1, "Nacionalidad"= 3))
+```
+
 ## Habilitadores territoriales
 
 - SD del promedio de años de escolaridad de sostenedor del hogar 1km a la redonda
@@ -168,7 +521,7 @@ clase.nacion
 ```{r}
 windowsFonts("Arial" = windowsFont("Arial"))
 clase.sdeduc <- data  %>% filter(lclass!=is.na(lclass)) %>% 
-  ggplot(aes(lclass, sded_1k)) +
+  ggplot(aes(lclass, jh_esc_sd)) +
   geom_boxplot(fill = "lightgray", color = "darkred") +
   stat_summary(fun = mean, geom = "point", size = 3, color = "steelblue") +
      theme(plot.caption = element_text(hjust = 0)) +
@@ -184,7 +537,7 @@ ggsave(clase.sdeduc, file = "bookdown-files/output/graphs/clase-sdeduc.png",devi
 ```{r}
 windowsFonts("Arial" = windowsFont("Arial"))
 clase.trab <- data  %>% filter(lclass!=is.na(lclass)) %>% 
-  ggplot(aes(lclass, trab_1k)) +
+  ggplot(aes(lclass, trabaja)) +
   geom_boxplot(fill = "lightgray", color = "darkred") +
   stat_summary(fun = mean, geom = "point", size = 3, color = "steelblue") +
      theme(plot.caption = element_text(hjust = 0)) +
@@ -200,7 +553,7 @@ Número de cesantes en 1 km a la redonda cesa_1k
 ```{r}
 windowsFonts("Arial" = windowsFont("Arial"))
 clase.cesantes <- data  %>% filter(lclass!=is.na(lclass)) %>% 
-  ggplot(aes(lclass, cesa_1k)) +
+  ggplot(aes(lclass, cesante)) +
   geom_boxplot(fill = "lightgray", color = "darkred") +
   stat_summary(fun = mean, geom = "point", size = 3, color = "steelblue") +
      theme(plot.caption = element_text(hjust = 0)) +
@@ -210,6 +563,23 @@ clase.cesantes
 
 ggsave(clase.cesantes, file = "bookdown-files/output/graphs/clase-cesantes.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
 ```
+
+Número de inactivos
+```{r}
+windowsFonts("Arial" = windowsFont("Arial"))
+clase.cesantes <- data  %>% filter(lclass!=is.na(lclass)) %>% 
+  ggplot(aes(lclass, inactivo)) +
+  geom_boxplot(fill = "lightgray", color = "darkred") +
+  stat_summary(fun = mean, geom = "point", size = 3, color = "steelblue") +
+     theme(plot.caption = element_text(hjust = 0)) +
+  labs(caption = "Fuente: elaboracion propia en base a datos de ELSOC 2016-2020",
+       x="Clases de cohesion social", y= "Cantidad de personas inactivas")
+clase.cesantes
+
+ggsave(clase.cesantes, file = "bookdown-files/output/graphs/clase-cesantes.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
+```
+
+
 Acceso areas verdes en radio de 15 min a pie #aclarar definición# ¿media de la ciudad? acver_mnz
 ```{r}
 windowsFonts("Arial" = windowsFont("Arial"))
