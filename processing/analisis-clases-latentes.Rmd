@@ -20,7 +20,16 @@ patterns_m
 
 ## Estimar modelo
 ```{r}
-f <- cbind(conf_interpersonal_med, diversidad_med, lazos_med, identificacion_med, justicia_med, conf_institucional_med, solidaridad_med, participacion_med, cohesion_territorial_med)~1
+f <- cbind(
+  conf_interpersonal_med, 
+  diversidad_med,
+  lazos_med,
+  identificacion_med,
+  justicia_med, 
+  conf_institucional_med, 
+  solidaridad_med, 
+  participacion_med, 
+  cohesion_territorial_med)~1
 
 set.seed(1234)
 lca1 <- poLCA(f,cohesion_med, nclass=1,graphs=F, verbose = FALSE)
@@ -114,7 +123,7 @@ fit.indices
     # Relabel factors
     datlca_tot_parl$variable=factor(datlca_tot_parl$variable, labels=c("Confianza", "Diversidad", "Lazos", "Identificación", "Justicia", "Conf. Instituciones","Solidaridad", "Participación", "Territorial"))
     lca3$P # class size
-    datlca_tot_parl$class=factor(datlca_tot_parl$class,labels=c("Institucionales (42%)", "Movilizados (32%)", "Atomizados (26%)"))
+    datlca_tot_parl$class=factor(datlca_tot_parl$class,labels=c("Movilizados (42%)", "Institucionales (32%)", "Atomizados (26%)"))
 
     library(ggplot2)
 lca3_graph <-ggplot(data = datlca_tot_parl, aes(x=variable, y=value, group=class, shape=class)) + 
