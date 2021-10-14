@@ -26,7 +26,7 @@ El análisis de la variación en los niveles de cohesión social dentro de la mu
 
 Los procedimientos de clasificación automática comparan sistemáticamente los niveles de respuesta entre individuos utilizando una medida de distancia para su similitud. El análisis de clases latentes (ACL) supone que los niveles observados corresponden a una variable subyacente con dos o más categorías. El ACL ubica la clasificación en el marco de los modelos de ecuaciones estructurales, modelando las covarianzas y proveyendo parámetros para el error de medida o varianza de los indicadores. Otros procedimientos de clasificación automática no diferencian varianza y covarianza lo cual puede llevar a resultados menos estables.   
 
-Aclarar cómo se cortan las clases. 
+Aclarar cómo se cortan las clases . 
 
 ```{r echo=FALSE, fig.align = 'center', out.width = '100%',out.height='100%'}
 

@@ -126,7 +126,7 @@ lca3_graph <-ggplot(data = datlca_tot_parl, aes(x=variable, y=value, group=class
     
 lca3_graph
     
-ggsave("output/graphs/lca3.jpg", plot = lca3_graph, height=4, width=10, units="in", dpi=350 )
+ggsave("bookdown-files/output/graphs/lca3.jpg", plot = lca3_graph, height=4, width=10, units="in", dpi=350 )
 
 ```
 
