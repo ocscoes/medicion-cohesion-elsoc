@@ -112,13 +112,14 @@ fit.indices
   print(levels(datlca_tot_parl$variable))
   
     # Relabel factors
-    datlca_tot_parl$variable=factor(datlca_tot_parl$variable, labels=c("Confianza", "Diversidad", "Lazos", "Identificación", "Justicia", "Conf. Instituciones","Solidaridad", "Participación", "Vecinal"))
+    datlca_tot_parl$variable=factor(datlca_tot_parl$variable, labels=c("Confianza", "Diversidad", "Lazos", "Identificación", "Justicia", "Conf. Instituciones","Solidaridad", "Participación", "Territorial"))
     lca3$P # class size
-    datlca_tot_parl$class=factor(datlca_tot_parl$class,labels=c("Clase 1 (42%)", "Clase 2 (32%)", "Clase 3 (26%)"))
+    datlca_tot_parl$class=factor(datlca_tot_parl$class,labels=c("Institucionales (42%)", "Movilizados (32%)", "Atomizados (26%)"))
 
     library(ggplot2)
 lca3_graph <-ggplot(data = datlca_tot_parl, aes(x=variable, y=value, group=class, shape=class)) + 
-      geom_line(aes(linetype=class)) + geom_point(size = 2) +
+      geom_line(aes(linetype=class, color=class)) + geom_point(aes(colour=class),size = 3) +
+      scale_color_manual(values=c('#F31111','#04129B', '#02971B')) +
       ggtitle("Clases latentes de Cohesión Social") + 
       xlab("Indicadores Cohesión") + 
       ylab("Probabilidades condicionales")
