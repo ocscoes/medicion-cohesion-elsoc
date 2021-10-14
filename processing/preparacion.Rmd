@@ -917,11 +917,11 @@ data %>% select (m0_edad_w01, m0_edad_w02, m0_edad_w03, m0_edad_w04, m0_edad_w05
 ```{r}
 data$m01_w05 <- data$m01
 
-data$m01_w01 <- car::recode(data$m01_w01, "c(1,2,3)=1;c(4,5)=2;c(6,7)=3;c(8,9,10)=4")
-data$m01_w02 <- car::recode(data$m01_w02, "c(1,2,3)=1;c(4,5)=2;c(6,7)=3;c(8,9,10)=4")
-data$m01_w03 <- car::recode(data$m01_w03, "c(1,2,3)=1;c(4,5)=2;c(6,7)=3;c(8,9,10)=4")
-data$m01_w04 <- car::recode(data$m01_w04, "c(1,2,3)=1;c(4,5)=2;c(6,7)=3;c(8,9,10)=4")
-data$m01_w05 <- car::recode(data$m01_w05, "c(1,2,3)=1;c(4,5)=2;c(6,7)=3;c(8,9,10)=4")
+data$m01_w01 <- car::recode(data$m01_w01, "c(1,2,3,4)=1;c(5)=2;c(6,7)=3;c(8,9,10)=4")
+data$m01_w02 <- car::recode(data$m01_w02, "c(1,2,3,4)=1;c(5)=2;c(6,7)=3;c(8,9,10)=4")
+data$m01_w03 <- car::recode(data$m01_w03, "c(1,2,3,4)=1;c(5)=2;c(6,7)=3;c(8,9,10)=4")
+data$m01_w04 <- car::recode(data$m01_w04, "c(1,2,3,4)=1;c(5)=2;c(6,7)=3;c(8,9,10)=4")
+data$m01_w05 <- car::recode(data$m01_w05, "c(1,2,3,4)=1;c(5)=2;c(6,7)=3;c(8,9,10)=4")
 
 data$m01_w01 <- factor(data$m01_w01, levels = c("1", "2", "3", "4"), labels=c( "Educacion basica o menos", "Educacion media", "Educacion tecnica superior", "Educacion universitaria y Postgrado"))
 data$m01_w02 <- factor(data$m01_w02, levels = c("1", "2", "3", "4"), labels=c( "Educacion basica o menos", "Educacion media", "Educacion tecnica superior", "Educacion universitaria y Postgrado"))
