@@ -60,9 +60,9 @@ solidaridad
 participación-cívica
 cohesion-territorial
 habilitadores-e-inhibidores-de-la-cohesión-social
-versión-2.-perfiles-de-la-cohesión-social
+perfiles-de-la-cohesión-social
 procedimiento.-tipología-de-clases-latentes-a-partir-de-subdimensiones-de-cohesión
-descripción.-mapeo-en-chile-de-niveles-de-cohesión-por-regiones-mapas-de-calor
-análisis.-tablas-con-niveles-de-cohesión-por-elementos-habilitadores
+mapeo-en-chile-de-niveles-de-cohesión-por-regiones-mapas-de-calor
+tablas-con-niveles-de-cohesión-por-elementos-habilitadores
 inclusión-laboral
 inclusión-social

@@ -13,7 +13,7 @@ load("../input/data/proc/data_clases.RData")
 
 <div style="text-align: justify">
 
-## Versión 2. Perfiles de la cohesión social
+## Perfiles de la cohesión social
 
 Los capítulos anteriores entregaron una versión operacional de la cohesión social y mostraron su evolución en el tiempo. Este capítulo ofrece una visión sintética de la cohesión social a partir de las similitudes entre individuos. A tal fin se comparan los niveles individuales en las subdimensiones de la cohesión para establecer grupos a partir de sus similitudes.  
 
@@ -35,23 +35,22 @@ knitr::include_graphics(path = "output/graphs/lca3.jpg")
 ```
 
 
-### Descripción. Mapeo en Chile de niveles de cohesión por regiones (mapas de calor)
+## Mapeo en Chile de niveles de cohesión por regiones (mapas de calor)
 
 Las agrupaciones obtenidas a partir del ACL será representada en los territorios de forma que se pueda apreciar la pauta predominante en cada región del país.
 
 ```{r include=F}
-data$informal <- factor(data$informal_w03, levels = c(0,1), labels = c("Formal", "Informal"))
 tabla1 <- addmargins(table(data$region_w03, data$lclass))
 tabla1 <- as.data.frame(tabla1)
 tabla2 <- round(prop.table(table(data$region_w03, data$lclass),1),3)*100
 tabla2 <- as.data.frame(tabla2)
 
-tablae1 <- tabla2 %>% filter(Var2=="Institucional") %>% select(Freq)
-tablae1tot <- tabla1 %>% filter(Var1=="Sum" & Var2=="Institucional") %>% select(Freq)
+tablae1 <- tabla2 %>% filter(Var2=="Movilizados") %>% select(Freq)
+tablae1tot <- tabla1 %>% filter(Var1=="Sum" & Var2=="Movilizados") %>% select(Freq)
 tablae1 <- rbind(tablae1, tablae1tot)
 
-tablae2 <- tabla2 %>% filter(Var2=="Movilizado") %>% select(Freq)
-tablae2tot <- tabla1 %>% filter(Var1=="Sum" & Var2=="Movilizado") %>% select(Freq)
+tablae2 <- tabla2 %>% filter(Var2=="Institucionales") %>% select(Freq)
+tablae2tot <- tabla1 %>% filter(Var1=="Sum" & Var2=="Institucionales") %>% select(Freq)
 tablae2 <- rbind(tablae2, tablae2tot)
 
 tablae3 <- tabla2 %>% filter(Var2=="Atomizado") %>% select(Freq)
@@ -85,8 +84,8 @@ collapse_rows_cohesion <-
 ```{r echo=FALSE, fig.align = 'center', out.width = '100%',out.height='100%'}
 knitr::kable(collapse_rows_cohesion, "html",
              col.names =  c("Clases de cohesión social",
-                            "Institucional",
-                        "Movilizado",
+                            "Movilizados",
+                        "Institucionales",
                         "Atomizado",
                             "N=100%"
                             )) %>%
@@ -94,19 +93,20 @@ knitr::kable(collapse_rows_cohesion, "html",
   kableExtra::add_header_above(header = c(" "=1, "Region"= 4))
 ```
 
-### Análisis. Tablas con niveles de cohesión por elementos habilitadores
+## Tablas con niveles de cohesión por elementos habilitadores
 
 Los procesos que producen cohesión social están lejos de responder a modelos sencillos y requieren análisis detallados #FALTAN REFERENCIAS#. En este capítulo presentamos de forma descriptiva tabulaciones sencillas destinados a mostrar los efectos directos de los factores que se hipotetiza están asociado con la cohesión social. El análisis busca establecer el efecto de los factores habilitadores sobre la tipología de cohesión social presentada en la primera parte del capítulo. Los factores habilitadores están clasificados en seis grupos, a saber: Edad, Educación, Nivel de ingreso, Etnia, Nacionalidad, Aislamiento territorial.
 
 La medida de aislamiento territorial registra las características del área correspondiente a 1km de radio desde el centro de la manzana en que reside el respondente, lo cual puede asimilarse con un barrio. Los datos demográficos provienen del censo 2012 y los de condición urbana a bases de datos del CIT. 
 
 
-#### Inclusión laboral
+### Inclusión laboral
 
 El acceso al mercado de trabajo se encuentra estrechamente asociado con el bienestar de las personas. En efecto, la superación de la pobreza depende en gran medida de la inserción laboral. En América Latina, Chile no es una excepción, las condiciones de trabajo informal, asociadas con pobreza y precariedad comprenden una parte significativa de la fuerza de trabajo. Las inserciones más débiles en el mercado de trabajo podrían afectar negativamente los niveles de cohesión social.
 
 
 ```{r include=F}
+data$informal <- factor(data$informal_w03, levels = c(0,1), labels = c("Formal", "Informal"))
 tabla1 <- addmargins(table(data$lclass, data$informal))
 tabla1 <- as.data.frame(tabla1)
 tabla2 <- round(prop.table(table(data$lclass, data$informal),2),3)*100
@@ -123,8 +123,8 @@ tablainformal <- rbind(tablainformal, tablainformaltot)
 tablatotal <- tabla1 %>% filter(Var2=="Sum") %>% select(Freq)
 
 collapse_rows_cohesion <-
-    data.frame(vars = c("Institucional",
-                        "Movilizado",
+    data.frame(vars = c("Movilizados",
+                        "Institucionales",
                         "Atomizado",
                         "N=100%"),
                tablaformal, 
@@ -145,7 +145,7 @@ knitr::kable(collapse_rows_cohesion, "html",
 ```
 
 
-#### Inclusión social
+### Inclusión social
 
 Hay diversas dimensiones en las brechas de participación en las condiciones de vida que una sociedad ofrece a sus integrantes.
 
@@ -183,8 +183,8 @@ tablae5 <- rbind(tablae5, tablae5tot)
 tablatotal <- tabla1 %>% filter(Var2=="Sum") %>% select(Freq)
 
 collapse_rows_cohesion <-
-    data.frame(vars = c("Institucional",
-                        "Movilizado",
+    data.frame(vars = c("Movilizados",
+                        "Institucionales",
                         "Atomizado",
                         "N=100%"),
                tablae1, 
@@ -209,6 +209,7 @@ knitr::kable(collapse_rows_cohesion, "html",
   kable_styling(bootstrap_options = c("striped", "hover")) %>% 
   kableExtra::add_header_above(header = c(" "=1, "Grupos de edad"= 6))
 ```
+
 -   El **sexo** de las personas afecta sus posibilidades de inclusión atendiendo a las pautas de roles asociadas con una sociedad patriarcal.
 
 ```{r include=F}
@@ -228,8 +229,8 @@ tablam <- rbind(tablam, tablamtot)
 tablatotal <- tabla1 %>% filter(Var2=="Sum") %>% select(Freq)
 
 collapse_rows_cohesion <-
-    data.frame(vars = c("Institucional",
-                        "Movilizado",
+    data.frame(vars = c("Movilizados",
+                        "Institucionales",
                         "Atomizado",
                         "N=100%"),
                tablah, 
@@ -278,8 +279,8 @@ tablae4 <- rbind(tablae4, tablae4tot)
 tablatotal <- tabla1 %>% filter(Var2=="Sum") %>% select(Freq)
 
 collapse_rows_cohesion <-
-    data.frame(vars = c("Institucional",
-                        "Movilizado",
+    data.frame(vars = c("Movilizados",
+                        "Institucionales",
                         "Atomizado",
                         "N=100%"),
                tablae1, 
@@ -335,8 +336,8 @@ tablae5 <- rbind(tablae5, tablae5tot)
 tablatotal <- tabla1 %>% filter(Var2=="Sum") %>% select(Freq)
 
 collapse_rows_cohesion <-
-    data.frame(vars = c("Institucional",
-                        "Movilizado",
+    data.frame(vars = c("Movilizados",
+                        "Institucionales",
                         "Atomizado",
                         "N=100%"),
                tablae1, 
@@ -365,41 +366,279 @@ knitr::kable(collapse_rows_cohesion, "html",
 -   La **segregación territorial**, especialmente la que se encuentra asociada con el nivel socioeconómico constituye un rasgo distintivo de los países latinoamericanos, del cual Chile no escapa. Por la naturaleza de los datos, no es posible hacer distinciones entre rural y urbano. Un primer nivel de la segregación se refiere a la dominancia urbana que posee la capital del país, asociada también con acceso a mejores servicios, por lo que se pueden esperar diferentes niveles de cohesión social al comparar Santiago y el resto de las regiones.
 
 -   El concepto de **aislamiento social de los territorios** fue acuñado por William Julius Wilson para explicar la condición de áreas urbanas de Chicago caracterizadas por concentración de la pobreza, desempleo, bajos niveles de escolaridad y reducida integración en la fuerza de trabajo. Su explicación apunta a que la vida en un vecindario donde la mayor parte de la población se encuentra en una situación de desventaja social constriñe las oportunidades de inclusión social. Los elementos de desventaja social pueden especificarse con el acceso a recursos públicos tales como servicios públicos, conectividad, fuentes de trabajo y centros de consumo. En los territorios limitados en estos aspectos sería más improbable que florezca la cohesión social.
-    -   Promedio años escolaridad de sostenedores en 1 km a la redonda #preferir desv estándar#
-```{r echo=FALSE, fig.align = 'center', out.width = '100%',out.height='100%'}
 
-knitr::include_graphics(path = "output/graphs/clase-sdeduc.png")
+  -   Promedio años escolaridad de sostenedores en 1 km a la redonda #preferir desv estándar#
+```{r include=F}
+tabla1 <- addmargins(table(data$lclass, data$percent_sded))
+tabla1 <- as.data.frame(tabla1)
+tabla2 <- round(prop.table(table(data$lclass, data$percent_sded),2),3)*100
+tabla2 <- as.data.frame(tabla2)
 
-```
-    -   Número de trabajadores/as (ocupados??) en 1 km a la redonda #usar también inactivos#
-```{r echo=FALSE, fig.align = 'center', out.width = '100%',out.height='100%'}
+tablah <- tabla2 %>% filter(Var2=="1") %>% select(Freq)
+tablahtot <- tabla1 %>% filter(Var1=="Sum" & Var2=="1") %>% select(Freq)
+tablah <- rbind(tablah, tablahtot)
 
-knitr::include_graphics(path = "output/graphs/clase-trab.png")
+tablam <- tabla2 %>% filter(Var2=="2") %>% select(Freq)
+tablamtot <- tabla1 %>% filter(Var1=="Sum" & Var2=="2") %>% select(Freq)
+tablam <- rbind(tablam, tablamtot)
 
-```
-    -   Número de cesantes en 1 km a la redonda
-```{r echo=FALSE, fig.align = 'center', out.width = '100%',out.height='100%'}
+tablatotal <- tabla1 %>% filter(Var2=="Sum") %>% select(Freq)
 
-knitr::include_graphics(path = "output/graphs/clase-cesantes.png")
-
-```
-    -   Acceso areas verdes en radio de 15 min a pie #aclarar definición# ¿media de la ciudad?
-```{r echo=FALSE, fig.align = 'center', out.width = '100%',out.height='100%'}
-
-knitr::include_graphics(path = "output/graphs/clase-acver.png")
-
-```
-    -   Acceso a colegios en radio de 15 min a pie #aclarar definición# ¿media de la ciudad?
-```{r echo=FALSE, fig.align = 'center', out.width = '100%',out.height='100%'}
-
-knitr::include_graphics(path = "output/graphs/clase-aced.png")
+collapse_rows_cohesion <-
+    data.frame(vars = c("Movilizados",
+                        "Institucionales",
+                        "Atomizado",
+                        "N=100%"),
+               tablah, 
+               tablam,
+               tablatotal)
 
 ```
-    -   Acceso a servicios en radio de 15 min a pie #aclarar definición# ¿media de la ciudad?
+
 ```{r echo=FALSE, fig.align = 'center', out.width = '100%',out.height='100%'}
+knitr::kable(collapse_rows_cohesion, "html",
+             col.names =  c("Clases de cohesión social",
+                            "Cuartil 1 al 3",
+                            "Cuartil 4",
+                            "N=100%"
+                            )) %>%
+  kable_styling(bootstrap_options = c("striped", "hover")) %>% 
+  kableExtra::add_header_above(header = c(" "=1, "Promedio de años de escolaridad sostenedor del hogar (sd)"= 3))
+```
+   
+   -   Número de trabajadores/as (ocupados??) en 1 km a la redonda #usar también inactivos#
+```{r include=F}
+tabla1 <- addmargins(table(data$lclass, data$percent_trabaja))
+tabla1 <- as.data.frame(tabla1)
+tabla2 <- round(prop.table(table(data$lclass, data$percent_trabaja),2),3)*100
+tabla2 <- as.data.frame(tabla2)
 
-knitr::include_graphics(path = "output/graphs/clase-accs.png")
+tablah <- tabla2 %>% filter(Var2=="1") %>% select(Freq)
+tablahtot <- tabla1 %>% filter(Var1=="Sum" & Var2=="1") %>% select(Freq)
+tablah <- rbind(tablah, tablahtot)
 
+tablam <- tabla2 %>% filter(Var2=="2") %>% select(Freq)
+tablamtot <- tabla1 %>% filter(Var1=="Sum" & Var2=="2") %>% select(Freq)
+tablam <- rbind(tablam, tablamtot)
+
+tablatotal <- tabla1 %>% filter(Var2=="Sum") %>% select(Freq)
+
+collapse_rows_cohesion <-
+    data.frame(vars = c("Movilizados",
+                        "Institucionales",
+                        "Atomizado",
+                        "N=100%"),
+               tablah, 
+               tablam,
+               tablatotal)
+
+```
+
+```{r echo=FALSE, fig.align = 'center', out.width = '100%',out.height='100%'}
+knitr::kable(collapse_rows_cohesion, "html",
+             col.names =  c("Clases de cohesión social",
+                            "Cuartil 1 al 3",
+                            "Cuartil 4",
+                            "N=100%"
+                            )) %>%
+  kable_styling(bootstrap_options = c("striped", "hover")) %>% 
+  kableExtra::add_header_above(header = c(" "=1, "Cantidad de trabajadores ocupados"= 3))
+```
+
+  - numero de inactivos
+
+```{r include=F}
+tabla1 <- addmargins(table(data$lclass, data$percent_inactivo))
+tabla1 <- as.data.frame(tabla1)
+tabla2 <- round(prop.table(table(data$lclass, data$percent_inactivo),2),3)*100
+tabla2 <- as.data.frame(tabla2)
+
+tablah <- tabla2 %>% filter(Var2=="1") %>% select(Freq)
+tablahtot <- tabla1 %>% filter(Var1=="Sum" & Var2=="1") %>% select(Freq)
+tablah <- rbind(tablah, tablahtot)
+
+tablam <- tabla2 %>% filter(Var2=="2") %>% select(Freq)
+tablamtot <- tabla1 %>% filter(Var1=="Sum" & Var2=="2") %>% select(Freq)
+tablam <- rbind(tablam, tablamtot)
+
+tablatotal <- tabla1 %>% filter(Var2=="Sum") %>% select(Freq)
+
+collapse_rows_cohesion <-
+    data.frame(vars = c("Movilizados",
+                        "Institucionales",
+                        "Atomizado",
+                        "N=100%"),
+               tablah, 
+               tablam,
+               tablatotal)
+
+```
+
+```{r echo=FALSE, fig.align = 'center', out.width = '100%',out.height='100%'}
+knitr::kable(collapse_rows_cohesion, "html",
+             col.names =  c("Clases de cohesión social",
+                            "Cuartil 1 al 3",
+                            "Cuartil 4",
+                            "N=100%"
+                            )) %>%
+  kable_styling(bootstrap_options = c("striped", "hover")) %>% 
+  kableExtra::add_header_above(header = c(" "=1, "Cantidad de trabajadores inactivos"= 3))
+```
+
+   -   Número de cesantes en 1 km a la redonda
+```{r include=F}
+tabla1 <- addmargins(table(data$lclass, data$percent_cesante))
+tabla1 <- as.data.frame(tabla1)
+tabla2 <- round(prop.table(table(data$lclass, data$percent_cesante),2),3)*100
+tabla2 <- as.data.frame(tabla2)
+
+tablah <- tabla2 %>% filter(Var2=="1") %>% select(Freq)
+tablahtot <- tabla1 %>% filter(Var1=="Sum" & Var2=="1") %>% select(Freq)
+tablah <- rbind(tablah, tablahtot)
+
+tablam <- tabla2 %>% filter(Var2=="2") %>% select(Freq)
+tablamtot <- tabla1 %>% filter(Var1=="Sum" & Var2=="2") %>% select(Freq)
+tablam <- rbind(tablam, tablamtot)
+
+tablatotal <- tabla1 %>% filter(Var2=="Sum") %>% select(Freq)
+
+collapse_rows_cohesion <-
+    data.frame(vars = c("Movilizados",
+                        "Institucionales",
+                        "Atomizado",
+                        "N=100%"),
+               tablah, 
+               tablam,
+               tablatotal)
+
+```
+
+```{r echo=FALSE, fig.align = 'center', out.width = '100%',out.height='100%'}
+knitr::kable(collapse_rows_cohesion, "html",
+             col.names =  c("Clases de cohesión social",
+                            "Cuartil 1 al 3",
+                            "Cuartil 4",
+                            "N=100%"
+                            )) %>%
+  kable_styling(bootstrap_options = c("striped", "hover")) %>% 
+  kableExtra::add_header_above(header = c(" "=1, "Cantidad de trabajadores buscando empleo"= 3))
+```
+   
+   -   Acceso areas verdes en radio de 15 min a pie #aclarar definición# ¿media de la ciudad?
+```{r include=F}
+tabla1 <- addmargins(table(data$lclass, data$percent_acver))
+tabla1 <- as.data.frame(tabla1)
+tabla2 <- round(prop.table(table(data$lclass, data$percent_acver),2),3)*100
+tabla2 <- as.data.frame(tabla2)
+
+tablah <- tabla2 %>% filter(Var2=="1") %>% select(Freq)
+tablahtot <- tabla1 %>% filter(Var1=="Sum" & Var2=="1") %>% select(Freq)
+tablah <- rbind(tablah, tablahtot)
+
+tablam <- tabla2 %>% filter(Var2=="2") %>% select(Freq)
+tablamtot <- tabla1 %>% filter(Var1=="Sum" & Var2=="2") %>% select(Freq)
+tablam <- rbind(tablam, tablamtot)
+
+tablatotal <- tabla1 %>% filter(Var2=="Sum") %>% select(Freq)
+
+collapse_rows_cohesion <-
+    data.frame(vars = c("Movilizados",
+                        "Institucionales",
+                        "Atomizado",
+                        "N=100%"),
+               tablah, 
+               tablam,
+               tablatotal)
+
+```
+
+```{r echo=FALSE, fig.align = 'center', out.width = '100%',out.height='100%'}
+knitr::kable(collapse_rows_cohesion, "html",
+             col.names =  c("Clases de cohesión social",
+                            "Cuartil 1 al 3",
+                            "Cuartil 4",
+                            "N=100%"
+                            )) %>%
+  kable_styling(bootstrap_options = c("striped", "hover")) %>% 
+  kableExtra::add_header_above(header = c(" "=1, "Acceso a areas verdes"= 3))
+```
+
+  -   Acceso a colegios en radio de 15 min a pie #aclarar definición# ¿media de la ciudad?
+```{r include=F}
+tabla1 <- addmargins(table(data$lclass, data$percent_aced))
+tabla1 <- as.data.frame(tabla1)
+tabla2 <- round(prop.table(table(data$lclass, data$percent_aced),2),3)*100
+tabla2 <- as.data.frame(tabla2)
+
+tablah <- tabla2 %>% filter(Var2=="1") %>% select(Freq)
+tablahtot <- tabla1 %>% filter(Var1=="Sum" & Var2=="1") %>% select(Freq)
+tablah <- rbind(tablah, tablahtot)
+
+tablam <- tabla2 %>% filter(Var2=="2") %>% select(Freq)
+tablamtot <- tabla1 %>% filter(Var1=="Sum" & Var2=="2") %>% select(Freq)
+tablam <- rbind(tablam, tablamtot)
+
+tablatotal <- tabla1 %>% filter(Var2=="Sum") %>% select(Freq)
+
+collapse_rows_cohesion <-
+    data.frame(vars = c("Movilizados",
+                        "Institucionales",
+                        "Atomizado",
+                        "N=100%"),
+               tablah, 
+               tablam,
+               tablatotal)
+
+```
+
+```{r echo=FALSE, fig.align = 'center', out.width = '100%',out.height='100%'}
+knitr::kable(collapse_rows_cohesion, "html",
+             col.names =  c("Clases de cohesión social",
+                            "Cuartil 1 al 3",
+                            "Cuartil 4",
+                            "N=100%"
+                            )) %>%
+  kable_styling(bootstrap_options = c("striped", "hover")) %>% 
+  kableExtra::add_header_above(header = c(" "=1, "Acceso a colegios"= 3))
+```
+  
+   -   Acceso a servicios en radio de 15 min a pie #aclarar definición# ¿media de la ciudad?
+```{r include=F}
+tabla1 <- addmargins(table(data$lclass, data$percent_accs))
+tabla1 <- as.data.frame(tabla1)
+tabla2 <- round(prop.table(table(data$lclass, data$percent_accs),2),3)*100
+tabla2 <- as.data.frame(tabla2)
+
+tablah <- tabla2 %>% filter(Var2=="1") %>% select(Freq)
+tablahtot <- tabla1 %>% filter(Var1=="Sum" & Var2=="1") %>% select(Freq)
+tablah <- rbind(tablah, tablahtot)
+
+tablam <- tabla2 %>% filter(Var2=="2") %>% select(Freq)
+tablamtot <- tabla1 %>% filter(Var1=="Sum" & Var2=="2") %>% select(Freq)
+tablam <- rbind(tablam, tablamtot)
+
+tablatotal <- tabla1 %>% filter(Var2=="Sum") %>% select(Freq)
+
+collapse_rows_cohesion <-
+    data.frame(vars = c("Movilizados",
+                        "Institucionales",
+                        "Atomizado",
+                        "N=100%"),
+               tablah, 
+               tablam,
+               tablatotal)
+
+```
+
+```{r echo=FALSE, fig.align = 'center', out.width = '100%',out.height='100%'}
+knitr::kable(collapse_rows_cohesion, "html",
+             col.names =  c("Clases de cohesión social",
+                            "Cuartil 1 al 3",
+                            "Cuartil 4",
+                            "N=100%"
+                            )) %>%
+  kable_styling(bootstrap_options = c("striped", "hover")) %>% 
+  kableExtra::add_header_above(header = c(" "=1, "Acceso a servicios publicos"= 3))
 ```
 
 -   La **pertenencia a pueblos indígenas** ha estado asociado con bajos niveles de inclusión social. Por mucho tiempo invisibilizada, en las últimas dos décadas el estado chileno ha reconocido la existencia de pueblos indígenas acordando diversos beneficios sociales asociados con esta condición. Como contrapartida, el reconocimiento de la condición de indígena ha conllevado a un fortalecimiento de la identidad étnica.
@@ -421,8 +660,8 @@ tablam <- rbind(tablam, tablamtot)
 tablatotal <- tabla1 %>% filter(Var2=="Sum") %>% select(Freq)
 
 collapse_rows_cohesion <-
-    data.frame(vars = c("Institucional",
-                        "Movilizado",
+    data.frame(vars = c("Movilizados",
+                        "Institucionales",
                         "Atomizado",
                         "N=100%"),
                tablah, 
@@ -461,8 +700,8 @@ tablam <- rbind(tablam, tablamtot)
 tablatotal <- tabla1 %>% filter(Var2=="Sum") %>% select(Freq)
 
 collapse_rows_cohesion <-
-    data.frame(vars = c("Institucional",
-                        "Movilizado",
+    data.frame(vars = c("Movilizados",
+                        "Institucionales",
                         "Atomizado",
                         "N=100%"),
                tablah, 

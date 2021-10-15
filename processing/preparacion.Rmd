@@ -58,7 +58,7 @@ data <- inner_join(data, data_territorial, by="idencuesta", copy = FALSE, suffix
 ```{r}
 cit <- read_excel("input/data/original/ELSOC_CIT_Dataset_2016.xlsx")
 
-cit <- cit %>% dplyr::select(idencuesta, acver_mnz, aced_com, accs_mnz) %>% as.data.frame()
+cit <- cit %>% dplyr::select(idencuesta, acver_mnz, aced_mnz, accs_mnz) %>% as.data.frame()
 
 cit <- cit %>% set_na(acver_mnz, aced_com, accs_mnz, na = c(994, 995,996), drop.levels = TRUE, as.tag = FALSE) # recode missings de no respuesta a NA
 
@@ -1191,10 +1191,25 @@ data$informal_w03<-informal
 table(data$informal_w03)
 ```
 
-### Region
+### Habilitadores territoriales
+
+
 ```{r}
-data$region <- ifelse(data$region_w03=="Metropolitana", 1, 2)
-data$region <- factor(data$region, levels = c(1,2), labels = c("Metropolitana", "Otra region"))
+# Se recodifican a quintiles y se dicotomizan en cuartil 4
+data <- data %>% dplyr::mutate(percent_sded = ntile(jh_esc_sd, 4))
+data <- data %>% dplyr::mutate(percent_trabaja = ntile(trabaja, 4))
+data <- data %>% dplyr::mutate(percent_cesante = ntile(cesante, 4))
+data <- data %>% dplyr::mutate(percent_inactivo = ntile(inactivo, 4))
+data <- data %>% dplyr::mutate(percent_acver = ntile(acver_mnz, 4))
+data <- data %>% dplyr::mutate(percent_aced = ntile(aced_mnz, 4))
+data <- data %>% dplyr::mutate(percent_accs = ntile(accs_mnz, 4))
+data$percent_sded <- car::recode(data$percent_sded, "c(1,2,3)=1; 4=2")
+data$percent_trabaja <- car::recode(data$percent_trabaja, "c(1,2,3)=1; 4=2")
+data$percent_cesante <- car::recode(data$percent_cesante, "c(1,2,3)=1; 4=2")
+data$percent_inactivo <- car::recode(data$percent_inactivo, "c(1,2,3)=1; 4=2")
+data$percent_acver<- car::recode(data$percent_acver, "c(1,2,3)=1; 4=2")
+data$percent_aced <- car::recode(data$percent_aced, "c(1,2,3)=1; 4=2")
+data$percent_accs <- car::recode(data$percent_accs, "c(1,2,3)=1; 4=2")
 ```
 
 

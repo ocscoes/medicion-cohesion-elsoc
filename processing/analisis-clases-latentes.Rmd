@@ -187,7 +187,7 @@ elsoc_lca3<- cbind(cohesion_med, "lclass" = lca3$predclass)
 elsoc_lca3<- as.data.frame(dplyr::select(elsoc_lca3, idencuesta, lclass))
 
 data <- dplyr::left_join(data, elsoc_lca3, by="idencuesta")
-data$lclass <- factor(data$lclass, levels = c(1,2,3), labels = c("Institucional", "Movilizado", "Atomizado"))
+data$lclass <- factor(data$lclass, levels = c(1,2,3), labels = c("Movilizados", "Institucionales", "Atomizado"))
 
 save(data, file = "input/data/proc/data_clases.RData")
 ```
