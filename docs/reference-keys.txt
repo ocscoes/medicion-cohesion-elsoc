@@ -50,9 +50,7 @@ tab:clases-educacion
 tab:clases-ingresos
 tab:clases-escolaridad
 tab:clases-ocupados
-tab:clases-inactivos
 tab:clases-cesantes
-tab:unnamed-chunk-16
 tab:clases-acced
 tab:clases-accser
 tab:clases-etnia
@@ -78,9 +76,10 @@ participación-cívica
 vínculos-territoriales
 conclusión
 habilitadores-e-inhibidores-de-la-cohesión-social
-perfiles-de-la-cohesión-social
-una-tipología-de-clases-latentes-a-partir-de-las-subdimensiones-de-cohesión-social
-niveles-de-cohesión-social-en-las-regiones-chilenas
+perfiles-de-cohesión-social
+perfiles-de-cohesión-social-en-el-territorio-nacional
 perfiles-de-cohesión-según-elementos-habilitadores
 inclusión-laboral
 inclusión-social
+factores-territoriales
+conclusiones

@@ -13,38 +13,35 @@ load("../input/data/proc/data_clases.RData")
 
 <div style="text-align: justify">
 
-## Perfiles de la cohesión social
+Los capítulos anteriores entregaron una medición de la cohesión social y mostraron su evolución en el tiempo. Basado en lo anterior, este capítulo ofrece un análisis de la cohesión social en Chile en relación a una serie de factores que en el marco del modelo conceptual de la CEPAL denominamos elementos habilitadores y/o ihnibidores de la cohesión social. La pregunta a abordar en este espacio es ¿Qué factores afectan los niveles de cohesión social? Antes de hablar sobre los factores, es necesario establecer una forma de analizar los indicadores de cohesión social para las nueve subdimensiones en consideración. Una posibilidad sin duda es analizar los factores en relación a cada una de las subdimensiones, pero esta estrategia tiene la desventaja de enfocarse en las subdimensiones por separado y perder de vista el tema central de este informe, que es la cohesión social como concepto macro. Por ello es que inicialmente generaremos una tipología de cohesión social, lo que nos permitirá identificar distintas clases o perfiles de personas en relación a sus puntajes en los distintos indicadores descritos en los capítulos anteriores. En base a esta tipología posteriormente analizaremos cómo los distintos perfiles se asocian a factores que habilitan o inhiben la cohesión, tales como educación, ingreso, situación laboral, entre otros.
 
-Los capítulos anteriores entregaron una medición de la cohesión social y mostraron su evolución en el tiempo. Este capítulo ofrece una visión sintética de la cohesión social a partir de las similitudes entre individuos. A tal fin se comparan los niveles individuales en las nueve subdimensiones de la cohesión para establecer grupos a partir de sus similitudes. Los grupos corresponden a 'perfiles' de cohesión social caracterizados por diferencias de nivel entre sub-dimensiones, las cuales se interpretan relacionalmente y también con relación a otros aspectos que caracterizan a la sociedad chilena.  
+## Perfiles de cohesión social
 
-La cohesión social y sus habilitadores se refieren a elementos estructurales que caracterizan un país. Dentro de un país puedan coexistir distintas formas de cohesión, o aún niveles, lo cual podría eventualmente afectar la cohesión global. La variación de la cohesión social dentro de un país refleja la forma en que individuos o agrupaciones sociales, así como territorios, corresponde a niveles y pautas diferenciadas de cohesión; en la medida que estas variaciones van más allá del error aleatorio que acompaña toda medición pueden interpretarse sustantivamente. La diferenciación en este informe se presenta como una tipología de cohesión que permite reconocer tres grupos: Aquellos atomizados que exhiben los niveles más bajos de cohesión en todas las subdimensiones. Los que denominamos 'institucionales' muestran valores más altos que el resto en la confianza institucional y la identificación nacional. Finalmente, denominamos 'movilizados' a quienes muestran valores mayores en las subdimensiones de participación cívica y orientación a la solidaridad.
+La construcción de perfiles o tipos en el análisis de datos posee distintas aproximaciones, que en términos simplificados podemos resumir en dos: diferenciación de niveles y diferenciación de perfiles o tipos. En el caso de los niveles, una estrategia posible sería promediar el puntaje de todos los indicadores y categorizar a las personas en niveles estableciendo ciertos puntajes de corte, por ejemplo "alto" quienes poseen puntaje superior al promedio, y "bajo" a aquellos que puntuan igual o bajo el promedio. Esta aproximación tiene la ventaja de ser muy simple, pero desconoce las posibles diferencias sistemáticas en las respuestas de las personas. Por ejemplo, en el caso de tener dos indicadores, una persona que posee alto puntaje en uno y bajo en otro obtendrá el mismo puntaje que otra persona que tiene puntajes inversos en los mismos indicadores. Con el objetivo de poder dar mejor cuenta de los puntajes de los respondentes a una serie de variables o indicadores es que se utiliza la segunda alternativa: diferenciación de perfiles de respuesta. Para ello, se estiman modelos que intentan representar a la mayoría de los patrones de respuesta existentes, siendo cada uno de estos patrones genéricos un perfil o clase. El resultado del análisis consiste en la agrupación de individuos semejantes entre sí, pero diferentes de otros, por lo que reflejan niveles o formas de cohesión diversas.
 
-La tipología obtenida permite agrupar individuos con perfiles de cohesión similares, para describirles en términos de las características de su inclusión social. Los elementos de inclusión son el área preferente de implementación de las políticas públicas y pueden concebirse como habilitadores o disruptores de la cohesión social. Cepal (fc:42) comprende la cohesión social volcada a la igualdad como ``la capacidad de una sociedad y sus instituciones democráticas de promover relaciones sociales de igualdad y generar un sentido de pertenencia y una orientación hacia el bien común de una forma percibida como legítima por sus miembros.'' Esta definición multidimensional resalta la igualdad en las relaciones sociales, el sentido de pertenencia, la orientación hacia el bien común y la legitimidad democrática. La definición describe un proceso e incorpora un elemento normativo destinado a orientar las políticas públicas, consistente con el marco establecido por la Agenda 2030. La habilitación se refiere a elementos de la estructura social (inclusión) que favorecen la orientación de un modelo de cohesión volcado a la igualdad. El procesos de la cohesión social puede también enfrentar disrupciones ya sea estructurales, como exclusión persistente, o coyunturales como los ciclos económicos o recientemente la pandemia asociada al covid-19.    
+Los procedimientos de clasificación automática en pefiles de respuestas comparan sistemáticamente los niveles de respuesta entre individuos utilizando una medida de distancia que establece su similitud. Para generar los tipos en el presente capítulos utilizaremos el análisis de clases latentes (ACL) [@collins_latent_2010]. En términos simples, este procedimiento de estimación supone que los niveles observados en los patrones de respuesta son generados por una variable subyacente con dos o más clases. El ACL ubica la clasificación en el marco de los modelos de ecuaciones estructurales, por lo que la estimación maximiza la probabilidad de que un individuo pertenezca a una clase. Con este análisis se obtienen dos estimaciones principales: la probabilidad de pertenencia a la clase dado el puntaje en el indicador, y el tamaño de cada una de las clases.
 
+El procedimiento incorpora una dimensión longitudinal pues considera todas las mediciones disponibles en las distintas olas del panel. Aunque lo anterior reduce la cantidad de casos a quienes respondieron en todas las olas, ofrece mayor estabilidad en la estimación.
 
-### Una tipología de clases latentes a partir de las subdimensiones de cohesión social
+La estimación con ACL para los indicadores de cohesión social utiliza las variables observadas dentro de cada una de las dimensiones en todas las olas del panel. Se procedió a calcular las medias de los ítemes que componen cada una de las 9 subdimensiones en cada año; posteriormente se calculó la media de las subdimensiones en todos los años, obteniendo un puntaje para cada respondente en cada subdimensión. Las medias de las subdimensiones fueron dicotomizadas usando la mediana como punto de corte. El análisis de clases latentes considera entonces nueve variables dicotómicas que describen los individuos en términos de alto o bajo puntaje en cada subdimensión de la cohesión social.
 
-El análisis de la variación en los niveles de cohesión social dentro de la muestra utiliza los niveles individuales de las subdimensiones que componen la medida de cohesión social (ver capítulo 1 de este informe). Al tratarse de datos provenientes de encuestas debe existir una variación producto del error estadístico en la medida. Puede ocurrir, sin embargo, que algunos perfiles se desvíen más allá de lo esperable por el error en la medida, lo cual indica niveles de cohesión significativamente diferentes. El resultado del análisis consiste en la agrupación de individuos semejantes entre sí, pero diferentes de otros, por lo que reflejan niveles o formas de cohesión diversas. Este procedimiento se diferencia de las comparaciones de la posición en un índice sintético porque se construye a partir de la diferencia en los niveles de las subdimensiones, vale decir, considerando la estructura de respuesta. Visto como índice sintético, un mismo nivel puede agrupar individuos con perfiles de respuesta diferentes, los cuales se toman en cuenta al construir una tipología en la medida que representan formas diferenciadas de incorporación en una sociedad. 
-
-Los procedimientos de clasificación automática comparan sistemáticamente los niveles de respuesta entre individuos utilizando una medida de distancia que establece su similitud. El análisis de clases latentes (ACL) supone que los niveles observados corresponden a una variable subyacente con dos o más categorías. El ACL ubica la clasificación en el marco de los modelos de ecuaciones estructurales, por lo que la estimación maximiza la probabilidad de que un individuo pertenezca a una clase. El procedimiento incorpora una dimensión longitudinal pues considera todas las mediciones disponibles en las distintas olas del panel. Aunque lo anterior reduce la cantidad de casos a quienes respondieron en todas las olas, ofrece mayor estabilidad en la estimación. 
-
-El análisis de clases latentes utiliza las variables observadas dentro de cada una de las dimensiones en todas las olas del panel. Se procedió a calcular las medias de los ítemes que componen cada una de las 9 subdimensiones en cada año; posteriormente se calculó la media de las subdimensiones en todos los años, obteniendo un puntaje para cada subdimensión. Las medias de las subdimensiones fueron dicotomizadas usando la mediana como punto de corte. El análisis de clases latentes se realiza sobre 9 variables dicotómicas que describen los individuos en términos de alto o bajo puntaje en cada subdimensión. Los procedimientos de clasificación automática asignan los individuos a grupos pero no establecen un número óptimo de grupos, lo cual constituye una decisión sustantiva basada en su interpretabilidad. En los datos chilenos de ELSOC una clasificación en tres grupos permite presentar tres perfiles distintos de cohesión social, que denominamos atomizado, institucional y movilizado. 
-
-La Figura \@ref(fig:clases-latentes) presenta los puntajes de los grupos en las subdimensiones: 
+El procedimiento sugerido de estimación de ACL es generar modelos con distinto número de clases y comparar sus estadísticos de ajuste. Lueog de realizar estas estimaciones, el modelo que resultó con mejor ajuste fue el de tres clases. En base a este número es posible representar gráficamente la estructura de cada clase según sus niveles (o probabilidad de pertenencia a la clase) en cada una de las subdimensiones, tal como se presenta en la Figura \@ref(fig:clases-latentes):
 
 ```{r clases-latentes, echo=FALSE, fig.cap="Tipologia de las clases latentes de cohesion social.", fig.align = 'center', out.width = '100%',out.height='100%'}
 knitr::include_graphics(path = "output/graphs/lca3.jpg")
 ```
+En el gráfico de la Figura \@ref(fig:clases-latentes) observamos en el eje X a las distintas subdimensiones de cohesión social del modelo de la CEPAL más la dimensión territorial añadida para este trabajo. Por temas de mayor claridad en el gráfico incluimos a la dimensión territorial junto a las otras subdimiensiones que corresponden a la dimensión de pertenencia. Las tres líneas identifican a cada una de las clases y su nivel (probabilidad) de respuesta en cada indicador. Las clases fueron luego etiquetadas para dar un sentido sustantivo a cada perfil, donde tenemos Movilizados, Institucionales y Atomizados, que se describen a continuación
+
 
 + Movilizados:
 
-Comprenden 42% de la muestra. Los elementos que les destacan remiten a una dimensión horizontal de la cohesión social en la cual los principios de cooperación y respeto entre iguales operan como organizadores de la vida social. Se caracterizan por sus conductas prosociales, orientadas al altruismo y la solidaridad, así como su activa participación cívica y mayor respeto a la diversidad de minorías visibles. Se diferencia de los institucionales porque, sin llegar a los niveles del grupo atomizado, se identifica menos con el país, cree que no hay justicia en la distribución de recompensas sociales y posee menor confianza en instituciones.
-  
+Comprenden 42% de la muestra, siendo la clase identificada de mayor tamaño. Los elementos que les destacan remiten a una dimensión horizontal de la cohesión social en la cual los principios de cooperación y respeto entre iguales operan como organizadores de la vida social. Se caracterizan por sus conductas prosociales, orientadas al altruismo y la solidaridad, así como su activa participación cívica y mayor respeto a la diversidad de minorías visibles. Se diferencia de los institucionales porque, sin llegar a los niveles del grupo atomizado, se identifica menos con el país, cree que no hay justicia en la distribución de recompensas sociales y posee menor confianza en instituciones.
+
   + conductas prosociales orientadas al altruismo y la solidaridad
   + activos en participación cívica
   + Altos en respeto a la diversidad cultural
   + bajos en los indicadores que caracterizan a los institucionales
-    
+
 
 + Institucionales.
 
@@ -57,13 +54,13 @@ Comprenden 32% de la muestra. Sus características refieren a una forma de cohes
   + más altos en confianza vecinal
   + bajos en lazos y participación
 
-+ atomizados:
++ Atomizados:
 
-  Presentan los niveles más bajos en todas las subdimensiones y comprenden 26% de esta muestra. Destacan la carencia de lazos sociales, así como sus bajos niveles de identificación y solidaridad. 
+  Presentan los niveles más bajos en todas las subdimensiones y comprenden 26% de esta muestra. Destacan la carencia de lazos sociales, así como sus bajos niveles de identificación y solidaridad.
 
-## Niveles de cohesión social en las regiones chilenas
+## Perfiles de cohesión social en el territorio nacional
 
-La distribución territorial de los perfiles de cohesión social permite apreciar la pauta predominante en cada región del país, como se muestra en la Tabla \@ref(tab:clases-region). Debido a que la muestra ELSOC es de carácter nacional, y no busca representación regional, la Tabla \@ref(tab:clases-region) presenta 13 regiones, pero el análisis se concentra en seis que poseen casos suficientes. 
+Antes de comenzar con el análisis de factores habilitadores de la cohesión social resulta interesante explorar la distribución territorial de los perfiles de cohesión social. Esto permite apreciar la pauta predominante en cada región del país, como se muestra en la Tabla \@ref(tab:clases-region). Debido a que la muestra ELSOC es de carácter nacional, y no busca representación regional, la Tabla \@ref(tab:clases-region) presenta 13 regiones, pero el análisis se concentra en seis que poseen casos suficientes.
 
 ```{r include=F}
 
@@ -96,7 +93,7 @@ collapse_rows_cohesion <-
                         "Los Rios",
                         "Los Lagos",
                         "Aysen"),
-               tablae1, 
+               tablae1,
                tablae2,
                tablae3,
                tablatotal)
@@ -111,17 +108,17 @@ knitr::kable(collapse_rows_cohesion, "html",
                             "Atomizado",
                             "N=100%"),
              caption = "Distribucion de las clases de cohesion social por region") %>%
-  kable_styling(bootstrap_options = c("striped", "hover")) %>% 
+  kable_styling(bootstrap_options = c("striped", "hover")) %>%
   kableExtra::add_header_above(header = c(" "=1, "Region"= 4))
 ```
 
 La distribución de los perfiles en cada región es marcadamente diferente, pero no es posible identificar pautas claras que asocien las características de los territorios con los perfiles de cohesión social. De todas formas, siete de las 13 regiones poseen un número de casos que no asegura representación, por lo que los resultados no se elaboran en su totalidad.
 
-En el perfil de cohesión horizontal que denominamos "movilizados", ocho regiones se encuentran por sobre la media nacional de este perfil. Destacando la Región Metropolitana (47.8%) y de Valparaíso (46.4). La región de Coquimbo (28.2%) presenta el valor más bajo en esta dimensión. 
+En el perfil de cohesión horizontal que denominamos "movilizados", ocho regiones se encuentran por sobre la media nacional de este perfil. Destacando la Región Metropolitana (47.8%) y de Valparaíso (46.4). La región de Coquimbo (28.2%) presenta el valor más bajo en esta dimensión.
 
-En el perfil de cohesión vertical que denominamos "institucional", cinco regiones se encuentran por sobre la media nacional de este perfil, cuatro de ellas con suficientes casos, destacando Coquimbo (42.4%). El nivel más bajo en este perfil se encuentra en la región Metropolitana (26.6%), no demasiado alejado de la media nacional. 
+En el perfil de cohesión vertical que denominamos "institucional", cinco regiones se encuentran por sobre la media nacional de este perfil, cuatro de ellas con suficientes casos, destacando Coquimbo (42.4%). El nivel más bajo en este perfil se encuentra en la región Metropolitana (26.6%), no demasiado alejado de la media nacional.
 
-El perfil atomizado presenta valores próximos a la media en las regiones con mayor número de casos, encontrándose su nivel más alto en Coquimbo (29.4%) y el más bajo en Maule (22.3%). 
+El perfil atomizado presenta valores próximos a la media en las regiones con mayor número de casos, encontrándose su nivel más alto en Coquimbo (29.4%) y el más bajo en Maule (22.3%).
 
 ```{r mapas-region, echo=FALSE, fig.cap="Mapa de la istribución de las clases latentes de cohesion social por region.", fig.align = 'center', out.width = '100%',out.height='100%'}
 
@@ -134,11 +131,13 @@ La Figura \@ref(fig:mapas-region) muestra gráficamente la distribución de la i
 
 ## Perfiles de cohesión según elementos habilitadores
 
-A continuación presentamos tabulaciones descriptivas destinadas a mostrar los efectos directos de factores estructurales de inclusión laboral y social que se hipotetiza es el valor de la media nacional está influido por los valores más bajos de algunas regiones, por lo que en la mayor parte del país tiende a predominar este perfil.tán asociados con la cohesión social. El análisis se aproxima al efecto de los factores habilitadores sobre la tipología de cohesión social sin asignar carácter explicativo a éstos, dado que en su operación los efectos directos están mediados o interactúan con otros. Los factores habilitadores están clasificados en siete grupos: inclusión laboral, edad, educación, nivel de ingreso, etnia, nacionalidad, aislamiento territorial.
+Las tres clases de cohesión social estimadas previamente permiten agrupar individuos con perfiles de cohesión similares, para describirles en términos de las características de su inclusión social. Los elementos de inclusión son el área preferente de implementación de las políticas públicas y pueden concebirse como habilitadores o disruptores de la cohesión social. Cepal (fc:42) comprende la cohesión social volcada a la igualdad como ``la capacidad de una sociedad y sus instituciones democráticas de promover relaciones sociales de igualdad y generar un sentido de pertenencia y una orientación hacia el bien común de una forma percibida como legítima por sus miembros.'' Esta definición multidimensional resalta la igualdad en las relaciones sociales, el sentido de pertenencia, la orientación hacia el bien común y la legitimidad democrática. La definición describe un proceso e incorpora un elemento normativo destinado a orientar las políticas públicas, consistente con el marco establecido por la Agenda 2030. La habilitación se refiere a elementos de la estructura social (inclusión) que favorecen la orientación de un modelo de cohesión volcado a la igualdad. El proceso de la cohesión social puede también enfrentar disrupciones ya sea estructurales, como exclusión persistente, o coyunturales como los ciclos económicos o recientemente la pandemia asociada al covid-19.
+
+Los factores habilitadores están clasificados en siete grupos: inclusión laboral, edad, educación, nivel de ingreso, etnia, nacionalidad, aislamiento territorial.
 
 ### Inclusión laboral
 
-El acceso al mercado de trabajo se encuentra estrechamente asociado con el bienestar de las personas. En efecto, la superación de la pobreza depende en gran medida de la inserción laboral. En América Latina, Chile no es una excepción, las condiciones de trabajo informal, asociadas con pobreza y precariedad comprenden una parte significativa de la fuerza de trabajo. Las inserciones más débiles en el mercado de trabajo podrían afectar negativamente los niveles de cohesión social. El empleo formal comprende a los ocupados que cumplen con cualquiera de las siguientes condiciones: no poseen contrato laboral, no emiten boletas o facturas, no poseen cobertura de salud, no se encuentran cotizando para su pensión de retiro. 
+El acceso al mercado de trabajo se encuentra estrechamente asociado con el bienestar de las personas. En efecto, la superación de la pobreza depende en gran medida de la inserción laboral. En América Latina, Chile no es una excepción, las condiciones de trabajo informal, asociadas con pobreza y precariedad comprenden una parte significativa de la fuerza de trabajo. Las inserciones más débiles en el mercado de trabajo podrían afectar negativamente los niveles de cohesión social. El empleo formal comprende a los ocupados que cumplen con cualquiera de las siguientes condiciones: no poseen contrato laboral, no emiten boletas o facturas, no poseen cobertura de salud, no se encuentran cotizando para su pensión de retiro.
 
 ```{r include=F}
 data$informal <- factor(data$informal_w03, levels = c(0,1), labels = c("Formal", "Informal"))
@@ -161,7 +160,7 @@ collapse_rows_cohesion <-
                         "Institucionales",
                         "Atomizado",
                         "N=100%"),
-               tablaformal, 
+               tablaformal,
                tablainformal)
 
 ```
@@ -173,12 +172,11 @@ knitr::kable(collapse_rows_cohesion, "html",
                             "Informal"
                             ),
              caption = "Efecto del tipo de empleo sobre las clases de cohesion social") %>%
-  kable_styling(bootstrap_options = c("striped", "hover")) %>% 
+  kable_styling(bootstrap_options = c("striped", "hover")) %>%
   kableExtra::add_header_above(header = c(" "=1, "Tipo de empleo"= 2))
 ```
 
-En la Tabla \@ref(tab:tabla-empleo) se muestra que el empleo formal incrementa la probabilidad de cohesión horizontal, mientras que el informal se encuentra más asociado con la cohesión vertical. Mientras que el empleo formal se asocia con solidaridad, participación cívica y respeto de la diversidad, el empleo informal resalta la identificación nacional y el esfuerzo individual.  
-
+En la Tabla \@ref(tab:tabla-empleo) se muestra que en el empleo formal la clase con mayor proporción es la movilizada. Si bien los informales también son mayoritariamente movilizados (43,6%), en ellos aumenta considerablemente la proporción de la clase institucional (34.1% vs 23.5%).
 
 ### Inclusión social
 
@@ -219,10 +217,10 @@ collapse_rows_cohesion <-
                         "Institucionales",
                         "Atomizado",
                         "N=100%"),
-               tablae1, 
+               tablae1,
                tablae2,
-               tablae3, 
-               tablae4, 
+               tablae3,
+               tablae4,
                tablae5)
 
 ```
@@ -237,11 +235,11 @@ knitr::kable(collapse_rows_cohesion, "html",
                             "Mas de 60"
                             ),
              caption = "Efecto de la edad sobre las clases de cohesion social") %>%
-  kable_styling(bootstrap_options = c("striped", "hover")) %>% 
+  kable_styling(bootstrap_options = c("striped", "hover")) %>%
   kableExtra::add_header_above(header = c(" "=1, "Grupos de edad"= 5))
 ```
 
-El perfil de cohesión horizontal es más probable de encontrar en edades más jóvenes, disminuyendo de manera sostenida a medida que se incrementa la edad. Lo contrario ocurre con la cohesión vertical, que es más probable de aparecer a medida que aumenta la edad. Aunque los datos corresponden a un panel, por el breve periodo que cubre, no es posible establecer si este efecto se debe al paso del tiempo o corresponde a efectos de tipo generacional. 
+El perfil de cohesión movilizada es más probable de encontrar en edades más jóvenes, disminuyendo de manera sostenida a medida que se incrementa la edad. Lo contrario ocurre con la cohesión institucional, que es más probable de aparecer a medida que aumenta la edad. Aunque los datos corresponden a un panel, por el breve periodo que cubre, no es posible establecer si este efecto se debe al paso del tiempo o corresponde a efectos de tipo generacional.
 
 
 -   El **sexo** de las personas afecta sus posibilidades de inclusión atendiendo a las pautas de roles asociadas con una sociedad patriarcal.
@@ -266,7 +264,7 @@ collapse_rows_cohesion <-
                         "Institucionales",
                         "Atomizado",
                         "N=100%"),
-               tablah, 
+               tablah,
                tablam)
 
 ```
@@ -278,13 +276,13 @@ knitr::kable(collapse_rows_cohesion, "html",
                             "Mujer"
                             ),
              caption = "Efecto del sexo sobre las clases de cohesion social") %>%
-  kable_styling(bootstrap_options = c("striped", "hover")) %>% 
+  kable_styling(bootstrap_options = c("striped", "hover")) %>%
   kableExtra::add_header_above(header = c(" "=1, "Sexo"= 2))
 ```
 
-La Tabla \@ref(tab:clases-sexo) indica que los hombres muestran mayor probabilidad de asociación con la cohesión horizontal, mientras que entre las mujeres destaca su mayor propensión a la atomización. No hay diferencias notorias entre hombres y mujeres en el perfil de cohesión vertical. El perfil de cohesión que caracteriza a las mujeres, si bien no es predominante entre ellas, revela que este grupo se encuentra alejado de la cohesión en cualquiera de sus dimensiones. Una parte de ello puede asociarse, posiblemente, con la menor participación laboral y menor participación en el espacio público.
+La Tabla \@ref(tab:clases-sexo) indica que los hombres muestran mayor probabilidad de asociación con la cohesión movilizada, mientras que entre las mujeres destaca su mayor propensión a la atomización en comparación con los hombres. No hay diferencias notorias entre hombres y mujeres en el perfil de cohesión institucional.
 
--   El **acceso a la educación** constituye un fuerte principio estructurador en la sociedad chilena, generalmente asociado con el status socioeconómico y, en sus niveles más altos, con la reproducción en los círculos sociales más deseables. En la medida que la fase de expansión en el acceso a la educación universitaria es relativamente reciente, puede esperarse mayor cohesión social entre las personas que hay tenido mayor exposición al sistema forma de educación. La educación está clasificada en cuatro grupos: Menos que enseñanza media, Enseñanza media Completa, técnica y universitaria. 
+-   El **acceso a la educación** constituye un fuerte principio estructurador en la sociedad chilena, generalmente asociado con el status socioeconómico y, en sus niveles más altos, con la reproducción en los círculos sociales más deseables. En la medida que la fase de expansión en el acceso a la educación universitaria es relativamente reciente, puede esperarse mayor cohesión social entre las personas que hay tenido mayor exposición al sistema forma de educación. La educación está clasificada en cuatro grupos: Menos que enseñanza media, Enseñanza media Completa, técnica y universitaria.
 
 ```{r include=F}
 tabla1 <- addmargins(table(data$lclass, data$m01_w03))
@@ -314,9 +312,9 @@ collapse_rows_cohesion <-
                         "Institucionales",
                         "Atomizado",
                         "N=100%"),
-               tablae1, 
+               tablae1,
                tablae2,
-               tablae3, 
+               tablae3,
                tablae4)
 
 ```
@@ -330,13 +328,13 @@ knitr::kable(collapse_rows_cohesion, "html",
                             "Educacion universitaria o Postgrado"
                             ),
              caption = "Efecto de la educacion sobre las clases de cohesion social") %>%
-  kable_styling(bootstrap_options = c("striped", "hover")) %>% 
+  kable_styling(bootstrap_options = c("striped", "hover")) %>%
   kableExtra::add_header_above(header = c(" "=1, "Nivel educacional"= 4))
 ```
 
-La Tabla  \@ref(tab:clases-educacion) muestra que hay una estrecha asociación entre el acceso a la educación y los perfiles de cohesión social. El perfil horizontal se incrementa junto con el nivel educacional, alcanzando 72.7% entre quienes cuentan con educación universitaria. Por contraste, el perfil de cohesión vertical es más característico de quienes cuentan con menor nivel educacional, alcanzando 50% de quienes cuentan con menos que enseñanza media completa. En cuanto a la atomización, este perfil sólo disminuye significativamente entre quienes cuentan con algún tipo de educación superior. El acceso al sistema educativo favorece la cohesión horizontal y reduce las tendencias a la atomización.
+La Tabla  \@ref(tab:clases-educacion) muestra que hay una estrecha asociación entre el acceso a la educación y los perfiles de cohesión social. El perfil movilizado se incrementa junto con el nivel educacional, alcanzando 72.7% entre quienes cuentan con educación universitaria. Por contraste, el perfil institucional es más característico de quienes cuentan con menor nivel educacional, alcanzando 50% de quienes cuentan con menos que enseñanza media completa. En cuanto a la atomización, este perfil sólo disminuye significativamente entre quienes cuentan con algún tipo de educación superior. El acceso al sistema educativo favorece la cohesión movilizada y reduce las tendencias a la atomización.
 
--   Los **ingresos** de las personas se encuentran estrechamente asociados con los niveles de educación, si bien en niveles menores a la enseñanza superior pueden encontrarse grandes variaciones. Por lo anterior es posible que el nivel de ingresos tenga un efecto independiente de la educación. Los niveles de ingreso están medidos en quintiles, que corresponden gruesamente al ingreso autónomo [ver informe Clases medias en tiempos de crisis](https://drive.google.com/file/d/12PsOPviSGwowOsxzvZn_vhwEoMbyMkl3/view). 
+-   Los **ingresos** de las personas se encuentran estrechamente asociados con los niveles de educación, si bien en niveles menores a la enseñanza superior pueden encontrarse grandes variaciones. Por lo anterior es posible que el nivel de ingresos tenga un efecto independiente de la educación. Los niveles de ingreso están medidos en quintiles, que corresponden gruesamente al ingreso autónomo [ver informe Clases medias en tiempos de crisis](https://drive.google.com/file/d/12PsOPviSGwowOsxzvZn_vhwEoMbyMkl3/view).
 
 ```{r include=F}
 tabla1 <- addmargins(table(data$lclass, data$quintiles_ingresos_w03))
@@ -369,10 +367,10 @@ collapse_rows_cohesion <-
                         "Institucionales",
                         "Atomizado",
                         "N=100%"),
-               tablae1, 
+               tablae1,
                tablae2,
-               tablae3, 
-               tablae4, 
+               tablae3,
+               tablae4,
                tablae5)
 
 ```
@@ -387,21 +385,23 @@ knitr::kable(collapse_rows_cohesion, "html",
                             "Quintil 5"
                             ),
              caption = "Efecto de los quintiles de ingreso sobre las clases de cohesion social") %>%
-  kable_styling(bootstrap_options = c("striped", "hover")) %>% 
+  kable_styling(bootstrap_options = c("striped", "hover")) %>%
   kableExtra::add_header_above(header = c(" "=1, "Quintiles de ingresos"= 5))
 ```
 
-La Tabla \@ref(tab:clases-ingresos) indica que los efectos del ingreso muestran que la asociación con la cohesión horizontal se incrementa junto con el ingreso, mientras que la cohesión institucional vertical se encuentra con más probabilidad en los ingresos más bajos. La atomización sólo disminuye significativamente en el quintil de mayor ingreso. Dada la alta asociación entre ingresos y educación no es posible establecer el efecto neto del ingreso y la educación.  
+La Tabla \@ref(tab:clases-ingresos) muestra que la asociación con la cohesión movilizada se incrementa junto con el ingreso, mientras que la cohesión institucional se encuentra con más probabilidad en los ingresos más bajos. La atomización sólo disminuye significativamente en el quintil de mayor ingreso. Dada la alta asociación entre ingresos y educación no es posible establecer el efecto neto del ingreso y la educación.
 
--   La **segregación territorial**, especialmente la que se encuentra asociada con el nivel socioeconómico constituye un rasgo distintivo de los países latinoamericanos, del cual Chile no escapa. Por la naturaleza de los datos, no es posible hacer distinciones entre rural y urbano. Un primer nivel de la segregación se refiere a la dominancia urbana que posee la capital del país, asociada también con acceso a mejores servicios, por lo que se pueden esperar diferentes niveles de cohesión social al comparar Santiago y el resto de las regiones.
+### Factores territoriales
 
--   El concepto de **aislamiento social de los territorios** fue acuñado por William Julius Wilson para explicar la condición de áreas urbanas de Chicago caracterizadas por concentración de la pobreza, desempleo, bajos niveles de escolaridad y reducida integración en la fuerza de trabajo. Su explicación apunta a que la vida en un vecindario donde la mayor parte de la población se encuentra en una situación de desventaja social constriñe las oportunidades de inclusión social. Los elementos de desventaja social pueden especificarse con el acceso a recursos públicos tales como servicios públicos, conectividad, fuentes de trabajo y centros de consumo. En los territorios limitados en estos aspectos sería más improbable que florezca la cohesión social.
+La **segregación territorial**, especialmente la que se encuentra asociada con el nivel socioeconómico constituye un rasgo distintivo de los países latinoamericanos, del cual Chile no escapa. Por la naturaleza de los datos, no es posible hacer distinciones entre rural y urbano. Un primer nivel de la segregación se refiere a la dominancia urbana que posee la capital del país, asociada también con acceso a mejores servicios, por lo que se pueden esperar diferentes niveles de cohesión social al comparar Santiago y el resto de las regiones.
 
-La literatura sobre barrios en los comportamientos individuales muestra resultados matizados en cuanto a los efectos de exposición a la diversidad. Idealmente, el contacto entre personas diversas debiera favorecer la tolerancia y el respeto, si bien algunos destacan que también ello puede desatar conflictos y competencia. En Chile se ha mostrado que las diferencias socioeconómicas en el entorno poseen efectos negativos sobre la sociabilidad, mientras que las diferencias étnicas y culturales favorecen la sociabilidad (Garretón et al 2021). 
+El concepto de **aislamiento social de los territorios** fue acuñado por William Julius Wilson para explicar la condición de áreas urbanas de Chicago caracterizadas por concentración de la pobreza, desempleo, bajos niveles de escolaridad y reducida integración en la fuerza de trabajo. Su explicación apunta a que la vida en un vecindario donde la mayor parte de la población se encuentra en una situación de desventaja social constriñe las oportunidades de inclusión social. Los elementos de desventaja social pueden especificarse con el acceso a recursos públicos tales como servicios públicos, conectividad, fuentes de trabajo y centros de consumo. En los territorios limitados en estos aspectos sería más improbable que florezca la cohesión social.
 
-En las siguientes tablas revisamos los efectos de los recursos disponibles en barrios sobre los niveles de cohesión. Operativamente se entiende por barrio el área establecida por el radio de un kilómetro desde el centro de la manzana en que se ubica el respondente. Los datos ELSOC se encuentran georeferenciados, por lo que se pueden asociar con características de los territorios obtenidas de censos nacionales o datos administrativos. 
+La literatura sobre el efecto de los barrios en los comportamientos individuales muestra resultados matizados en cuanto a los efectos de exposición a la diversidad. Idealmente, el contacto entre personas diversas debiera favorecer la tolerancia y el respeto, si bien algunos destacan que también ello puede desatar conflictos y competencia. En Chile se ha mostrado que las diferencias socioeconómicas en el entorno poseen efectos negativos sobre la sociabilidad, mientras que las diferencias étnicas y culturales favorecen la sociabilidad [@garreton_social_2021]
 
-la Tabla \@ref(tab:clases-escolaridad) presenta la dispersión de niveles educacionales de los sostenedores del hogar en el barrio del respondente. Este indicador está calculado a partir de la zona censal del CENSO 2017. La dispersión fue segmentada en cuartiles de forma que los niveles de mayor dispersión están representados por el cuartil 4. El gráfico muestra el 25% de entrevistados que se encuentran en barrios de mayor dispersión educativa. 
+En las siguientes tablas revisamos los efectos de los recursos disponibles en barrios sobre los niveles de cohesión. Operativamente se entiende por barrio el área establecida por el radio de un kilómetro desde el centro de la manzana en que se ubica el respondente. Los datos ELSOC se encuentran georeferenciados, por lo que se pueden asociar con características de los territorios obtenidas de censos nacionales o datos administrativos.
+
+la Tabla \@ref(tab:clases-escolaridad) presenta la dispersión de niveles educacionales de los sostenedores del hogar en el barrio del respondente. Este indicador está calculado a partir de la zona censal del CENSO 2017. La dispersión fue segmentada en cuartiles de forma que los niveles de mayor concentración de alta escolaridad están representados por el cuartil 4 (25% superior), mientras quienes se encuentran en lugares con menor concentración de alta escolaridad (o mayor dispersión de niveles educacionales en el entorno) comprenden los cuartiles 1 al 3 (75% inferior).
 
 ```{r include=F}
 tabla1 <- addmargins(table(data$lclass, data$percent_sded))
@@ -422,7 +422,7 @@ collapse_rows_cohesion <-
                         "Institucionales",
                         "Atomizado",
                         "N=100%"),
-               tablah, 
+               tablah,
                tablam)
 
 ```
@@ -434,13 +434,13 @@ knitr::kable(collapse_rows_cohesion, "html",
                             "Alta escolaridad"
                             ),
              caption = "Efecto del promedio de escolaridad del barrio sobre las clases de cohesion social") %>%
-  kable_styling(bootstrap_options = c("striped", "hover")) %>% 
+  kable_styling(bootstrap_options = c("striped", "hover")) %>%
   kableExtra::add_header_above(header = c(" "=1, "Promedio de años de escolaridad sostenedor del hogar (sd)"= 2))
 ```
-   
-La mayor dispersión educativa en los barrios se encuentra asociada con un perfil de cohesión vertical, mientras que la menor dispersión se encuentra asociada tanto con la cohesión horizontal como con la cohesión. Los resultados pueden interpretarse en términos de segregación residencial. Los respondentes que corresponden al perfil de cohesión horizontal son hombres, de mayor escolaridad, con empleos formales e ingresos relativamente altos. La asociación de la cohesión horizontal con barrios menos diversos parece asociarse con la segregación socioeconómica de la ciudad. De forma similar, el perfil atomizado también se presenta en barrios homogéneos en términos educativos, en este caso con bajos niveles. La mixidad educacional del barrio se asocia con más probabilidad a un perfil de cohesión vertical.  
-   
-La Tabla \@ref(tab:clases-ocupados) presenta la dispersión del porcentaje de ocupados en el barrio utilizando nuevamente una segmentación por cuartiles para los niveles de ocupación. Este indicador también está calculado a partir de la zona censal del CENSO 2017. A nivel individual, la inserción en el mercado de trabajo, especialmente en ocupaciones formales favorece la cohesión horizontal. El barrio debiera reforzar este efecto. 
+
+Quienes viven en barrios con una mayor concentración de alta educación se caracterizan por un perfil institucional, mientras aquellos que viven en barrios con menor nivel educacional son mayoritariamente movilizados y también comparativamente más atomizados.
+
+La Tabla \@ref(tab:clases-ocupados) presenta la dispersión del porcentaje de ocupados en el barrio utilizando nuevamente una segmentación por cuartiles para los niveles de ocupación. Este indicador también está calculado a partir de la zona censal del CENSO 2017. A nivel individual, la inserción en el mercado de trabajo, especialmente en ocupaciones formales favorece la cohesión movilizada. El barrio debiera reforzar este efecto.
 
 
 ```{r include=F}
@@ -462,7 +462,7 @@ collapse_rows_cohesion <-
                         "Institucionales",
                         "Atomizado",
                         "N=100%"),
-               tablah, 
+               tablah,
                tablam)
 
 ```
@@ -474,50 +474,11 @@ knitr::kable(collapse_rows_cohesion, "html",
                             "Alta cantidad de ocupados"
                             ),
              caption = "Efecto de la cantidad de trabajadores ocupados sobre las clases de cohesion social") %>%
-  kable_styling(bootstrap_options = c("striped", "hover")) %>% 
+  kable_styling(bootstrap_options = c("striped", "hover")) %>%
   kableExtra::add_header_above(header = c(" "=1, "Cantidad de trabajadores ocupados"= 2))
 ```
 
-En barrios con mayor porcentaje de ocupados también se aprecia esta asociación. La cohesión vertical se encuentra con mayor probabilidad en barrios con menor porcentaje de ocupados. Los efectos de la inserción laboral en el mercado de trabajo deben interpretarse con mayores antecedentes, porque es probable que se encuentren asociados con empleos de menor calidad.
-
-La carga de los inactivos condiciona en gran medida las posibilidades de progreso de los hogares. La Tabla \@ref(tab:clases-inactivos) presenta la dispersión del porcentaje de inactivos segmentando por cuartiles. Este indicador, al igual que los dos anteriores, está calculado a partir de la zona censal del CENSO 2017.. 
-
-```{r include=F}
-tabla1 <- addmargins(table(data$lclass, data$percent_inactivo))
-tabla1 <- as.data.frame(tabla1)
-tabla2 <- round(prop.table(table(data$lclass, data$percent_inactivo),2),3)*100
-tabla2 <- as.data.frame(tabla2)
-
-tablah <- tabla2 %>% filter(Var2=="1") %>% select(Freq)
-tablahtot <- tabla1 %>% filter(Var1=="Sum" & Var2=="1") %>% select(Freq)
-tablah <- rbind(tablah, tablahtot)
-
-tablam <- tabla2 %>% filter(Var2=="2") %>% select(Freq)
-tablamtot <- tabla1 %>% filter(Var1=="Sum" & Var2=="2") %>% select(Freq)
-tablam <- rbind(tablam, tablamtot)
-
-collapse_rows_cohesion <-
-    data.frame(vars = c("Movilizados",
-                        "Institucionales",
-                        "Atomizado",
-                        "N=100%"),
-               tablah, 
-               tablam)
-
-```
-
-```{r clases-inactivos, echo=FALSE, fig.cap="Efecto de la cantidad de personas inactivas sobre las clases de cohesion social", fig.align = 'center', out.width = '100%',out.height='100%'}
-knitr::kable(collapse_rows_cohesion, "html",
-             col.names =  c("Clases de cohesión social",
-                            "Menor cantidad de inactivos",
-                            "Alta cantidad de inactivos"
-                            ),
-             caption = "Efecto de la cantidad de personas inactivas sobre las clases de cohesion social") %>%
-  kable_styling(bootstrap_options = c("striped", "hover")) %>% 
-  kableExtra::add_header_above(header = c(" "=1, "Cantidad de trabajadores inactivos"= 2))
-```
-
-No hay efectos de los inactivos en el barrio sobre los perfiles de cohesión social. #considerar eliminar#
+En barrios con mayor porcentaje de ocupados también se aprecia esta asociación. La cohesión institucional se encuentra con mayor probabilidad en barrios con menor porcentaje de ocupados. Los efectos de la inserción laboral en el mercado de trabajo deben interpretarse con mayores antecedentes, porque es probable que se encuentren asociados con empleos de menor calidad.
 
 Los trabajadores sin ocupación están generalmente asociados con empleos de menor estabilidad, lo cual redunda en condiciones desmejoradas de vida. La Tabla \@ref(tab:clases-cesantes) presenta la dispersión de los trabajadores que buscan empleo en el barrio del respondente, segmentada por cuartiles y que está calculado a partir de la zona censal del CENSO 2017.
 
@@ -541,7 +502,7 @@ collapse_rows_cohesion <-
                         "Institucionales",
                         "Atomizado",
                         "N=100%"),
-               tablah, 
+               tablah,
                tablam)
 
 ```
@@ -553,52 +514,12 @@ knitr::kable(collapse_rows_cohesion, "html",
                             "Alta cantidad de cesantes"
                             ),
              caption = "Efecto de la cantidad de trabajadores cesantes sobre las clases de cohesion social") %>%
-  kable_styling(bootstrap_options = c("striped", "hover")) %>% 
+  kable_styling(bootstrap_options = c("striped", "hover")) %>%
   kableExtra::add_header_above(header = c(" "=1, "Cantidad de trabajadores buscando empleo"= 2))
 ```
 
-Los respondentes con perfil de atomización se ubican en barrios con mayores niveles de desempleo, probablemente caracterizados por condiciones de vida desmejoradas. El perfil de cohesión vertical se encuentra con más probabildad en barrios con pocos desempleados.
+Los respondentes con perfil de atomización se ubican en barrios con mayores niveles de desempleo, probablemente caracterizados por condiciones de vida desmejoradas. El perfil de cohesión institucional se encuentra con más probabildad en barrios con pocos desempleados.
 
-   -   Acceso areas verdes en radio de 15 min a pie
-```{r include=F}
-tabla1 <- addmargins(table(data$lclass, data$percent_acver))
-tabla1 <- as.data.frame(tabla1)
-tabla2 <- round(prop.table(table(data$lclass, data$percent_acver),2),3)*100
-tabla2 <- as.data.frame(tabla2)
-
-tablah <- tabla2 %>% filter(Var2=="1") %>% select(Freq)
-tablahtot <- tabla1 %>% filter(Var1=="Sum" & Var2=="1") %>% select(Freq)
-tablah <- rbind(tablah, tablahtot)
-
-tablam <- tabla2 %>% filter(Var2=="2") %>% select(Freq)
-tablamtot <- tabla1 %>% filter(Var1=="Sum" & Var2=="2") %>% select(Freq)
-tablam <- rbind(tablam, tablamtot)
-
-
-collapse_rows_cohesion <-
-    data.frame(vars = c("Movilizados",
-                        "Institucionales",
-                        "Atomizado",
-                        "N=100%"),
-               tablah, 
-               tablam)
-
-```
-
-```{r echo=FALSE, fig.align = 'center', out.width = '100%',out.height='100%'}
-knitr::kable(collapse_rows_cohesion, "html",
-             col.names =  c("Clases de cohesión social",
-                            "Menor acceso a areas verdes",
-                            "Alto acceso a areas verdes"
-                            ),
-             caption = "Distribucion de las clases de cohesion social por region") %>%
-  kable_styling(bootstrap_options = c("striped", "hover")) %>% 
-  kableExtra::add_header_above(header = c(" "=1, "Acceso a areas verdes"= 2))
-```
-
-Accesibilidad de áreas verdes considerando e ajuste entre oferta (m2 de áreas verdes) y demanda (población) en un radio de 15 minutos a pie, a nivel de manzana (CIT).
-
-No hay asociación significativa entre el acceso a áreas verdes y los perfiles de cohesión social. #considerar eliminar# 
 
   -   Acceso a colegios en radio de 15 min a pie
 ```{r include=F}
@@ -621,7 +542,7 @@ collapse_rows_cohesion <-
                         "Institucionales",
                         "Atomizado",
                         "N=100%"),
-               tablah, 
+               tablah,
                tablam)
 
 ```
@@ -633,15 +554,14 @@ knitr::kable(collapse_rows_cohesion, "html",
                             "Alto acceso a colegios"
                             ),
              caption = "Efecto del acceso a colegios sobre las clases de cohesion social") %>%
-  kable_styling(bootstrap_options = c("striped", "hover")) %>% 
+  kable_styling(bootstrap_options = c("striped", "hover")) %>%
   kableExtra::add_header_above(header = c(" "=1, "Acceso a colegios"= 2))
 ```
 
-La Tabla \@ref(tab:clases-acced) muestra que los respondentes que corresponden al perfil de cohesión institucional se encuentran con más probabilidad en barrios que cuentan con alta proximidad a establecimientos educacionales. En cambio, quienes corresponden al perfil movilizado se encuentran comparativamente en barrios más distantes de los establecimientos educacionales. #aclarar el cálculo. Esto es difícil de interpretar# 
+La Tabla \@ref(tab:clases-acced) muestra que los respondentes que corresponden al perfil de cohesión institucional se encuentran con más probabilidad en barrios que cuentan con alta proximidad a establecimientos educacionales. En cambio, quienes corresponden al perfil movilizado se encuentran comparativamente en barrios más distantes de los establecimientos educacionales.
 
-Accesibilidad de colegios considerando el ajuste entre oferta (matriculas) y demanda (población en edad escolar) en un radio de 15 minutos a pie, a nivel de manzana (CIT).
+La siguente tabla muestra la relación entre perfiles de cohesión social y la accesibilidad de colegios considerando el ajuste entre oferta (matriculas) y demanda (población en edad escolar) en un radio de 15 minutos a pie, a nivel de manzana (CIT).
 
-   -   Acceso a servicios en radio de 15 min a pie #aclarar definición de servicios# 
 ```{r include=F}
 tabla1 <- addmargins(table(data$lclass, data$percent_accs))
 tabla1 <- as.data.frame(tabla1)
@@ -661,7 +581,7 @@ collapse_rows_cohesion <-
                         "Institucionales",
                         "Atomizado",
                         "N=100%"),
-               tablah, 
+               tablah,
                tablam)
 
 ```
@@ -673,15 +593,13 @@ knitr::kable(collapse_rows_cohesion, "html",
                             "Alto acceso a servicios"
                             ),
              caption = "Efecto del acceso a servicios y equipamientos publicos sobre las clases de cohesion social") %>%
-  kable_styling(bootstrap_options = c("striped", "hover")) %>% 
+  kable_styling(bootstrap_options = c("striped", "hover")) %>%
   kableExtra::add_header_above(header = c(" "=1, "Acceso a servicios publicos"= 2))
 ```
 
-La Tabla \@ref(tab:clases-accser) muestra que los respondentes que corresponden a un perfil de cohesión horizontal se ubican en barrios con alto acceso a servicios públicos, mientras que los respondentes de perfil atomizado se ubican en barrios con escaso acceso a servicios públicos. No hay diferencia notoria en el perfil de cohesión vertical. 
+La Tabla \@ref(tab:clases-accser) muestra que los respondentes que corresponden a un perfil de cohesión movilizada se ubican en barrios con alto acceso a servicios públicos, mientras que los respondentes de perfil atomizado se ubican en barrios con escaso acceso a servicios públicos. No hay diferencia notoria en el perfil de cohesión institucional.
 
-Accesibilidad a servicios y equipamientos públicos, considerando el ajuste entre oferta (numero y tamaño de equipamientos) y demanda (poblacion) en un radio de 15 minutos a pie (aprox 1 km), a nivel de manzana (CIT).
-
--   La **pertenencia a pueblos indígenas** ha estado asociado con bajos niveles de inclusión social. Por mucho tiempo invisibilizada, en las últimas dos décadas el estado chileno ha reconocido la existencia de pueblos indígenas acordando diversos beneficios sociales asociados con esta condición. Como contrapartida, el reconocimiento de la condición de indígena ha conllevado a un fortalecimiento de la identidad étnica.
+La **pertenencia a pueblos indígenas** ha estado asociado con bajos niveles de inclusión social. Por mucho tiempo invisibilizada, en las últimas dos décadas el estado chileno ha reconocido la existencia de pueblos indígenas acordando diversos beneficios sociales asociados con esta condición. Como contrapartida, el reconocimiento de la condición de indígena ha conllevado a un fortalecimiento de la identidad étnica.
 
 ```{r include=F}
 tabla1 <- addmargins(table(data$lclass, data$etnia_rec))
@@ -702,7 +620,7 @@ collapse_rows_cohesion <-
                         "Institucionales",
                         "Atomizado",
                         "N=100%"),
-               tablah, 
+               tablah,
                tablam)
 
 ```
@@ -714,13 +632,13 @@ knitr::kable(collapse_rows_cohesion, "html",
                             "Pertenece a una etnia"
                             ),
              caption = "Efecto de la pertenencia a una etnia sobre las clases de cohesion social") %>%
-  kable_styling(bootstrap_options = c("striped", "hover")) %>% 
+  kable_styling(bootstrap_options = c("striped", "hover")) %>%
   kableExtra::add_header_above(header = c(" "=1, "Etnia"= 2))
 ```
 
-La Tabla \@ref(tab:clases-etnia) muestra que los respondentes que declaran pertenecer a una etnia se asocian con más probabilidad a un perfil de cohesión horizontal, mientras que quienes no se identifican con alguna etnia se asocian con más probabilidad a un perfil de tipo vertical. El reconocimiento de la condición étnica, específicamente la pertenencia a un pueblo indígena se encuentra asociado con mayor participación cívica y respeto a la diversidad.
+La Tabla \@ref(tab:clases-etnia) muestra que los respondentes que declaran pertenecer a una etnia se asocian con más probabilidad a un perfil de cohesión movilizada, mientras que quienes no se identifican con alguna etnia se asocian con más probabilidad a un perfil de tipo institucional. El reconocimiento de la condición étnica, específicamente la pertenencia a un pueblo indígena se encuentra asociado con mayor participación cívica y respeto a la diversidad.
 
--   Vinculado con lo anterior, en la última década la condición étnica ha sido progresivamente asociada con la **condición de migrante**. El pequeño número de migrantes en la muestra no permite, lamentablemente, elaborar sobre este aspecto.  
+Vinculado con lo anterior, en la última década la condición étnica ha sido progresivamente asociada con la **condición de migrante**.
 
 ```{r include=F}
 tabla1 <- addmargins(table(data$lclass, data$nacion_rec))
@@ -741,7 +659,7 @@ collapse_rows_cohesion <-
                         "Institucionales",
                         "Atomizado",
                         "N=100%"),
-               tablah, 
+               tablah,
                tablam)
 
 ```
@@ -753,8 +671,8 @@ knitr::kable(collapse_rows_cohesion, "html",
                             "Otra nacionalidad"
                             ),
              caption = "Efecto de la condicion de migracion sobre las clases de cohesion social") %>%
-  kable_styling(bootstrap_options = c("striped", "hover")) %>% 
+  kable_styling(bootstrap_options = c("striped", "hover")) %>%
   kableExtra::add_header_above(header = c(" "=1, "Nacionalidad"= 2))
 ```
 
-La Tabla \@ref(tab:clases-nacion) indica que los chilenos muestran una asociación más probable con un perfil de cohesión horizontal. Si bien los migrantes se encuentran más asociados con un perfil de atomización, el pequeño número de migrantes en la muestra no permite afirmar que la pauta sea representativa de esta población. #considerar no presentar la tabla# 
+La Tabla \@ref(tab:clases-nacion) indica que los chilenos muestran una asociación más probable con un perfil de cohesión movilizada. Si bien los migrantes se encuentran más asociados con un perfil de atomización, el pequeño número de migrantes en la muestra no permite afirmar que la pauta sea representativa de esta población.
