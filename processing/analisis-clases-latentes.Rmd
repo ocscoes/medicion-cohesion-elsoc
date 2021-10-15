@@ -122,7 +122,7 @@ fit.indices
   print(levels(datlca_tot_parl$variable))
   
     # Relabel factors
-    datlca_tot_parl$variable=factor(datlca_tot_parl$variable, labels=c("Confianza", "Diversidad", "Lazos", "Identificación", "Justicia", "Conf. Instituciones",   "Solidaridad", "Participación", "Territorial"))
+    datlca_tot_parl$variable=factor(datlca_tot_parl$variable, levels=c("Confianza", "Diversidad", "Lazos", "Identificación", "Justicia", "Conf. Instituciones", "Territorial",  "Solidaridad", "Participación"))
     
     lca3$P # class size
     datlca_tot_parl$class=factor(datlca_tot_parl$class,labels=c("Movilizados (42%)", "Institucionales (32%)", "Atomizados (26%)"))
@@ -187,7 +187,7 @@ elsoc_lca3<- cbind(cohesion_med, "lclass" = lca3$predclass)
 elsoc_lca3<- as.data.frame(dplyr::select(elsoc_lca3, idencuesta, lclass))
 
 data <- dplyr::left_join(data, elsoc_lca3, by="idencuesta")
-data$lclass <- factor(data$lclass, levels = c(1,2,3), labels = c("Movilizados", "Institucionales", "Atomizado"))
+data$lclass <- factor(data$lclass, levels = c(1,2,3), labels = c("Institucional", "Movilizado", "Atomizado"))
 
 save(data, file = "input/data/proc/data_clases.RData")
 ```
