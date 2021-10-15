@@ -8,47 +8,11 @@ editor_options:
 
 <div style="text-align: justify">
 
-Este capítulo tiene como finalidad analizar la evolución de la opinión de las personas entre 2016 y 2020 respecto de las distintas dimensiones de la cohesión social presentadas en el capítulo 1. A través de este análisis longitudinal, se muestra no sólo la evaluación de la frecuencia de las respuestas, sino que además los cambios de opiniones de los respondentes entre olas. Estos cambios son representados con gráficos fluviales o aluviales. Recordamos que usamos las olas disponibles para cada dimensión de cohesión social construida en base a los indicadores detallados en el capítulo anterior.
+Este capítulo tiene como finalidad analizar la evolución de la opinión de las personas entre 2016 y 2020 respecto de las distintas dimensiones de la cohesión social presentadas en el capítulo 1. A través de este análisis longitudinal, se muestra no sólo la variación de la frecuencia de las respuestas en el tiempo, sino que además los cambios de opiniones de los respondentes entre olas. Estos cambios son representados con gráficos fluviales o aluviales. Recordamos que usamos las olas disponibles para cada dimensión de cohesión social construida en base a los indicadores detallados en el capítulo anterior.
 
-***
+El análisis presentado a continuación es de tipo descriptivo y de resumen, antes de pasar a la tercera parte del informe, que aborda los habilitadores e inhibidores de la cohesión social de manera más explicativa. Aquí no ahondamos en determinantes de la cohesión social, sino que presentamos información resumida en el tiempo para cerrar la primera parte del informe.
 
-_Recuadro metodológico: ¿Cómo leer un gráfico fluvial?_
-
-Este tipo de diagrama muestra el cambio en el tiempo mediante flujos, usando una metáfora visual. Se trata de una representación esquemática y dinámica inspirada en el diagrama de Sankey, usado para dar cuenta de flujos energéticos. Su nombre proviene de los flujos - o clusters para fines de la lectura - que genera el agua y los diferentes arroyos contiguos que se forman de una misma fuente. Cada año funciona como un histograma apilado, donde la altura de cada barra indica el tamaño del cluster. Con la sucesión de los años, se observan los cambios en la composición de los clusters mediante los flujos. La amplitud de los flujos muestra el tamaño de los grupos de personas que cambian de opinión de un año a otro. Permiten a la vez ver la evolución de las categorías, así como los cambios y transiciones entre categorías y años. Los colores permiten visualizar las principales transiciones entre categorías [@rosvall_mapping_2010]. Como no hay personas que salen de la muestra entre las cinco mediciones, no existen pérdidas en este gráfico.
-
-***
-
-El análisis presentado a continuación es de tipo descriptivo y de resumen, antes de pasar a la tercera parte del informe, que aborda los habilitadores e inhabilitadores de la cohesión social de manera más explicativa. Aquí no ahondamos en determinantes de la cohesión social, sino que presentamos información resumida en el tiempo para cerrar la primera parte del informe.
-
-A continuación, se presenta el análisis ordenado por dimensiones y subdimensiones, con una comparación longitudinal entre las olas. Los gráficos fueron realizados solo con los respondentes de la muestra original, quienes han participado en las cinco olas, es decir 1492 casos.
-
-Recordamos a continuación las dimensiones y subdimensiones analizadas:
-
-- Dimensión relaciones sociales de igualdad:
-
-  - confianza interpersonal
-
-  - reconocimiento y respecto de la diversidad
-
-  - lazos
-
-- Dimensión sentido de pertenencia:
-
-  - identificación con el país
-
-  - percepción de justicia
-
-  - confianza institucional
-
-- Dimensión orientación hacia el bien común:
-
-  - solidaridad
-
-  - participación cívica
-
-- Cohesión territorial
-
-Adelantamos que  en términos generales, existe poca varianza en los indicadores descritos a continuación en términos del tamaño de las categorías, pero pondremos el foco en quienes cambian de opinión de una ola a otra, que es uno de los aportes centrales de los gráficos fluviales. La finalidad de esta sección no es presentar gatilladores del estallido social, tarea explicativa de una envergadura superior a lo que los datos permiten decir, sino que mostrar la evolución general en los últimos cinco años de las dimensiones constitutivas del sentido de pertenencia en Chile.
+Adelantamos que  en términos generales, existe poca varianza en los indicadores descritos a continuación en términos del tamaño de las categorías, pero pondremos el foco en quienes cambian de opinión de una ola a otra, que es uno de los aportes centrales del análisis longitudinal (que se representa en gráficos fluviales). La finalidad de esta sección es mostrar la evolución general en los últimos cinco años de las dimensiones constitutivas del sentido de pertenencia en Chile.
 
 También señalamos que estos gráficos resumen una gran cantidad de información, la descrita en las secciones anteriores y la presenta gráficamente en una dimensión de tiempo, por lo que su meta es mostrar tendencias generales. Este tipo de gráfico es de uso reciente en Chile (ELSOC, 2020).
 
@@ -68,15 +32,23 @@ knitr::include_graphics(path = "output/graphs/alluvial_conf_interpersonal.png")
 
 ```
 
-En general, en la Figura \@ref(fig:alluvial-conf-interpersonal) se observa una importante desconfianza hacia los demás en todas las olas, tal como era de esperarse en Chile, variando muy levemente entre un 66,6% (2016) a un 72,2% (2020). Las personas confiadas son absolutamente minoritarias, manteniéndose cerca de un 5% en la primera y la última ola, con un leve aumento en las olas intermedias. Esta respuesta varía poco en todo caso, manteniéndose alrededor de la cuarta parte de las respuestas para todas las olas, sin mayores variaciones.
+En general, en la Figura \@ref(fig:alluvial-conf-interpersonal) se observa una importante desconfianza hacia los demás en todas las olas, tal como era de esperarse en Chile, variando muy levemente entre un 66,6% (2016) a un 72,2% (2020). Las personas confiadas son absolutamente minoritarias, manteniéndose cerca de un 5% en la primera y la última ola, con un leve aumento en las olas intermedias. Esta respuesta cambia poco en todo caso, manteniéndose alrededor de la cuarta parte de las respuestas para todas las olas, sin mayores variaciones.
 
 En cuanto a las variaciones entre olas y entre respondentes, se observan algunos cambios de respuesta, aunque la mayor parte de quienes contestaron no mantiene su opinión a lo largo del período (alrededor del 50% de los respondentes de la totalidad de la muestra). Los principales cambios son hacia la categoría “depende”. Casi nadie cambia completamente de opinión en cuanto a confianza hacia las otras personas, salvo entre las olas 2016 y 2017, cuando el flujo es un poco más importante que en otros años. En cambio, respecto de las personas que señalan que “depende”, en todos los años, se mantiene una mitad en la misma opción, mientras un grupo importante se cambia al grupo que expresa desconfianza hacia los demás en todos los años.
 
-El estallido del 2019 no alteró sustancialmente la percepción para el conjunto de la muestra en este elemento central de la cohesión social. La alta desconfianza interpersonal en Chile es una dimensión central de la cohesión social y no parece alterarse en el corto plazo, como se indica en este gráfico.
+El estallido no alteró sustancialmente la percepción para el conjunto de la muestra en este elemento central de la cohesión social. La alta desconfianza interpersonal en Chile es una dimensión central de la cohesión social y no parece alterarse en el corto plazo, como se indica en este gráfico.
+
+***
+
+_Recuadro metodológico: ¿Cómo leer un gráfico fluvial?_
+
+Este tipo de diagrama muestra el cambio en el tiempo mediante flujos, usando una metáfora visual. Se trata de una representación esquemática y dinámica inspirada en el diagrama de Sankey, usado para dar cuenta de flujos energéticos. Su nombre proviene de los flujos - o clusters para fines de la lectura - que genera el agua y los diferentes arroyos contiguos que se forman de una misma fuente. Cada año funciona como un histograma apilado, donde la altura de cada barra indica el tamaño del cluster. Con la sucesión de los años, se observan los cambios en la composición de los clusters mediante los flujos. La amplitud de los flujos muestra el tamaño de los grupos de personas que cambian de opinión de un año a otro. Permiten a la vez ver la evolución de las categorías, así como los cambios y transiciones entre categorías y años. Los colores permiten visualizar las principales transiciones entre categorías [@rosvall_mapping_2010]. Como no hay personas que salen de la muestra entre las cinco mediciones, no existen pérdidas en este gráfico.
+
+***
 
 ### Reconocimiento y respeto de la diversidad
 
-Los items que componen este indicador son:
+Los ítems que componen este indicador son:
 
 -	Grado de confianza con personas homosexuales
 
@@ -90,7 +62,7 @@ knitr::include_graphics(path = "output/graphs/alluvial_diversidad.png")
 
 ```
 
-Contamos solo con dos olas y no se incluye la del 2020, por lo que es poco interpretable en términos longitudinales. De todas formas se realiza el ejercicio de análisis.
+Contamos solo con dos olas ya que estos ítems no se incluyen en la ola 2020 de ELSOC, por lo que es poco interpretable en términos longitudinales. De todas formas se realiza el ejercicio de análisis.
 
 En general, en la Figura \@ref(fig:alluvial-diversidad) las respuestas son muy estables en frecuencia entre las dos olas para el reconocimiento y el respeto de la diversidad. La categoría más numerosa es la intermedia, es decir “algo”, del 38% de las respuestas, es decir con un grado moderado de confianza hacia personas que la sociedad asume como diferentes. Si sumamos “nada” y “poca” confianza hacia personas diversas, por un lado, se suma alrededor del 33% de las respuestas en ambas olas, mientras al añadir las respuestas “bastante” y “mucha”, la frecuencia es un poco mayor a las respuestas desconfiadas hacia la diversidad, alrededor del 27%. Observamos por lo tanto casi tres tercios equilibrados y constantes al agrupar las respuestas.
 
@@ -110,7 +82,7 @@ En general, en la Figura \@ref(fig:alluvial-lazos) se observa una importante est
 
 En cuanto a las variaciones entre olas y entre respondentes, las frecuencias varían significativamente de una ola a otra, salvo para las categorías con mayores contactos en diferentes ocupaciones, que mayoritariamente se mantienen (de 6 a 10 y más de 10). Los cambios más importantes, dentro de la minoría que cambia de respuesta, se da hacia categorías colindantes, sin cambios entre categorías extremas.
 
-En resumen, el número de personas que los respondentes declaran conocer con diferentes ocupaciones es un indicador estable de cohesión social para el período completo, pero con importantes cambios de respuesta entre las mismas personas de una ola a otra.
+En resumen, el número de personas que los respondentes declaran conocer con diferentes ocupaciones es un indicador relativamente estable de cohesión social para el período completo, pero con importantes cambios de respuesta entre las mismas personas de una ola a otra.
 
 ## Sentido de pertenencia
 
@@ -122,7 +94,7 @@ Los ítems que componen este indicador son
 
 -	Me identifico con Chile
 
-```{r alluvial-identificacion, echo=FALSE, fig.cap="Cambios en la subdimensión identificaci?n con el pais.", fig.align = 'center', out.width = '100%',out.height='100%'}
+```{r alluvial-identificacion, echo=FALSE, fig.cap="Cambios en la subdimensión identificacion con el pais.", fig.align = 'center', out.width = '100%',out.height='100%'}
 
 knitr::include_graphics(path = "output/graphs/alluvial_identificacion.png")
 
@@ -174,7 +146,7 @@ knitr::include_graphics(path = "output/graphs/alluvial_conf_institucional.png")
 
 En general, al igual que para el ítem de confianza entre personas, en la Figura \@ref(fig:alluvial-conf-institucional) se observa que el ítem de confianza institucional es muy reducido en Chile entre los respondentes, quienes mayoritariamente confían “Nada o poco” en las instituciones del país, en este caso el gobierno, el presidente o los partidos políticos. Era de esperarse, pero corresponde a una de las mayores brechas en la cohesión, con un aumento notorio en el 2019 (pasando de 70% a un 91%), antes de bajar nuevamente en 2020, pero de forma muy leve. El salto entre 2018 y 2019 es uno de los mayores observados en este capítulo, correspondiente al aumento del malestar de los ciudadanos frente a la ausencia de respuestas a sus demandas. Finalmente, la categoría “Bastante o mucha” confianza se mantiene muy baja en todas las olas, llegando a un máximo del 6% en 2018, antes de bajar casi a cero en 2020.
 
-En cuanto a las variaciones entre olas y entre respondentes, las personas desconfianza mantienen masivamente su preferencia de un año a otro. Otro elemento de preocupación es que entre las personas que tenían “Algo de confianza” al inicio de la medición muestran en general una opinión poco estable de una ola a otra, con una fuga cada vez más importante hasta el 2018 hacia la categoría “Nada o poca confianza”. Como era de esperarse, los cambios son nuevamente hacia categorías contiguas, con mínimos traspasos entre extremos.
+En cuanto a las variaciones entre olas y entre respondentes, las personas desconfiadas mantienen masivamente su preferencia de un año a otro. Otro elemento de preocupación es que entre las personas que tenían “Algo de confianza” al inicio de la medición muestran en general una opinión poco estable de una ola a otra, con una fuga cada vez más importante hasta el 2018 hacia la categoría “Nada o poca confianza”. Como era de esperarse, los cambios son nuevamente hacia categorías contiguas, con mínimos traspasos entre extremos.
 
 En resumen, la confianza hacia las instituciones se ha degradado, lo que era esperable, pero a niveles críticos hasta la ola 2020.
 
@@ -220,13 +192,13 @@ knitr::include_graphics(path = "output/graphs/alluvial_participacion.png")
 
 ```
 
-En general, en la Figura \@ref(fig:alluvial-participacion) se observa que en cuanto a la participación cívica (asistir a marchas, participar en huelgas, expresar opiniones por redes sociales y firmar una carta o petición), la mayoría de los respondentes nunca lo ha hecho, con un aumento constante de alrededor de un 55% a un 60% entre el 2017 y el 2018, antes de bajar nuevamente a su nivel inicial en 2019. Al no contar con los datos 2020, no podemos indicar si el estallido de 2019 significó un cambio en esta nula participación cívica, como se podría esperar. La categoría “casi nunca” es la segunda de mayor importancia a lo largo del período con entre una cuarta y una tercera parte de las respuestas. Las opciones de participación cívica “frecuente” o “muy frecuente” son muy bajas, particularmente la última.
+En general, en la Figura \@ref(fig:alluvial-participacion) se observa que en cuanto a la participación cívica (asistir a marchas, participar en huelgas, expresar opiniones por redes sociales y firmar una carta o petición), la mayoría de los respondentes nunca lo ha hecho, con un aumento constante de alrededor de un 55% a un 60% entre el 2017 y el 2018, antes de bajar nuevamente a su nivel inicial en 2019. Al no contar con los datos 2020, no podemos indicar si el estallido significó un cambio en esta nula participación cívica, como se podría esperar. La categoría “casi nunca” es la segunda de mayor importancia a lo largo del período con entre una cuarta y una tercera parte de las respuestas. Las opciones de participación cívica “frecuente” o “muy frecuente” son muy bajas, particularmente la última.
 
 En cuanto a las variaciones entre olas y entre respondentes, la respuesta “nunca” es muy estable y presenta pocos cambios, siendo estos hacia la categoría contigua de “caso nunca”. Este flujo aumenta levemente entre 2018 y 2019. Respecto de la categoría “casi nunca”, los principales flujos son para la misma categoría al año siguiente, es decir que las personas mantienen su opinión o hacia la categoría contigua “casi nunca”.
 
 En resumen, fuera del aumento al doble en el período 2018-2019 de las categorías “A veces ” y “Frecuentemente”, que siguen siendo minoritarias, la participación cívica es muy baja y no varía particularmente entre olas.
 
-## Cohesion territorial
+## Vínculos territoriales
 
 Los items que componen este indicador son:
 
@@ -250,6 +222,20 @@ En cuanto a las variaciones entre olas y entre respondentes, la categoría princ
 
 En resumen, también se trata de un indicador muy positivo de cohesión social, además de muy estable en el tiempo, aunque no se cuente con datos del 2020.
 
-En conclusión, se observa una varianza baja en las expresiones constitutivas de la cohesión social, desglosadas aquí en cuatro dimensiones principales (relaciones sociales de igualdad, sentido de pertenencia, orientación hacia el bien común, cohesión territorial). Sin embargo, uno de los cambios más significativos se da en relación con la confianza institucional, que ya siendo muy baja, lo que es un problema para la cohesión social, baja aún más dramáticamente a partir de 2018. 
+## Conclusión
 
-Se puede hipotetizar que la cohesión social cambia poco, pues de lo contrario no sostendría la sociedad, ni en tiempos de estallido social, pero algunos indicadores muestran la fragilidad de algunos de sus pilares, particularmente en la dimensión institucional.
+En primer lugar, respecto de las frecuencias, se observa una varianza más bien baja en las expresiones constitutivas de la cohesión social, desglosadas aquí en cuatro dimensiones principales (relaciones sociales de igualdad, sentido de pertenencia, orientación hacia el bien común, vínculos territoriales).
+
+En cuanto a las frecuencias de los indicadores particularmente bajos, como era de esperarse, la desconfianza entre personas y hacia las instituciones es muy alta en Chile y varía muy poco en el período descrito, al igual que el número de contactos con diferentes ocupaciones y la percepción de justicia. Lo mismo ocurre con la prosocialidad. En especial, las personas confiadas o que piensan que en Chile se recompensa el esfuerzo representan un grupo muy limitado y esto constituye un inhibidor potente, aunque estable de la cohesión social y que no ha sido afectado por el estallido. Un factor alarmante es que, siendo baja la confianza hacia instituciones en Chile, logra aumentar la cantidad de personas que desconfían de ellas. Se entiende retrospectivamente por el contexto pre estallido, pero se trata de uno de los elementos de mayor preocupación para el caso de Chile, pues la degradación de este indicador ha llegado a niveles críticos.
+
+Respecto de los indicadores medios, destaca el reconocimiento y respeto por la diversidad.
+
+En cuanto a los indicadores altos, es notoria la alta identificación con Chile o el orgullo de ser chileno, pero se observa en esta dimensión una de las variaciones más notables en los gráficos analizados en este capítulo, en especial con una caída fuerte en 2019-2020 de la categoría de mayor identificación en las tres últimas olas, con una pérdida de 15 puntos. También destaca la alta identificación de los respondentes con el barrio en que viven, siendo uno de los indicadores más positivos de cohesión social, además de muy estable en el tiempo.
+
+En segundo lugar, respecto de las varianzas, algunas casi no presentan alteraciones, como por ejemplo la confianza entre personas, hacia las instituciones o el reconocimiento y respeto por la diversidad. Lo mismo ocurre con la prosocialidad y los vínculos barriales.
+
+En un punto intermedio, se encuentra la identificación con Chile, con variaciones entre respondentes sobre todo entre las categorías de mayor identificación con el país. 
+
+En cambio, el número de contactos con diferentes ocupaciones, las frecuencias varían significativamente de una ola a otra, lo que muestra una mayor volatilidad en el tipo de contactos de las personas. Ocurre lo mismo con la percepción de justicia, donde existen importantes cambios en las respuestas entre olas, siendo este indicador uno de los menos estables en el tiempo.
+
+Se puede hipotetizar que la cohesión social cambia poco, pues de lo contrario no sostendría la sociedad, ni en tiempos de estallido social, pero algunos indicadores muestran la fragilidad de algunos de sus pilares, particularmente en la dimensión institucional. Ahora, luego de este análisis longitudinal de las principales dimensiones de la cohesión social, en la parte siguiente, se ofrecerá una visión sintética de la cohesión social a partir de las similitudes entre individuos y territorios. Nos centramos para ello en los diversos niveles de inclusión e integración de agrupaciones sociales en la sociedad chilena.

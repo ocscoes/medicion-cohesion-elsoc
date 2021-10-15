@@ -353,7 +353,7 @@ knitr::kable(collapse_rows_cohesion, "html",
 clase.region = sjPlot::sjt.xtab(data$lclass,data$region_w03,
                            var.labels = c("Clases de cohesión social", "Region"),
                            show.obs = T,
-                           show.cell.prc=T,
+                           show.col.prc=T,
                            show.summary=F,
                            prc.sign = "", string.total="N=100%")
 clase.region
