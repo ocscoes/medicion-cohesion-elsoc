@@ -923,11 +923,11 @@ data$m01_w03 <- car::recode(data$m01_w03, "c(1,2,3,4)=1;c(5)=2;c(6,7)=3;c(8,9,10
 data$m01_w04 <- car::recode(data$m01_w04, "c(1,2,3,4)=1;c(5)=2;c(6,7)=3;c(8,9,10)=4")
 data$m01_w05 <- car::recode(data$m01_w05, "c(1,2,3,4)=1;c(5)=2;c(6,7)=3;c(8,9,10)=4")
 
-data$m01_w01 <- factor(data$m01_w01, levels = c("1", "2", "3", "4"), labels=c( "Educacion basica o menos", "Educacion media", "Educacion tecnica superior", "Educacion universitaria y Postgrado"))
-data$m01_w02 <- factor(data$m01_w02, levels = c("1", "2", "3", "4"), labels=c( "Educacion basica o menos", "Educacion media", "Educacion tecnica superior", "Educacion universitaria y Postgrado"))
-data$m01_w03 <- factor(data$m01_w03, levels = c("1", "2", "3", "4"), labels=c( "Educacion basica o menos", "Educacion media", "Educacion tecnica superior", "Educacion universitaria y Postgrado"))
-data$m01_w04 <- factor(data$m01_w04, levels = c("1", "2", "3", "4"), labels=c( "Educacion basica o menos", "Educacion media", "Educacion tecnica superior", "Educacion universitaria y Postgrado"))
-data$m01_w05 <- factor(data$m01_w05, levels = c("1", "2", "3", "4"), labels=c( "Educacion basica o menos", "Educacion media", "Educacion tecnica superior", "Educacion universitaria y Postgrado"))
+data$m01_w01 <- factor(data$m01_w01, levels = c("1", "2", "3", "4"), labels=c( "Menos que media completa", "Media completa", "Educacion tecnica superior", "Educacion universitaria y Postgrado"))
+data$m01_w02 <- factor(data$m01_w02, levels = c("1", "2", "3", "4"), labels=c( "Menos que media completa", "Media completa", "Educacion tecnica superior", "Educacion universitaria y Postgrado"))
+data$m01_w03 <- factor(data$m01_w03, levels = c("1", "2", "3", "4"), labels=c( "Menos que media completa", "Media completa", "Educacion tecnica superior", "Educacion universitaria y Postgrado"))
+data$m01_w04 <- factor(data$m01_w04, levels = c("1", "2", "3", "4"), labels=c( "Menos que media completa", "Media completa", "Educacion tecnica superior", "Educacion universitaria y Postgrado"))
+data$m01_w05 <- factor(data$m01_w05, levels = c("1", "2", "3", "4"), labels=c( "Menos que media completa", "Media completa", "Educacion tecnica superior", "Educacion universitaria y Postgrado"))
 
 label(data$m01_w01) <- "Nivel educacional (2016)"
 label(data$m01_w02) <- "Nivel educacional (2017)"

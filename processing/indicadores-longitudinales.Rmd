@@ -585,9 +585,9 @@ alluvial_lazos <- ggplot(datos.lazos, aes(x = ola, fill = lazos, stratum = lazos
               aes(label = ifelse(porcentaje > 0.03 , scales::percent(porcentaje, accuracy = .1),"")),
               position = position_stack(vjust = .5),
               show.legend = FALSE,
-              size = 5,
-              color = rep('white')) +
-  ggtitle('Cambio de frecuencias segun año') +
+              size = 4,
+              color = rep('white'),
+              bg.colour='grey30') +
   labs(caption = "Fuente: elaboracion propia en base a datos de ELSOC 2016-2020
   
 Nota: El indicador de Cuantas personas se conocen con profesiones distintas solo esta disponible 
@@ -626,9 +626,9 @@ alluvial_conf.interpersonal <- ggplot(datos.conf.interpersonal,
               aes(label = ifelse(porcentaje > 0.03 , scales::percent(porcentaje, accuracy = .1),"")),
               position = position_stack(vjust = .5),
               show.legend = FALSE,
-              size = 5,
-              color = rep('white'))+
-  ggtitle('Cambio de frecuencias segun año') +
+              size = 4,
+              color = rep('white'),
+              bg.colour='grey30') +
   labs(caption = "Fuente: elaboracion propia en base a datos de ELSOC 2016-2020")
 
 alluvial_conf.interpersonal
@@ -664,9 +664,9 @@ alluvial_diversidad <- ggplot(datos.diversidad, aes(x = ola, fill = diversidad, 
               aes(label = ifelse(porcentaje > 0.03 , scales::percent(porcentaje, accuracy = .1),"")),
               position = position_stack(vjust = .5),
               show.legend = FALSE,
-              size = 5,
-              color = rep('white'))+
-  ggtitle('Cambio de frecuencias segun año') +
+              size = 4,
+              color = rep('white'),
+              bg.colour='grey30') +
   labs(caption = "Fuente: elaboracion propia en base a datos de ELSOC 2016-2020
   
 Nota: Los indicadores de Grado de confianza en personas mapuche, inmigrantes y homosexuales
@@ -703,9 +703,9 @@ alluvial_identificacion <- ggplot(datos.identificacion, aes(x = ola, fill = iden
               aes(label = ifelse(porcentaje > 0.03 , scales::percent(porcentaje, accuracy = .1),"")),
               position = position_stack(vjust = .5),
               show.legend = FALSE,
-              size = 5,
-              color = rep('white'))+
-  ggtitle('Cambio de frecuencias segun año') +
+              size = 4,
+              color = rep('white'),
+              bg.colour='grey30') +
   labs(caption = "Fuente: elaboracion propia en base a datos de ELSOC 2016-2020")
 
 alluvial_identificacion
@@ -739,9 +739,9 @@ alluvial_justicia <- ggplot(datos.justicia, aes(x = ola, fill = justicia, stratu
               aes(label = ifelse(porcentaje > 0.03 , scales::percent(porcentaje, accuracy = .1),"")),
               position = position_stack(vjust = .5),
               show.legend = FALSE,
-              size = 5,
-              color = rep('white'))+
-  ggtitle('Cambio de frecuencias segun año') +
+              size = 4,
+              color = rep('white'),
+              bg.colour='grey30') +
   labs(caption = "Fuente: elaboracion propia en base a datos de ELSOC 2016-2020")
 
 alluvial_justicia
@@ -775,9 +775,9 @@ alluvial_conf.institucional <- ggplot(datos.conf.institucional, aes(x = ola, fil
               aes(label = ifelse(porcentaje > 0.03 , scales::percent(porcentaje, accuracy = .1),"")),
               position = position_stack(vjust = .5),
               show.legend = FALSE,
-              size = 5,
-              color = rep('white'))+
-  ggtitle('Cambio de frecuencias segun año') +
+              size = 4,
+              color = rep('white'),
+              bg.colour='grey30') +
   labs(caption = "Fuente: elaboracion propia en base a datos de ELSOC 2016-2020")
 
 alluvial_conf.institucional
@@ -812,9 +812,9 @@ alluvial_solidaridad <- ggplot(datos.solidaridad, aes(x = ola, fill = solidarida
               aes(label = ifelse(porcentaje > 0.03 , scales::percent(porcentaje, accuracy = .1),"")),
               position = position_stack(vjust = .5),
               show.legend = FALSE,
-              size = 5,
-              color = rep('white'))+
-  ggtitle('Cambio de frecuencias segun año') +
+              size = 4,
+              color = rep('white'),
+              bg.colour='grey30') +
   labs(caption = "Fuente: elaboracion propia en base a datos de ELSOC 2016-2020")
 
 alluvial_solidaridad
@@ -848,9 +848,9 @@ alluvial_participacion <- ggplot(datos.participacion, aes(x = ola, fill = partic
               aes(label = ifelse(porcentaje > 0.03 , scales::percent(porcentaje, accuracy = .1),"")),
               position = position_stack(vjust = .5),
               show.legend = FALSE,
-              size = 5,
-              color = rep('white'))+
-  ggtitle('Cambio de frecuencias segun año') +
+              size = 4,
+              color = rep('white'),
+              bg.colour='grey30') +
   labs(caption = "Fuente: elaboracion propia en base a datos de ELSOC 2016-2020
   
 Nota: Los item Firma una carta o peticion apoyando una causa y Participa en huelgas no se 
@@ -887,9 +887,9 @@ alluvial_cohesion_territorial <- ggplot(datos.cohesion_territorial, aes(x = ola,
               aes(label = ifelse(porcentaje > 0.03 , scales::percent(porcentaje, accuracy = .1),"")),
               position = position_stack(vjust = .5),
               show.legend = FALSE,
-              size = 5,
-              color = rep('white'))+
-  ggtitle('Cambio de frecuencias segun año') +
+              size = 4,
+              color = rep('white'),
+              bg.colour='grey30') +
   labs(caption = "Fuente: elaboracion propia en base a datos de ELSOC 2016-2020
        
 Nota: Los item Este barrio es ideal para mi, Me siento integrado/a en este barrio, Me identifico con la
