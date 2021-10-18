@@ -71,6 +71,13 @@ pacman::p_load(stargazer, sjmisc, car, sjlabelled, kableExtra, dplyr, Hmisc)
 
 load("../input/data/data.RData")
 
+# condicional Table_format para que las tablas salgan en html y pdf
+table_format = if(knitr::is_html_output()) {
+    "html"
+  } else if(knitr::is_latex_output()) {
+    "latex"
+  }
+
 data <- data %>%
   rowwise() %>%
   mutate(conf_interpersonal_w01 =
@@ -110,6 +117,32 @@ data <- data %>%
   rowwise() %>%
   mutate(cohesion_territorial_w01 =
            mean(c(t02_01_w01, t02_02_w01, t02_03_w01, t02_04_w01), na.rm = T))
+
+label(data$vol.red_w01) <- "Cantidad de personas que se conocen con diferentes ocupaciones."
+label(data$c02_rec_w01) <- "Se puede confiar en la mayoria de las personas."
+label(data$c03_rec_w01) <- "La mayoria de las personas tratan de ayudar a las demas."
+label(data$c06_04_w01) <- "Grado de confianza con personas homosexuales."
+label(data$c06_05_w01) <- "Grado de confianza con personas mapuche."
+label(data$c06_06_w01) <- "Grado de confianza con personas inmigrantes."
+label(data$c32_01_w01) <- "Me siento orgulloso de ser chileno."
+label(data$c32_02_w01) <- "Me identifico con Chile."
+label(data$c18_09_w01) <- "En Chile las personas son recompensadas por sus esfuerzos."
+label(data$c18_10_w01) <- "En Chile las personas son recompensadas por su inteligencia."
+label(data$c05_01_w01) <- "Confianza en el gobierno."
+label(data$c05_02_w01) <- "Confianza en los partidos politicos."
+label(data$c05_08_w01) <- "Confianza en el presidente/a de la republica."
+label(data$c07_05_w01) <- "Ha donado dinero a una obra social o de caridad."
+label(data$c07_06_w01) <- "Ha prestado una suma de dinero de $10.000.- o mas."
+label(data$c07_07_w01) <- "Ha conversado con una persona en problemas o deprimida."
+label(data$c07_08_w01) <- "Ha ayudado a alguien a conseguir trabajo."
+label(data$c08_01_w01) <- "Firmado una carta o peticion apoyando una causa."
+label(data$c08_02_w01) <- "Asistido a una marcha o manifestacion pacifica."
+label(data$c08_03_w01) <- "Participado en una huelga."
+label(data$c08_04_w01) <- "Usado las redes sociales para expresar su opinion en temas publicos."
+label(data$t02_01_w01) <- "Este barrio es ideal para mi."
+label(data$t02_02_w01) <- "Me siento integrado/a en este barrio."
+label(data$t02_03_w01) <- "Me identifico con la gente de este barrio."
+label(data$t02_04_w01) <- "Este barrio es parte de mi."
 
 cohesion.item=
   c(label(data$vol.red_w01),
@@ -172,7 +205,7 @@ collapse_rows_cohesion <-
 ```
 
 ```{r descriptivos-cohesion, echo=FALSE, fig.align = 'center', out.width = '100%',out.height='100%'}
-knitr::kable(collapse_rows_cohesion, "html",
+knitr::kable(collapse_rows_cohesion, table_format,
              col.names =  c("Subdimensión",
                             "Indicadores",
                             "Min - max",
@@ -180,7 +213,8 @@ knitr::kable(collapse_rows_cohesion, "html",
              caption = "Descriptivos medición de cohesión social.",) %>%
   column_spec(1, bold = T) %>%
   collapse_rows(columns = 1:4, valign = "middle") %>%
-  kable_styling(bootstrap_options = c("striped", "hover"))
+  kable_styling(bootstrap_options = c("striped", "hover"),
+                latex_options="scale_down")
 ```
 
 A continuación se detallan los criterios y análisis utilizados para seleccionar el conjunto de indicadores que constituyen la propuesta de medición de la cohesión social.

@@ -12,9 +12,9 @@ Este capítulo tiene como finalidad analizar la evolución de la opinión de las
 
 El análisis presentado a continuación es de tipo descriptivo y de resumen, antes de pasar a la tercera parte del informe, que aborda los habilitadores e inhibidores de la cohesión social de manera más explicativa. Aquí no ahondamos en determinantes de la cohesión social, sino que presentamos información resumida en el tiempo para cerrar la primera parte del informe.
 
-Adelantamos que  en términos generales, existe poca varianza en los indicadores descritos a continuación en términos del tamaño de las categorías, pero pondremos el foco en quienes cambian de opinión de una ola a otra, que es uno de los aportes centrales del análisis longitudinal (que se representa en gráficos fluviales). La finalidad de esta sección es mostrar la evolución general en los últimos cinco años de las dimensiones constitutivas del sentido de pertenencia en Chile.
+Adelantamos que  en términos generales, existe poca varianza en los indicadores descritos a continuación en términos del tamaño de las categorías, pero pondremos el foco en quienes cambian de opinión de una ola a otra, que es uno de los aportes centrales del análisis longitudinal. La finalidad de esta sección es mostrar la evolución general en los últimos cinco años de las dimensiones constitutivas del sentido de pertenencia en Chile.
 
-También señalamos que estos gráficos resumen una gran cantidad de información, la descrita en las secciones anteriores y la presenta gráficamente en una dimensión de tiempo, por lo que su meta es mostrar tendencias generales. Este tipo de gráfico es de uso reciente en Chile (ELSOC, 2020).
+También señalamos que estos gráficos resumen una gran cantidad de información, descrita en las secciones anteriores y la presenta gráficamente en una dimensión de tiempo, por lo que su meta es mostrar tendencias generales. Este tipo de gráfico es de uso reciente en Chile (ELSOC, 2020).
 
 ## Relaciones sociales de igualdad
 
@@ -64,13 +64,13 @@ knitr::include_graphics(path = "output/graphs/alluvial_diversidad.png")
 
 Contamos solo con dos olas ya que estos ítems no se incluyen en la ola 2020 de ELSOC, por lo que es poco interpretable en términos longitudinales. De todas formas se realiza el ejercicio de análisis.
 
-En general, en la Figura \@ref(fig:alluvial-diversidad) las respuestas son muy estables en frecuencia entre las dos olas para el reconocimiento y el respeto de la diversidad. La categoría más numerosa es la intermedia, es decir “algo”, del 38% de las respuestas, es decir con un grado moderado de confianza hacia personas que la sociedad asume como diferentes. Si sumamos “nada” y “poca” confianza hacia personas diversas, por un lado, se suma alrededor del 33% de las respuestas en ambas olas, mientras al añadir las respuestas “bastante” y “mucha”, la frecuencia es un poco mayor a las respuestas desconfiadas hacia la diversidad, alrededor del 27%. Observamos por lo tanto casi tres tercios equilibrados y constantes al agrupar las respuestas.
+En general, en la Figura \@ref(fig:alluvial-diversidad) las respuestas son muy estables en frecuencia entre las dos olas para el reconocimiento y el respeto de la diversidad. La categoría más numerosa es la intermedia, es decir “algo”, del 38% de las respuestas, es decir con un grado moderado de confianza hacia personas que la sociedad asume como diferentes. Si sumamos “nada” y “poca” confianza hacia personas diversas se suma alrededor del 33% de las respuestas en ambas olas, mientras al añadir las respuestas “bastante” y “mucha”, la frecuencia es un poco mayor a las respuestas desconfiadas hacia la diversidad, alrededor del 27%. Observamos por lo tanto casi tres tercios equilibrados y constantes al agrupar las respuestas.
 
-En cuanto a las variaciones entre olas y entre respondentes, en general las opiniones se mantienen de forma mayoritaria, salvo para la categoría “nada'', que tiende a repartirse en todas las demás categorías, salvo la máxima (“mucha”). El grupo más estable entre las dos olas corresponde a las personas que expresan “algo” de confianza hacia las personas diversas. Las personas que expresan confianza y respeto hacia la diversidad en la ola 2016 (con las categorías “bastante” o “mucha”) pueden cambiarse a la categoría inferior, pero no al otro extremo.
+En cuanto a las variaciones entre olas y entre respondentes, en general las opiniones se mantienen de forma mayoritaria, salvo para la categoría “nada'', que tiende a repartirse entre todas las demás categorías, salvo la máxima (“mucha”). El grupo más estable entre las dos olas corresponde a las personas que expresan “algo” de confianza hacia las personas diversas. Las personas que expresan confianza y respeto hacia la diversidad en la ola 2016 (con las categorías “bastante” o “mucha”) pueden cambiarse a la categoría inferior, pero no al otro extremo.
 
 ### Lazos (cantidad de personas que se conocen con diferentes ocupaciones)
 
-Este indicador se compone del item "Cantidad de personas que se conocen con diferentes ocupaciones"
+A diferencia de las demás subdimensiones, essta se compone por un solo item: "Cantidad de personas que se conocen con diferentes ocupaciones"
 
 ```{r alluvial-lazos, echo=FALSE, fig.cap="Cambios en la subdimensión Lazos.", fig.align = 'center', out.width = '100%',out.height='100%'}
 
@@ -88,7 +88,7 @@ En resumen, el número de personas que los respondentes declaran conocer con dif
 
 ### Identificación con el país
 
-Los ítems que componen este indicador son
+Los ítems que componen este indicador son:
 
 -	Me siento orgulloso de ser chileno
 
@@ -100,9 +100,9 @@ knitr::include_graphics(path = "output/graphs/alluvial_identificacion.png")
 
 ```
 
-En general, en cuanto a la identificación con Chile o el orgullo de ser chileno de la Figura \@ref(fig:alluvial-identificacion), para las cinco olas, la cantidad de personas que no se identifican con Chile es mínima (correspondiente a las categorías “totalmente en desacuerdo” y “en desacuerdo”). La categoría intermedia (“ni en desacuerdo ni de acuerdo”) no varía tampoco entre olas y es muy baja (entre el 5% y el 8%). Las respuestas “de acuerdo” y “muy de acuerdo”, que indican una identificación fuerte o muy fuerte con Chile recogen una cantidad abrumadora de respuestas, sumando más del 90% de las opciones en todas las olas. Esto indica una identificación elevada y constante, aunque existen variaciones entre la categoría “muy de acuerdo”, que indica una identificación muy fuerte y la categoría “de acuerdo” entre las distintas olas. Llama la atención la baja de la categoría “totalmente de acuerdo” en las tres últimas olas, pasando de un 52% a un 36.6%, una de las variaciones más notables en los gráficos analizados en este capítulo, incluida una caída fuerte en 2019-2020. 
+En general, en cuanto a la identificación con Chile o el orgullo de ser chileno presentes en la Figura \@ref(fig:alluvial-identificacion), para las cinco olas, la cantidad de personas que no se identifican con Chile es mínima (correspondiente a las categorías “totalmente en desacuerdo” y “en desacuerdo”). La categoría intermedia (“ni en desacuerdo ni de acuerdo”) no varía tampoco entre olas y es muy baja (entre el 5% y el 8%). Las respuestas “de acuerdo” y “muy de acuerdo”, que indican una identificación fuerte o muy fuerte con Chile, recogen una cantidad abrumadora de respuestas, sumando más del 90% de las opciones en todas las olas. Esto indica una identificación elevada y constante, aunque existen variaciones entre la categoría “muy de acuerdo”, que indica una identificación muy fuerte y la categoría “de acuerdo” entre las distintas olas. Llama la atención la disminución de la categoría “totalmente de acuerdo” en las tres últimas olas, pasando de un 52% a un 36.6%, una de las variaciones más notables en los gráficos analizados en este capítulo, incluida una caída fuerte en 2019-2020. 
 
-En cuanto a las variaciones entre olas y entre respondentes, se da sobre todo entre las categorías de mayor identificación con Chile, en proporciones que varían del tercio a la mitad de los respondentes. La categoría más estable en el tiempo es “ni de acuerdo ni en desacuerdo”. Existe un leve flujo entre la categoría “ni en desacuerdo ni de acuerdo” y “en desacuerdo”, pero es bastante menor, aunque un poco más elevada entre el 2018 y el 2019, flujo que se revierte al año siguiente.
+En cuanto a las variaciones entre olas y entre respondentes, se da sobre todo entre las categorías de mayor identificación con Chile, en proporciones que pasan del tercio a la mitad de los respondentes. La categoría más estable en el tiempo es “ni de acuerdo ni en desacuerdo”. Existe un leve flujo entre la categoría “ni en desacuerdo ni de acuerdo” y “en desacuerdo”, pero es bastante menor, aunque un poco más elevado entre el 2018 y el 2019, flujo que se revierte al año siguiente.
 
 Nuevamente estamos frente a categorías con poca varianza y la identificación con Chile es estable en el tiempo si se miran solo 3 categorías, pero con una interesante baja de la identificación más fuerte en las tres últimas olas hasta un menos comprometido “de acuerdo”.
 
@@ -110,7 +110,7 @@ En resumen, el estallido del 2019 no alteró sustancialmente la percepción para
 
 ### Percepción de justicia
 
-Los ítems que componen este indicador son
+Los ítems que componen este indicador son:
 
 -	En Chile las personas son recompensadas por sus esfuerzos
 
@@ -122,7 +122,7 @@ knitr::include_graphics(path = "output/graphs/alluvial_justicia.png")
 
 ```
 
-En general, respecto de si la inteligencia y el esfuerzo son recompensados en Chile, datos que se observa en la Figura \@ref(fig:alluvial-justicia), existen pocas variaciones entre olas. La más abultada es “En desacuerdo”, con una frecuencia promedio del 41%, seguida por “Ni de acuerdo ni en desacuerdo (alrededor del 30%) y finalmente viene la opción “De acuerdo” con alrededor del 28% de las preferencias en promedio. Esto indica que en general los respondentes consideran más bien que no se recompensa la inteligencia ni el esfuerzo en Chile. Sin embargo, cabe notar que entre 2016 y 2018, la cantidad de personas que están en desacuerdo con la idea de que en Chile se recompensan los esfuerzos y la inteligencia baja de casi 12 puntos, lo que es una evolución notoria. Este juicio vuelve a tener más importancia en las olas 2019 y 2020, llegando a un nivel estable en ambos años del 42%. Esta evolución se nota también en la categoría “De acuerdo”, que fluctúa como espejo respecto de “En desacuerdo”. Aunque recoge menos opciones que la categoría con el juicio negativo, aumenta en 6 puntos entre 2016 y 2019 antes de volver a bajar, con una pérdida importante de 12 puntos entre 2018 y 2020, lo que se podría corresponder con percepciones ampliamente vehiculizadas por el estallido social de 2019.
+En general, respecto de si la inteligencia y el esfuerzo son recompensados en Chile, datos que se observa en la Figura \@ref(fig:alluvial-justicia), existen pocas variaciones entre olas. La más abultada es “En desacuerdo”, con una frecuencia promedio del 41%, seguida por “Ni de acuerdo ni en desacuerdo (alrededor del 30%) y finalmente viene la opción “De acuerdo” con alrededor del 28% de las preferencias en promedio. Esto indica que en general los respondentes consideran más bien que no se recompensa la inteligencia ni el esfuerzo en Chile. Sin embargo, cabe notar que entre 2016 y 2018, la cantidad de personas que están en desacuerdo con la idea de que en Chile se recompensan los esfuerzos y la inteligencia baja de casi 12 puntos, lo que es una evolución notoria. Este juicio vuelve a tener más importancia en las olas 2019 y 2020, llegando a un nivel estable en ambos años del 42%. Este cambio se nota también en la categoría “De acuerdo”, que fluctúa como espejo respecto de “En desacuerdo”. Aunque recoge menos opciones que la categoría con el juicio negativo, aumenta en 6 puntos entre 2016 y 2019 antes de volver a bajar, con una pérdida importante de 12 puntos entre 2018 y 2020, lo que se podría corresponder con percepciones ampliamente vehiculizadas por el estallido social de 2019.
 
 En cuanto a las variaciones entre olas y entre respondentes, la mitad de los respondentes mantiene su opción entre olas, salvo para la opción “Ni de acuerdo ni en desacuerdo”. No son entonces categorías particularmente estables en el tiempo. Si bien las variaciones más importantes se dan entre categorías colindantes, existen flujos no menores entre categorías extremas que indican que alrededor del 5 a 8% de los respondentes puede haber sufrido un cambio importante en su percepción.
 
@@ -130,7 +130,7 @@ En resumen, el estallido del 2019 no alteró sustancialmente la percepción para
 
 ### Confianza institucional
 
-Los ítems que componen este indicador son
+Los ítems que componen este indicador son:
 
 -	Confianza en el gobierno
 
@@ -154,7 +154,7 @@ En resumen, la confianza hacia las instituciones se ha degradado, lo que era esp
 
 ### Solidaridad
 
-Los ítems que componen este indicador son
+Los ítems que componen este indicador son:
 
 -	Ha donado dinero a una obra social o de caridad
 
@@ -176,7 +176,7 @@ En cuanto a las variaciones entre olas y entre respondentes, la mayoría de los 
 
 ### Participación cívica
 
-Los ítems que componen este indicador son
+Los ítems que componen este indicador son:
 
 -	Firmado una carta o petición apoyando una causa
 
@@ -196,7 +196,7 @@ En general, en la Figura \@ref(fig:alluvial-participacion) se observa que en cua
 
 En cuanto a las variaciones entre olas y entre respondentes, la respuesta “nunca” es muy estable y presenta pocos cambios, siendo estos hacia la categoría contigua de “caso nunca”. Este flujo aumenta levemente entre 2018 y 2019. Respecto de la categoría “casi nunca”, los principales flujos son para la misma categoría al año siguiente, es decir que las personas mantienen su opinión o hacia la categoría contigua “casi nunca”.
 
-En resumen, fuera del aumento al doble en el período 2018-2019 de las categorías “A veces ” y “Frecuentemente”, que siguen siendo minoritarias, la participación cívica es muy baja y no varía particularmente entre olas.
+En resumen, fuera del aumento al doble en el período 2018-2019 de las categorías “a veces ” y “frecuentemente”, que siguen siendo minoritarias, la participación cívica es muy baja y no varía particularmente entre olas.
 
 ## Vínculos territoriales
 
@@ -216,7 +216,7 @@ knitr::include_graphics(path = "output/graphs/alluvial_cohesion_territorial.png"
 
 ```
 
-En general, en la Figura \@ref(fig:alluvial-cohesion-territorial) los respondentes suman una abrumadora mayoría entre “de acuerdo” respecto de su identificación con el barrio en que vive, opción que recoge casi el 60% de las preferencias en todas las olas y “totalmente de acuerdo”, con alrededor del 18% en todas las olas, salvo en el 2016, cuando puntúa sólo un 11,2%. Se trata de uno de los indicadores más positivos de cohesión social que analizamos en este capítulo. Una cantidad mínima de personas no se identifica con su barrio a lo largo de las cuatro olas. No contamos con los datos 2020, por lo que no se puede ver si el estallido tuvo un impacto sobre la identificación con el barrio aunque es esperable que no varíe particularmente.
+En general, en la Figura \@ref(fig:alluvial-cohesion-territorial) los respondentes suman una abrumadora mayoría entre “de acuerdo” respecto de su identificación con el barrio en que vive, opción que recoge casi el 60% de las preferencias en todas las olas y “totalmente de acuerdo”, con alrededor del 18% en todas las olas, salvo en el 2016, cuando puntúa sólo un 11.2%. Se trata de uno de los indicadores más positivos de cohesión social que analizamos en este capítulo. Una cantidad mínima de personas no se identifica con su barrio a lo largo de las cuatro olas. No contamos con los datos 2020, por lo que no se puede ver si el estallido tuvo un impacto sobre la identificación con el barrio aunque es esperable que no varíe particularmente.
 
 En cuanto a las variaciones entre olas y entre respondentes, la categoría principal (“de acuerdo”), es decir de mayor identificación con el barrio, no conoce mayores flujos de un año a otro y es muy estable. Las demás categorías son más inestables e indican un mayor cambio de percepción entre olas, nuevamente hacia las categorías contiguas.
 
