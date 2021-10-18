@@ -69,7 +69,7 @@ La propuesta de medición de la cohesión social generada en este informe a part
 ```{r include=FALSE,cache=TRUE}
 pacman::p_load(stargazer, sjmisc, car, sjlabelled, kableExtra, dplyr, Hmisc)
 
-load("../input/data/data.RData")
+load("../input/data/proc/data.RData")
 
 # condicional Table_format para que las tablas salgan en html y pdf
 table_format = if(knitr::is_html_output()) {

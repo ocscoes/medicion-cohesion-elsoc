@@ -81,7 +81,7 @@ tablae1 <- tabla2 %>% filter(Var2=="Movilizados") %>% select(Freq)
 
 tablae2 <- tabla2 %>% filter(Var2=="Institucionales") %>% select(Freq)
 
-tablae3 <- tabla2 %>% filter(Var2=="Atomizados") %>% select(Freq)
+tablae3 <- tabla2 %>% filter(Var2=="Atomizado") %>% select(Freq)
 
 tablatotal <- tabla1 %>% filter(Var1!="Sum" & Var2=="Sum") %>% select(Freq)
 
@@ -98,7 +98,7 @@ collapse_rows_cohesion <-
                         "Araucania",
                         "Los Rios",
                         "Los Lagos",
-                        "Aysen"),
+                         "Aysen"),
                tablae1,
                tablae2,
                tablae3,
@@ -114,7 +114,7 @@ knitr::kable(collapse_rows_cohesion, table_format,
                             "Atomizados",
                             "N=100%"),
              caption = "Distribucion de las clases de cohesion social por region") %>%
-  kable_styling(bootstrap_options = c("striped", "hover")) %>%
+  kable_styling(bootstrap_options = c("striped", "hover"),latex_options = c("scale_down")) %>%
   kableExtra::add_header_above(header = c(" "=1, "Region"= 4))
 ```
 
@@ -178,7 +178,7 @@ knitr::kable(collapse_rows_cohesion, table_format,
                             "Informal"
                             ),
              caption = "Efecto del tipo de empleo sobre las clases de cohesion social") %>%
-  kable_styling(bootstrap_options = c("striped", "hover")) %>%
+  kable_styling(bootstrap_options = c("striped", "hover"),latex_options = c("scale_down")) %>%
   kableExtra::add_header_above(header = c(" "=1, "Tipo de empleo"= 2))
 ```
 
@@ -241,8 +241,8 @@ knitr::kable(collapse_rows_cohesion, table_format,
                             "Mas de 60"
                             ),
              caption = "Efecto de la edad sobre las clases de cohesion social") %>%
-  kable_styling(bootstrap_options = c("striped", "hover")) %>%
-  kableExtra::add_header_above(header = c(" "=1, "Grupos de edad"= 5))
+  kable_styling(bootstrap_options = c("striped", "hover"), latex_options = c("scale_down")) %>%
+kableExtra::add_header_above(header = c(" "=1, "Grupos de edad"= 5))
 ```
 
 Como era de esperar, el perfil de cohesión movilizada es más probable de encontrar en edades más jóvenes, disminuyendo de manera sostenida a medida que se incrementa la edad. Lo contrario ocurre con la cohesión institucional, que es más probable de aparecer a medida que aumenta la edad. Aunque los datos corresponden a un panel, por el periodo que cubre, no es posible establecer si este efecto se debe al paso del tiempo o corresponde a efectos de tipo generacional.
@@ -282,7 +282,7 @@ knitr::kable(collapse_rows_cohesion, table_format,
                             "Mujer"
                             ),
              caption = "Efecto del sexo sobre las clases de cohesion social") %>%
-  kable_styling(bootstrap_options = c("striped", "hover")) %>%
+  kable_styling(bootstrap_options = c("striped", "hover"),latex_options = c("scale_down")) %>%
   kableExtra::add_header_above(header = c(" "=1, "Sexo"= 2))
 ```
 
@@ -334,9 +334,8 @@ knitr::kable(collapse_rows_cohesion, table_format,
                             "Educacion universitaria o Postgrado"
                             ),
              caption = "Efecto de la educacion sobre las clases de cohesion social") %>%
-  kable_styling(bootstrap_options = c("striped", "hover")) %>%
-  kableExtra::add_header_above(header = c(" "=1, "Nivel educacional"= 4),
-                latex_options="scale_down")
+  kable_styling(bootstrap_options = c("striped", "hover"),latex_options = c("scale_down")) %>%
+  kableExtra::add_header_above(header = c(" "=1, "Nivel educacional"= 4))
 ```
 
 La Tabla  \@ref(tab:clases-educacion) muestra que hay una estrecha asociación entre el acceso a la educación y los perfiles de cohesión social. El perfil movilizado se incrementa junto con el nivel educacional, alcanzando 72.7% entre quienes cuentan con educación universitaria. Por contraste, el perfil institucional es más característico de quienes cuentan con menor nivel educacional, alcanzando 50% de quienes cuentan con menos que enseñanza media completa. En cuanto a la atomización, este perfil sólo disminuye significativamente entre quienes cuentan con algún tipo de educación superior. El acceso al sistema educativo favorece la cohesión movilizada y reduce las tendencias a la atomización.
@@ -392,7 +391,7 @@ knitr::kable(collapse_rows_cohesion, table_format,
                             "Quintil 5"
                             ),
              caption = "Efecto de los quintiles de ingreso sobre las clases de cohesion social") %>%
-  kable_styling(bootstrap_options = c("striped", "hover")) %>%
+  kable_styling(bootstrap_options = c("striped", "hover"),latex_options = c("scale_down")) %>%
   kableExtra::add_header_above(header = c(" "=1, "Quintiles de ingresos"= 5))
 ```
 
@@ -441,7 +440,7 @@ knitr::kable(collapse_rows_cohesion, table_format,
                             "Alta escolaridad"
                             ),
              caption = "Efecto del promedio de escolaridad del barrio sobre las clases de cohesion social") %>%
-  kable_styling(bootstrap_options = c("striped", "hover")) %>%
+  kable_styling(bootstrap_options = c("striped", "hover"),latex_options = c("scale_down")) %>%
   kableExtra::add_header_above(header = c(" "=1, "Promedio de años de escolaridad sostenedor del hogar (sd)"= 2))
 ```
 
@@ -481,7 +480,7 @@ knitr::kable(collapse_rows_cohesion, table_format,
                             "Alta cantidad de ocupados"
                             ),
              caption = "Efecto de la cantidad de trabajadores ocupados sobre las clases de cohesion social") %>%
-  kable_styling(bootstrap_options = c("striped", "hover")) %>%
+  kable_styling(bootstrap_options = c("striped", "hover"),latex_options = c("scale_down")) %>%
   kableExtra::add_header_above(header = c(" "=1, "Cantidad de trabajadores ocupados"= 2))
 ```
 
@@ -521,7 +520,7 @@ knitr::kable(collapse_rows_cohesion, table_format,
                             "Alta cantidad de cesantes"
                             ),
              caption = "Efecto de la cantidad de trabajadores cesantes sobre las clases de cohesion social") %>%
-  kable_styling(bootstrap_options = c("striped", "hover")) %>%
+  kable_styling(bootstrap_options = c("striped", "hover"),latex_options = c("scale_down")) %>%
   kableExtra::add_header_above(header = c(" "=1, "Cantidad de trabajadores buscando empleo"= 2))
 ```
 
@@ -561,7 +560,7 @@ knitr::kable(collapse_rows_cohesion, table_format,
                             "Alto acceso a colegios"
                             ),
              caption = "Efecto del acceso a colegios sobre las clases de cohesion social") %>%
-  kable_styling(bootstrap_options = c("striped", "hover")) %>%
+  kable_styling(bootstrap_options = c("striped", "hover"),latex_options = c("scale_down")) %>%
   kableExtra::add_header_above(header = c(" "=1, "Acceso a colegios"= 2))
 ```
 
@@ -600,7 +599,7 @@ knitr::kable(collapse_rows_cohesion, table_format,
                             "Alto acceso a servicios"
                             ),
              caption = "Efecto del acceso a servicios y equipamientos publicos sobre las clases de cohesion social") %>%
-  kable_styling(bootstrap_options = c("striped", "hover")) %>%
+  kable_styling(bootstrap_options = c("striped", "hover"),latex_options = c("scale_down")) %>%
   kableExtra::add_header_above(header = c(" "=1, "Acceso a servicios publicos"= 2))
 ```
 
@@ -639,7 +638,7 @@ knitr::kable(collapse_rows_cohesion, table_format,
                             "Pertenece a una etnia"
                             ),
              caption = "Efecto de la pertenencia a una etnia sobre las clases de cohesion social") %>%
-  kable_styling(bootstrap_options = c("striped", "hover")) %>%
+  kable_styling(bootstrap_options = c("striped", "hover"),latex_options = c("scale_down")) %>%
   kableExtra::add_header_above(header = c(" "=1, "Etnia"= 2))
 ```
 
@@ -678,7 +677,7 @@ knitr::kable(collapse_rows_cohesion, table_format,
                             "Otra nacionalidad"
                             ),
              caption = "Efecto de la condicion de migracion sobre las clases de cohesion social") %>%
-  kable_styling(bootstrap_options = c("striped", "hover")) %>%
+  kable_styling(bootstrap_options = c("striped", "hover"),latex_options = c("scale_down")) %>%
   kableExtra::add_header_above(header = c(" "=1, "Nacionalidad"= 2))
 ```
 
