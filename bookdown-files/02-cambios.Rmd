@@ -12,9 +12,17 @@ Este capítulo tiene como finalidad analizar la evolución de la opinión de las
 
 El análisis presentado a continuación es de tipo descriptivo y de resumen, antes de pasar a la tercera parte del informe, que aborda los habilitadores e inhibidores de la cohesión social de manera más explicativa. Aquí no ahondamos en determinantes de la cohesión social, sino que presentamos información resumida en el tiempo para cerrar la primera parte del informe.
 
-Adelantamos que  en términos generales, existe poca varianza en los indicadores descritos a continuación en términos del tamaño de las categorías, pero pondremos el foco en quienes cambian de opinión de una ola a otra, que es uno de los aportes centrales del análisis longitudinal. La finalidad de esta sección es mostrar la evolución general en los últimos cinco años de las dimensiones constitutivas del sentido de pertenencia en Chile.
+Adelantamos que, en términos generales, existe poca variación en los indicadores descritos a continuación en términos del tamaño de las categorías, pero pondremos el foco en quienes cambian de opinión de una ola a otra, que es uno de los aportes centrales del análisis longitudinal. La finalidad de esta sección es mostrar la evolución general en los últimos cinco años de las dimensiones constitutivas del sentido de pertenencia en Chile.
 
 También señalamos que estos gráficos resumen una gran cantidad de información, descrita en las secciones anteriores y la presenta gráficamente en una dimensión de tiempo, por lo que su meta es mostrar tendencias generales. Este tipo de gráfico es de uso reciente en Chile (ELSOC, 2020).
+
+***
+
+_Recuadro metodológico: ¿Cómo leer un gráfico fluvial?_
+
+Este tipo de diagrama muestra el cambio en el tiempo mediante flujos, usando una metáfora visual. Se trata de una representación esquemática y dinámica inspirada en el diagrama de Sankey, usado para dar cuenta de flujos energéticos. Su nombre proviene de los flujos - o clusters para fines de la lectura - que genera el agua y los diferentes arroyos contiguos que se forman de una misma fuente. Cada año funciona como un histograma apilado, donde la altura de cada barra indica el tamaño del cluster. Con la sucesión de los años, se observan los cambios en la composición de los clusters mediante los flujos. La amplitud de los flujos muestra el tamaño de los grupos de personas que cambian de opinión de un año a otro. Permiten a la vez ver la evolución de las categorías, así como los cambios y transiciones entre categorías y años. Los colores permiten visualizar las principales transiciones entre categorías [@rosvall_mapping_2010]. Como no hay personas que salen de la muestra entre las cinco mediciones, no existen pérdidas en este gráfico.
+
+***
 
 ## Relaciones sociales de igualdad
 
@@ -26,7 +34,7 @@ Los ítems que componen este indicador son dos:
 
 -	La mayoría de las personas tratan de ayudar a las demás
 
-```{r alluvial-conf-interpersonal, echo=FALSE, fig.cap="Cambios en la subdimension confianza interpersonal.", fig.align = 'center', out.width = '100%',out.height='100%'}
+```{r alluvial-conf-interpersonal, echo=FALSE, fig.cap="Cambios en la subdimensión confianza interpersonal.", fig.topcaption = TRUE, fig.align = 'center', out.width = '100%',out.height='100%'}
 
 knitr::include_graphics(path = "output/graphs/alluvial_conf_interpersonal.png")
 
@@ -38,14 +46,6 @@ En cuanto a las variaciones entre olas y entre respondentes, se observan algunos
 
 El estallido no alteró sustancialmente la percepción para el conjunto de la muestra en este elemento central de la cohesión social. La alta desconfianza interpersonal en Chile es una dimensión central de la cohesión social y no parece alterarse en el corto plazo, como se indica en este gráfico.
 
-***
-
-_Recuadro metodológico: ¿Cómo leer un gráfico fluvial?_
-
-Este tipo de diagrama muestra el cambio en el tiempo mediante flujos, usando una metáfora visual. Se trata de una representación esquemática y dinámica inspirada en el diagrama de Sankey, usado para dar cuenta de flujos energéticos. Su nombre proviene de los flujos - o clusters para fines de la lectura - que genera el agua y los diferentes arroyos contiguos que se forman de una misma fuente. Cada año funciona como un histograma apilado, donde la altura de cada barra indica el tamaño del cluster. Con la sucesión de los años, se observan los cambios en la composición de los clusters mediante los flujos. La amplitud de los flujos muestra el tamaño de los grupos de personas que cambian de opinión de un año a otro. Permiten a la vez ver la evolución de las categorías, así como los cambios y transiciones entre categorías y años. Los colores permiten visualizar las principales transiciones entre categorías [@rosvall_mapping_2010]. Como no hay personas que salen de la muestra entre las cinco mediciones, no existen pérdidas en este gráfico.
-
-***
-
 ### Reconocimiento y respeto de la diversidad
 
 Los ítems que componen este indicador son:
@@ -56,7 +56,7 @@ Los ítems que componen este indicador son:
 
 -	Grado de confianza con personas inmigrantes
 
-```{r alluvial-diversidad, echo=FALSE, fig.cap="Cambios en la subdimension reconocimiento y respeto de la diversidad.", fig.align = 'center', out.width = '100%',out.height='100%'}
+```{r alluvial-diversidad, echo=FALSE, fig.cap="Cambios en la subdimensión reconocimiento y respeto de la diversidad.", fig.topcaption = TRUE, fig.align = 'center', out.width = '100%',out.height='100%'}
 
 knitr::include_graphics(path = "output/graphs/alluvial_diversidad.png")
 
@@ -70,9 +70,9 @@ En cuanto a las variaciones entre olas y entre respondentes, en general las opin
 
 ### Lazos (cantidad de personas que se conocen con diferentes ocupaciones)
 
-A diferencia de las demás subdimensiones, essta se compone por un solo item: "Cantidad de personas que se conocen con diferentes ocupaciones"
+A diferencia de las demás subdimensiones, esta se compone por un solo item: "Cantidad de personas que se conocen con diferentes ocupaciones"
 
-```{r alluvial-lazos, echo=FALSE, fig.cap="Cambios en la subdimensión Lazos.", fig.align = 'center', out.width = '100%',out.height='100%'}
+```{r alluvial-lazos, echo=FALSE, fig.cap="Cambios en la subdimensión Lazos.", fig.topcaption = TRUE, fig.align = 'center', out.width = '100%',out.height='100%'}
 
 knitr::include_graphics(path = "output/graphs/alluvial_lazos.png")
 
@@ -94,13 +94,13 @@ Los ítems que componen este indicador son:
 
 -	Me identifico con Chile
 
-```{r alluvial-identificacion, echo=FALSE, fig.cap="Cambios en la subdimensión identificacion con el pais.", fig.align = 'center', out.width = '100%',out.height='100%'}
+```{r alluvial-identificacion, echo=FALSE, fig.cap="Cambios en la subdimensión identificacion con el pais.", fig.topcaption = TRUE, fig.align = 'center', out.width = '100%',out.height='100%'}
 
 knitr::include_graphics(path = "output/graphs/alluvial_identificacion.png")
 
 ```
 
-En general, en cuanto a la identificación con Chile o el orgullo de ser chileno presentes en la Figura \@ref(fig:alluvial-identificacion), para las cinco olas, la cantidad de personas que no se identifican con Chile es mínima (correspondiente a las categorías “totalmente en desacuerdo” y “en desacuerdo”). La categoría intermedia (“ni en desacuerdo ni de acuerdo”) no varía tampoco entre olas y es muy baja (entre el 5% y el 8%). Las respuestas “de acuerdo” y “muy de acuerdo”, que indican una identificación fuerte o muy fuerte con Chile, recogen una cantidad abrumadora de respuestas, sumando más del 90% de las opciones en todas las olas. Esto indica una identificación elevada y constante, aunque existen variaciones entre la categoría “muy de acuerdo”, que indica una identificación muy fuerte y la categoría “de acuerdo” entre las distintas olas. Llama la atención la disminución de la categoría “totalmente de acuerdo” en las tres últimas olas, pasando de un 52% a un 36.6%, una de las variaciones más notables en los gráficos analizados en este capítulo, incluida una caída fuerte en 2019-2020. 
+En general, en cuanto a la identificación con Chile o el orgullo de ser chileno presentes en la Figura \@ref(fig:alluvial-identificacion), para las cinco olas, la cantidad de personas que no se identifican con Chile es mínima (correspondiente a las categorías “totalmente en desacuerdo” y “en desacuerdo”). La categoría intermedia (“ni en desacuerdo ni de acuerdo”) no varía tampoco entre olas y es muy baja (entre el 5% y el 8%). Las respuestas “de acuerdo” y “muy de acuerdo”, que indican una identificación fuerte o muy fuerte con Chile, recogen una cantidad abrumadora de respuestas, sumando más del 90% de las opciones en todas las olas. Esto indica una identificación elevada y constante, aunque existen variaciones entre la categoría “muy de acuerdo”, que indica una identificación muy fuerte y la categoría “de acuerdo” entre las distintas olas. Llama la atención la disminución de la categoría “totalmente de acuerdo” en las tres últimas olas, pasando de un 52% a un 36,6%, una de las variaciones más notables en los gráficos analizados en este capítulo, incluida una caída fuerte en 2019-2020. 
 
 En cuanto a las variaciones entre olas y entre respondentes, se da sobre todo entre las categorías de mayor identificación con Chile, en proporciones que pasan del tercio a la mitad de los respondentes. La categoría más estable en el tiempo es “ni de acuerdo ni en desacuerdo”. Existe un leve flujo entre la categoría “ni en desacuerdo ni de acuerdo” y “en desacuerdo”, pero es bastante menor, aunque un poco más elevado entre el 2018 y el 2019, flujo que se revierte al año siguiente.
 
@@ -116,7 +116,7 @@ Los ítems que componen este indicador son:
 
 -	En Chile las personas son recompensadas por su inteligencia
 
-```{r alluvial-justicia, echo=FALSE, fig.cap="Cambios en la subdimensión percepcion de justicia.", fig.align = 'center', out.width = '100%',out.height='100%'}
+```{r alluvial-justicia, echo=FALSE, fig.cap="Cambios en la subdimensión percepción de justicia.", fig.topcaption = TRUE, fig.align = 'center', out.width = '100%',out.height='100%'}
 
 knitr::include_graphics(path = "output/graphs/alluvial_justicia.png")
 
@@ -138,7 +138,7 @@ Los ítems que componen este indicador son:
 
 -	Confianza en los partidos políticos
 
-```{r alluvial-conf-institucional, echo=FALSE, fig.cap="Cambios en la subdimensión confianza institucional.", fig.align = 'center', out.width = '100%',out.height='100%'}
+```{r alluvial-conf-institucional, echo=FALSE, fig.cap="Cambios en la subdimensión confianza institucional.", fig.topcaption = TRUE, fig.align = 'center', out.width = '100%',out.height='100%'}
 
 knitr::include_graphics(path = "output/graphs/alluvial_conf_institucional.png")
 
@@ -164,7 +164,7 @@ Los ítems que componen este indicador son:
 
 -	Ha ayudado a alguien a conseguir trabajo
 
-```{r alluvial-solidaridad, echo=FALSE, fig.cap="Cambios en la subdimensión solidaridad.", fig.align = 'center', out.width = '100%',out.height='100%'}
+```{r alluvial-solidaridad, echo=FALSE, fig.cap="Cambios en la subdimensión solidaridad.", fig.topcaption = TRUE, fig.align = 'center', out.width = '100%',out.height='100%'}
 
 knitr::include_graphics(path = "output/graphs/alluvial_solidaridad.png")
 
@@ -186,7 +186,7 @@ Los ítems que componen este indicador son:
 
 -	Usado las redes sociales para expresar su opinión en temas públicos
 
-```{r alluvial-participacion, echo=FALSE, fig.cap="Cambios en la subdimensión participacion civica.", fig.align = 'center', out.width = '100%',out.height='100%'}
+```{r alluvial-participacion, echo=FALSE, fig.cap="Cambios en la subdimensión participacion civica.", fig.topcaption = TRUE, fig.align = 'center', out.width = '100%',out.height='100%'}
 
 knitr::include_graphics(path = "output/graphs/alluvial_participacion.png")
 
@@ -196,7 +196,7 @@ En general, en la Figura \@ref(fig:alluvial-participacion) se observa que en cua
 
 En cuanto a las variaciones entre olas y entre respondentes, la respuesta “nunca” es muy estable y presenta pocos cambios, siendo estos hacia la categoría contigua de “caso nunca”. Este flujo aumenta levemente entre 2018 y 2019. Respecto de la categoría “casi nunca”, los principales flujos son para la misma categoría al año siguiente, es decir que las personas mantienen su opinión o hacia la categoría contigua “casi nunca”.
 
-En resumen, fuera del aumento al doble en el período 2018-2019 de las categorías “a veces ” y “frecuentemente”, que siguen siendo minoritarias, la participación cívica es muy baja y no varía particularmente entre olas.
+En resumen, fuera del aumento al doble en el período 2018-2019 de las categorías “a veces” y “frecuentemente”, que siguen siendo minoritarias, la participación cívica es muy baja y no varía particularmente entre olas.
 
 ## Vínculos territoriales
 
@@ -210,13 +210,13 @@ Los items que componen este indicador son:
 
 -	Este barrio es parte de mi
 
-```{r alluvial-cohesion-territorial, echo=FALSE, fig.cap="Cambios en la subdimensión cohesion territorial.", fig.align = 'center', out.width = '100%',out.height='100%'}
+```{r alluvial-cohesion-territorial, echo=FALSE, fig.cap="Cambios en la subdimensión vínculos territoriales.", fig.topcaption = TRUE, fig.align = 'center', out.width = '100%',out.height='100%'}
 
 knitr::include_graphics(path = "output/graphs/alluvial_cohesion_territorial.png")
 
 ```
 
-En general, en la Figura \@ref(fig:alluvial-cohesion-territorial) los respondentes suman una abrumadora mayoría entre “de acuerdo” respecto de su identificación con el barrio en que vive, opción que recoge casi el 60% de las preferencias en todas las olas y “totalmente de acuerdo”, con alrededor del 18% en todas las olas, salvo en el 2016, cuando puntúa sólo un 11.2%. Se trata de uno de los indicadores más positivos de cohesión social que analizamos en este capítulo. Una cantidad mínima de personas no se identifica con su barrio a lo largo de las cuatro olas. No contamos con los datos 2020, por lo que no se puede ver si el estallido tuvo un impacto sobre la identificación con el barrio aunque es esperable que no varíe particularmente.
+En general, en la Figura \@ref(fig:alluvial-cohesion-territorial) los respondentes suman una abrumadora mayoría entre “de acuerdo” respecto de su identificación con el barrio en que vive, opción que recoge casi el 60% de las preferencias en todas las olas y “totalmente de acuerdo”, con alrededor del 18% en todas las olas, salvo en el 2016, cuando puntúa sólo un 11,2%. Se trata de uno de los indicadores más positivos de cohesión social que analizamos en este capítulo. Una cantidad mínima de personas no se identifica con su barrio a lo largo de las cuatro olas. No contamos con los datos 2020, por lo que no se puede ver si el estallido tuvo un impacto sobre la identificación con el barrio aunque es esperable que no varíe particularmente.
 
 En cuanto a las variaciones entre olas y entre respondentes, la categoría principal (“de acuerdo”), es decir de mayor identificación con el barrio, no conoce mayores flujos de un año a otro y es muy estable. Las demás categorías son más inestables e indican un mayor cambio de percepción entre olas, nuevamente hacia las categorías contiguas.
 
@@ -224,7 +224,7 @@ En resumen, también se trata de un indicador muy positivo de cohesión social, 
 
 ## Conclusión
 
-En primer lugar, respecto de las frecuencias, se observa una varianza más bien baja en las expresiones constitutivas de la cohesión social, desglosadas aquí en cuatro dimensiones principales (relaciones sociales de igualdad, sentido de pertenencia, orientación hacia el bien común, vínculos territoriales).
+En primer lugar, respecto de las frecuencias, se observa poca variación en las expresiones constitutivas de la cohesión social, desglosadas aquí en cuatro dimensiones principales (relaciones sociales de igualdad, sentido de pertenencia, orientación hacia el bien común, vínculos territoriales).
 
 En cuanto a las frecuencias de los indicadores particularmente bajos, como era de esperarse, la desconfianza entre personas y hacia las instituciones es muy alta en Chile y varía muy poco en el período descrito, al igual que el número de contactos con diferentes ocupaciones y la percepción de justicia. Lo mismo ocurre con la prosocialidad. En especial, las personas confiadas o que piensan que en Chile se recompensa el esfuerzo representan un grupo muy limitado y esto constituye un inhibidor potente, aunque estable de la cohesión social y que no ha sido afectado por el estallido. Un factor alarmante es que, siendo baja la confianza hacia instituciones en Chile, logra aumentar la cantidad de personas que desconfían de ellas. Se entiende retrospectivamente por el contexto pre estallido, pero se trata de uno de los elementos de mayor preocupación para el caso de Chile, pues la degradación de este indicador ha llegado a niveles críticos.
 
@@ -232,7 +232,7 @@ Respecto de los indicadores medios, destaca el reconocimiento y respeto por la d
 
 En cuanto a los indicadores altos, es notoria la alta identificación con Chile o el orgullo de ser chileno, pero se observa en esta dimensión una de las variaciones más notables en los gráficos analizados en este capítulo, en especial con una caída fuerte en 2019-2020 de la categoría de mayor identificación en las tres últimas olas, con una pérdida de 15 puntos. También destaca la alta identificación de los respondentes con el barrio en que viven, siendo uno de los indicadores más positivos de cohesión social, además de muy estable en el tiempo.
 
-En segundo lugar, respecto de las varianzas, algunas casi no presentan alteraciones, como por ejemplo la confianza entre personas, hacia las instituciones o el reconocimiento y respeto por la diversidad. Lo mismo ocurre con la prosocialidad y los vínculos barriales.
+En segundo lugar, respecto de las variaciones, algunas casi no presentan alteraciones, como por ejemplo la confianza entre personas, hacia las instituciones o el reconocimiento y respeto por la diversidad. Lo mismo ocurre con la prosocialidad y los vínculos barriales.
 
 En un punto intermedio, se encuentra la identificación con Chile, con variaciones entre respondentes sobre todo entre las categorías de mayor identificación con el país. 
 

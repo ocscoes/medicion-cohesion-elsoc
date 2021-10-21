@@ -10,7 +10,7 @@ editor_options:
 
 El objetivo de este primer capítulo es establecer indicadores de cohesión social basados en el modelo conceptual de CEPAL, en particular para los denominados _elementos constitutivos de la cohesión social_ y que se presentan en la Figura  \@ref(fig:esquema-cepal).
 
-```{r esquema-cepal, echo=FALSE, fig.cap="Resumen dimensiones CEPAL.", fig.align = 'center', out.width = '100%',out.height='100%'}
+```{r esquema-cepal, echo=FALSE, fig.cap="Resumen de dimensiones de cohesión social de CEPAL.", fig.topcaption = TRUE, fig.align = 'center', out.width = '100%',out.height='100%'}
 knitr::include_graphics(path = "images/dimensiones-cepal.jpg")
 ```
 
@@ -200,22 +200,24 @@ collapse_rows_cohesion <-
            rep("Confianza institucional", 3),
            rep("Solidaridad", 4),
            rep("Participación cívica", 4),
-           rep("Cohesión territorial", 4)),
+           rep("Vínculos territoriales", 4)),
            cohesion.item,cohesion.min,cohesion.mean)
 ```
 
-```{r descriptivos-cohesion, echo=FALSE, fig.align = 'center', out.width = '100%',out.height='100%'}
+```{r descriptivos-cohesion, echo=FALSE, fig.topcaption = TRUE, fig.align = 'center', out.width = '100%',out.height='100%'}
 knitr::kable(collapse_rows_cohesion, table_format,
              col.names =  c("Subdimensión",
                             "Indicadores",
                             "Min - max",
                             "Mean (sd)"),
-             caption = "Descriptivos medición de cohesión social.",) %>%
+             caption = "Descriptivos de medición de cohesión social.") %>%
   column_spec(1, bold = T) %>%
   collapse_rows(columns = 1:4, valign = "middle") %>%
   kable_styling(bootstrap_options = c("striped", "hover"),
-                latex_options="scale_down")
+                latex_options = c("scale_down"))
 ```
+
+
 
 A continuación se detallan los criterios y análisis utilizados para seleccionar el conjunto de indicadores que constituyen la propuesta de medición de la cohesión social.
 
@@ -229,13 +231,13 @@ La confianza interpersonal es un atributo de las relaciones sociales que permite
 
 En la propuesta regional de CEPAL se utilizan los indicadores "Confianza en la gente de su comunidad", que busca cuantificar que tan confiable consideran a los habitantes de su comunidad y "Confianza en la gente que se conoce por primera vez", en el cual se cuantifica si se puede confiar en la mayoría de las personas o uno debe ser cuidadoso con los demás. Al trabajar con ELSOC, los items que van en esta línea son "Se puede confiar en la mayoría de las personas o hay que tener cuidado al tratar con ellas", "La mayoría de las personas tratan de ayudar a las demás o se preocupan sólo de sí mismas" y "La mayoría de la gente intentaría aprovecharse de usted o la gente trata de ser justa", presentes en las cinco versiones de ELSOC. Un análisis descriptivo de estos items se presenta en la Figura \@ref(fig:confianza-interpersonal) y un análisis bivariado en la Figura \@ref(fig:confianza-interpersonal-cor).
 
-```{r confianza-interpersonal, echo=FALSE, fig.cap="Confianza interpersonal.", fig.align = 'center', out.width = '100%',out.height='100%'}
+```{r confianza-interpersonal, echo=FALSE, fig.cap="Confianza interpersonal.", fig.topcaption = TRUE, fig.align = 'center', out.width = '100%',out.height='100%'}
 knitr::include_graphics(path = "output/graphs/confianza-interpersonal.png")
 ```
 
 En la matriz de correlaciones de la Figura \@ref(fig:confianza-interpersonal-cor) vemos que las correlaciones entre los items van en el rango bajo a moderado, donde los items más correlacionados son A y B. Al calcular la consistencia interna de estos tres items mediante alpha de Cronbach el resultado arroja 0.42, bastante por debajo del límite recomendable de 0.7. Por lo tanto, el índice sugerido para esta subdimensión considera un promedio solo de aquellos items que presentan una correlación mayor: "Se puede confiar en la mayoría de las personas" y "La mayoría de las personas trata de ayudar a los demás".
 
-```{r confianza-interpersonal-cor, echo=FALSE, fig.cap="Asociación indicadores Confianza interpersonal.", fig.align = 'center', out.width = '100%',out.height='100%'}
+```{r confianza-interpersonal-cor, echo=FALSE, fig.cap="Asociación de indicadores de Confianza interpersonal.", fig.topcaption = TRUE, fig.align = 'center', out.width = '100%',out.height='100%'}
 knitr::include_graphics(path = "output/graphs/confianza-interpersonal_cor.png")
 ```
 
@@ -246,22 +248,22 @@ Las relaciones sociales de igualdad suponen el reconocimiento de la dignidad del
 En la propuesta regional de CEPAL se utilizan dos indicadores en esta subdimensión: "Aprueba el derecho a contraer matrimonio de parejas del mismo sexo", que se incluye con el objetivo de cuantificar la tolerancia hacia los individuos y comunidades con distinta orientación sexual y "Los hombres no tienen prioridad sobre la mujer, a la hora acceder a un trabajo", que se incluye con el objetivo de cuantificar la cultura de igualdad de género en la sociedad. Además, en la propuesta regional de la CEPAL se deja pendiente la construcción de un indicador sobre tolerancia a personas de distinta raza y etnia, así como de percepción de discriminación debido a la ausencia de indicadores comparables a nivel regional. En el caso de ELSOC existen items distintos pero relacionados con actitudes hacia la diversidad: a) Chile pierde su identidad con la llegada de inmigrantes; b) Con la llegada de inmigrantes aumenta el desempleo; c) Grado de acuerdo con adopción homoparental; d) Grado de confianza con personas homosexuales; e) Grado de confianza con personas mapuche; y f) Grado de confianza con personas inmigrantes. Los dos primeros items están presentes en las cinco versiones, adopción homoparental en olas 2018 y 2019 y el resto de items en las olas 2017 y 2019. Un gráfico descriptivo de estos items se presenta en la Figura \@ref(fig:prejuicios) y en la Figura \@ref(fig:diversidad) y un análisis bivariado en la Figura \@ref(fig:diversidad-cor).
 
 
-```{r prejuicios, echo=FALSE, fig.cap="Prejuicios hacia inmigrantes y adopción homoparental.", fig.align = 'center', out.width = '100%',out.height='100%'}
+```{r prejuicios, echo=FALSE, fig.cap="Prejuicios hacia inmigrantes y adopción homoparental.", fig.topcaption = TRUE, fig.align = 'center', out.width = '100%',out.height='100%'}
 knitr::include_graphics(path = "output/graphs/prejuicios.png")
 ```
 
-```{r diversidad, echo=FALSE, fig.cap="Grado de confianza grupos sociales.", fig.align = 'center', out.width = '100%',out.height='100%'}
+```{r diversidad, echo=FALSE, fig.cap="Grado de confianza hacia distintos grupos sociales.", fig.topcaption = TRUE, fig.align = 'center', out.width = '100%',out.height='100%'}
 knitr::include_graphics(path = "output/graphs/diversidad.png")
 ```
 
-```{r diversidad-cor, echo=FALSE, fig.cap="Asociación de indicadores de la subdimensión Reconocimiento y respeto de la diversidad.", fig.align = 'center', out.width = '100%',out.height='100%'}
+```{r diversidad-cor, echo=FALSE, fig.cap="Asociación de indicadores de la subdimensión Reconocimiento y respeto de la diversidad.", fig.topcaption = TRUE, fig.align = 'center', out.width = '100%',out.height='100%'}
 knitr::include_graphics(path = "output/graphs/diversidad_cor.png")
 ```
 
 Dada la cantidad de items y la heterogeneidad de sus correlaciones, es necesario realizar análisis adicionales. Para ello utilizaremos análisis factorial exploratorio, que entrega información de las dimensiones comunes que subyacen a un conjunto de items. La Tabla \@ref(tab:div-fa) muestra el resultado de la extracción de tres factores:
 
-```{r div-fa, echo=FALSE, fig.align = 'center', out.width = '100%',out.height='100%'}
-knitr::kable(data.frame(image='![](output/tables/div_fa.png){width="800"}'),    # generar tabla
+```{r div-fa, echo=FALSE, fig.topcaption = TRUE, fig.align = 'center', out.width = '100%',out.height='100%'}
+knitr::kable(data.frame(image='![](output/tables/div_fa.png){width="650"}'),    # generar tabla
              caption = "Dimensiones de reconocimiento y respeto de la diversidad.",
              col.names = "",
              row.names = F,
@@ -280,11 +282,11 @@ El indicador utilizado en la propuesta regional de la CEPAL para esta subdimensi
 
 La Figura \@ref(fig:lazos) muestra un gráfico descriptivo de estos items, mientras en la Figura \@ref(fig:lazos-cor) se presenta la estimación de las correlaciones.
 
-```{r lazos, echo=FALSE, fig.cap="Item subdimension Lazos.", fig.align = 'center', out.width = '100%',out.height='100%'}
+```{r lazos, echo=FALSE, fig.topcaption = TRUE, fig.cap="Item subdimension Lazos.", fig.align = 'center', out.width = '100%',out.height='100%'}
 knitr::include_graphics(path = "output/graphs/lazos.png")
 ```
 
-```{r lazos-cor, echo=FALSE, fig.cap="Asociación de indicadores lazos.", fig.align = 'center', out.width = '100%',out.height='100%'}
+```{r lazos-cor, echo=FALSE, fig.cap="Asociación de indicadores de subdimensión lazos.", fig.topcaption = TRUE, fig.align = 'center', out.width = '100%',out.height='100%'}
 knitr::include_graphics(path = "output/graphs/lazos_cor.png")
 ```
 En la matriz de correlaciones de la Figura \@ref(fig:lazos-cor) se observa que las correlaciones entre los items están en un rango bajo, donde los items que presentan una correlación mayor son A y C. Para calcular la consistencia interna de estos tres items se utilizó alpha de Cronbach, obteniendo un resultado de 0.32, muy por debajo del valor mínimo recomendado de 0.7. Por lo tanto, para esta subdimensión se decide considerar solo el item "Cantidad de personas que se conocen con diferentes ocupaciones" (variedad de la red). Este indicador posee mayor sentido en el marco de la cohesión social, ya que esta va más allá de la calidad y cantidad de lazos cercanos como familia y amigos, contemplando aquellos lazos sociales más extensos.
@@ -300,7 +302,7 @@ Por medio de esta subdimensión se busca cuantificar la identificación de los i
 En la propuesta regional de la CEPAL se incluyen los indicadores "Orgullo por el sistema político", que busca medir la adhesión de los encuestados con la labor que realizan sus instituciones en la representación de sus valores y objetivos y "Orgullo por su nacionalidad", que busca cuantificar la identificación de los encuestados con los valores y normas que rigen las instituciones del país. Al trabajar con ELSOC se utilizan los items "Orgullo de ser chileno" e "Identificación con Chile",   presentes en las cinco olas del estudio. Un análisis descriptivo de estos items se presenta en la Figura \@ref(fig:identificacion).
 
 
-```{r identificacion, echo=FALSE, fig.cap="Identificación y orgullo con Chile.", fig.align = 'center', out.width = '100%',out.height='100%'}
+```{r identificacion, echo=FALSE, fig.cap="Identificación y orgullo con Chile.", fig.topcaption = TRUE, fig.align = 'center', out.width = '100%',out.height='100%'}
 knitr::include_graphics(path = "output/graphs/identificacion.png")
 ```
 La correlación entre estos items es positiva y alta (r=0.77). Por lo tanto, en esta subdimensión se utilizará como índicador un promedio simple de ambos items.
@@ -312,7 +314,7 @@ La subdimensión de percepción de justicia refiere al examen que realizan las p
 
 En la propuesta regional de la CEPAL se utilizan los indicadores "Se deben equiparar los sueldos, no mantener desigualdad para incentivar el esfuerzo personal", que cuantifica percepciones respecto a aversiones hacia la desigualdad; "El trabajo a largo plazo da beneficios, no las conexiones o suerte", que busca captar percepciones sobre la estructura de oportunidades en el país y las expectativas de movilidad social; y "El Estado debe implementar políticas para reducir la desigualdad de ingreso", que aborda las percepciones respecto a la desigualdad de ingresos en el país. Al trabajar con ELSOC se utilizan los items "En Chile las personas son recompensadas por su esfuerzo" y "En Chile las personas son recompensadas por su inteligencia", presentes en todas las olas. Un gráfico descriptivo de estos items se presenta en la Figura \@ref(fig:justicia).
 
-```{r justicia, echo=FALSE, fig.cap="Descriptivos Percepción de recompensa por esfuerzo e inteligencia.", fig.align = 'center', out.width = '100%',out.height='100%'}
+```{r justicia, echo=FALSE, fig.cap="Percepción de recompensa por esfuerzo e inteligencia.", fig.topcaption = TRUE, fig.align = 'center', out.width = '100%',out.height='100%'}
 knitr::include_graphics(path = "output/graphs/justicia.png")
 ```
 
@@ -325,18 +327,18 @@ La subdimensión de confianza institucional "mide la valoración implícita de l
 
 En la propuesta regional de la CEPAL se utiliza grado de confianza en (a) las cortes, (b) el Congreso Nacional, (c) la Policía Nacional, (d) los partidos políticos, (e) el ejecutivo y (f) las elecciones. Al trabajar con ELSOC se utilizan los siguientes ocho items presentes en las cinco olas: grado de confianza en (a) el gobierno, (b) los partidos políticos; (c) carabineros; (d) los sindicatos; (e) el poder judicial; (f) las empresas privadas; (g) el congreso nacional; y (h) el presidente/a de la república. Un análisis descriptivo de estos items se presenta en la Figura \@ref(fig:confianza-institucional) y la estimación de las correlaciones en la Figura \@ref(fig:confianza-institucional-cor).
 
-```{r confianza-institucional, echo=FALSE, fig.cap="Confianza en instituciones.", fig.align = 'center', out.width = '100%',out.height='100%'}
+```{r confianza-institucional, echo=FALSE, fig.cap="Confianza en instituciones.", fig.topcaption = TRUE, fig.align = 'center', out.width = '100%',out.height='100%'}
 knitr::include_graphics(path = "output/graphs/confianza-institucional.png")
 ```
 
-```{r confianza-institucional-cor, echo=FALSE, fig.cap="Asociación indicadores Confianza institucional.", fig.align = 'center', out.width = '100%',out.height='100%'}
+```{r confianza-institucional-cor, echo=FALSE, fig.cap="Asociación de indicadores de confianza institucional.", fig.topcaption = TRUE, fig.align = 'center', out.width = '100%',out.height='100%'}
 knitr::include_graphics(path = "output/graphs/confianza-institucional_cor.png")
 ```
 
 En esta oportunidad, nuevamente se utilizó un análisis factorial exploratorio con el objetivo de construir un indicador a partir de la información de las dimensiones comunes que subyacen a este conjunto de ocho items. La Tabla \@ref(tab:inst-fa) muestra el resultado de la extracción de tres factores:
 
-```{r inst-fa, echo=FALSE, fig.align = 'center', out.width = '100%',out.height='100%'}
-knitr::kable(data.frame(image='![](output/tables/inst_fa.png){width="800"}'),    # generar tabla
+```{r inst-fa, echo=FALSE, fig.topcaption = TRUE, fig.align = 'center', out.width = '100%',out.height='100%'}
+knitr::kable(data.frame(image='![](output/tables/inst_fa.png){width="650"}'),    # generar tabla
              caption = "Dimensiones de confianza institucional.",
              col.names = "",
              row.names = F,
@@ -355,18 +357,18 @@ La subdimensión de solidaridad busca cuantificar la presencia de valores solida
 
 En el informe de la CEPAL se utiliza como indicador el item "Asistencia a reuniones de un grupo de mejoras para la comunidad". Al trabajar con ELSOC se utilizará este item y otros siete que abordan un comportamiento prosocial y que se encuentran en las cinco olas. Estos items se describen en la Figura \@ref(fig:solidaridad) y un análisis bivariado se muestra en la Figura \@ref(fig:solidaridad-cor).
 
-```{r solidaridad, echo=FALSE, fig.cap="Acciones de solidaridad.", fig.align = 'center', out.width = '100%',out.height='100%'}
+```{r solidaridad, echo=FALSE, fig.cap="Acciones de solidaridad.", fig.topcaption = TRUE, fig.align = 'center', out.width = '100%',out.height='100%'}
 knitr::include_graphics(path = "output/graphs/solidaridad.png")
 ```
 
-```{r solidaridad-cor, echo=FALSE, fig.cap="Asociación indicadores de solidaridad.", fig.align = 'center', out.width = '100%',out.height='100%'}
+```{r solidaridad-cor, echo=FALSE, fig.cap="Asociación de indicadores de solidaridad.", fig.topcaption = TRUE, fig.align = 'center', out.width = '100%',out.height='100%'}
 knitr::include_graphics(path = "output/graphs/solidaridad_cor.png")
 ```
 
 Como esta subdimensión posee ocho items, se volvió a realizar un análisis factorial exploratorio para construir un índice a partir de la información de las dimensiones comunes entre este conjunto de items. La Tabla \@ref(tab:solidaridad-fa) muestra el resultado de la extracción de tres factores:
 
-```{r solidaridad-fa, echo=FALSE, fig.align = 'center', out.width = '100%',out.height='100%'}
-knitr::kable(data.frame(image='![](output/tables/solidaridad_fa.png){width="800"}'),    # generar tabla
+```{r solidaridad-fa, echo=FALSE, fig.topcaption = TRUE, fig.align = 'center', out.width = '100%',out.height='100%'}
+knitr::kable(data.frame(image='![](output/tables/solidaridad_fa.png){width="650"}'),    # generar tabla
              caption = "Dimensiones de solidaridad.",
              col.names = "",
              row.names = F,
@@ -381,35 +383,35 @@ La subdimensión de participación cívica da cuenta de la voluntad de adherir a
 
 En informe CEPAL se utilizaron los indicadores "Tiene actividad política (firma peticiones, boicot, va a manifestaciones pacíficas, huelgas)", que indica la predisposición hacia la actividad política, "Participación en organizaciones", que busca medir la implicación de los individuos con su comunidad y "Voto en elecciones presidenciales", que pretende capturar el grado de compromiso cívico con el sistema regente y la dirección de la sociedad. Al trabajar con ELSOC se utilizan cuatro items de actividad política presentes en las cuatro primeras olas, ocho items de participación en organizaciones presentes en ola 2016 y 2018 y voto en elecciones 2013 y 2017 (ola 2016 y 2018). Un gráfico descriptivo de estos items se presenta en la Figura \@ref(fig:participacion-civica), en la Figura \@ref(fig:participacion-organizaciones) y en la Figura \@ref(fig:participacion-electoral), mientras que las correlaciones se muestran en la Figura \@ref(fig:participacion-civica-cor) y en la Figura \@ref(fig:participacion-organizaciones-cor). La tasa de respuesta considera un N de alrededor de 1490 respuestas.
 
-```{r participacion-civica, echo=FALSE, fig.cap="Participación en actividades cívicas.", fig.align = 'center', out.width = '100%',out.height='100%'}
+```{r participacion-civica, echo=FALSE, fig.cap="Participación en actividades cívicas.", fig.topcaption = TRUE, fig.align = 'center', out.width = '100%',out.height='100%'}
 knitr::include_graphics(path = "output/graphs/participacion-civica.png")
 ```
 
-```{r participacion-civica-cor, echo=FALSE, fig.cap="Asociación indicadores participación cívica.", fig.align = 'center', out.width = '100%',out.height='100%'}
+```{r participacion-civica-cor, echo=FALSE, fig.cap="Asociación de indicadores de participación cívica.", fig.topcaption = TRUE, fig.align = 'center', out.width = '100%',out.height='100%'}
 knitr::include_graphics(path = "output/graphs/participacion-civica_cor.png")
 ```
 
 **Participación en organizaciones**
 
-```{r participacion-organizaciones, echo=FALSE, fig.cap="Participación en organizaciones sociales.", fig.align = 'center', out.width = '100%',out.height='100%'}
+```{r participacion-organizaciones, echo=FALSE, fig.cap="Participación en organizaciones sociales.", fig.topcaption = TRUE, fig.align = 'center', out.width = '100%',out.height='100%'}
 knitr::include_graphics(path = "output/graphs/participacion-organizaciones.png")
 ```
 
-```{r participacion-organizaciones-cor, echo=FALSE, fig.cap="Asociación indicadores participación en organizaciones.", fig.align = 'center', out.width = '100%',out.height='100%'}
+```{r participacion-organizaciones-cor, echo=FALSE, fig.cap="Asociación de indicadores participación en organizaciones sociales.", fig.topcaption = TRUE, fig.align = 'center', out.width = '100%',out.height='100%'}
 knitr::include_graphics(path = "output/graphs/participacion-organizaciones_cor.png")
 ```
 
 **Participación electoral**
 
-```{r participacion-electoral, echo=FALSE, fig.cap="Participación en elecciones 2013.", fig.align = 'center', out.width = '100%',out.height='100%'}
+```{r participacion-electoral, echo=FALSE, fig.cap="Participación en elecciones 2013.", fig.topcaption = TRUE, fig.align = 'center', out.width = '100%',out.height='100%'}
 knitr::include_graphics(path = "output/graphs/participacion-electoral.png")
 ```
 
 En esta oportunidad, se utilizó un análisis factorial exploratorio sobre los cuatro items de participación cívica, sobre los ocho tipos de participación en organizaciones presentes en ELSOC y sobre el item de participación en elecciones con el objetivo de construir un índice a partir de la información de las dimensiones comunes que subyacen a este conjunto de items. La Tabla \@ref(tab:participacion-fa) muestra el resultado de la extracción de tres factores:
 
-```{r participacion-fa, echo=FALSE, fig.align = 'center', out.width = '100%',out.height='100%'}
-knitr::kable(data.frame(image='![](output/tables/participacion_fa.png){width="800"}'),    # generar tabla
-             caption = "Dimensiones de Participación cívica y en organizaciones.",
+```{r participacion-fa, echo=FALSE, fig.topcaption = TRUE, fig.align = 'center', out.width = '100%',out.height='100%'}
+knitr::kable(data.frame(image='![](output/tables/participacion_fa.png){width="650"}'),    # generar tabla
+             caption = "Dimensiones de participación cívica y en organizaciones.",
              col.names = "",
              row.names = F,
              format = "pipe") %>%  kable_styling(latex_options = c("HOLD_position"),full_width = T)
@@ -419,7 +421,7 @@ Podemos observar en la Tabla \@ref(tab:participacion-fa) un primer factor asocia
 
 Finalmente, la subdimensión de Respeto por reglas sociales presente en esta dimensión de la propuesta regional de la CEPAL lamentablemente no tiene representación en los items de ELSOC.
 
-## Cohesión territorial
+## Vínculos territoriales
 
 De manera adicional, se incorpora una dimensión sobre calidad de vida en el vecindario presente en ELSOC. Todos estos items se encuentran presentes en las cinco olas.
 
@@ -427,7 +429,7 @@ De manera adicional, se incorpora una dimensión sobre calidad de vida en el vec
 
 En la encuesta ELSOC se incluye un item territorial sobre el grado de confianza en vecinos. Un análisis descriptivo de este item, que sería el único representante de esta subdimensión, se presenta en la Figura \@ref(fig:confianza-vecinos).
 
-```{r confianza-vecinos, echo=FALSE, fig.cap="Confianza en vecinos.", fig.align = 'center', out.width = '100%',out.height='100%'}
+```{r confianza-vecinos, echo=FALSE, fig.cap="Confianza en vecinos.", fig.topcaption = TRUE, fig.align = 'center', out.width = '100%',out.height='100%'}
 knitr::include_graphics(path = "output/graphs/confianza-vecinos.png")
 ```
 
@@ -435,11 +437,11 @@ knitr::include_graphics(path = "output/graphs/confianza-vecinos.png")
 
 Estos items abordan si las personas se sienten identificadas con la gente del barrio, si se sienten integrados, si se sienten parte del barrio y si creen que es su barrio ideal. Un gráfico descriptivo de estos cuatro items se presenta en la Figura \@ref(fig:cohesion-barrial) y las correlaciones en la Figura \@ref(fig:cohesion-barrial-cor).
 
-```{r cohesion-barrial, echo=FALSE, fig.cap="Cohesión en el barrio.", fig.align = 'center', out.width = '100%',out.height='100%'}
+```{r cohesion-barrial, echo=FALSE, fig.cap="Cohesión en el barrio.", fig.topcaption = TRUE, fig.align = 'center', out.width = '100%',out.height='100%'}
 knitr::include_graphics(path = "output/graphs/cohesion-barrial.png")
 ```
 
-```{r cohesion-barrial-cor, echo=FALSE, fig.cap="Asociación indicadores cohesión barrial.", fig.align = 'center', out.width = '100%',out.height='100%'}
+```{r cohesion-barrial-cor, echo=FALSE, fig.cap="Asociación de indicadores de cohesión barrial.", fig.topcaption = TRUE, fig.align = 'center', out.width = '100%',out.height='100%'}
 knitr::include_graphics(path = "output/graphs/cohesion-barrial_cor.png")
 ```
 
@@ -447,11 +449,11 @@ knitr::include_graphics(path = "output/graphs/cohesion-barrial_cor.png")
 
 Esta subdimensión de items territoriales presente en las cinco olas de ELSOC aborda la percepción sobre el barrio en relación con si las demás personas son sociables, si es fácil hacer amigos, si las personas son cordiales y si son colaboradoras. Un gráfico descriptivo de estos cuatro items se presenta en la Figura \@ref(fig:sociabilidad-barrial) y un análisis bivariado en la Figura \@ref(fig:sociabilidad-barrial-cor).
 
-```{r sociabilidad-barrial, echo=FALSE, fig.cap="Sociabilidad barrial.", fig.align = 'center', out.width = '100%',out.height='100%'}
+```{r sociabilidad-barrial, echo=FALSE, fig.cap="Sociabilidad barrial.", fig.topcaption = TRUE, fig.align = 'center', out.width = '100%',out.height='100%'}
 knitr::include_graphics(path = "output/graphs/sociabilidad-barrial.png")
 ```
 
-```{r sociabilidad-barrial-cor, echo=FALSE, fig.cap="Asociación indicadores sociabilidad barrial.", fig.align = 'center', out.width = '100%',out.height='100%'}
+```{r sociabilidad-barrial-cor, echo=FALSE, fig.cap="Asociación de indicadores de sociabilidad barrial.", fig.topcaption = TRUE, fig.align = 'center', out.width = '100%',out.height='100%'}
 knitr::include_graphics(path = "output/graphs/sociabilidad-barrial_cor.png")
 ```
 
@@ -459,19 +461,19 @@ knitr::include_graphics(path = "output/graphs/sociabilidad-barrial_cor.png")
 
 Finalmente, se incluye una subdimensión de Satisfacción Residencial, relacionada con items que miden la conectividad del barrio, la proximidad con el comercio, colegios, familiares y la principal actividad de trabajo, la limpieza del barrio, la cantidad de áreas verdes y la seguridad del barrio. Se incluye un gráfico descriptivo de estos ocho items en la Figura \@ref(fig:satisfaccion-residencial) y un análisis bivariado en la Figura \@ref(fig:satisfaccion-residencial-cor).
 
-```{r satisfaccion-residencial, echo=FALSE, fig.cap="Satisfacción con el barrio.", fig.align = 'center', out.width = '100%',out.height='100%'}
+```{r satisfaccion-residencial, echo=FALSE, fig.cap="Satisfacción con el barrio.", fig.topcaption = TRUE, fig.align = 'center', out.width = '100%',out.height='100%'}
 knitr::include_graphics(path = "output/graphs/satisfaccion-residencial.png")
 ```
 
-```{r satisfaccion-residencial-cor, echo=FALSE, fig.cap="Asociación indicadores satisfacción residencial.", fig.align = 'center', out.width = '100%',out.height='100%'}
+```{r satisfaccion-residencial-cor, echo=FALSE, fig.cap="Asociación de indicadores de satisfacción residencial.", fig.topcaption = TRUE, fig.align = 'center', out.width = '100%',out.height='100%'}
 knitr::include_graphics(path = "output/graphs/satisfaccion-residencial_cor.png")
 ```
 
 Para la dimensión de cohesión territorial se realizó un único análisis factorial exploratorio. Como observamos en la Tabla \@ref(tab:cohesion-territorial-fa), en la segunda columna se presenta un factor que incluye los items referidos a la cohesión barrial, en la tercera columna se presenta un segundo factor asociado a la sociabilidad barrial y la confianza en vecinos y finalmente se presenta un tercer factor que incluye los items de satisfacción residencial. En cuanto a la varianza asociada a cada uno de estos factores, el primero de ellos representa el 15% de la varianza, el segundo un 14% de la varianza y el tercero un 13% de la varianza. En base a estos resultados se propone utilizar un índice que incluya los cuatro items de cohesión barrial.
 
-```{r cohesion-territorial-fa, echo=FALSE, fig.align = 'center', out.width = '100%',out.height='100%'}
-knitr::kable(data.frame(image='![](output/tables/cohesion_territorial_fa.png){width="800"}'),    # generar tabla
-             caption = "Dimensiones de cohesión territorial.",
+```{r cohesion-territorial-fa, echo=FALSE, fig.topcaption = TRUE, fig.align = 'center', out.width = '100%',out.height='100%'}
+knitr::kable(data.frame(image='![](output/tables/cohesion_territorial_fa.png){width="650"}'),    # generar tabla
+             caption = "Dimensiones de vínculos territoriales.",
              col.names = "",
              row.names = F,
              format = "pipe") %>%  kable_styling(latex_options = c("HOLD_position"),full_width = T)
@@ -481,7 +483,7 @@ knitr::kable(data.frame(image='![](output/tables/cohesion_territorial_fa.png){wi
 
 Finalmente es relevante evaluar la consistencia del modelo teórico de cohesión social. En términos de medición esto se expresaría en que los indicadores que corresponden a una misma dimensión deberían correlacionar de manera moderada a alta entre sí, y de manera baja con las otras dimensiones. De ser así sería posible avanzar en la construcción de un indicador por dimensión, simplificando los análisis posteriores. De otra manera, en lo que sigue se debería analizar cada subdimensión por separado. Para poder evaluar este punto, la Figura \@ref(fig:cohesion-social-cor) presenta información sobre la asociación entre las distintas subdimensiones de la cohesión social en base a los indicadores diseñados para cada una de ellas.
 
-```{r cohesion-social-cor, echo=FALSE, fig.cap="Asociación de las subdimensiones de cohesión social.", fig.align = 'center', out.width = '100%', out.height='100%'}
+```{r cohesion-social-cor, echo=FALSE, fig.cap="Asociación de las subdimensiones de cohesión social.", fig.topcaption = TRUE, fig.align = 'center', out.width = '100%', out.height='100%'}
 knitr::include_graphics(path = "output/graphs/cohesion_social_cor.png")
 ```
 

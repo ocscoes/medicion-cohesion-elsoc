@@ -59,7 +59,7 @@ generación-de-indicadores-de-cohesión-social
 relaciones-sociales-de-igualdad
 sentido-de-pertenencia
 orientación-hacia-el-bien-común
-cohesión-territorial
+vínculos-territoriales
 relación-entre-las-subdimensiones-de-cohesión-social
 cambios-en-la-cohesión-social-en-chile-2016-2020
 relaciones-sociales-de-igualdad-1
@@ -73,7 +73,7 @@ confianza-institucional
 orientación-hacia-el-bien-común-1
 solidaridad
 participación-cívica
-vínculos-territoriales
+vínculos-territoriales-1
 conclusión
 habilitadores-e-inhibidores-de-la-cohesión-social
 perfiles-de-cohesión-social
