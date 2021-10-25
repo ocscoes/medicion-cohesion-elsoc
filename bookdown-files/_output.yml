@@ -24,7 +24,7 @@ bookdown::gitbook:
       all: ['facebook', 'twitter', 'linkedin']
     info: no
   citation_package: default
-  pandoc_args: [ "--csl", "bib/apa-no-ampersand.csl", "-M","lang:es"]
+  pandoc_args: [ "--csl", "bib/comision-economica-para-america-latina-y-el-caribe.csl", "-M","lang:es"]
 
 bookdown::pdf_book:
   includes:

@@ -33,7 +33,7 @@ La estimación con ACL para los indicadores de cohesión social utiliza las vari
 
 El procedimiento de estimación de ACL es generar modelos con distinto número de clases y comparar sus estadísticos de ajuste. Luego de realizar estas estimaciones, el modelo que resultó con mejor ajuste fue el de tres clases. En base a este número es posible representar gráficamente la estructura de cada clase según sus niveles (o probabilidad de pertenencia a la clase) en cada una de las subdimensiones, tal como se presenta en la Figura \@ref(fig:clases-latentes):
 
-```{r clases-latentes, echo=FALSE, fig.cap="Tipologia de las clases latentes de cohesion social.", fig.align = 'center', out.width = '100%',out.height='100%'}
+```{r clases-latentes, echo=FALSE, fig.cap="Tipología de las clases latentes de cohesión social.", fig.topcaption = TRUE, fig.align = 'center', out.width = '100%',out.height='100%'}
 knitr::include_graphics(path = "output/graphs/lca3.jpg")
 ```
 En el gráfico de la Figura \@ref(fig:clases-latentes) observamos en el eje X a las distintas subdimensiones de cohesión social del modelo de la CEPAL, más la dimensión territorial añadida para este trabajo. Por temas de mayor claridad, en el gráfico, incluimos a la dimensión territorial junto a las otras subdimiensiones que corresponden a la dimensión de pertenencia. Las tres líneas identifican a cada una de las clases y su nivel (probabilidad) de respuesta en cada indicador. Las clases fueron luego etiquetadas para dar un sentido sustantivo a cada perfil, donde se configuran tres grupos: Movilizados, Institucionales y Atomizados, que se describen a continuación.
@@ -106,14 +106,14 @@ collapse_rows_cohesion <-
 
 ```
 
-```{r clases-region, echo=FALSE, fig.align = 'center', out.width = '100%',out.height='100%'}
+```{r clases-region, echo=FALSE, fig.topcaption = TRUE, fig.align = 'center', out.width = '100%',out.height='100%'}
 knitr::kable(collapse_rows_cohesion, table_format,
              col.names =  c("Clases de cohesión social",
                             "Movilizados",
                             "Institucionales",
                             "Atomizados",
                             "N=100%"),
-             caption = "Distribucion de las clases de cohesion social por region") %>%
+             caption = "Distribución de las clases latentes de cohesin social por región") %>%
   kable_styling(bootstrap_options = c("striped", "hover"),latex_options = c("scale_down")) %>%
   kableExtra::add_header_above(header = c(" "=1, "Region"= 4))
 ```
@@ -126,7 +126,7 @@ En el perfil de cohesión vertical que denominamos "institucional", cinco region
 
 El perfil atomizado presenta valores próximos a la media en las regiones con mayor número de casos, encontrándose su nivel más alto en Coquimbo (29.4%) y el más bajo en Maule (22.3%).
 
-```{r mapas-region, echo=FALSE, fig.cap="Mapa de la distribución de las clases latentes de cohesion social por region.", fig.align = 'center', out.width = '100%',out.height='100%'}
+```{r mapas-region, echo=FALSE, fig.topcaption = TRUE, fig.cap="Mapa de la distribución de las clases latentes de cohesión social por región.", fig.align = 'center', out.width = '100%',out.height='100%'}
 
 knitr::include_graphics(path = "output/graphs/mapas_region.png")
 
@@ -171,14 +171,14 @@ collapse_rows_cohesion <-
 
 ```
 
-```{r tabla-empleo, echo=FALSE, fig.cap="Efecto del tipo de empleo sobre las clases de cohesion social en porcentaje", fig.align = 'center', out.width = '100%',out.height='100%'}
+```{r tabla-empleo, echo=FALSE, fig.cap="Efecto del tipo de empleo sobre las clases de cohesión social en porcentaje", fig.topcaption = TRUE, fig.align = 'center', out.width = '100%',out.height='100%'}
 knitr::kable(collapse_rows_cohesion, table_format,
              col.names =  c("Clases de cohesión social",
                             "Formal",
                             "Informal"
                             ),
-             caption = "Efecto del tipo de empleo sobre las clases de cohesion social") %>%
-  kable_styling(bootstrap_options = c("striped", "hover"),latex_options = c("scale_down")) %>%
+             caption = "Efecto del tipo de empleo sobre las clases de cohesión social en porcentaje") %>%
+  kable_styling(bootstrap_options = c("striped", "hover")) %>%
   kableExtra::add_header_above(header = c(" "=1, "Tipo de empleo"= 2))
 ```
 
@@ -231,7 +231,7 @@ collapse_rows_cohesion <-
 
 ```
 
-```{r clases-edad, echo=FALSE, fig.cap="Efecto de la edad sobre las clases de cohesion social en porcentaje", fig.align = 'center', out.width = '100%',out.height='100%'}
+```{r clases-edad, echo=FALSE, fig.cap="Efecto de la edad sobre las clases de cohesión social en porcentaje", fig.topcaption = TRUE, fig.align = 'center', out.width = '100%',out.height='100%'}
 knitr::kable(collapse_rows_cohesion, table_format,
              col.names =  c("Clases de cohesión social",
                             "Entre 18 y 29",
@@ -240,7 +240,7 @@ knitr::kable(collapse_rows_cohesion, table_format,
                             "Entre 50 y 59",
                             "Mas de 60"
                             ),
-             caption = "Efecto de la edad sobre las clases de cohesion social") %>%
+             caption = "Efecto de la edad sobre las clases de cohesión social en porcentaje") %>%
   kable_styling(bootstrap_options = c("striped", "hover"), latex_options = c("scale_down")) %>%
 kableExtra::add_header_above(header = c(" "=1, "Grupos de edad"= 5))
 ```
@@ -275,14 +275,14 @@ collapse_rows_cohesion <-
 
 ```
 
-```{r clases-sexo, echo=FALSE, fig.cap="Efecto del sexo sobre las clases de cohesion social en porcentaje", fig.align = 'center', out.width = '100%',out.height='100%'}
+```{r clases-sexo, echo=FALSE, fig.cap="Efecto del sexo sobre las clases de cohesión social en porcentaje", fig.topcaption = TRUE, fig.align = 'center', out.width = '100%',out.height='100%'}
 knitr::kable(collapse_rows_cohesion, table_format,
              col.names =  c("Clases de cohesión social",
                             "Hombre",
                             "Mujer"
                             ),
-             caption = "Efecto del sexo sobre las clases de cohesion social") %>%
-  kable_styling(bootstrap_options = c("striped", "hover"),latex_options = c("scale_down")) %>%
+             caption = "Efecto del sexo sobre las clases de cohesión social en porcentaje") %>%
+  kable_styling(bootstrap_options = c("striped", "hover")) %>%
   kableExtra::add_header_above(header = c(" "=1, "Sexo"= 2))
 ```
 
@@ -325,7 +325,7 @@ collapse_rows_cohesion <-
 
 ```
 
-```{r clases-educacion, echo=FALSE, fig.cap="Efecto de la educacion sobre las clases de cohesion social en porcentaje", fig.align = 'center', out.width = '100%',out.height='100%'}
+```{r clases-educacion, echo=FALSE, fig.cap="Efecto de la educación sobre las clases de cohesión social en porcentaje", fig.topcaption = TRUE, fig.align = 'center', out.width = '100%',out.height='100%'}
 knitr::kable(collapse_rows_cohesion, table_format,
              col.names =  c("Clases de cohesión social",
                             "Menos que media completa",
@@ -333,7 +333,7 @@ knitr::kable(collapse_rows_cohesion, table_format,
                             "Educacion tecnica superior",
                             "Educacion universitaria o Postgrado"
                             ),
-             caption = "Efecto de la educacion sobre las clases de cohesion social") %>%
+             caption = "Efecto de la educación sobre las clases de cohesión social en porcentaje") %>%
   kable_styling(bootstrap_options = c("striped", "hover"),latex_options = c("scale_down")) %>%
   kableExtra::add_header_above(header = c(" "=1, "Nivel educacional"= 4))
 ```
@@ -381,7 +381,7 @@ collapse_rows_cohesion <-
 
 ```
 
-```{r clases-ingresos, echo=FALSE, fig.cap="Efecto de los quintiles de ingreso sobre las clases de cohesion social en porcentaje", fig.align = 'center', out.width = '100%',out.height='100%'}
+```{r clases-ingresos, echo=FALSE, fig.cap="Efecto de los quintiles de ingreso sobre las clases de cohesión social en porcentaje", fig.topcaption = TRUE, fig.align = 'center', out.width = '100%',out.height='100%'}
 knitr::kable(collapse_rows_cohesion, table_format,
              col.names =  c("Clases de cohesión social",
                             "Quintil 1",
@@ -390,7 +390,7 @@ knitr::kable(collapse_rows_cohesion, table_format,
                             "Quintil 4",
                             "Quintil 5"
                             ),
-             caption = "Efecto de los quintiles de ingreso sobre las clases de cohesion social") %>%
+             caption = "Efecto de los quintiles de ingreso sobre las clases de cohesión social en porcentaje") %>%
   kable_styling(bootstrap_options = c("striped", "hover"),latex_options = c("scale_down")) %>%
   kableExtra::add_header_above(header = c(" "=1, "Quintiles de ingresos"= 5))
 ```
@@ -433,14 +433,14 @@ collapse_rows_cohesion <-
 
 ```
 
-```{r clases-escolaridad, echo=FALSE, fig.cap="Efecto del promedio de escolaridad del barrio sobre las clases de cohesion social en porcentaje", fig.align = 'center', out.width = '100%',out.height='100%'}
+```{r clases-escolaridad, echo=FALSE, fig.cap="Efecto del promedio de escolaridad del barrio sobre las clases de cohesión social en porcentaje", fig.topcaption = TRUE, fig.align = 'center', out.width = '100%',out.height='100%'}
 knitr::kable(collapse_rows_cohesion, table_format,
              col.names =  c("Clases de cohesión social",
                             "Menor escolaridad",
                             "Alta escolaridad"
                             ),
-             caption = "Efecto del promedio de escolaridad del barrio sobre las clases de cohesion social") %>%
-  kable_styling(bootstrap_options = c("striped", "hover"),latex_options = c("scale_down")) %>%
+             caption = "Efecto del promedio de escolaridad del barrio sobre las clases de cohesión social en porcentaje") %>%
+  kable_styling(bootstrap_options = c("striped", "hover")) %>%
   kableExtra::add_header_above(header = c(" "=1, "Promedio de años de escolaridad sostenedor del hogar (sd)"= 2))
 ```
 
@@ -473,14 +473,14 @@ collapse_rows_cohesion <-
 
 ```
 
-```{r clases-ocupados, echo=FALSE, fig.cap="Efecto de la cantidad de trabajadores ocupados sobre las clases de cohesion social en porcentaje", fig.align = 'center', out.width = '100%',out.height='100%'}
+```{r clases-ocupados, echo=FALSE, fig.cap="Efecto de la cantidad de trabajadores ocupados sobre las clases de cohesión social en porcentaje", fig.topcaption = TRUE, fig.align = 'center', out.width = '100%',out.height='100%'}
 knitr::kable(collapse_rows_cohesion, table_format,
              col.names =  c("Clases de cohesión social",
                             "Menor cantidad de ocupados",
                             "Alta cantidad de ocupados"
                             ),
-             caption = "Efecto de la cantidad de trabajadores ocupados sobre las clases de cohesion social") %>%
-  kable_styling(bootstrap_options = c("striped", "hover"),latex_options = c("scale_down")) %>%
+             caption = "Efecto de la cantidad de trabajadores ocupados sobre las clases de cohesión social en porcentaje") %>%
+  kable_styling(bootstrap_options = c("striped", "hover")) %>%
   kableExtra::add_header_above(header = c(" "=1, "Cantidad de trabajadores ocupados"= 2))
 ```
 
@@ -513,14 +513,14 @@ collapse_rows_cohesion <-
 
 ```
 
-```{r clases-cesantes, echo=FALSE, fig.cap="Efecto de la cantidad de trabajadores cesantes sobre las clases de cohesion social en porcentaje", fig.align = 'center', out.width = '100%',out.height='100%'}
+```{r clases-cesantes, echo=FALSE, fig.cap="Efecto de la cantidad de trabajadores cesantes sobre las clases de cohesión social en porcentaje", fig.topcaption = TRUE, fig.align = 'center', out.width = '100%',out.height='100%'}
 knitr::kable(collapse_rows_cohesion, table_format,
              col.names =  c("Clases de cohesión social",
                             "Menor cantidad de cesantes",
                             "Alta cantidad de cesantes"
                             ),
-             caption = "Efecto de la cantidad de trabajadores cesantes sobre las clases de cohesion social") %>%
-  kable_styling(bootstrap_options = c("striped", "hover"),latex_options = c("scale_down")) %>%
+             caption = "Efecto de la cantidad de trabajadores cesantes sobre las clases de cohesión social en porcentaje") %>%
+  kable_styling(bootstrap_options = c("striped", "hover")) %>%
   kableExtra::add_header_above(header = c(" "=1, "Cantidad de trabajadores buscando empleo"= 2))
 ```
 
@@ -553,14 +553,14 @@ collapse_rows_cohesion <-
 
 ```
 
-```{r clases-acced, echo=FALSE, fig.cap="Efecto del acceso a colegios sobre las clases de cohesion social en porcentaje", fig.align = 'center', out.width = '100%',out.height='100%'}
+```{r clases-acced, echo=FALSE, fig.cap="Efecto del acceso a colegios sobre las clases de cohesión social en porcentaje", fig.topcaption = TRUE, fig.align = 'center', out.width = '100%',out.height='100%'}
 knitr::kable(collapse_rows_cohesion, table_format,
              col.names =  c("Clases de cohesión social",
                             "Menor acceso a colegios",
                             "Alto acceso a colegios"
                             ),
-             caption = "Efecto del acceso a colegios sobre las clases de cohesion social") %>%
-  kable_styling(bootstrap_options = c("striped", "hover"),latex_options = c("scale_down")) %>%
+             caption = "Efecto del acceso a colegios sobre las clases de cohesión social en porcentaje") %>%
+  kable_styling(bootstrap_options = c("striped", "hover")) %>%
   kableExtra::add_header_above(header = c(" "=1, "Acceso a colegios"= 2))
 ```
 
@@ -592,14 +592,14 @@ collapse_rows_cohesion <-
 
 ```
 
-```{r clases-accser, echo=FALSE, fig.cap="Efecto del acceso a servicios y equipamientos publicos sobre las clases de cohesion social en porcentaje", fig.align = 'center', out.width = '100%',out.height='100%'}
+```{r clases-accser, echo=FALSE, fig.cap="Efecto del acceso a servicios y equipamientos públicos sobre las clases de cohesión social en porcentaje", fig.topcaption = TRUE, fig.align = 'center', out.width = '100%',out.height='100%'}
 knitr::kable(collapse_rows_cohesion, table_format,
              col.names =  c("Clases de cohesión social",
                             "Menor acceso a servicios",
                             "Alto acceso a servicios"
                             ),
-             caption = "Efecto del acceso a servicios y equipamientos publicos sobre las clases de cohesion social") %>%
-  kable_styling(bootstrap_options = c("striped", "hover"),latex_options = c("scale_down")) %>%
+             caption = "Efecto del acceso a servicios y equipamientos públicos sobre las clases de cohesión social en porcentaje") %>%
+  kable_styling(bootstrap_options = c("striped", "hover")) %>%
   kableExtra::add_header_above(header = c(" "=1, "Acceso a servicios publicos"= 2))
 ```
 
@@ -631,14 +631,14 @@ collapse_rows_cohesion <-
 
 ```
 
-```{r clases-etnia, echo=FALSE, fig.cap="Efecto de la pertenencia a una etnia sobre las clases de cohesion social en porcentaje", fig.align = 'center', out.width = '100%',out.height='100%'}
+```{r clases-etnia, echo=FALSE, fig.cap="Efecto de la pertenencia a una etnia sobre las clases de cohesión social en porcentaje", fig.topcaption = TRUE, fig.align = 'center', out.width = '100%',out.height='100%'}
 knitr::kable(collapse_rows_cohesion, table_format,
              col.names =  c("Clases de cohesión social",
                             "Ninguna",
                             "Pertenece a una etnia"
                             ),
-             caption = "Efecto de la pertenencia a una etnia sobre las clases de cohesion social") %>%
-  kable_styling(bootstrap_options = c("striped", "hover"),latex_options = c("scale_down")) %>%
+             caption = "Efecto de la pertenencia a una etnia sobre las clases de cohesión social en porcentaje") %>%
+  kable_styling(bootstrap_options = c("striped", "hover")) %>%
   kableExtra::add_header_above(header = c(" "=1, "Etnia"= 2))
 ```
 
@@ -670,14 +670,14 @@ collapse_rows_cohesion <-
 
 ```
 
-```{r clases-nacion, echo=FALSE,fig.cap="Efecto de ser migrante sobre las clases de cohesion social en porcentaje", fig.align = 'center', out.width = '100%',out.height='100%'}
+```{r clases-nacion, echo=FALSE,fig.cap="Efecto de ser migrante sobre las clases de cohesión social en porcentaje", fig.topcaption = TRUE, fig.align = 'center', out.width = '100%',out.height='100%'}
 knitr::kable(collapse_rows_cohesion, table_format,
              col.names =  c("Clases de cohesión social",
                             "Nacionalidad chilena",
                             "Otra nacionalidad"
                             ),
-             caption = "Efecto de la condicion de migracion sobre las clases de cohesion social") %>%
-  kable_styling(bootstrap_options = c("striped", "hover"),latex_options = c("scale_down")) %>%
+             caption = "Efecto de ser migrante sobre las clases de cohesión social en porcentaje") %>%
+  kable_styling(bootstrap_options = c("striped", "hover")) %>%
   kableExtra::add_header_above(header = c(" "=1, "Nacionalidad"= 2))
 ```
 
