@@ -77,8 +77,14 @@ vínculos-territoriales-1
 conclusión
 habilitadores-e-inhibidores-de-la-cohesión-social
 perfiles-de-cohesión-social
+principales-características-de-los-perfiles-de-cohesión-social
+perfil-movilizado-dimensión-horizontal-42
+perfil-institucional.-dimensión-vertical-32
+perfil-atomizado-26
 perfiles-de-cohesión-social-en-el-territorio-nacional
 perfiles-de-cohesión-según-elementos-habilitadores
 inclusión-laboral
+clave-para-la-lectura-de-las-tablas
 inclusión-social
 factores-territoriales
+recapitulación-sintética
