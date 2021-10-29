@@ -1,5 +1,5 @@
 ---
-title: "Cambios en la Cohesión Social en Chile"
+title: "Cohesión social en Chile en tiempos de cambio: Indicadores, perfiles y factores asociados"
 subtitle: ""
 author: "Equipo CEPAL-ELSOC"
 date: "`r Sys.Date()`"
@@ -55,14 +55,16 @@ fullw = if(is_html_output()) {T} else if(is_latex_output()) {F}
 fsize = if(is_html_output()) {14} else if(is_latex_output()) {8}
 ```
 
-# Presentación {-}
+# Resumen {-}
 
-Este reporte de investigación consiste en un análisis de medición y cambios en la cohesión social en Chile en base a indicadores de la Encuesta Longitudinal Social de Chile - [ELSOC](https://coes.cl/encuesta-panel/), producida por [COES](https://coes.cl/)
+El interés por el estudio de la cohesión social posee una larga trayectoria tanto académica como así también desde el estado y de organizaciones con interés público. La cohesión social aparece como una aspiración normativa de una sociedad mejor, vinculada a conceptos como lazos sociales de calidad, pertenencia, y confianza en los demás y en el estado. Se asume también que un estado de adecuada cohesión social es producto de condiciones estructurales y políticas que apunten a mayor igualdad, integración y oportunidades, por lo cual muchas veces se refiere a ella como un horizonte o una consecuencia de buenas políticas sociales. Sin duda este horizonte normativo reaparece con fuerza en tiempos caracterizados por crisis económica producto de la pandemia, polarización política, y la extrema concentración de ingreso y privilegios que caracteriza las sociedades actuales y donde el caso Chileno claramente no es una excepción.
 
-Autores:
+El renovado interés por la cohesión social nos lleva necesariamente a volver sobre su definición, sus alcances y su medición. Si bien existen muchas diferencias en las aproximaciones y definiciones en este tema, en los últimos años surge una convergencia hacia el carácter multidimensional de la cohesión social, que incorpora elementos como relaciones sociales de igualdad, sentido de pertenencia y orientación hacia el bien común. Partiendo desde una definición de cohesión social de la @cepal_cohesion_2021, este reporte de investigación presenta inicialmente una propuesta de indicadores de cohesión social basada en la Encuesta Longitudinal Social de Chile - [ELSOC 2016-2020](https://coes.cl/encuesta-panel/), producida por [COES](https://coes.cl/). El carácter longitudinal-panel de esta encuesta nos permite realizar posteriormente un análisis de los cambios ocurridos en nueve indicadores de cohesión social en Chile entre los años 2016 y 2020. Finalmente, se presenta una propuesta de tres perfiles de cohesión social en la sociedad chilena así como también su caracterización socioeconómica y regional.
 
-- Juan Carlos Castillo
-- Emmanuelle Barozet
-- Vicente Espinoza
+**Autores:**
 
-Ayudante de investigación: Kevin Carrasco.
+- Juan Carlos Castillo - Departamento de Sociología, Universidad de Chile / COES. juancastillov@uchile.cl
+- Vicente Espinoza - COES
+- Emmanuelle Barozet - Departamento de Sociología, Universidad de Chile / COES
+
+- Asistente de investigación: Kevin Carrasco.
