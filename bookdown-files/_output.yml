@@ -39,7 +39,7 @@ bookdown::pdf_book:
 bookdown::word_document2:
   reference_docx: "bib/template.docx"
   citation_package: default
-  pandoc_args: [ "--csl", "bib/apa-no-ampersand.csl", "-M","lang:es"]
+  pandoc_args: [ "--csl", "bib/comision-economica-para-america-latina-y-el-caribe.csl", "-M","lang:es"]
 
 
 # [Cambiar el .csl]: https://stackoverflow.com/questions/48965247/use-csl-file-for-pdf-output-in-bookdown/49145699#49145699
