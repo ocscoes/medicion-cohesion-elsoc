@@ -941,7 +941,7 @@ collapse_rows_cohesion <-
            rep("Solidaridad", 4),
            rep("Participación cívica", 4),
            rep("Cohesión territorial", 4)),
-           cohesion.item,cohesion.min,cohesion.mean) #derechos y oport
+           cohesion.item,cohesion.min,cohesion.mean)
 ```
 
 ```{r echo=FALSE}

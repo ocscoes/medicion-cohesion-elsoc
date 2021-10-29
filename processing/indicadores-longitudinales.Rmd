@@ -595,7 +595,7 @@ para los años 2016, 2018 y 2020")
 
 alluvial_lazos
 
-ggsave(alluvial_lazos, file = "bookdown-files/output/graphs/alluvial_lazos.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
+ggsave(alluvial_lazos, file = "bookdown-files/output/graphs/alluvial_lazos.svg",device = "svg",width = 25,height = 13,dpi = "retina",units = "cm")
 ```
 
 ## Confianza interpersonal
@@ -633,7 +633,7 @@ alluvial_conf.interpersonal <- ggplot(datos.conf.interpersonal,
 
 alluvial_conf.interpersonal
 
-ggsave(alluvial_conf.interpersonal, file = "bookdown-files/output/graphs/alluvial_conf_interpersonal.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
+ggsave(alluvial_conf.interpersonal, file = "bookdown-files/output/graphs/alluvial_conf_interpersonal.svg",device = "svg",width = 25,height = 13,dpi = "retina",units = "cm")
 ```
 
 ## Diversidad
@@ -674,7 +674,7 @@ solo estan disponibles para los años 2016 y 2018")
 
 alluvial_diversidad
 
-ggsave(alluvial_diversidad, file = "bookdown-files/output/graphs/alluvial_diversidad.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
+ggsave(alluvial_diversidad, file = "bookdown-files/output/graphs/alluvial_diversidad.svg",device = "svg",width = 25,height = 13,dpi = "retina",units = "cm")
 ```
 
 ## Identificación con el país
@@ -710,7 +710,7 @@ alluvial_identificacion <- ggplot(datos.identificacion, aes(x = ola, fill = iden
 
 alluvial_identificacion
 
-ggsave(alluvial_identificacion, file = "bookdown-files/output/graphs/alluvial_identificacion.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
+ggsave(alluvial_identificacion, file = "bookdown-files/output/graphs/alluvial_identificacion.svg",device = "svg",width = 25,height = 13,dpi = "retina",units = "cm")
 ```
 
 ## Percepcion de justicia
@@ -746,7 +746,7 @@ alluvial_justicia <- ggplot(datos.justicia, aes(x = ola, fill = justicia, stratu
 
 alluvial_justicia
 
-ggsave(alluvial_justicia, file = "bookdown-files/output/graphs/alluvial_justicia.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
+ggsave(alluvial_justicia, file = "bookdown-files/output/graphs/alluvial_justicia.svg",device = "svg",width = 25,height = 13,dpi = "retina",units = "cm")
 ```
 
 ## Confianza institucional
@@ -782,7 +782,7 @@ alluvial_conf.institucional <- ggplot(datos.conf.institucional, aes(x = ola, fil
 
 alluvial_conf.institucional
 
-ggsave(alluvial_conf.institucional, file = "bookdown-files/output/graphs/alluvial_conf_institucional.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
+ggsave(alluvial_conf.institucional, file = "bookdown-files/output/graphs/alluvial_conf_institucional.svg",device = "svg",width = 25,height = 13,dpi = "retina",units = "cm")
 ```
 
 ## Solidaridad
@@ -819,7 +819,7 @@ alluvial_solidaridad <- ggplot(datos.solidaridad, aes(x = ola, fill = solidarida
 
 alluvial_solidaridad
 
-ggsave(alluvial_solidaridad, file = "bookdown-files/output/graphs/alluvial_solidaridad.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
+ggsave(alluvial_solidaridad, file = "bookdown-files/output/graphs/alluvial_solidaridad.svg",device = "svg",width = 25,height = 13,dpi = "retina",units = "cm")
 ```
 
 ## Participación cívica
@@ -858,7 +858,7 @@ encuentran disponibles para el año 2020, por lo que no se estimo este indicador
 
 alluvial_participacion
 
-ggsave(alluvial_participacion, file = "bookdown-files/output/graphs/alluvial_participacion.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
+ggsave(alluvial_participacion, file = "bookdown-files/output/graphs/alluvial_participacion.svg",device = "svg",width = 25,height = 13,dpi = "retina",units = "cm")
 ```
 
 ## Cohesion territorial
@@ -896,7 +896,7 @@ Nota: Los item Este barrio es ideal para mi, Me siento integrado/a en este barri
 gente de este barrio y Este barrio es parte de mi solo están disponibles para los años 2016-2019")
 
 alluvial_cohesion_territorial
-ggsave(alluvial_cohesion_territorial, file = "bookdown-files/output/graphs/alluvial_cohesion_territorial.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
+ggsave(alluvial_cohesion_territorial, file = "bookdown-files/output/graphs/alluvial_cohesion_territorial.svg",device = "svg",width = 25,height = 13,dpi = "retina",units = "cm")
 ```
 
 

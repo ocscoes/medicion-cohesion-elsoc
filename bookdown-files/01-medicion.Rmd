@@ -72,8 +72,14 @@ pacman::p_load(stargazer, sjmisc, car, sjlabelled, kableExtra, dplyr, Hmisc)
 load("../input/data/proc/data.RData")
 
 # condicional Table_format para que las tablas salgan en html y pdf
+is_word_output <- function(fmt = knitr:::pandoc_to()) {
+  length(fmt) == 1 && fmt == "docx"
+}
+
 table_format = if(knitr::is_html_output()) {
-    "html"
+    table_format
+  } else if(is_word_output())  {
+    "simple"
   } else if(knitr::is_latex_output()) {
     "latex"
   }

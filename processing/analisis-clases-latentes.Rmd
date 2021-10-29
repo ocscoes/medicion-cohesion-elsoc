@@ -125,7 +125,7 @@ fit.indices
     datlca_tot_parl$variable=factor(datlca_tot_parl$variable, labels=c("Confianza", "Diversidad", "Lazos", "Identificación", "Justicia", "Conf. Instituciones", "Territorial",  "Solidaridad", "Participación"))
     
     lca3$P # class size
-    datlca_tot_parl$class=factor(datlca_tot_parl$class,labels=c("Movilizados (42%)", "Institucionales (32%)", "Atomizados (26%)"))
+    datlca_tot_parl$class=factor(datlca_tot_parl$class,labels=c("Movilizados (42%)", "Legitimantes (32%)", "Atomizados (26%)"))
 
     library(ggplot2)
 lca3_graph <-ggplot(data = datlca_tot_parl, aes(x=variable, y=value, group=class, shape=class)) + 
@@ -187,7 +187,7 @@ elsoc_lca3<- cbind(cohesion_med, "lclass" = lca3$predclass)
 elsoc_lca3<- as.data.frame(dplyr::select(elsoc_lca3, idencuesta, lclass))
 
 data <- dplyr::left_join(data, elsoc_lca3, by="idencuesta")
-data$lclass <- factor(data$lclass, levels = c(1,2,3), labels = c("Institucional", "Movilizado", "Atomizado"))
+data$lclass <- factor(data$lclass, levels = c(1,2,3), labels = c("Movilizado", "Institucional", "Atomizado"))
 
 save(data, file = "input/data/proc/data_clases.RData")
 ```

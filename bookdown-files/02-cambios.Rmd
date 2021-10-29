@@ -14,7 +14,7 @@ El análisis presentado a continuación es de tipo descriptivo y de resumen, ant
 
 Adelantamos que, en términos generales, existe poca variación en los indicadores descritos a continuación en términos del tamaño de las categorías, pero pondremos el foco en quienes cambian de opinión de una ola a otra, que es uno de los aportes centrales del análisis longitudinal. La finalidad de esta sección es mostrar la evolución general en los últimos cinco años de las dimensiones constitutivas del sentido de pertenencia en Chile.
 
-También señalamos que estos gráficos resumen una gran cantidad de información, descrita en las secciones anteriores y la presenta gráficamente en una dimensión de tiempo, por lo que su meta es mostrar tendencias generales. Este tipo de gráfico es de uso reciente en Chile (ELSOC, 2020).
+También señalamos que estos gráficos resumen una gran cantidad de información, descrita en las secciones anteriores y la presenta gráficamente en una dimensión de tiempo, por lo que su meta es mostrar tendencias generales. Este tipo de gráfico es de uso reciente en Chile [@coes_radiografia_2020].
 
 ***
 
@@ -227,6 +227,8 @@ En resumen, también se trata de un indicador muy positivo de cohesión social, 
 En primer lugar, respecto de las frecuencias, se observa poca variación en las expresiones constitutivas de la cohesión social, desglosadas aquí en cuatro dimensiones principales (relaciones sociales de igualdad, sentido de pertenencia, orientación hacia el bien común, vínculos territoriales).
 
 En cuanto a las frecuencias de los indicadores particularmente bajos, como era de esperarse, la desconfianza entre personas y hacia las instituciones es muy alta en Chile y varía muy poco en el período descrito, al igual que el número de contactos con diferentes ocupaciones y la percepción de justicia. Lo mismo ocurre con la prosocialidad. En especial, las personas confiadas o que piensan que en Chile se recompensa el esfuerzo representan un grupo muy limitado y esto constituye un inhibidor potente, aunque estable de la cohesión social y que no ha sido afectado por el estallido. Un factor alarmante es que, siendo baja la confianza hacia instituciones en Chile, logra aumentar la cantidad de personas que desconfían de ellas. Se entiende retrospectivamente por el contexto pre estallido, pero se trata de uno de los elementos de mayor preocupación para el caso de Chile, pues la degradación de este indicador ha llegado a niveles críticos.
+
+Otro elemento interesante es la participación cívica. Esta se mantiene constante en un nivel bajo, pero entre 2018 y 2019 cae considerablemente el porcentaje que "nunca" se moviliza de 62 a 47%. Asimismo, aumenta el porcentaje de quienes "casi nunca" se movilizan e incluso el porcentaje de quienes "a veces" se movilizan aumenta al doble.
 
 Respecto de los indicadores medios, destaca el reconocimiento y respeto por la diversidad.
 
