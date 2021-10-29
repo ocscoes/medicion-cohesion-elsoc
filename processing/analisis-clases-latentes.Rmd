@@ -122,7 +122,9 @@ fit.indices
   print(levels(datlca_tot_parl$variable))
   
     # Relabel factors
-    datlca_tot_parl$variable=factor(datlca_tot_parl$variable, labels=c("Confianza", "Diversidad", "Lazos", "Identificación", "Justicia", "Conf. Instituciones", "Territorial",  "Solidaridad", "Participación"))
+    datlca_tot_parl$variable=factor(datlca_tot_parl$variable, labels=c("Confianza", "Diversidad", "Lazos", "Identificación", "Justicia", "Conf. Instituciones",  "Solidaridad", "Participación", "Territorial"))
+    
+    datlca_tot_parl$variable=factor(datlca_tot_parl$variable, levels=c("Confianza", "Diversidad", "Lazos", "Identificación", "Justicia", "Conf. Instituciones", "Territorial",  "Solidaridad", "Participación"))
     
     lca3$P # class size
     datlca_tot_parl$class=factor(datlca_tot_parl$class,labels=c("Movilizados (42%)", "Legitimantes (32%)", "Atomizados (26%)"))
