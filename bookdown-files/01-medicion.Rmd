@@ -266,7 +266,7 @@ knitr::include_graphics(path = "output/graphs/diversidad.png")
 knitr::include_graphics(path = "output/graphs/diversidad_cor.png")
 ```
 
-Dada la cantidad de items y la heterogeneidad de sus correlaciones, es necesario realizar análisis adicionales. Para ello utilizaremos análisis factorial exploratorio, que entrega información de las dimensiones comunes que subyacen a un conjunto de items. La Tabla \@ref(tab:div-fa) muestra el resultado de la extracción de tres factores:
+Dada la cantidad de items y la heterogeneidad de sus correlaciones, es necesario realizar análisis adicionales. Para ello utilizaremos análisis factorial exploratorio, que entrega información de las dimensiones comunes que subyacen a un conjunto de items. la Tabla \@ref(tab:div-fa) muestra el resultado de la extracción de tres factores:
 
 ```{r div-fa, echo=FALSE, fig.topcaption = TRUE, fig.align = 'center', out.width = '100%',out.height='100%'}
 knitr::kable(data.frame(image='![](output/tables/div_fa.png){width="650"}'),    # generar tabla
@@ -276,7 +276,7 @@ knitr::kable(data.frame(image='![](output/tables/div_fa.png){width="650"}'),    
              format = "pipe") %>%  kable_styling(latex_options = c("HOLD_position"),full_width = T)
 ```
 
-En la Tabla \@ref(tab:div-fa) observamos en la primera columna los items analizados, y las siguientes columnas que comienzan con ML se refieren a cada uno de los factores extraídos, en este caso tres. Los valores de la tabla en estas columnas indican la intensidad de la relación entre items y factores en una escala de 0 a 1, donde sobre 0.7 se asume una asociación considerable entre item y factor. La columna _Uniqueness_ (unicidad)  se refiere a la proporción de varianza que el indicador no comparte con los factores (varianza única), y la fila _Proportion Var_ al final de la tabla informa la proporción de la varianza del factor en relación a la varianza total.
+En la Tabla \@ref(tab:div-fa) observamos en la primera columna los items analizados, y las siguientes columnas que comienzan con ML se refieren a cada uno de los factores extraídos, en este caso tres. Los valores de la Tabla en estas columnas indican la intensidad de la relación entre items y factores en una escala de 0 a 1, donde sobre 0.7 se asume una asociación considerable entre item y factor. La columna _Uniqueness_ (unicidad)  se refiere a la proporción de varianza que el indicador no comparte con los factores (varianza única), y la fila _Proportion Var_ al final de la Tabla informa la proporción de la varianza del factor en relación a la varianza total.
 
 En la segunda columna (ML1) se observa un factor que se relaciona con las preguntas sobre el grado de confianza de la Figura \@ref(fig:diversidad), luego un segundo factor asociado a las preguntas de inmigrantes, y finalmente un tercer factor asociado a la pregunta de adopción homoparental. Atendiendo ahora a la varianza asociada a estos factores, el primer factor representa casi un 30% de la varianza, el segundo alrededor de 20% y el tercero muy por debajo con cerca de un 11%. Por lo tanto existe mayor consistencia en los dos primeros factores, y entre ellos dos el asociado a confianza hacia la diversidad es el más nítido. Basándose en este análisis es posible proponer utilizar un índice que represente a la subdimensión de reconocimiento y respeto hacia la diversidad calculado a partir de un promedio simple entre los indicadores "Grado de confianza con personas mapuche", "Grado de confianza con personas inmigrantes" y "Grado de confianza con personas homosexuales".
 
@@ -286,7 +286,7 @@ Según la @cepal_cohesion_2021, "los lazos sociales permiten generar espacios de
 
 El indicador utilizado en la propuesta regional de la CEPAL para esta subdimensión es "Importancia de los amigos en la vida", que es un indicador de percepción de la Encuesta Mundial de Valores, a partir del cual se busca cuantificar la intensidad del tejido social en los países de la región. En el caso de ELSOC los items más cercanos a esta operacionalización corresponden a "Cantidad de amigos/as cercanos" y "Tamaño de la red cercana", que están presentes solo en las olas de los años 2017 y 2019 de la encuesta. Además, se incluye un item de "Cantidad de personas que se conocen con diferentes ocupaciones" (gerentes de empresas, vendedor ambulante, secretario/a, mecánico de autos, vendedor de tienda, abogado/a, aseador/a de oficina, médico, parvularia, chofer de taxi, camarero/a, contador/a, profesor/a universitario) para determinar la heterogeneidad de los lazos; este item está presente en las versiones 2016, 2018 y 2020.
 
-La Figura \@ref(fig:lazos) muestra un gráfico descriptivo de estos items, mientras en la Figura \@ref(fig:lazos-cor) se presenta la estimación de las correlaciones.
+la Figura \@ref(fig:lazos) muestra un gráfico descriptivo de estos items, mientras en la Figura \@ref(fig:lazos-cor) se presenta la estimación de las correlaciones.
 
 ```{r lazos, echo=FALSE, fig.topcaption = TRUE, fig.cap="Item subdimension Lazos.", fig.align = 'center', out.width = '100%',out.height='100%'}
 knitr::include_graphics(path = "output/graphs/lazos.png")
@@ -341,7 +341,7 @@ knitr::include_graphics(path = "output/graphs/confianza-institucional.png")
 knitr::include_graphics(path = "output/graphs/confianza-institucional_cor.png")
 ```
 
-En esta oportunidad, nuevamente se utilizó un análisis factorial exploratorio con el objetivo de construir un indicador a partir de la información de las dimensiones comunes que subyacen a este conjunto de ocho items. La Tabla \@ref(tab:inst-fa) muestra el resultado de la extracción de tres factores:
+En esta oportunidad, nuevamente se utilizó un análisis factorial exploratorio con el objetivo de construir un indicador a partir de la información de las dimensiones comunes que subyacen a este conjunto de ocho items. la Tabla \@ref(tab:inst-fa) muestra el resultado de la extracción de tres factores:
 
 ```{r inst-fa, echo=FALSE, fig.topcaption = TRUE, fig.align = 'center', out.width = '100%',out.height='100%'}
 knitr::kable(data.frame(image='![](output/tables/inst_fa.png){width="650"}'),    # generar tabla
@@ -371,7 +371,7 @@ knitr::include_graphics(path = "output/graphs/solidaridad.png")
 knitr::include_graphics(path = "output/graphs/solidaridad_cor.png")
 ```
 
-Como esta subdimensión posee ocho items, se volvió a realizar un análisis factorial exploratorio para construir un índice a partir de la información de las dimensiones comunes entre este conjunto de items. La Tabla \@ref(tab:solidaridad-fa) muestra el resultado de la extracción de tres factores:
+Como esta subdimensión posee ocho items, se volvió a realizar un análisis factorial exploratorio para construir un índice a partir de la información de las dimensiones comunes entre este conjunto de items. la Tabla \@ref(tab:solidaridad-fa) muestra el resultado de la extracción de tres factores:
 
 ```{r solidaridad-fa, echo=FALSE, fig.topcaption = TRUE, fig.align = 'center', out.width = '100%',out.height='100%'}
 knitr::kable(data.frame(image='![](output/tables/solidaridad_fa.png){width="650"}'),    # generar tabla
@@ -413,7 +413,7 @@ knitr::include_graphics(path = "output/graphs/participacion-organizaciones_cor.p
 knitr::include_graphics(path = "output/graphs/participacion-electoral.png")
 ```
 
-En esta oportunidad, se utilizó un análisis factorial exploratorio sobre los cuatro items de participación cívica, sobre los ocho tipos de participación en organizaciones presentes en ELSOC y sobre el item de participación en elecciones con el objetivo de construir un índice a partir de la información de las dimensiones comunes que subyacen a este conjunto de items. La Tabla \@ref(tab:participacion-fa) muestra el resultado de la extracción de tres factores:
+En esta oportunidad, se utilizó un análisis factorial exploratorio sobre los cuatro items de participación cívica, sobre los ocho tipos de participación en organizaciones presentes en ELSOC y sobre el item de participación en elecciones con el objetivo de construir un índice a partir de la información de las dimensiones comunes que subyacen a este conjunto de items. la Tabla \@ref(tab:participacion-fa) muestra el resultado de la extracción de tres factores:
 
 ```{r participacion-fa, echo=FALSE, fig.topcaption = TRUE, fig.align = 'center', out.width = '100%',out.height='100%'}
 knitr::kable(data.frame(image='![](output/tables/participacion_fa.png){width="650"}'),    # generar tabla
@@ -475,7 +475,7 @@ knitr::include_graphics(path = "output/graphs/satisfaccion-residencial.png")
 knitr::include_graphics(path = "output/graphs/satisfaccion-residencial_cor.png")
 ```
 
-Para la dimensión de cohesión territorial se realizó un único análisis factorial exploratorio. Como observamos en la Tabla \@ref(tab:cohesion-territorial-fa), en la segunda columna se presenta un factor que incluye los items referidos a la cohesión barrial, en la tercera columna se presenta un segundo factor asociado a la sociabilidad barrial y la confianza en vecinos y finalmente se presenta un tercer factor que incluye los items de satisfacción residencial. En cuanto a la varianza asociada a cada uno de estos factores, el primero de ellos representa el 15% de la varianza, el segundo un 14% de la varianza y el tercero un 13% de la varianza. En base a estos resultados se propone utilizar un índice que incluya los cuatro items de cohesión barrial.
+Para la dimensión de vínculos territoriales se realizó un único análisis factorial exploratorio. Como observamos en la Tabla \@ref(tab:cohesion-territorial-fa), en la segunda columna se presenta un factor que incluye los items referidos a la cohesión barrial, en la tercera columna se presenta un segundo factor asociado a la sociabilidad barrial y la confianza en vecinos y finalmente se presenta un tercer factor que incluye los items de satisfacción residencial. En cuanto a la varianza asociada a cada uno de estos factores, el primero de ellos representa el 15% de la varianza, el segundo un 14% de la varianza y el tercero un 13% de la varianza. En base a estos resultados se propone utilizar un índice que incluya los cuatro items de cohesión barrial.
 
 ```{r cohesion-territorial-fa, echo=FALSE, fig.topcaption = TRUE, fig.align = 'center', out.width = '100%',out.height='100%'}
 knitr::kable(data.frame(image='![](output/tables/cohesion_territorial_fa.png){width="650"}'),    # generar tabla

@@ -14,12 +14,12 @@ knitr::opts_chunk$set(echo = TRUE, warning=F, message=F)
 
 ```{r include=FALSE}
 # Cargar paquetes
-pacman::p_load(dplyr, car, summarytools, webshot, knitr, kableExtra, corrplot, ggplot2, sjPlot, sjmisc, semPlot, semTools, psych, svglite)
+pacman::p_load(dplyr, car, summarytools, webshot, knitr, kableExtra, corrplot, ggplot2, sjPlot, sjmisc, semPlot, semTools, psych, svglite, writexl)
 ```
 
 
 ```{r include=FALSE}
-# Cargar base elsoc longitudinal (2016-2019) creada en "preparacion"
+# Cargar base elsoc longitudinal (2016-2020) creada en "preparacion"
 load("input/data/proc/data.RData")
 
 ```
@@ -29,11 +29,16 @@ load("input/data/proc/data.RData")
 ### Lazos
 
 ```{r echo=FALSE}
+windowsFonts("Arial" = windowsFont("Arial"))
 lazos <-  plot_stackfrq(select(data, r15_w02, r13_nredes_w02, vol.red_w01), geom.size = 0.33) +
   theme(text=element_text(family="Arial", size=12),
-        legend.position="bottom")
+        legend.position="bottom",
+        plot.caption = element_text(hjust = 0)) +
+  labs(caption = "Fuente: Elaboración propia en base a datos de ELSOC 2016-2020")
 lazos
-ggsave(lazos, file = "bookdown-files/output/graphs/lazos.svg",device = "svg",width = 25,height = 13,dpi = "retina",units = "cm")
+# Los gráficos son exportados en png para bookdown y en svg según requerimiento de CEPAL
+ggsave(lazos, file = "bookdown-files/output/graphs/lazos.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
+ggsave(lazos, file = "bookdown-files/output/figuras-svg-cepal/Grafico 7 Item subdimension Lazos.svg",device = "svg",width = 25,height = 13,dpi = "retina",units = "cm")
 ```
 
 ```{r}
@@ -49,9 +54,22 @@ colnames(lazos_cor) <-c("(A)", "(B)","(C)")
 
 
 
-svglite("bookdown-files/output/graphs/lazos_cor.svg", width = 7, height = 7, pointsize = 10)
+png("bookdown-files/output/graphs/lazos_cor.png",width=600,height=300, pointsize = 10)
 par(family="Arial", size= 10)
 corrplot::corrplot(lazos_cor,
+  method = "color",
+  addCoef.col = "#000390",
+  type = "upper",
+  tl.col = "black",
+  col=colorRampPalette(c("white","#0068DC"))(12),
+  bg = "white",
+  na.label = "-",
+  lower.col = "black")
+dev.off()
+
+svglite("bookdown-files/output/figuras-svg-cepal/Grafico 8 Asociacion de indicadores de subdimension lazos.svg", width = 7, height = 7, pointsize = 10)
+par(family="Arial", size= 10)
+foot<-corrplot::corrplot(lazos_cor,
   method = "color",
   addCoef.col = "#000390",
   type = "upper",
@@ -83,10 +101,14 @@ data <- data %>%
 ```{r echo=FALSE}
 conf_interpersonal <- plot_stackfrq(select(data, c02_rec_w01, c03_rec_w01, c04_rec_w01), geom.colors = "RdBu", geom.size = 0.33) +
   theme(text=element_text(family="Arial", size=12),
-        legend.position="bottom")
+        legend.position="bottom",
+        plot.caption = element_text(hjust = 0)) +
+  labs(caption = "Fuente: Elaboración propia en base a datos de ELSOC 2016-2020")
 conf_interpersonal
 
-ggsave(conf_interpersonal, file = "bookdown-files/output/graphs/confianza-interpersonal.svg",device = "svg",width = 25,height = 13,dpi = "retina",units = "cm")
+ggsave(conf_interpersonal, file = "bookdown-files/output/graphs/confianza-interpersonal.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
+
+ggsave(conf_interpersonal, file = "bookdown-files/output/figuras-svg-cepal/Grafico 2 Confianza interpersonal.svg",device = "svg",width = 25,height = 13,dpi = "retina",units = "cm")
 ```
 
 ```{r echo=FALSE}
@@ -100,7 +122,7 @@ rownames(conf_interpersonal_cor) <- c("A. Se puede confiar en la mayoria de las 
                                   "C. La mayoria de las personas trata de ser justa")
 colnames(conf_interpersonal_cor) <-c("(A)", "(B)","(C)")
 
-svglite("bookdown-files/output/graphs/confianza-interpersonal_cor.svg", width = 7, height = 7, pointsize = 10)
+png("bookdown-files/output/graphs/confianza-interpersonal_cor.png", width=600,height=300, pointsize = 10)
 par(family="Arial", size= 10)
 corrplot::corrplot(conf_interpersonal_cor,
   method = "color",
@@ -113,6 +135,18 @@ corrplot::corrplot(conf_interpersonal_cor,
   lower.col = "black")
 dev.off()
 
+svglite("bookdown-files/output/figuras-svg-cepal/Grafico 3 Asociacion de indicadores de Confianza interpersonal.svg", width = 7, height = 7, pointsize = 10)
+par(family="Arial", size= 10)
+corrplot::corrplot(conf_interpersonal_cor,
+  method = "color",
+  addCoef.col = "#000390",
+  type = "upper",
+  tl.col = "black",
+  col=colorRampPalette(c("white","#0068DC"))(12),
+  bg = "white",
+  na.label = "-",
+  lower.col = "black")
+dev.off()
 
 ltm::cronbach.alpha(data %>%
   dplyr::select(c02_rec_w01, c03_rec_w01, c04_rec_w01), na.rm=TRUE)
@@ -137,19 +171,26 @@ data <- data %>%
 ```{r echo=FALSE}
 prejuicios<- plot_stackfrq(select(data, r12_03_w01, r12_04_w01, c37_01_w03), geom.colors = "RdBu", geom.size = 0.33) +
   theme(text=element_text(family="Arial", size=12),
-        legend.position="bottom")
+        legend.position="bottom",
+        plot.caption = element_text(hjust = 0)) +
+  labs(caption = "Fuente: Elaboración propia en base a datos de ELSOC 2016-2020")
 
 prejuicios
-ggsave(prejuicios, file = "bookdown-files/output/graphs/prejuicios.svg",device = "svg",width = 25,height = 13,dpi = "retina",units = "cm")
+ggsave(prejuicios, file = "bookdown-files/output/graphs/prejuicios.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
+
+ggsave(prejuicios, file = "bookdown-files/output/figuras-svg-cepal/Grafico 4 Prejuicios hacia inmigrantes y adopcion homoparental.svg",device = "svg",width = 25,height = 13,dpi = "retina",units = "cm")
 ```
 
 ```{r echo=FALSE}
 diversidad <- plot_stackfrq(select(data, c06_04_w01, c06_05_w01, c06_06_w01), geom.size = 0.33) +
   theme(text=element_text(family="Arial", size=12),
-        legend.position="bottom")
+        legend.position="bottom",
+        plot.caption = element_text(hjust = 0)) +
+  labs(caption = "Fuente: Elaboración propia en base a datos de ELSOC 2016-2020")
 
 diversidad
-ggsave(diversidad, file = "bookdown-files/output/graphs/diversidad.svg",device = "svg",width = 25,height = 13,dpi = "retina",units = "cm")
+ggsave(diversidad, file = "bookdown-files/output/graphs/diversidad.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
+ggsave(diversidad, file = "bookdown-files/output/figuras-svg-cepal/Grafico 5 Grado de confianza hacia distintos grupos sociales.svg",device = "svg",width = 25,height = 13,dpi = "retina",units = "cm")
 ```
 
 ```{r echo=FALSE}
@@ -166,7 +207,20 @@ rownames(diversidad_cor) <- c("A. Chile pierde su identidad con la llegada de in
                           "F. Grado de confianza con personas inmigrantes")
 colnames(diversidad_cor) <-c("(A)", "(B)","(C)", "(D)", "(E)", "(F)")
 
-svglite("bookdown-files/output/graphs/diversidad_cor.svg", width = 7, height = 7, pointsize = 10)
+png("bookdown-files/output/graphs/diversidad_cor.png", width=600,height=300, pointsize = 10)
+par(family="Arial", size= 10)
+corrplot::corrplot(diversidad_cor,
+  method = "color",
+  addCoef.col = "#000390",
+  type = "upper",
+  tl.col = "black",
+  col=colorRampPalette(c("white","#0068DC"))(12),
+  bg = "white",
+  na.label = "-",
+  lower.col = "black")
+dev.off()
+
+svglite("bookdown-files/output/figuras-svg-cepal/Grafico 6 Asociacion de indicadores de la subdimension Reconocimiento y respeto de la diversidad.svg", width = 7, height = 7, pointsize = 10)
 par(family="Arial", size= 10)
 corrplot::corrplot(diversidad_cor,
   method = "color",
@@ -213,16 +267,20 @@ fac_ml <- psych::fa(r = diversidad_fa, nfactors = 3, fm= "ml", rotate = "varimax
 
 fac_ml$loadings
 # ver https://www.anthonyschmidt.co/post/2020-09-27-efa-tables-in-r/
-
+# Busca funcion para crear tablas FA
 source("processing/fa_table.R") 
 
+# Crea la tabla FA
 div_fa <-fa_table(fac_ml, .32)
+# Exportar la tabla en html
 knitr::kable(div_fa, "html") %>%
   kable_styling(bootstrap_options = c("striped", "hover")) %>%
   column_spec(column = 1,width = "20 cm") %>%
   cat(., file = "bookdown-files/output/tables/div_fa.html")
-
+# convertir tabla html en imagen png
 webshot(url ="bookdown-files/output/tables/div_fa.html", file ="bookdown-files/output/tables/div_fa.png", vheight = 10, vwidth = 600)
+# exportar la tabla en excel segun requerimiento cepal
+write_xlsx(div_fa, path = "bookdown-files/output/tables-excel-cepal/tabla 1.2.xlsx")
 ```
 
 ```{r}
@@ -247,7 +305,7 @@ rownames(relaciones_cor) <- c("A. Lazos",
                           "C. Reconocimiento y respeto de la diversidad")
 colnames(relaciones_cor) <-c("(A)", "(B)","(C)")
 
-svglite("bookdown-files/output/graphs/relaciones_cor.svg", width = 7, height = 7, pointsize = 10)
+png("bookdown-files/output/graphs/relaciones_cor.png", width=600,height=300, pointsize = 10)
 par(family="Arial", size= 10)
 corrplot::corrplot(relaciones_cor,
   method = "color",
@@ -269,10 +327,13 @@ dev.off()
 ```{r echo=FALSE}
 identificacion <-plot_stackfrq(select(data, c32_01_w01,c32_02_w01), geom.colors = "RdBu", geom.size = 0.25) +
   theme(text=element_text(family="Arial", size=12),
-        legend.position="bottom")
+        legend.position="bottom",
+        plot.caption = element_text(hjust = 0)) +
+  labs(caption = "Fuente: Elaboración propia en base a datos de ELSOC 2016-2020")
 
 identificacion
-ggsave(identificacion, file = "bookdown-files/output/graphs/identificacion.svg",device = "svg",width = 25,height = 13,dpi = "retina",units = "cm")
+ggsave(identificacion, file = "bookdown-files/output/graphs/identificacion.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
+ggsave(identificacion, file = "bookdown-files/output/figuras-svg-cepal/Grafico 9 Identificacion y orgullo con Chile.svg",device = "svg",width = 25,height = 13,dpi = "retina",units = "cm")
 ```
 
 ```{r echo=FALSE}
@@ -295,10 +356,14 @@ data <- data %>%
 ```{r echo=FALSE}
 justicia <-plot_stackfrq(select(data, c18_09_w01,c18_10_w01), geom.colors = "RdBu", geom.size = 0.25) +
   theme(text=element_text(family="Arial", size=12),
-        legend.position="bottom")
+        legend.position="bottom",
+        plot.caption = element_text(hjust = 0)) +
+  labs(caption = "Fuente: Elaboración propia en base a datos de ELSOC 2016-2020")
 
 justicia
-ggsave(justicia, file = "bookdown-files/output/graphs/justicia.svg",device = "svg",width = 25,height = 13,dpi = "retina",units = "cm")
+ggsave(justicia, file = "bookdown-files/output/graphs/justicia.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
+ggsave(justicia, file = "bookdown-files/output/figuras-svg-cepal/Grafico 10 Percepcion de recompensa por esfuerzo e inteligencia.svg",device = "svg",width = 25,height = 13,dpi = "retina",units = "cm")
+
 ```
 
 ```{r echo=FALSE}
@@ -328,10 +393,14 @@ confianza_institucional <- plot_stackfrq(select(data,c05_01_w01,
                          c05_07_w01,
                          c05_08_w01), geom.size = 0.9) +
   theme(text=element_text(family="Arial", size=12),
-        legend.position="bottom")
+        legend.position="bottom",
+        plot.caption = element_text(hjust = 0)) +
+  labs(caption = "Fuente: Elaboración propia en base a datos de ELSOC 2016-2020")
 
 confianza_institucional
-ggsave(confianza_institucional, file = "bookdown-files/output/graphs/confianza-institucional.svg",device = "svg",width = 25,height = 13,dpi = "retina",units = "cm")
+ggsave(confianza_institucional, file = "bookdown-files/output/graphs/confianza-institucional.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
+ggsave(confianza_institucional, file = "bookdown-files/output/figuras-svg-cepal/Grafico 11 Confianza en instituciones.svg",device = "svg",width = 25,height = 13,dpi = "retina",units = "cm")
+
 ```
 
 ```{r echo=FALSE}
@@ -351,7 +420,20 @@ rownames(conf_institucional_cor) <- c("A. Confianza en el gobierno",
 colnames(conf_institucional_cor) <-c("(A)", "(B)","(C)", "(D)", "(E)", "(F)", "(G)", "(H)")
 
 
-svglite("bookdown-files/output/graphs/confianza-institucional_cor.svg", width = 7, height = 7, pointsize = 10)
+png("bookdown-files/output/graphs/confianza-institucional_cor.png", width=600,height=300, pointsize = 10)
+par(family="Arial", size= 10)
+corrplot::corrplot(conf_institucional_cor,
+  method = "color",
+  addCoef.col = "#000390",
+  type = "upper",
+  tl.col = "black",
+  col=colorRampPalette(c("white","#0068DC"))(12),
+  bg = "white",
+  na.label = "-",
+  lower.col = "black")
+dev.off()
+
+svglite("bookdown-files/output/figuras-svg-cepal/Grafico 12 Asociacion de indicadores de confianza institucional.svg", width = 7, height = 7, pointsize = 10)
 par(family="Arial", size= 10)
 corrplot::corrplot(conf_institucional_cor,
   method = "color",
@@ -396,6 +478,8 @@ knitr::kable(inst_fa, "html") %>%
   cat(., file = "bookdown-files/output/tables/inst_fa.html")
 
 webshot(url ="bookdown-files/output/tables/inst_fa.html", file ="bookdown-files/output/tables/inst_fa.png", vheight = 10, vwidth = 600)
+
+write_xlsx(inst_fa, path = "bookdown-files/output/tables-excel-cepal/tabla 1.3.xlsx")
 ```
 
 ```{r}
@@ -420,7 +504,7 @@ rownames(pertenencia_cor) <- c("A. Identificación con el país",
                           "C. Confianza en instituciones políticas")
 colnames(pertenencia_cor) <-c("(A)", "(B)","(C)")
 
-svglite("bookdown-files/output/graphs/pertenencia_cor.svg", width = 7, height = 7, pointsize = 10)
+png("bookdown-files/output/graphs/pertenencia_cor.png", width=600,height=300, pointsize = 10)
 par(family="Arial", size= 10)
 corrplot::corrplot(pertenencia_cor,
   method = "color",
@@ -449,10 +533,14 @@ solidaridad <- plot_stackfrq(select(data, c07_01_w01,
                          c07_07_w01,
                          c07_08_w01), geom.size = 0.9) +
   theme(text=element_text(family="Arial", size=12),
-        legend.position="bottom")
+        legend.position="bottom",
+        plot.caption = element_text(hjust = 0)) +
+  labs(caption = "Fuente: Elaboración propia en base a datos de ELSOC 2016-2020")
 
 solidaridad
-ggsave(solidaridad, file = "bookdown-files/output/graphs/solidaridad.svg",device = "svg",width = 25,height = 13,dpi = "retina",units = "cm")
+ggsave(solidaridad, file = "bookdown-files/output/graphs/solidaridad.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
+ggsave(solidaridad, file = "bookdown-files/output/figuras-svg-cepal/Grafico 13 Acciones de solidaridad.svg",device = "svg",width = 25,height = 13,dpi = "retina",units = "cm")
+
 ```
 
 ```{r echo=FALSE}
@@ -471,7 +559,20 @@ rownames(solidaridad_cor) <- c("A. Visita la casa de algún vecino",
                           "H. Ayuda a alguien a conseguir trabajo")
 colnames(solidaridad_cor) <-c("(A)", "(B)","(C)", "(D)", "(E)", "(F)", "(G)", "(H)")
 
-svglite("bookdown-files/output/graphs/solidaridad_cor.svg", width = 7, height = 7, pointsize = 10)
+png("bookdown-files/output/graphs/solidaridad_cor.png", width=600,height=300, pointsize = 10)
+par(family="Arial", size= 10)
+corrplot::corrplot(solidaridad_cor,
+  method = "color",
+  addCoef.col = "#000390",
+  type = "upper",
+  tl.col = "black",
+  col=colorRampPalette(c("white","#0068DC"))(12),
+  bg = "white",
+  na.label = "-",
+  lower.col = "black")
+dev.off()
+
+svglite("bookdown-files/output/figuras-svg-cepal/Grafico 14 Asociacion de indicadores de solidaridad.svg", width = 7, height = 7, pointsize = 10)
 par(family="Arial", size= 10)
 corrplot::corrplot(solidaridad_cor,
   method = "color",
@@ -517,6 +618,8 @@ knitr::kable(solidaridad_fa, "html") %>%
   cat(., file = "bookdown-files/output/tables/solidaridad_fa.html")
 
 webshot(url ="bookdown-files/output/tables/solidaridad_fa.html", file ="bookdown-files/output/tables/solidaridad_fa.png", vheight = 10, vwidth = 600)
+
+write_xlsx(solidaridad_fa, path = "bookdown-files/output/tables-excel-cepal/tabla 1.4.xlsx")
 ```
 
 ```{r}
@@ -537,10 +640,14 @@ part_civica <- plot_stackfrq(select(data, c08_01_w01,
                          c08_03_w01,
                          c08_04_w01), geom.size = 0.45) +
   theme(text=element_text(family="Arial", size=12),
-        legend.position="bottom")
+        legend.position="bottom",
+        plot.caption = element_text(hjust = 0)) +
+  labs(caption = "Fuente: Elaboración propia en base a datos de ELSOC 2016-2020")
 
 part_civica
-ggsave(part_civica, file = "bookdown-files/output/graphs/participacion-civica.svg",device = "svg",width = 25,height = 13,dpi = "retina",units = "cm")
+ggsave(part_civica, file = "bookdown-files/output/graphs/participacion-civica.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
+ggsave(part_civica, file = "bookdown-files/output/figuras-svg-cepal/Grafico 15 Participacion en actividades civicas.svg",device = "svg",width = 25,height = 13,dpi = "retina",units = "cm")
+
 ```
 
 ```{r echo=FALSE}
@@ -555,7 +662,20 @@ rownames(part_civica_cor) <- c("A. Firma una carta o petición",
                           "D. Usa redes sociales para expresar su opinión")
 colnames(part_civica_cor) <-c("(A)", "(B)","(C)", "(D)")
 
-svglite("bookdown-files/output/graphs/participacion-civica_cor.svg", width = 7, height = 7, pointsize = 10)
+png("bookdown-files/output/graphs/participacion-civica_cor.png", width=600,height=300, pointsize = 10)
+par(family="Arial", size= 10)
+corrplot::corrplot(part_civica_cor,
+  method = "color",
+  addCoef.col = "#000390",
+  type = "upper",
+  tl.col = "black",
+  col=colorRampPalette(c("white","#0068DC"))(12),
+  bg = "white",
+  na.label = "-",
+  lower.col = "black")
+dev.off()
+
+svglite("bookdown-files/output/figuras-svg-cepal/Grafico 16 Asociacion de indicadores de participacion civica.svg", width = 7, height = 7, pointsize = 10)
 par(family="Arial", size= 10)
 corrplot::corrplot(part_civica_cor,
   method = "color",
@@ -580,10 +700,13 @@ part_organizaciones <- plot_stackfrq(select(data, c12_01_w01,
                          c12_07_w01,
                          c12_08_w01), geom.size = 0.9) +
   theme(text=element_text(family="Arial", size=12),
-        legend.position="bottom")
-
+        legend.position="bottom",
+        plot.caption = element_text(hjust = 0)) +
+  labs(caption = "Fuente: Elaboración propia en base a datos de ELSOC 2016-2020")
 part_organizaciones
-ggsave(part_organizaciones, file = "bookdown-files/output/graphs/participacion-organizaciones.svg",device = "svg",width = 25,height = 13,dpi = "retina",units = "cm")
+ggsave(part_organizaciones, file = "bookdown-files/output/graphs/participacion-organizaciones.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
+ggsave(part_organizaciones, file = "bookdown-files/output/figuras-svg-cepal/Grafico 17 Participacion en organizaciones sociales.svg",device = "svg",width = 25,height = 13,dpi = "retina",units = "cm")
+
 ```
 
 ```{r echo=FALSE}
@@ -602,7 +725,20 @@ rownames(part_organizaciones_cor) <- c("A. Junta de vecinos u otra organización
                           "H. Asociaciones o centros de estudiantes")
 colnames(part_organizaciones_cor) <-c("(A)", "(B)","(C)", "(D)", "(E)", "(F)", "(G)", "(H)")
 
-svglite("bookdown-files/output/graphs/participacion-organizaciones_cor.svg", width = 7, height = 7, pointsize = 10)
+png("bookdown-files/output/graphs/participacion-organizaciones_cor.png", width=600,height=300, pointsize = 10)
+par(family="Arial", size= 10)
+corrplot::corrplot(part_organizaciones_cor,
+  method = "color",
+  addCoef.col = "#000390",
+  type = "upper",
+  tl.col = "black",
+  col=colorRampPalette(c("white","#0068DC"))(12),
+  bg = "white",
+  na.label = "-",
+  lower.col = "black")
+dev.off()
+
+svglite("bookdown-files/output/figuras-svg-cepal/Grafico 18 Asociacion de indicadores participacion en organizaciones sociales.svg", width = 7, height = 7, pointsize = 10)
 par(family="Arial", size= 10)
 corrplot::corrplot(part_organizaciones_cor,
   method = "color",
@@ -619,12 +755,27 @@ dev.off()
 ### Participacion electoral
 
 ```{r echo=FALSE}
-part_electoral <- plot_stackfrq(select(data, c11_w01), geom.size = 0.14) +
-  theme(text=element_text(family="Arial", size=12),
-        legend.position="bottom")
+elecciones = round(prop.table(table(categorias=data$c11_w01)),2)
+elecciones = as.data.frame(elecciones)
+elecciones$categorias <- factor(elecciones$categorias, levels = c(1, 2, 3), labels = c("No", "Si",
+"No tenia edad para hacerlo"))
 
+part_electoral<-ggplot(elecciones,aes(x=2,y=-Freq, fill=categorias))+
+  geom_bar(stat = "identity",
+           color="white")+
+    geom_text(aes(label = scales::percent(Freq)),
+              position=position_stack(vjust=0.5),color="black",size=6)+
+  coord_polar(theta = "y")+
+  scale_fill_brewer(palette = 1)+
+    theme_void()+
+  theme(legend.title = element_blank())+
+    labs(caption = "Fuente: Elaboración propia en base a datos de ELSOC 2016-2020")+
+  xlim(0.5,2.5)
 part_electoral
-ggsave(part_electoral, file = "bookdown-files/output/graphs/participacion-electoral.svg",device = "svg",width = 25,height = 13,dpi = "retina",units = "cm")
+
+ggsave(part_electoral, file = "bookdown-files/output/graphs/participacion-electoral.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
+ggsave(part_electoral, file = "bookdown-files/output/figuras-svg-cepal/Grafico 19 Participacion en elecciones 2013.svg",device = "svg",width = 25,height = 13,dpi = "retina",units = "cm")
+
 ```
 
 ### Análisis factorial exploratorio participación cívica y participación en organizaciones
@@ -666,6 +817,7 @@ knitr::kable(participacion_fa, "html") %>%
 
 webshot(url ="bookdown-files/output/tables/participacion_fa.html", file ="bookdown-files/output/tables/participacion_fa.png", vheight = 10, vwidth = 600)
 
+write_xlsx(participacion_fa, path = "bookdown-files/output/tables-excel-cepal/tabla 1.5.xlsx")
 ```
 
 ```{r}
@@ -689,7 +841,7 @@ rownames(bien_comun_cor) <- c("A. Solidaridad",
                           "B. Participación cívica")
 colnames(bien_comun_cor) <-c("(A)", "(B)")
 
-svglite("bookdown-files/output/graphs/bien_comun_cor.svg", width = 7, height = 7, pointsize = 10)
+png("bookdown-files/output/graphs/bien_comun_cor.png", width=600,height=300, pointsize = 10)
 par(family="Arial", size= 10)
 corrplot::corrplot(bien_comun_cor,
   method = "color",
@@ -709,21 +861,38 @@ dev.off()
 ## Calidad de vida en el vecindario
 De manera adicional, se incorpora una dimensión sobre calidad de vida en el vecindario presente en ELSOC. Todos estos indicadores se encuentran presentes en las cuatro olas.
 ```{r echo=FALSE}
-conf_vecinos <- plot_stackfrq(data$t01_w01, geom.size = 0.14) +
-  theme(text=element_text(family="Arial", size=12),
-        legend.position="bottom")
-
+vecinos = round(prop.table(table(categorias=data$t01_w01)),2)
+vecinos = as.data.frame(vecinos)
+vecinos$categorias <- factor(vecinos$categorias, levels = c(1, 2, 3, 4, 5), labels = c("Muy poco", "Poco", "Algo", "Bastante", "Mucho"))
+conf_vecinos<-ggplot(vecinos,aes(x=2,y=-Freq, fill=categorias))+
+  geom_bar(stat = "identity",
+           color="white")+
+    geom_text(aes(label = scales::percent(Freq)),
+              position=position_stack(vjust=0.5),color="black",size=6)+
+  coord_polar(theta = "y")+
+  scale_fill_brewer(palette = 1)+
+    theme_void()+
+  theme(legend.title = element_blank())+
+    labs(caption = "Fuente: Elaboración propia en base a datos de ELSOC 2016-2020")+
+  xlim(0.5,2.5)
 conf_vecinos
-ggsave(conf_vecinos, file = "bookdown-files/output/graphs/confianza-vecinos.svg",device = "svg",width = 25,height = 13,dpi = "retina",units = "cm")
+
+
+ggsave(conf_vecinos, file = "bookdown-files/output/graphs/confianza-vecinos.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
+ggsave(conf_vecinos, file = "bookdown-files/output/figuras-svg-cepal/Grafico 20 Confianza en vecinos.svg",device = "svg",width = 25,height = 13,dpi = "retina",units = "cm")
+
 ```
 
 ```{r echo=FALSE}
 cohesion_barrial <-plot_stackfrq(select(data, t02_01_w01, t02_02_w01, t02_03_w01, t02_04_w01), geom.colors = "RdBu", geom.size = 0.45) +
   theme(text=element_text(family="Arial", size=12),
-        legend.position="bottom")
+        legend.position="bottom",
+        plot.caption = element_text(hjust = 0)) +
+  labs(caption = "Fuente: Elaboración propia en base a datos de ELSOC 2016-2020")
 
 cohesion_barrial
-ggsave(cohesion_barrial, file = "bookdown-files/output/graphs/cohesion-barrial.svg",device = "svg",width = 25,height = 13,dpi = "retina",units = "cm")
+ggsave(cohesion_barrial, file = "bookdown-files/output/graphs/cohesion-barrial.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
+ggsave(cohesion_barrial, file = "bookdown-files/output/figuras-svg-cepal/Grafico 21 Cohesion en el barrio.svg",device = "svg",width = 25,height = 13,dpi = "retina",units = "cm")
 ```
 
 ```{r echo=FALSE}
@@ -738,7 +907,20 @@ rownames(cohesion_barrial_cor) <- c("A. Este barrio es ideal para mi",
                           "D. Este barrio es parte de mi")
 colnames(cohesion_barrial_cor) <-c("(A)", "(B)","(C)", "(D)")
 
-svglite("bookdown-files/output/graphs/cohesion-barrial_cor.svg", width = 7, height = 7, pointsize = 10)
+png("bookdown-files/output/graphs/cohesion-barrial_cor.png", width=600,height=300, pointsize = 10)
+par(family="Arial", size= 10)
+corrplot::corrplot(cohesion_barrial_cor,
+  method = "color",
+  addCoef.col = "#000390",
+  type = "upper",
+  tl.col = "black",
+  col=colorRampPalette(c("white","#0068DC"))(12),
+  bg = "white",
+  na.label = "-",
+  lower.col = "black")
+dev.off()
+
+svglite("bookdown-files/output/figuras-svg-cepal/Grafico 22 Asociacion de indicadores de cohesion barrial.svg", width = 7, height = 7, pointsize = 10)
 par(family="Arial", size= 10)
 corrplot::corrplot(cohesion_barrial_cor,
   method = "color",
@@ -755,10 +937,14 @@ dev.off()
 ```{r echo=FALSE}
 sociabilidad_barrial <-plot_stackfrq(select(data, t03_01_w01, t03_02_w01, t03_03_w01, t03_04_w01), geom.colors = "RdBu", geom.size = 0.45) +
   theme(text=element_text(family="Arial", size=12),
-        legend.position="bottom")
+        legend.position="bottom",
+        plot.caption = element_text(hjust = 0)) +
+  labs(caption = "Fuente: Elaboración propia en base a datos de ELSOC 2016-2020")
 
 sociabilidad_barrial
-ggsave(sociabilidad_barrial, file = "bookdown-files/output/graphs/sociabilidad-barrial.svg",device = "svg",width = 25,height = 13,dpi = "retina",units = "cm")
+ggsave(sociabilidad_barrial, file = "bookdown-files/output/graphs/sociabilidad-barrial.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
+ggsave(sociabilidad_barrial, file = "bookdown-files/output/figuras-svg-cepal/Grafico 23 Sociabilidad barrial.svg",device = "svg",width = 25,height = 13,dpi = "retina",units = "cm")
+
 ```
 
 ```{r echo=FALSE}
@@ -773,7 +959,20 @@ rownames(sociabilidad_barrial_cor) <- c("A. En este barrio es fácil hacer amigo
                           "D. La gente en este barrio es colaboradora")
 colnames(sociabilidad_barrial_cor) <-c("(A)", "(B)","(C)", "(D)")
 
-svglite("bookdown-files/output/graphs/sociabilidad-barrial_cor.svg", width = 7, height = 7, pointsize = 10)
+png("bookdown-files/output/graphs/sociabilidad-barrial_cor.png", width=600,height=300, pointsize = 10)
+par(family="Arial", size= 10)
+corrplot::corrplot(sociabilidad_barrial_cor,
+  method = "color",
+  addCoef.col = "#000390",
+  type = "upper",
+  tl.col = "black",
+  col=colorRampPalette(c("white","#0068DC"))(12),
+  bg = "white",
+  na.label = "-",
+  lower.col = "black")
+dev.off()
+
+svglite("bookdown-files/output/figuras-svg-cepal/Grafico 24 Asociacion de indicadores de sociabilidad barrial.svg", width = 7, height = 7, pointsize = 10)
 par(family="Arial", size= 10)
 corrplot::corrplot(sociabilidad_barrial_cor,
   method = "color",
@@ -790,10 +989,14 @@ dev.off()
 ```{r echo=FALSE}
 sat_residencial<-plot_stackfrq(select(data, t06_01_w01, t06_02_w01, t06_03_w01, t06_04_w01, t06_05_w01, t06_06_w01, t06_07_w01, t06_08_w01), geom.colors = "RdBu", geom.size = 0.9) +
   theme(text=element_text(family="Arial", size=12),
-        legend.position="bottom")
+        legend.position="bottom",
+        plot.caption = element_text(hjust = 0)) +
+  labs(caption = "Fuente: Elaboración propia en base a datos de ELSOC 2016-2020")
 
 sat_residencial
-ggsave(sat_residencial, file = "bookdown-files/output/graphs/satisfaccion-residencial.svg",device = "svg",width = 25,height = 13,dpi = "retina",units = "cm")
+ggsave(sat_residencial, file = "bookdown-files/output/graphs/satisfaccion-residencial.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
+ggsave(sat_residencial, file = "bookdown-files/output/figuras-svg-cepal/Grafico 25 Satisfaccion con el barrio.svg",device = "svg",width = 25,height = 13,dpi = "retina",units = "cm")
+
 ```
 
 ```{r echo=FALSE}
@@ -812,7 +1015,20 @@ rownames(sat_residencial_cor) <- c("A. Seguridad del barrio",
                           "H. Proximidad con familiares y/o amigos")
 colnames(sat_residencial_cor) <-c("(A)", "(B)","(C)", "(D)", "(E)", "(F)", "(G)", "(H)")
 
-svglite("bookdown-files/output/graphs/satisfaccion-residencial_cor.svg", width = 7, height = 7, pointsize = 10)
+png("bookdown-files/output/graphs/satisfaccion-residencial_cor.png", width=600,height=300, pointsize = 10)
+par(family="Arial", size= 10)
+corrplot::corrplot(sat_residencial_cor,
+  method = "color",
+  addCoef.col = "#000390",
+  type = "upper",
+  tl.col = "black",
+  col=colorRampPalette(c("white","#0068DC"))(12),
+  bg = "white",
+  na.label = "-",
+  lower.col = "black")
+dev.off()
+
+svglite("bookdown-files/output/figuras-svg-cepal/Grafico 26 Asociacion de indicadores de satisfaccion residencial.svg", width = 7, height = 7, pointsize = 10)
 par(family="Arial", size= 10)
 corrplot::corrplot(sat_residencial_cor,
   method = "color",
@@ -867,6 +1083,7 @@ knitr::kable(cohesion_territorial_fa, "html") %>%
 
 webshot(url ="bookdown-files/output/tables/cohesion_territorial_fa.html", file ="bookdown-files/output/tables/cohesion_territorial_fa.png", vheight = 10, vwidth = 600)
 
+write_xlsx(cohesion_territorial_fa, path = "bookdown-files/output/tables-excel-cepal/tabla 1.6.xlsx")
 ```
 
 ```{r echo=FALSE}
@@ -882,6 +1099,8 @@ data <- data %>%
 
 ```{r echo=FALSE}
 # -------------------------------------------------------------------------
+label(data$lazos_w01) <- "Cantidad de personas que se conocen con diferentes ocupaciones"
+
 cohesion.item=
   c(label(data$lazos_w01),
     label(data$c02_rec_w01),
@@ -954,6 +1173,13 @@ knitr::kable(collapse_rows_cohesion, "html",
   collapse_rows(columns = 1:4, valign = "middle") %>%
   kable_styling(bootstrap_options = c("striped", "hover")) %>%
   cat(., file = "bookdown-files/output/tables/descriptivos_cohesion.html")
+
+colnames(collapse_rows_cohesion) <- c("Subdimensión",
+                            "Indicadores",
+                            "Min - max",
+                            "Mean (sd)")
+
+write_xlsx(collapse_rows_cohesion, path = "bookdown-files/output/tables-excel-cepal/tabla 1.xlsx")
 ```
 
 # Matriz de correlaciones final
@@ -975,7 +1201,20 @@ rownames(cohesion_social_cor) <- c("A. Lazos",
                           "I. Cohesión territorial")
 colnames(cohesion_social_cor) <-c("(A)", "(B)","(C)", "(D)", "(E)", "(F)", "(G)", "(H)", "(I)")
 
-svglite("bookdown-files/output/graphs/cohesion_social_cor.svg", width = 7, height = 7, pointsize = 10)
+png("bookdown-files/output/graphs/cohesion_social_cor.png", width=600,height=300, pointsize = 10)
+par(family="Arial", size= 10)
+corrplot::corrplot(cohesion_social_cor,
+  method = "color",
+  addCoef.col = "#000390",
+  type = "upper",
+  tl.col = "black",
+  col=colorRampPalette(c("white","#0068DC"))(12),
+  bg = "white",
+  na.label = "-",
+  lower.col = "black")
+dev.off()
+
+svglite("bookdown-files/output/figuras-svg-cepal/Grafico 27 Asociacion de las subdimensiones de cohesion social.svg", width = 7, height = 7, pointsize = 10)
 par(family="Arial", size= 10)
 corrplot::corrplot(cohesion_social_cor,
   method = "color",

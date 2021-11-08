@@ -135,11 +135,16 @@ lca3_graph <-ggplot(data = datlca_tot_parl, aes(x=variable, y=value, group=class
       scale_color_manual(values=c('#F31111','#04129B', '#02971B')) +
       ggtitle("Clases latentes de Cohesión Social") + 
       xlab("Indicadores Cohesión") + 
-      ylab("Probabilidades condicionales")
+      ylab("Probabilidades condicionales") +
+    theme(text=element_text(family="Arial", size=12),
+        plot.caption = element_text(hjust = 0)) +
+  labs(caption = "Fuente: Elaboración propia en base a datos de ELSOC 2016-2020")
     
 lca3_graph
     
 ggsave("bookdown-files/output/graphs/lca3.jpg", plot = lca3_graph, height=4, width=10, units="in", dpi=350 )
+
+ggsave("bookdown-files/output/figuras-svg-cepal/Grafico 37 Tipologia de las clases latentes de cohesion social.svg", plot = lca3_graph, height=4, width=10, units="in", dpi=350 )
 
 ```
 
