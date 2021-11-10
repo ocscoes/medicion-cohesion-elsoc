@@ -92,7 +92,7 @@ colnames(collapse_rows_cohesion) <- c("Agrupacion territorial",
                             "Atomizados",
                             "N=100%")
 
-write_xlsx(collapse_rows_cohesion, path = "bookdown-files/output/tables-excel-cepal/tabla 3.1.xlsx")
+write_xlsx(collapse_rows_cohesion, path = "bookdown-files/output/tables-excel-cepal/cuadro 7.xlsx")
 ```
 
 ## Tipo de empleo
@@ -126,7 +126,7 @@ colnames(collapse_rows_cohesion) <- c("Perfiles de cohesión social",
                             "Informal"
                             )
 
-write_xlsx(collapse_rows_cohesion, path = "bookdown-files/output/tables-excel-cepal/tabla 3.2.xlsx")
+write_xlsx(collapse_rows_cohesion, path = "bookdown-files/output/tables-excel-cepal/cuadro 8.xlsx")
 ```
 
 
@@ -179,7 +179,7 @@ colnames(collapse_rows_cohesion) <- c("Perfiles de cohesión social",
                             "Mas de 60"
                             )
 
-write_xlsx(collapse_rows_cohesion, path = "bookdown-files/output/tables-excel-cepal/tabla 3.3.xlsx")
+write_xlsx(collapse_rows_cohesion, path = "bookdown-files/output/tables-excel-cepal/cuadro 9.xlsx")
 ```
 
 ## Sexo
@@ -212,7 +212,7 @@ colnames(collapse_rows_cohesion) <- c("Perfiles de cohesión social",
                             "Mujer"
                             )
 
-write_xlsx(collapse_rows_cohesion, path = "bookdown-files/output/tables-excel-cepal/tabla 3.4.xlsx")
+write_xlsx(collapse_rows_cohesion, path = "bookdown-files/output/tables-excel-cepal/cuadro 10.xlsx")
 ```
 
 ## Educacion
@@ -257,7 +257,7 @@ colnames(collapse_rows_cohesion) <- c("Perfiles de cohesión social",
                             "Educacion universitaria o Postgrado"
                             )
 
-write_xlsx(collapse_rows_cohesion, path = "bookdown-files/output/tables-excel-cepal/tabla 3.5.xlsx")
+write_xlsx(collapse_rows_cohesion, path = "bookdown-files/output/tables-excel-cepal/cuadro 11.xlsx")
 
 ```
 
@@ -308,7 +308,7 @@ colnames(collapse_rows_cohesion) <- c("Perfiles de cohesión social",
                             "Quintil 5"
                             )
 
-write_xlsx(collapse_rows_cohesion, path = "bookdown-files/output/tables-excel-cepal/tabla 3.6.xlsx")
+write_xlsx(collapse_rows_cohesion, path = "bookdown-files/output/tables-excel-cepal/cuadro 12.xlsx")
 
 ```
 
@@ -341,7 +341,7 @@ colnames(collapse_rows_cohesion) <- c("Perfiles de cohesión social",
                             "Pertenece a una etnia"
                             )
 
-write_xlsx(collapse_rows_cohesion, path = "bookdown-files/output/tables-excel-cepal/tabla 3.7.xlsx")
+write_xlsx(collapse_rows_cohesion, path = "bookdown-files/output/tables-excel-cepal/cuadro 13.xlsx")
 ```
 
 ## Acceso a colegios
@@ -372,7 +372,7 @@ colnames(collapse_rows_cohesion) <- c("Perfiles de cohesión social",
                             "Menor proximidad",
                             "Alta proximidad")
 
-write_xlsx(collapse_rows_cohesion, path = "bookdown-files/output/tables-excel-cepal/tabla 3.8.xlsx")
+write_xlsx(collapse_rows_cohesion, path = "bookdown-files/output/tables-excel-cepal/cuadro 14.xlsx")
 ```
 
 ## Promedio nivel educacional
@@ -402,7 +402,7 @@ colnames(collapse_rows_cohesion) <- c("Perfiles de cohesión social",
                             "Menor dispersión",
                             "Mayor dispersión")
 
-write_xlsx(collapse_rows_cohesion, path = "bookdown-files/output/tables-excel-cepal/tabla 3.9.xlsx")
+write_xlsx(collapse_rows_cohesion, path = "bookdown-files/output/tables-excel-cepal/cuadro 15.xlsx")
 ```
 
 ## Proporcion ocupados
@@ -432,7 +432,7 @@ collapse_rows_cohesion <-
 colnames(collapse_rows_cohesion) <- c("Perfiles de cohesión social",
                             "Menor proporción de ocupados",
                             "Mayor proporción de ocupados")
-write_xlsx(collapse_rows_cohesion, path = "bookdown-files/output/tables-excel-cepal/tabla 3.10.xlsx")
+write_xlsx(collapse_rows_cohesion, path = "bookdown-files/output/tables-excel-cepal/cuadro 16.xlsx")
 ```
 
 ## Sin ocupacion
@@ -463,7 +463,7 @@ collapse_rows_cohesion <-
 colnames(collapse_rows_cohesion) <- c("Perfiles de cohesión social",
                             "Menor proporción de desempleados",
                             "Mayor proporción de desempleados")
-write_xlsx(collapse_rows_cohesion, path = "bookdown-files/output/tables-excel-cepal/tabla 3.11.xlsx")
+write_xlsx(collapse_rows_cohesion, path = "bookdown-files/output/tables-excel-cepal/cuadro 17.xlsx")
 ```
 
 ## Acceso a servicios
@@ -493,7 +493,7 @@ colnames(collapse_rows_cohesion) <- c("Perfiles de cohesión social",
                             "Menor acceso a servicios",
                             "Alto acceso a servicios"
                             )
-write_xlsx(collapse_rows_cohesion, path = "bookdown-files/output/tables-excel-cepal/tabla 3.12.xlsx")
+write_xlsx(collapse_rows_cohesion, path = "bookdown-files/output/tables-excel-cepal/cuadro 18.xlsx")
 ```
 
 

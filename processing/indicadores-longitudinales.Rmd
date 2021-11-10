@@ -587,16 +587,12 @@ alluvial_lazos <- ggplot(datos.lazos, aes(x = ola, fill = lazos, stratum = lazos
               show.legend = FALSE,
               size = 4,
               color = rep('white'),
-              bg.colour='grey30') +
-  labs(caption = "Fuente: Elaboración propia en base a datos de ELSOC 2016-2020
-  
-Nota: El indicador de Cuantas personas se conocen con profesiones distintas solo esta disponible 
-para los años 2016, 2018 y 2020")
+              bg.colour='grey30')
 
 alluvial_lazos
 
 ggsave(alluvial_lazos, file = "bookdown-files/output/graphs/alluvial_lazos.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
-ggsave(alluvial_lazos, file = "bookdown-files/output/figuras-svg-cepal/Figura 2.3 Cambios en la subdimension Lazos.svg",device = "svg",width = 25,height = 13,dpi = "retina",units = "cm")
+ggsave(alluvial_lazos, file = "bookdown-files/output/figuras-svg-cepal/Grafico 27 Cambios en la subdimension Lazos.svg",device = "svg",width = 25,height = 13,dpi = "retina",units = "cm")
 ```
 
 ## Confianza interpersonal
@@ -629,13 +625,12 @@ alluvial_conf.interpersonal <- ggplot(datos.conf.interpersonal,
               show.legend = FALSE,
               size = 4,
               color = rep('white'),
-              bg.colour='grey30') +
-  labs(caption = "Fuente: Elaboración propia en base a datos de ELSOC 2016-2020")
+              bg.colour='grey30')
 
 alluvial_conf.interpersonal
 
 ggsave(alluvial_conf.interpersonal, file = "bookdown-files/output/graphs/alluvial_conf_interpersonal.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
-ggsave(alluvial_conf.interpersonal, file = "bookdown-files/output/figuras-svg-cepal/Figura 2.1 Cambios en la subdimension confianza interpersonal.svg",device = "svg",width = 25,height = 13,dpi = "retina",units = "cm")
+ggsave(alluvial_conf.interpersonal, file = "bookdown-files/output/figuras-svg-cepal/Grafico 28 Cambios en la subdimension confianza interpersonal.svg",device = "svg",width = 25,height = 13,dpi = "retina",units = "cm")
 ```
 
 ## Diversidad
@@ -668,16 +663,12 @@ alluvial_diversidad <- ggplot(datos.diversidad, aes(x = ola, fill = diversidad, 
               show.legend = FALSE,
               size = 4,
               color = rep('white'),
-              bg.colour='grey30') +
-  labs(caption = "Fuente: Elaboración propia en base a datos de ELSOC 2016-2020
-  
-Nota: Los indicadores de Grado de confianza en personas mapuche, inmigrantes y homosexuales
-solo estan disponibles para los años 2016 y 2018")
+              bg.colour='grey30')
 
 alluvial_diversidad
 
 ggsave(alluvial_diversidad, file = "bookdown-files/output/graphs/alluvial_diversidad.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
-ggsave(alluvial_diversidad, file = "bookdown-files/output/figuras-svg-cepal/Figura 2.2 Cambios en la subdimension reconocimiento y respeto de la diversidad.svg",device = "svg",width = 25,height = 13,dpi = "retina",units = "cm")
+ggsave(alluvial_diversidad, file = "bookdown-files/output/figuras-svg-cepal/Grafico 29 Cambios en la subdimension reconocimiento y respeto de la diversidad.svg",device = "svg",width = 25,height = 13,dpi = "retina",units = "cm")
 ```
 
 ## Identificación con el país
@@ -708,13 +699,12 @@ alluvial_identificacion <- ggplot(datos.identificacion, aes(x = ola, fill = iden
               show.legend = FALSE,
               size = 4,
               color = rep('white'),
-              bg.colour='grey30') +
-  labs(caption = "Fuente: Elaboración propia en base a datos de ELSOC 2016-2020")
+              bg.colour='grey30')
 
 alluvial_identificacion
 
 ggsave(alluvial_identificacion, file = "bookdown-files/output/graphs/alluvial_identificacion.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
-ggsave(alluvial_identificacion, file = "bookdown-files/output/figuras-svg-cepal/Figura 2.4 Cambios en la subdimension identificacion con el pais.svg",device = "svg",width = 25,height = 13,dpi = "retina",units = "cm")
+ggsave(alluvial_identificacion, file = "bookdown-files/output/figuras-svg-cepal/Grafico 30 Cambios en la subdimension identificacion con el pais.svg",device = "svg",width = 25,height = 13,dpi = "retina",units = "cm")
 ```
 
 ## Percepcion de justicia
@@ -745,13 +735,12 @@ alluvial_justicia <- ggplot(datos.justicia, aes(x = ola, fill = justicia, stratu
               show.legend = FALSE,
               size = 4,
               color = rep('white'),
-              bg.colour='grey30') +
-  labs(caption = "Fuente: Elaboración propia en base a datos de ELSOC 2016-2020")
+              bg.colour='grey30')
 
 alluvial_justicia
 
 ggsave(alluvial_justicia, file = "bookdown-files/output/graphs/alluvial_justicia.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
-ggsave(alluvial_justicia, file = "bookdown-files/output/figuras-svg-cepal/Figura 2.5 Cambios en la subdimension percepcion de justicia.svg",device = "svg",width = 25,height = 13,dpi = "retina",units = "cm")
+ggsave(alluvial_justicia, file = "bookdown-files/output/figuras-svg-cepal/Grafico 31 Cambios en la subdimension percepcion de justicia.svg",device = "svg",width = 25,height = 13,dpi = "retina",units = "cm")
 ```
 
 ## Confianza institucional
@@ -782,13 +771,12 @@ alluvial_conf.institucional <- ggplot(datos.conf.institucional, aes(x = ola, fil
               show.legend = FALSE,
               size = 4,
               color = rep('white'),
-              bg.colour='grey30') +
-  labs(caption = "Fuente: Elaboración propia en base a datos de ELSOC 2016-2020")
+              bg.colour='grey30')
 
 alluvial_conf.institucional
 
 ggsave(alluvial_conf.institucional, file = "bookdown-files/output/graphs/alluvial_conf_institucional.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
-ggsave(alluvial_conf.institucional, file = "bookdown-files/output/figuras-svg-cepal/Figura 2.6 Cambios en la subdimension confianza institucional.svg",device = "svg",width = 25,height = 13,dpi = "retina",units = "cm")
+ggsave(alluvial_conf.institucional, file = "bookdown-files/output/figuras-svg-cepal/Grafico 32 Cambios en la subdimension confianza institucional.svg",device = "svg",width = 25,height = 13,dpi = "retina",units = "cm")
 ```
 
 ## Solidaridad
@@ -820,13 +808,12 @@ alluvial_solidaridad <- ggplot(datos.solidaridad, aes(x = ola, fill = solidarida
               show.legend = FALSE,
               size = 4,
               color = rep('white'),
-              bg.colour='grey30') +
-  labs(caption = "Fuente: Elaboración propia en base a datos de ELSOC 2016-2020")
+              bg.colour='grey30')
 
 alluvial_solidaridad
 
 ggsave(alluvial_solidaridad, file = "bookdown-files/output/graphs/alluvial_solidaridad.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
-ggsave(alluvial_solidaridad, file = "bookdown-files/output/figuras-svg-cepal/Figura 2.7 Cambios en la subdimension solidaridad.svg",device = "svg",width = 25,height = 13,dpi = "retina",units = "cm")
+ggsave(alluvial_solidaridad, file = "bookdown-files/output/figuras-svg-cepal/Grafico 33 Cambios en la subdimension solidaridad.svg",device = "svg",width = 25,height = 13,dpi = "retina",units = "cm")
 ```
 
 ## Participación cívica
@@ -857,16 +844,12 @@ alluvial_participacion <- ggplot(datos.participacion, aes(x = ola, fill = partic
               show.legend = FALSE,
               size = 4,
               color = rep('white'),
-              bg.colour='grey30') +
-  labs(caption = "Fuente: Elaboración propia en base a datos de ELSOC 2016-2020
-  
-Nota: Los item Firma una carta o peticion apoyando una causa y Participa en huelgas no se 
-encuentran disponibles para el año 2020, por lo que no se estimo este indicador en dicho año")
+              bg.colour='grey30')
 
 alluvial_participacion
 
 ggsave(alluvial_participacion, file = "bookdown-files/output/graphs/alluvial_participacion.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
-ggsave(alluvial_participacion, file = "bookdown-files/output/figuras-svg-cepal/Figura 2.8 Cambios en la subdimension participacion civica.svg",device = "svg",width = 25,height = 13,dpi = "retina",units = "cm")
+ggsave(alluvial_participacion, file = "bookdown-files/output/figuras-svg-cepal/Grafico 34 Cambios en la subdimension participacion civica.svg",device = "svg",width = 25,height = 13,dpi = "retina",units = "cm")
 ```
 
 ## Cohesion territorial
@@ -897,15 +880,11 @@ alluvial_cohesion_territorial <- ggplot(datos.cohesion_territorial, aes(x = ola,
               show.legend = FALSE,
               size = 4,
               color = rep('white'),
-              bg.colour='grey30') +
-  labs(caption = "Fuente: Elaboración propia en base a datos de ELSOC 2016-2020
-       
-Nota: Los item Este barrio es ideal para mi, Me siento integrado/a en este barrio, Me identifico con la
-gente de este barrio y Este barrio es parte de mi solo están disponibles para los años 2016-2019")
+              bg.colour='grey30')
 
 alluvial_cohesion_territorial
 ggsave(alluvial_cohesion_territorial, file = "bookdown-files/output/graphs/alluvial_cohesion_territorial.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
-ggsave(alluvial_cohesion_territorial, file = "bookdown-files/output/figuras-svg-cepal/Figura 2.9 Cambios en la subdimension vinculos territoriales.svg",device = "svg",width = 25,height = 13,dpi = "retina",units = "cm")
+ggsave(alluvial_cohesion_territorial, file = "bookdown-files/output/figuras-svg-cepal/Grafico 35 Cambios en la subdimension vinculos territoriales.svg",device = "svg",width = 25,height = 13,dpi = "retina",units = "cm")
 ```
 
 
