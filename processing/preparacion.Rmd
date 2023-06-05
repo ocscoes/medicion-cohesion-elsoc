@@ -27,95 +27,302 @@ load("input/data/original/ELSOC_Wide.RData")
 data <- elsoc_wide_2016_2022
 data <- data %>% car::recode(., "c(-888,-999)=NA") # recode missings de no respuesta a NA
 
-data <- data %>% sjlabelled::remove_labels(labels = c('No Responde (no leer)','No Sabe (no leer)')) # elimina value labels de missings de no respuesta para no interferir en descriptivos posteriores
+data <- data %>% sjlabelled::remove_labels(labels = c('No Responde','No Sabe', "Valor perdido por error tecnico", "Valor perdido por encuesta incompleta")) # elimina value labels de missings de no respuesta para no interferir en descriptivos posteriores
 
 # Filtrar base por casos participantes en cinco olas
 data <- data %>% dplyr::filter(tipo_atricion==1 & ola_w01==1)
 ```
 
+# Vertical
 
-# Relaciones sociales de igualdad
+## Confianza en instituciones y democracia
 
-## Lazos
+### Confianza en instituciones
 
-### R15: Cantidad de amigos cercanos (w02 & w04)
-
-```{r}
-data$r15_w02<- factor(data$r15_w02, levels = c(1, 2, 3, 4, 5), labels = c("No tiene", "De 1 a 2", "De 3 a 5", "De 6 a 10", "Mas de 10"))
-data$r15_w04<- factor(data$r15_w04, levels = c(1, 2, 3, 4, 5), labels = c("No tiene", "De 1 a 2", "De 3 a 5", "De 6 a 10", "Mas de 10"))
-
-label(data$r15_w02) <- "Cantidad de amigos cercanos (2017)"
-label(data$r15_w04) <- "Cantidad de amigos cercanos (2019)"
-
-data %>% select (r15_w02,r15_w04)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
-```
-
-### R13_nredes: Tamaño de red cercana
-```{r}
-data$r13_nredes_w02<- factor(data$r13_nredes_w02, levels = c(1, 2, 3, 4, 5), labels = c("No tiene", "De 1 a 2", "De 3 a 5", "De 6 a 10", "Mas de 10"))
-data$r13_nredes_w04<- factor(data$r13_nredes_w04, levels = c(1, 2, 3, 4, 5), labels = c("No tiene", "De 1 a 2", "De 3 a 5", "De 6 a 10", "Mas de 10"))
-
-label(data$r13_nredes_w02) <- "Tamaño de red cercana (2017)"
-label(data$r13_nredes_w04) <- "Tamaño de red cercana (2019)"
-
-data %>% select (r13_nredes_w02,r13_nredes_w04)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
-```
-
-### R13_relacion: Numero de parientes red cercana
-```{r}
-data$numkin_w02 <- apply(data[, c('r13_relacion_01_w02','r13_relacion_02_w02','r13_relacion_03_w02','r13_relacion_04_w02','r13_relacion_05_w02')], 1, function(x) sum(x>0 & x<4, na.rm=TRUE))
-
-data$numkin_w04 <- apply(data[, c('r13_relacion_01_w04','r13_relacion_02_w04','r13_relacion_03_w04','r13_relacion_04_w04','r13_relacion_05_w04')], 1, function(x) sum(x>0 & x<4, na.rm=TRUE))
-
-label(data$numkin_w02) <- "Numero de parientes red cercana (2017)"
-label(data$numkin_w04) <- "Numero de parientes red cercana (2019)"
-
-
-data %>% select(numkin_w02, numkin_w04)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
-```
-
-### R01: generador posicional (variedad de la red)
+C05_01: Grado de confianza en el gobierno (w01, w02, w03, w04, w05 & w06)
 
 ```{r}
-
-# Ocupaciones correspondientes a 13 posiciones del generador de posiciones
-
-# ('CEO', 'Vend.Ambulante', 'Secretario/a', 'Mec.Autos', 'Vend.Tienda', 'Abogado', 'Aseador.of', 'Médico', 'Parvularia', 'Chofer.Taxi', 'Camarero/a', 'Contador/a', 'Prof.Univ')
-
-#2016
-data$vol.red_w01 <- rep(0, length(data$comuna_w01))
-data$vol.red_w01 <- apply(data[,c('r01_01_w01', 'r01_02_w01', 'r01_03_w01', 'r01_04_w01', 'r01_05_w01', 'r01_06_w01', 'r01_07_w01', 'r01_08_w01','r01_09_w01', 'r01_10_w01', 'r01_11_w01','r01_12_w01', 'r01_13_w01')], 1, function(x)  sum(x>1 & x<8, na.rm=TRUE)) #suma para todos los casos los que tienen al menos una persona.
-
-data$vol.red_w01 <- recode(data$vol.red_w01, "0=1; 1:2=2; 3:5=3; 6:10=4; 11:13=5")
-
-# 2018
-data$vol.red_w03 <- rep(0, length(data$comuna_w03))
-data$vol.red_w03 <- apply(data[,c('r01_01_w03', 'r01_02_w03', 'r01_03_w03', 'r01_04_w03', 'r01_05_w03', 'r01_06_w03', 'r01_07_w03', 'r01_08_w03','r01_09_w03', 'r01_10_w03', 'r01_11_w03','r01_12_w03', 'r01_13_w03')], 1, function(x)  sum(x>1 & x<8, na.rm=TRUE)) #suma para todos los casos los que tienen al menos una persona.
-
-data$vol.red_w03 <- recode(data$vol.red_w03, "0=1; 1:2=2; 3:5=3; 6:10=4; 11:13=5")
-
-# 2020
-data$vol.red_w05 <- rep(0, length(data$comuna))
-data$vol.red_w05 <- apply(data[,c('r01_01', 'r01_02', 'r01_03', 'r01_04', 'r01_05', 'r01_06', 'r01_07', 'r01_08','r01_09', 'r01_10', 'r01_11','r01_12', 'r01_13')], 1, function(x)  sum(x>1 & x<200, na.rm=TRUE)) #suma para todos los casos los que tienen al menos una persona.
-
-data$vol.red_w05 <- recode(data$vol.red_w05, "0=1; 1:2=2; 3:5=3; 6:10=4; 11:13=5")
-
-data$vol.red_w01<- factor(data$vol.red_w01, levels = c(1, 2, 3, 4, 5), labels = c("No tiene", "De 1 a 2", "De 3 a 5", "De 6 a 10", "Mas de 10"))
-data$vol.red_w03<- factor(data$vol.red_w03, levels = c(1, 2, 3, 4, 5), labels = c("No tiene", "De 1 a 2", "De 3 a 5", "De 6 a 10", "Mas de 10"))
-data$vol.red_w05<- factor(data$vol.red_w05, levels = c(1, 2, 3, 4, 5), labels = c("No tiene", "De 1 a 2", "De 3 a 5", "De 6 a 10", "Mas de 10"))
-
-
-label(data$vol.red_w01) <- "Cantidad de personas que se conocen con diferentes ocupaciones (2016)"
-label(data$vol.red_w03) <- "Cantidad de personas que se conocen con diferentes ocupaciones (2018)"
-label(data$vol.red_w05) <- "Cantidad de personas que se conocen con diferentes ocupaciones (2020)"
-
-data %>% select(vol.red_w01, vol.red_w03, vol.red_w05)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
+data %>% select (c05_01_w01, c05_01_w02, c05_01_w03, c05_01_w04, c05_01_w05, c05_01_w06)  %>% sjlabelled::as_label(.)  %>%  dfSummary(graph.col = FALSE)
 ```
 
+C05_02: Grado de confianza en los partidos políticos (w01, w02, w03, w04, w05 & w06)
 
-## Confianza interpersonal
+```{r}
+data %>% select (c05_02_w01, c05_02_w02, c05_02_w03, c05_02_w04, c05_02_w05, c05_02_w06)  %>% sjlabelled::as_label(.)  %>%  dfSummary(graph.col = FALSE)
+```
 
-C02: Se puede confiar en la mayoría de las personas o hay que tener cuidado al tratar con ellas (w01, w02, w03, w04 & w05)
+C05_03: Grado de confianza en carabineros (w01, w02, w03, w04, w05 & w06)
+
+```{r}
+data %>% select (c05_03_w01, c05_03_w02, c05_03_w03, c05_03_w04, c05_03_w05, c05_03_w06)  %>% sjlabelled::as_label(.)  %>%  dfSummary(graph.col = FALSE)
+```
+
+C05_04: Grado de confianza en los sindicatos (w01, w02, w03, w04 & w06)
+
+```{r}
+data %>% select (c05_04_w01, c05_04_w02, c05_04_w03, c05_04_w04, c05_04_w06)  %>% sjlabelled::as_label(.)  %>%  dfSummary(graph.col = FALSE)
+```
+
+C05_05: Grado de confianza en el poder judicial (w01, w02, w03, w04, w05 & w06)
+
+```{r}
+data %>% select (c05_05_w01, c05_05_w02, c05_05_w03, c05_05_w04, c05_05_w05, c05_05_w06)  %>% sjlabelled::as_label(.)  %>%  dfSummary(graph.col = FALSE)
+```
+
+C05_06: Grado de confianza en las empresas privadas (w01, w02, w03, w04 & w06)
+
+```{r}
+data %>% select (c05_06_w01, c05_06_w02, c05_06_w03, c05_06_w04, c05_06_w06)  %>% sjlabelled::as_label(.)  %>%  dfSummary(graph.col = FALSE)
+```
+
+C05_07: Grado de confianza en el congreso nacional (w01, w02, w03, w04, w05 & w06)
+
+```{r}
+data %>% select (c05_07_w01, c05_07_w02, c05_07_w03, c05_07_w04, c05_07_w05, c05_07_w06)  %>% sjlabelled::as_label(.)  %>%  dfSummary(graph.col = FALSE)
+```
+
+C05_08: Grado de confianza en el presidente/a de la república (w01, w02, w03, w04, w05 & w06)
+
+```{r}
+data %>% select (c05_08_w01, c05_08_w02, c05_08_w03, c05_08_w04, c05_08_w05, c05_08_w06)  %>% sjlabelled::as_label(.)  %>%  dfSummary(graph.col = FALSE)
+```
+
+### Actitud hacia la Democracia
+
+c01: ¿cuán satisfecho o insatisfecho está usted con el funcionamiento de la democracia en Chile?
+
+```{r}
+data %>% select (c01_w01, c01_w02, c01_w03, c01_w04, c01_w05, c01_w06)  %>% sjlabelled::as_label(.)  %>%  dfSummary(graph.col = FALSE)
+```
+
+## Participación política
+
+### Participación cívica
+
+C08_01: Firmado una carta o petición apoyando una causa (w01, w02, w03, w04 & w06)
+
+```{r}
+data %>% select (c08_01_w01, c08_01_w02, c08_01_w03, c08_01_w04, c08_01_w06)  %>% sjlabelled::as_label(.)  %>%  dfSummary(graph.col = FALSE)
+```
+
+C08_02: Asistir a una marcha o manifestación pacífica (w01, w02, w03, w04, w05 & w06)
+
+```{r}
+data %>% select (c08_02_w01, c08_02_w02, c08_02_w03, c08_02_w04, c08_02_w05, c08_02_w06)  %>% sjlabelled::as_label(.)  %>%  dfSummary(graph.col = FALSE)
+```
+
+C08_03: Participar en una huelga (w01, w02, w03, w04 & w06)
+
+```{r}
+data %>% select (c08_03_w01, c08_03_w02, c08_03_w03, c08_03_w04, c08_03_w06)  %>% sjlabelled::as_label(.)  %>%  dfSummary(graph.col = FALSE)
+```
+
+C08_04: Usar las redes sociales para expresar su opinión en temas públicos (w01, w02, w03, w04, w05 & w06)
+
+```{r}
+data %>% select (c08_04_w01, c08_04_w02, c08_04_w03, c08_04_w04, c08_04_w05, c08_04_w06)  %>% sjlabelled::as_label(.)  %>%  dfSummary(graph.col = FALSE)
+```
+
+### Interés político
+
+c13: ¿qué tan interesado está usted en la política? (w01, w02, w03, w04 & w06)
+
+```{r}
+data %>% select (c13_w01, c13_w02, c13_w03, c13_w04, c13_w05, c13_w06)  %>% sjlabelled::as_label(.)  %>%  dfSummary(graph.col = FALSE)
+```
+
+c14_01: habla de política con familiares o amigos (w01, w02, w03, w04 & w06)
+
+```{r}
+data %>% select (c14_01_w01, c14_01_w02, c14_01_w03, c14_01_w04, c14_01_w05, c14_01_w06)  %>% sjlabelled::as_label(.)  %>%  dfSummary(graph.col = FALSE)
+```
+
+c14_02: se informa activamente sobre política en medios tales como televisión, radios, diarios o internet (w01, w02, w03, w04 & w06)
+
+```{r}
+data %>% select (c14_02_w01, c14_02_w02, c14_02_w03, c14_02_w04, c14_02_w05, c14_02_w06)  %>% sjlabelled::as_label(.)  %>%  dfSummary(graph.col = FALSE)
+```
+
+## Percepción de justicia
+
+### Justicia distributiva y meritocracia
+
+C18_09: En Chile las personas son recompensadas por sus esfuerzos (w01, w02, w03, w04, w05 & w06)
+
+```{r}
+data %>% select (c18_09_w01, c18_09_w02, c18_09_w03, c18_09_w04, c18_09_w05, c18_09_w06)  %>% sjlabelled::as_label(.)  %>%  dfSummary(graph.col = FALSE)
+```
+
+C18_10: En Chile las personas son recompensadas por su inteligencia y habilidades (w01, w02, w03, w04, w05 & w06)
+
+```{r}
+data %>% select (c18_10_w01, c18_10_w02, c18_10_w03, c18_10_w04, c18_10_w05, c18_10_w06)  %>% sjlabelled::as_label(.)  %>%  dfSummary(graph.col = FALSE)
+```
+
+### Movilidad social
+actualmente en Chile, ¿cuán importante es para surgir en la vida?
+
+d05_01: Provenir de una familia rica o con muchos recursos (w01, w02, w03, w04 & w05)
+
+```{r}
+data %>% select (d05_01_w01, d05_01_w02, d05_01_w03, d05_01_w04, d05_01_w05)  %>% sjlabelled::as_label(.)  %>%  dfSummary(graph.col = FALSE)
+```
+
+d05_02: tener un buen nivel de educación (w01, w02, w03, w04 & w05)
+
+```{r}
+data %>% select (d05_02_w01, d05_02_w02, d05_02_w03, d05_02_w04, d05_02_w05)  %>% sjlabelled::as_label(.)  %>%  dfSummary(graph.col = FALSE)
+```
+
+d05_03: tener ambición (w01, w02, w03, w04 & w05)
+
+```{r}
+data %>% select (d05_03_w01, d05_03_w02, d05_03_w03, d05_03_w04, d05_03_w05)  %>% sjlabelled::as_label(.)  %>%  dfSummary(graph.col = FALSE)
+```
+
+d05_04: el trabajo duro (w01, w02, w03, w04 & w05)
+
+```{r}
+data %>% select (d05_04_w01, d05_04_w02, d05_04_w03, d05_04_w04, d05_04_w05)  %>% sjlabelled::as_label(.)  %>%  dfSummary(graph.col = FALSE)
+```
+
+# Horizontal
+
+## Sentido de pertenencia
+
+### Orgullo nacional
+
+C32_01: Me siento orgulloso de ser chileno (w01, w02, w03 & w04)
+
+```{r}
+data %>% select (c32_01_w01, c32_01_w02, c32_01_w03, c32_01_w04, c32_01_w05, c32_01_w06)  %>% sjlabelled::as_label(.)  %>%  dfSummary(graph.col = FALSE)
+```
+
+### Identidad nacional
+
+C32_02: Me identifico con Chile (w01, w02, w03, w04, w05 & w06)
+
+```{r}
+data %>% select (c32_02_w01, c32_02_w02, c32_02_w03, c32_02_w04, c32_02_w05, c32_02_w06)  %>% sjlabelled::as_label(.)  %>%  dfSummary(graph.col = FALSE)
+```
+
+## Calidad de la vida en el vecindario
+
+### Confianza en vecinos
+
+T01: Confianza en vecinos (w01, w02, w03, w04, w05 & w06)
+
+```{r}
+data %>% select (t01_w01, t01_w02, t01_w03, t01_w04, t01_w05, t01_w06)  %>% sjlabelled::as_label(.)  %>%  dfSummary(graph.col = FALSE)
+```
+
+### Cohesión barrial
+
+T02_01: Este barrio es ideal para mi (w01, w02, w03, w04 & w06)
+
+```{r}
+data %>% select (t02_01_w01, t02_01_w02, t02_01_w03, t02_01_w04, t02_01_w06)  %>% sjlabelled::as_label(.)  %>%  dfSummary(graph.col = FALSE)
+```
+
+T02_02: Me siento integrado/a en este barrio (w01, w02, w03, w04 & w06)
+
+```{r}
+data %>% select (t02_02_w01, t02_02_w02, t02_02_w03, t02_02_w04, t02_02_w06)  %>% sjlabelled::as_label(.)  %>%  dfSummary(graph.col = FALSE)
+```
+
+T02_03: Me identifico con la gente de este barrio (w01, w02, w03, w04 & w06)
+
+```{r}
+data %>% select (t02_03_w01, t02_03_w02, t02_03_w03, t02_03_w04, t02_03_w06)  %>% sjlabelled::as_label(.)  %>%  dfSummary(graph.col = FALSE)
+```
+
+T02_04: Este barrio es parte de mi (w01, w02, w03, w04 & w06)
+
+```{r}
+data %>% select (t02_04_w01, t02_04_w02, t02_04_w03, t02_04_w04, t02_04_w06)  %>% sjlabelled::as_label(.)  %>%  dfSummary(graph.col = FALSE)
+```
+
+### Sociabilidad barrial
+
+T03_01: En este barrio es facil hacer amigos (w01, w02, w03, w04 & w06)
+
+```{r}
+data %>% select (t03_01_w01, t03_01_w02, t03_01_w03, t03_01_w04, t03_01_w06)  %>% sjlabelled::as_label(.)  %>%  dfSummary(graph.col = FALSE)
+```
+
+T03_02: La gente en este barrio es sociable (w01, w02, w03, w04 & w06)
+
+```{r}
+data %>% select (t03_02_w01, t03_02_w02, t03_02_w03, t03_02_w04, t03_02_w06)  %>% sjlabelled::as_label(.)  %>%  dfSummary(graph.col = FALSE)
+```
+
+T03_03: La gente en este barrio es cordial (w01, w02, w03, w04 & w06)
+
+```{r}
+data %>% select (t03_03_w01, t03_03_w02, t03_03_w03, t03_03_w04, t03_03_w06)  %>% sjlabelled::as_label(.)  %>%  dfSummary(graph.col = FALSE)
+```
+
+T03_04: La gente en este barrio es colaboradora (w01, w02, w03 & w04)
+
+```{r}
+data %>% select (t03_04_w01, t03_04_w02, t03_04_w03, t03_04_w04, t03_04_w06)  %>% sjlabelled::as_label(.)  %>%  dfSummary(graph.col = FALSE)
+```
+
+## Satisfacción barrial
+
+T06_01: Seguridad del barrio (w01, w02, w03, w04 & w06)
+
+```{r}
+data %>% select (t06_01_w01, t06_01_w02, t06_01_w03, t06_01_w04, t06_01_w06)  %>% sjlabelled::as_label(.)  %>%  dfSummary(graph.col = FALSE)
+```
+
+T06_02: Conectividad (w01, w02, w03, w04 & w06)
+
+```{r}
+data %>% select (t06_02_w01, t06_02_w02, t06_02_w03, t06_02_w04, t06_02_w06)  %>% sjlabelled::as_label(.)  %>%  dfSummary(graph.col = FALSE)
+```
+
+T06_03: Áreas verdes y de recreación disponibles (w01, w02, w03, w04 & w06)
+
+```{r}
+data %>% select (t06_03_w01, t06_03_w02, t06_03_w03, t06_03_w04, t06_03_w06)  %>% sjlabelled::as_label(.)  %>%  dfSummary(graph.col = FALSE)
+```
+
+T06_04: Limpieza y belleza del barrio (w01, w02, w03, w04 & w06)
+
+```{r}
+data %>% select (t06_04_w01, t06_04_w02, t06_04_w03, t06_04_w04, t06_04_w06)  %>% sjlabelled::as_label(.)  %>%  dfSummary(graph.col = FALSE)
+```
+
+T06_05: Proximidad al lugar de actividad principal (w01, w02, w03, w04 & w06)
+
+```{r}
+data %>% select (t06_05_w01, t06_05_w02, t06_05_w03, t06_05_w04, t06_05_w06)  %>% sjlabelled::as_label(.)  %>%  dfSummary(graph.col = FALSE)
+```
+
+T06_06: Proximidad a colegios de buena calidad (w01, w02, w03, w04 & w06)
+
+```{r}
+data %>% select (t06_06_w01, t06_06_w02, t06_06_w03, t06_06_w04, t06_06_w06)  %>% sjlabelled::as_label(.)  %>%  dfSummary(graph.col = FALSE)
+```
+
+T06_07: Proximidad a áreas de comercio (w01, w02, w03, w04 & w06)
+
+```{r}
+data %>% select (t06_07_w01, t06_07_w02, t06_07_w03, t06_07_w04, t06_07_w06)  %>% sjlabelled::as_label(.)  %>%  dfSummary(graph.col = FALSE)
+```
+
+T06_08: Proximidad con familiares y/o amigos cercanos (w01, w02, w03, w04 & w06)
+
+```{r}
+data %>% select (t06_08_w01, t06_08_w02, t06_08_w03, t06_08_w04, t06_08_w06)  %>% sjlabelled::as_label(.)  %>%  dfSummary(graph.col = FALSE)
+```
+
+## Redes sociales
+
+### Confianza interpersonal
+
+C02: Se puede confiar en la mayoría de las personas o hay que tener cuidado al tratar con ellas (w01, w02, w03, w04, w05 & w06)
 
 ```{r}
 data <- data %>%
@@ -123,19 +330,22 @@ data <- data %>%
          c02_rec_w02 = car::recode(data$c02_w02, c("1=3; 2=1; 3=2")),
          c02_rec_w03 = car::recode(data$c02_w03, c("1=3; 2=1; 3=2")),
          c02_rec_w04 = car::recode(data$c02_w04, c("1=3; 2=1; 3=2")),
-         c02_rec_w05 = car::recode(data$c02, c("1=3; 2=1; 3=2")))
+         c02_rec_w05 = car::recode(data$c02_w05, c("1=3; 2=1; 3=2")),
+         c02_rec_w06 = car::recode(data$c02_w06, c("1=3; 2=1; 3=2")))
 data$c02_rec_w01<- factor(data$c02_rec_w01, levels = c(1, 2, 3), labels = c("No", "Depende", "Si"))
 data$c02_rec_w02<- factor(data$c02_rec_w02, levels = c(1, 2, 3), labels = c("No", "Depende", "Si"))
 data$c02_rec_w03<- factor(data$c02_rec_w03, levels = c(1, 2, 3), labels = c("No", "Depende", "Si"))
 data$c02_rec_w04<- factor(data$c02_rec_w04, levels = c(1, 2, 3), labels = c("No", "Depende", "Si"))
 data$c02_rec_w05<- factor(data$c02_rec_w05, levels = c(1, 2, 3), labels = c("No", "Depende", "Si"))
+data$c02_rec_w06<- factor(data$c02_rec_w06, levels = c(1, 2, 3), labels = c("No", "Depende", "Si"))
 label(data$c02_rec_w01) <- "Se puede confiar en la mayoria de las personas (2016)."
 label(data$c02_rec_w02) <- "Se puede confiar en la mayoria de las personas (2017)."
 label(data$c02_rec_w03) <- "Se puede confiar en la mayoria de las personas (2018)."
 label(data$c02_rec_w04) <- "Se puede confiar en la mayoria de las personas (2019)."
-label(data$c02_rec_w05) <- "Se puede confiar en la mayoria de las personas (2020)."
+label(data$c02_rec_w05) <- "Se puede confiar en la mayoria de las personas (2021)."
+label(data$c02_rec_w06) <- "Se puede confiar en la mayoria de las personas (2022)."
 
-data %>% select (c02_rec_w01, c02_rec_w02, c02_rec_w03, c02_rec_w04, c02_rec_w05)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
+data %>% select (c02_rec_w01, c02_rec_w02, c02_rec_w03, c02_rec_w04, c02_rec_w05, c02_rec_w06)  %>% sjlabelled::as_label(.)  %>%  dfSummary(graph.col = FALSE)
 ```
 
 C03: Las personas tratan de ayudar a los demás o se preocupan mayormente sólo de sí mismas (w01, w02, w03 & w04)
@@ -146,19 +356,22 @@ data <- data %>%
          c03_rec_w02 = car::recode(data$c03_w02, "1=3; 2=1; 3=2"),
          c03_rec_w03 = car::recode(data$c03_w03, "1=3; 2=1; 3=2"),
          c03_rec_w04 = car::recode(data$c03_w04, "1=3; 2=1; 3=2"),
-         c03_rec_w05 = car::recode(data$c03, "1=3; 2=1; 3=2"))
+         c03_rec_w05 = car::recode(data$c03_w05, "1=3; 2=1; 3=2"),
+         c03_rec_w06 = car::recode(data$c03_w06, "1=3; 2=1; 3=2"))
 data$c03_rec_w01<- factor(data$c03_rec_w01, levels = c(1, 2, 3), labels = c("No", "Depende", "Si"))
 data$c03_rec_w02<- factor(data$c03_rec_w02, levels = c(1, 2, 3), labels = c("No", "Depende", "Si"))
 data$c03_rec_w03<- factor(data$c03_rec_w03, levels = c(1, 2, 3), labels = c("No", "Depende", "Si"))
 data$c03_rec_w04<- factor(data$c03_rec_w04, levels = c(1, 2, 3), labels = c("No", "Depende", "Si"))
 data$c03_rec_w05<- factor(data$c03_rec_w05, levels = c(1, 2, 3), labels = c("No", "Depende", "Si"))
+data$c03_rec_w06<- factor(data$c03_rec_w06, levels = c(1, 2, 3), labels = c("No", "Depende", "Si"))
 label(data$c03_rec_w01) <- "La mayoria de las personas tratan de ayudar a las demas (2016)."
 label(data$c03_rec_w02) <- "La mayoria de las personas tratan de ayudar a las demas (2017)."
 label(data$c03_rec_w03) <- "La mayoria de las personas tratan de ayudar a las demas (2018)."
 label(data$c03_rec_w04) <- "La mayoria de las personas tratan de ayudar a las demas (2019)."
-label(data$c03_rec_w05) <- "La mayoria de las personas tratan de ayudar a las demas (2020)."
+label(data$c03_rec_w05) <- "La mayoria de las personas tratan de ayudar a las demas (2021)."
+label(data$c03_rec_w06) <- "La mayoria de las personas tratan de ayudar a las demas (2022)."
 
-data %>% select (c03_rec_w01, c03_rec_w02, c03_rec_w03, c03_rec_w04, c03_rec_w05)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
+data %>% select (c03_rec_w01, c03_rec_w02, c03_rec_w03, c03_rec_w04, c03_rec_w05, c03_rec_w06)  %>% sjlabelled::as_label(.)  %>%  dfSummary(graph.col = FALSE)
 ```
 
 C04: La gente intentaría aprovecharse de usted si tuviera la oportunidad o cree que trataría de ser justa (w01, w02, w03 & w04)
@@ -169,1016 +382,73 @@ data <- data %>%
          c04_rec_w02 = car::recode(data$c04_w02, "1=1; 2=3; 3=2"),
          c04_rec_w03 = car::recode(data$c04_w03, "1=1; 2=3; 3=2"),
          c04_rec_w04 = car::recode(data$c04_w04, "1=1; 2=3; 3=2"),
-         c04_rec_w05 = car::recode(data$c04, "1=1; 2=3; 3=2"))
+         c04_rec_w05 = car::recode(data$c04_w05, "1=1; 2=3; 3=2"),
+         c04_rec_w06 = car::recode(data$c04_w06, "1=1; 2=3; 3=2"))
 data$c04_rec_w01<- factor(data$c04_rec_w01, levels = c(1, 2, 3), labels = c("No", "Depende", "Si"))
 data$c04_rec_w02<- factor(data$c04_rec_w02, levels = c(1, 2, 3), labels = c("No", "Depende", "Si"))
 data$c04_rec_w03<- factor(data$c04_rec_w03, levels = c(1, 2, 3), labels = c("No", "Depende", "Si"))
 data$c04_rec_w04<- factor(data$c04_rec_w04, levels = c(1, 2, 3), labels = c("No", "Depende", "Si"))
 data$c04_rec_w05<- factor(data$c04_rec_w05, levels = c(1, 2, 3), labels = c("No", "Depende", "Si"))
+data$c04_rec_w06<- factor(data$c04_rec_w06, levels = c(1, 2, 3), labels = c("No", "Depende", "Si"))
 label(data$c04_rec_w01) <- "La mayoria de las personas tratan de ser justas (2016)."
 label(data$c04_rec_w02) <- "La mayoria de las personas tratan de ser justas (2017)."
 label(data$c04_rec_w03) <- "La mayoria de las personas tratan de ser justas (2018)."
 label(data$c04_rec_w04) <- "La mayoria de las personas tratan de ser justas (2019)."
-label(data$c04_rec_w05) <- "La mayoria de las personas tratan de ser justas (2020)."
+label(data$c04_rec_w05) <- "La mayoria de las personas tratan de ser justas (2021)."
+label(data$c04_rec_w06) <- "La mayoria de las personas tratan de ser justas (2022)."
 
-data %>% select (c04_rec_w01, c04_rec_w02, c04_rec_w03, c04_rec_w04, c04_rec_w05)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
+data %>% select (c04_rec_w01, c04_rec_w02, c04_rec_w03, c04_rec_w04, c04_rec_w05, c04_rec_w06)  %>% sjlabelled::as_label(.)  %>%  dfSummary(graph.col = FALSE)
 ```
 
-## Reconocimiento y respeto de la diversidad
+### Solidaridad
 
-R12_03: Chile pierde su identidad con la llegada de inmigrantes (w01, w02, w03 & w04)
+C07_01: Ha visitado la casa de algún vecino (w01, w02, w03, w04, w05)
 
 ```{r}
-label(data$r12_03_w01) <- "Chile pierde su identidad con la llegada de inmigrantes (2016)."
-label(data$r12_03_w02) <- "Chile pierde su identidad con la llegada de inmigrantes (2017)."
-label(data$r12_03_w03) <- "Chile pierde su identidad con la llegada de inmigrantes (2018)."
-label(data$r12_03_w04) <- "Chile pierde su identidad con la llegada de inmigrantes (2019)."
-data$r12_03_w05 <- data$r12_03
-label(data$r12_03_w05) <- "Chile pierde su identidad con la llegada de inmigrantes (2020)."
-
-data %>% select (r12_03_w01, r12_03_w02, r12_03_w03, r12_03_w04, r12_03_w05)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
-```
-
-R12_04: Con la llegada de inmigrantes aumenta el desempleo (w01, w02, w03 & w04)
-
-```{r}
-label(data$r12_04_w01) <- "Con la llegada de inmigrantes aumenta el desempleo (2016)."
-label(data$r12_04_w02) <- "Con la llegada de inmigrantes aumenta el desempleo (2017)."
-label(data$r12_04_w03) <- "Con la llegada de inmigrantes aumenta el desempleo (2018)."
-label(data$r12_04_w04) <- "Con la llegada de inmigrantes aumenta el desempleo (2019)."
-data$r12_04_w05 <- data$r12_04
-label(data$r12_04_w05) <- "Con la llegada de inmigrantes aumenta el desempleo (2020)."
-
-data %>% select (r12_04_w01, r12_04_w02, r12_04_w03, r12_04_w04, r12_04_w05)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
-```
-
-C37_01: Grado de acuerdo con adopción homoparental (w03 & w04)
-
-```{r}
-label(data$c37_01_w03) <- "Grado de acuerdo con adopcion homoparental (2018)."
-label(data$c37_01_w04) <- "Grado de acuerdo con adopcion homoparental (2019)."
-
-data %>% select (c37_01_w03, c37_01_w04)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
-```
-
-C06_04: Grado de confianza con personas homosexuales (w01 & w03)
-
-```{r}
-label(data$c06_04_w01) <- "Grado de confianza con personas homosexuales (2016)."
-label(data$c06_04_w03) <- "Grado de confianza con personas homosexuales (2018)."
-
-data %>% select (c06_04_w01, c06_04_w03)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
-```
-
-C06_05: Grado de confianza con personas mapuche (w01 & w03)
-
-```{r}
-label(data$c06_05_w01) <- "Grado de confianza con personas mapuche (2016)."
-label(data$c06_05_w03) <- "Grado de confianza con personas mapuche (2018)."
-
-data %>% select (c06_05_w01, c06_05_w03)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
-```
-
-C06_06: Grado de confianza con personas inmigrantes (w01 & w03)
-
-```{r}
-label(data$c06_06_w01) <- "Grado de confianza con personas inmigrantes (2016)."
-label(data$c06_06_w03) <- "Grado de confianza con personas inmigrantes (2018)."
-
-data %>% select (c06_06_w01, c06_06_w03)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
-```
-
-# Sentido de pertenencia
-
-## Identificación con el país
-
-C32_01: Me siento orgulloso de ser chileno (w01, w02, w03 & w04)
-
-```{r}
-label(data$c32_01_w01) <- "Me siento orgulloso de ser chileno (2016)."
-label(data$c32_01_w02) <- "Me siento orgulloso de ser chileno (2017)."
-label(data$c32_01_w03) <- "Me siento orgulloso de ser chileno (2018)."
-label(data$c32_01_w04) <- "Me siento orgulloso de ser chileno (2019)."
-data$c32_01_w05 <- data$c32_01
-label(data$c32_01_w05) <- "Me siento orgulloso de ser chileno (2020)."
-
-data %>% select (c32_01_w01, c32_01_w02, c32_01_w03, c32_01_w04, c32_01_w05)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
-```
-
-C32_02: Me identifico con Chile (w01, w02, w03, w04 & w05)
-
-```{r}
-label(data$c32_02_w01) <- "Me identifico con Chile (2016)."
-label(data$c32_02_w02) <- "Me identifico con Chile (2017)."
-label(data$c32_02_w03) <- "Me identifico con Chile (2018)."
-label(data$c32_02_w04) <- "Me identifico con Chile (2019)."
-data$c32_02_w05 <- data$c32_02
-label(data$c32_02_w05) <- "Me identifico con Chile (2020)."
-
-data %>% select (c32_02_w01, c32_02_w02, c32_02_w03, c32_02_w04, c32_02_w05)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
-```
-
-## Percepción de justicia
-
-C18_09: En Chile las personas son recompensadas por sus esfuerzos (w01, w02, w03, w04 & w05)
-
-```{r}
-label(data$c18_09_w01) <- "En Chile las personas son recompensadas por sus esfuerzos (2016)."
-label(data$c18_09_w02) <- "En Chile las personas son recompensadas por sus esfuerzos (2017)."
-label(data$c18_09_w03) <- "En Chile las personas son recompensadas por sus esfuerzos (2018)."
-label(data$c18_09_w04) <- "En Chile las personas son recompensadas por sus esfuerzos (2019)."
-data$c18_09_w05 <- data$c18_09
-label(data$c18_09_w05) <- "En Chile las personas son recompensadas por sus esfuerzos (2020)."
-
-data %>% select (c18_09_w01, c18_09_w02, c18_09_w03, c18_09_w04, c18_09_w05)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
-```
-
-C18_10: En Chile las personas son recompensadas por su inteligencia y habilidades (w01, w02, w03, w04 & w05)
-
-```{r}
-label(data$c18_10_w01) <- "En Chile las personas son recompensadas por su inteligencia (2016)."
-label(data$c18_10_w02) <- "En Chile las personas son recompensadas por su inteligencia (2017)."
-label(data$c18_10_w03) <- "En Chile las personas son recompensadas por su inteligencia (2018)."
-label(data$c18_10_w04) <- "En Chile las personas son recompensadas por su inteligencia (2019)."
-data$c18_10_w05 <- data$c18_10
-label(data$c18_10_w05) <- "En Chile las personas son recompensadas por su inteligencia (2020)."
-
-data %>% select (c18_10_w01, c18_10_w02, c18_10_w03, c18_10_w04, c18_10_w05)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
-```
-
-## Confianza institucional
-
-C05_01: Grado de confianza en el gobierno (w01, w02, w03, w04 & w05)
-
-```{r}
-label(data$c05_01_w01) <- "Confianza en el gobierno (2016)."
-label(data$c05_01_w02) <- "Confianza en el gobierno (2017)."
-label(data$c05_01_w03) <- "Confianza en el gobierno (2018)."
-label(data$c05_01_w04) <- "Confianza en el gobierno (2019)."
-data$c05_01_w05 <- data$c05_01
-label(data$c05_01_w05) <- "Confianza en el gobierno (2020)."
-
-data %>% select (c05_01_w01, c05_01_w02, c05_01_w03, c05_01_w04, c05_01_w05)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
-```
-
-C05_02: Grado de confianza en los partidos políticos (w01, w02, w03, w04 & w05)
-
-```{r}
-label(data$c05_02_w01) <- "Confianza en los partidos politicos (2016)."
-label(data$c05_02_w02) <- "Confianza en los partidos politicos (2017)."
-label(data$c05_02_w03) <- "Confianza en los partidos politicos (2018)."
-label(data$c05_02_w04) <- "Confianza en los partidos politicos (2019)."
-data$c05_02_w05 <- data$c05_02
-label(data$c05_02_w05) <- "Confianza en los partidos politicos (2020)."
-
-data %>% select (c05_02_w01, c05_02_w02, c05_02_w03, c05_02_w04, c05_02_w05)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
-```
-
-C05_03: Grado de confianza en carabineros (w01, w02, w03, w04 & w05)
-
-```{r}
-label(data$c05_03_w01) <- "Confianza en Carabineros (2016)."
-label(data$c05_03_w02) <- "Confianza en Carabineros (2017)."
-label(data$c05_03_w03) <- "Confianza en Carabineros (2018)."
-label(data$c05_03_w04) <- "Confianza en Carabineros (2019)."
-data$c05_03_w05 <- data$c05_03
-label(data$c05_03_w05) <- "Confianza en Carabineros (2020)."
-
-data %>% select (c05_03_w01, c05_03_w02, c05_03_w03, c05_03_w04, c05_03_w05)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
-```
-
-C05_04: Grado de confianza en los sindicatos (w01, w02, w03 & w04)
-
-```{r}
-label(data$c05_04_w01) <- "Confianza en los sindicatos (2016)."
-label(data$c05_04_w02) <- "Confianza en los sindicatos (2017)."
-label(data$c05_04_w03) <- "Confianza en los sindicatos (2018)."
-label(data$c05_04_w04) <- "Confianza en los sindicatos (2019)."
-
-data %>% select (c05_04_w01, c05_04_w02, c05_04_w03, c05_04_w04)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
-```
-
-C05_05: Grado de confianza en el poder judicial (w01, w02, w03, w04 & w05)
-
-```{r}
-label(data$c05_05_w01) <- "Confianza en el poder judicial (2016)."
-label(data$c05_05_w02) <- "Confianza en el poder judicial (2017)."
-label(data$c05_05_w03) <- "Confianza en el poder judicial (2018)."
-label(data$c05_05_w04) <- "Confianza en el poder judicial (2019)."
-data$c05_05_w05 <- data$c05_05
-label(data$c05_05_w05) <- "Confianza en el poder judicial (2020)."
-
-data %>% select (c05_05_w01, c05_05_w02, c05_05_w03, c05_05_w04, c05_05_w05)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
-```
-
-C05_06: Grado de confianza en las empresas privadas (w01, w02, w03 & w04)
-
-```{r}
-label(data$c05_06_w01) <- "Confianza en las empresas privadas (2016)."
-label(data$c05_06_w02) <- "Confianza en las empresas privadas (2017)."
-label(data$c05_06_w03) <- "Confianza en las empresas privadas (2018)."
-label(data$c05_06_w04) <- "Confianza en las empresas privadas (2019)."
-
-data %>% select (c05_06_w01, c05_06_w02, c05_06_w03, c05_06_w04)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
-```
-
-C05_07: Grado de confianza en el congreso nacional (w01, w02, w03, w04 & w05)
-
-```{r}
-label(data$c05_07_w01) <- "Confianza en el congreso nacional (2016)."
-label(data$c05_07_w02) <- "Confianza en el congreso nacional (2017)."
-label(data$c05_07_w03) <- "Confianza en el congreso nacional (2018)."
-label(data$c05_07_w04) <- "Confianza en el congreso nacional (2019)."
-data$c05_07_w05 <- data$c05_07
-label(data$c05_07_w05) <- "Confianza en el congreso nacional (2020)."
-
-data %>% select (c05_07_w01, c05_07_w02, c05_07_w03, c05_07_w04, c05_07_w05)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
-```
-
-C05_08: Grado de confianza en el presidente/a de la república (w01, w02, w03, w04 & w05)
-
-```{r}
-label(data$c05_08_w01) <- "Confianza en el presidente/a de la republica (2016)."
-label(data$c05_08_w02) <- "Confianza en el presidente/a de la republica (2017)."
-label(data$c05_08_w03) <- "Confianza en el presidente/a de la republica (2018)."
-label(data$c05_08_w04) <- "Confianza en el presidente/a de la republica (2019)."
-data$c05_08_w05 <- data$c05_08
-label(data$c05_08_w05) <- "Confianza en el presidente/a de la republica (2020)."
-
-data %>% select (c05_08_w01, c05_08_w02, c05_08_w03, c05_08_w04, c05_08_w05)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
-```
-
-# Orientación hacia el bien común
-
-## Solidaridad
-
-C07_01: Ha visitado la casa de algún vecino (w01, w02, w03, w04 & w05)
-
-```{r}
-label(data$c07_01_w01) <- "Ha visitado la casa de algun vecino (2016)."
-label(data$c07_01_w02) <- "Ha visitado la casa de algun vecino (2017)."
-label(data$c07_01_w03) <- "Ha visitado la casa de algun vecino (2018)."
-label(data$c07_01_w04) <- "Ha visitado la casa de algun vecino (2019)."
-data$c07_01_w05 <- data$c07_01
-label(data$c07_01_w05) <- "Ha visitado la casa de algun vecino (2020)."
-
-data %>% select (c07_01_w01, c07_01_w02, c07_01_w03, c07_01_w04, c07_01_w05)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
-```
-
-C07_02: Ha asistido a alguna reunión donde se traten temas de interés público o comunitario (w01, w02, w03, w04 & w05)
-
-```{r}
-label(data$c07_02_w01) <- "Ha asistido a alguna reunion donde se traten temas de interes publico o comunitario (2016)."
-label(data$c07_02_w02) <- "Ha asistido a alguna reunion donde se traten temas de interes publico o comunitario (2017)."
-label(data$c07_02_w03) <- "Ha asistido a alguna reunion donde se traten temas de interes publico o comunitario (2018)."
-label(data$c07_02_w04) <- "Ha asistido a alguna reunion donde se traten temas de interes publico o comunitario (2019)."
-data$c07_02_w05 <- data$c07_02
-label(data$c07_02_w05) <- "Ha asistido a alguna reunion donde se traten temas de interes publico o comunitario (2020)."
-
-data %>% select (c07_02_w01, c07_02_w02, c07_02_w03, c07_02_w04, c07_02_w05)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
-```
-
-C07_03: Han venido amigos a visitarlo a su casa (w01, w02, w03, w04 & w05)
-
-```{r}
-label(data$c07_03_w01) <- "Han venido amigos a visitarlo a su casa (2016)."
-label(data$c07_03_w02) <- "Han venido amigos a visitarlo a su casa (2017)."
-label(data$c07_03_w03) <- "Han venido amigos a visitarlo a su casa (2018)."
-label(data$c07_03_w04) <- "Han venido amigos a visitarlo a su casa (2019)."
-data$c07_03_w05 <- data$c07_03
-label(data$c07_03_w05) <- "Han venido amigos a visitarlo a su casa (2020)."
-
-data %>% select (c07_03_w01, c07_03_w02, c07_03_w03, c07_03_w04, c07_03_w05)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
-```
-
-C07_04: Ha hecho voluntariado (w01, w02, w03, w04 & w05)
-
-```{r}
-label(data$c07_04_w01) <- "Ha hecho voluntariado (2016)."
-label(data$c07_04_w02) <- "Ha hecho voluntariado (2017)."
-label(data$c07_04_w03) <- "Ha hecho voluntariado (2018)."
-label(data$c07_04_w04) <- "Ha hecho voluntariado (2019)."
-data$c07_04_w05 <- data$c07_04
-label(data$c07_04_w05) <- "Ha hecho voluntariado (2020)."
-
-data %>% select (c07_04_w01, c07_04_w02, c07_04_w03, c07_04_w04, c07_04_w05)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
-```
-
-C07_05: Ha donado dinero a una obra social (w01, w02, w03, w04 & w05)
-
-```{r}
-label(data$c07_05_w01) <- "Ha donado dinero a una obra social o de caridad (2016)."
-label(data$c07_05_w02) <- "Ha donado dinero a una obra social o de caridad (2017)."
-label(data$c07_05_w03) <- "Ha donado dinero a una obra social o de caridad (2018)."
-label(data$c07_05_w04) <- "Ha donado dinero a una obra social o de caridad (2019)."
-data$c07_05_w05 <- data$c07_05
-label(data$c07_05_w05) <- "Ha donado dinero a una obra social o de caridad (2020)."
-
-data %>% select (c07_05_w01, c07_05_w02, c07_05_w03, c07_05_w04, c07_05_w05)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
-```
-
-C07_06: Ha prestado una suma de dinero de 10.000.- o más (w01, w02, w03, w04 & w05)
-
-```{r}
-label(data$c07_06_w01) <- "Ha prestado una suma de dinero de $10.000.- o mas (2016)."
-label(data$c07_06_w02) <- "Ha prestado una suma de dinero de $10.000.- o mas (2017)."
-label(data$c07_06_w03) <- "Ha prestado una suma de dinero de $10.000.- o mas (2018)."
-label(data$c07_06_w04) <- "Ha prestado una suma de dinero de $10.000.- o mas (2019)."
-data$c07_06_w05 <- data$c07_06
-label(data$c07_06_w05) <- "Ha prestado una suma de dinero de $10.000.- o mas (2020)."
-
-data %>% select (c07_06_w01, c07_06_w02, c07_06_w03, c07_06_w04, c07_06_w05)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
-```
-
-C07_07: Ha conversado con una persona en problemas o deprimida (w01, w02, w03, w04 & w05)
-
-```{r}
-label(data$c07_07_w01) <- "Ha conversado con una persona en problemas o deprimida (2016)."
-label(data$c07_07_w02) <- "Ha conversado con una persona en problemas o deprimida (2017)."
-label(data$c07_07_w03) <- "Ha conversado con una persona en problemas o deprimida (2018)."
-label(data$c07_07_w04) <- "Ha conversado con una persona en problemas o deprimida (2019)."
-data$c07_07_w05 <- data$c07_07
-label(data$c07_07_w05) <- "Ha conversado con una persona en problemas o deprimida (2020)."
-
-data %>% select (c07_07_w01, c07_07_w02, c07_07_w03, c07_07_w04, c07_07_w05)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
-```
-
-C07_08: Ha ayudado a alguien a conseguir trabajo (w01, w02, w03, w04 & w05)
-
-```{r}
-label(data$c07_08_w01) <- "Ha ayudado a alguien a conseguir trabajo (2016)."
-label(data$c07_08_w02) <- "Ha ayudado a alguien a conseguir trabajo (2017)."
-label(data$c07_08_w03) <- "Ha ayudado a alguien a conseguir trabajo (2018)."
-label(data$c07_08_w04) <- "Ha ayudado a alguien a conseguir trabajo (2019)."
-data$c07_08_w05 <- data$c07_08
-label(data$c07_08_w05) <- "Ha ayudado a alguien a conseguir trabajo (2020)."
-
-data %>% select (c07_08_w01, c07_08_w02, c07_08_w03, c07_08_w04, c07_08_w05)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
-```
-
-## Participación cívica
-
-C08_01: Firmado una carta o petición apoyando una causa (w01, w02, w03 & w04)
-
-```{r}
-label(data$c08_01_w01) <- "Firmado una carta o peticion apoyando una causa (2016)."
-label(data$c08_01_w02) <- "Firmado una carta o peticion apoyando una causa (2017)."
-label(data$c08_01_w03) <- "Firmado una carta o peticion apoyando una causa (2018)."
-label(data$c08_01_w04) <- "Firmado una carta o peticion apoyando una causa (2019)."
-
-data %>% select (c08_01_w01, c08_01_w02, c08_01_w03, c08_01_w04)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
-```
-
-C08_02: Asistir a una marcha o manifestación pacífica (w01, w02, w03, w04 & w05)
-
-```{r}
-label(data$c08_02_w01) <- "Asistido a una marcha o manifestacion pacifica (2016)."
-label(data$c08_02_w02) <- "Asistido a una marcha o manifestacion pacifica (2017)."
-label(data$c08_02_w03) <- "Asistido a una marcha o manifestacion pacifica (2018)."
-label(data$c08_02_w04) <- "Asistido a una marcha o manifestacion pacifica (2019)."
-data$c08_02_w05 <- data$c08_02
-label(data$c08_02_w05) <- "Asistido a una marcha o manifestacion pacifica (2020)."
-
-data %>% select (c08_02_w01, c08_02_w02, c08_02_w03, c08_02_w04, c08_02_w05)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
-```
-
-C08_03: Participar en una huelga (w01, w02, w03 & w04)
-
-```{r}
-label(data$c08_03_w01) <- "Participado en una huelga (2016)."
-label(data$c08_03_w02) <- "Participado en una huelga (2017)."
-label(data$c08_03_w03) <- "Participado en una huelga (2018)."
-label(data$c08_03_w04) <- "Participado en una huelga (2019)."
-
-data %>% select (c08_03_w01, c08_03_w02, c08_03_w03, c08_03_w04)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
-```
-
-C08_04: Usar las redes sociales para expresar su opinión en temas públicos (w01, w02, w03, w04 & w05)
-
-```{r}
-label(data$c08_04_w01) <- "Usado las redes sociales para expresar su opinion en temas publicos (2016)."
-label(data$c08_04_w02) <- "Usado las redes sociales para expresar su opinion en temas publicos (2017)."
-label(data$c08_04_w03) <- "Usado las redes sociales para expresar su opinion en temas publicos (2018)."
-label(data$c08_04_w04) <- "Usado las redes sociales para expresar su opinion en temas publicos (2019)."
-data$c08_04_w05 <- data$c08_04
-label(data$c08_04_w05) <- "Usado las redes sociales para expresar su opinion en temas publicos (2020)."
-
-data %>% select (c08_04_w01, c08_04_w02, c08_04_w03, c08_04_w04, c08_04_w05)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
-```
-
-## Participación en organizaciones
-
-C12_01: Junta de vecinos u otra organización vecinal (w01 & w03)
-
-```{r}
-label(data$c12_01_w01) <- "Junta de vecinos u otra organizacion (2016)."
-label(data$c12_01_w03) <- "Junta de vecinos u otra organizacion (2018)."
-
-data %>% select (c12_01_w01, c12_01_w03)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
-```
-
-C12_02: Organización religiosa o iglesia (w01 & w03)
-
-```{r}
-label(data$c12_02_w01) <- "Organizacion religiosa o Iglesia (2016)."
-label(data$c12_02_w03) <- "Organizacion religiosa o Iglesia (2018)."
-
-data %>% select (c12_02_w01, c12_02_w03)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
-```
-
-C12_03: Partido o movimiento político (w01 & w03)
-
-```{r}
-label(data$c12_03_w01) <- "Partido o movimiento politico (2016)."
-label(data$c12_03_w03) <- "Partido o movimiento politico (2018)."
-
-data %>% select (c12_03_w01, c12_03_w03)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
-```
-
-C12_04: Sindicato (w01 & w03)
-
-```{r}
-label(data$c12_04_w01) <- "Sindicato (2016)."
-label(data$c12_04_w03) <- "Sindicato (2018)."
-
-data %>% select (c12_04_w01, c12_04_w03)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
-```
-
-C12_05: Asociación profesional o gremial (w01 & w03)
-
-```{r}
-label(data$c12_05_w01) <- "Asociacion profesional o gremial (2016)."
-label(data$c12_05_w03) <- "Asociacion profesional o gremial (2018)."
-
-data %>% select (c12_05_w01, c12_05_w03)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
-```
-
-C12_06: Organización deportiva (w01 & w03)
-
-```{r}
-label(data$c12_06_w01) <- "Organizacion deportiva (2016)."
-label(data$c12_06_w03) <- "Organizacion deportiva (2018)."
-
-data %>% select (c12_06_w01, c12_06_w03)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
-```
-
-C12_07: Organización ecológica o medioambiental (w01 & w03)
-
-```{r}
-label(data$c12_07_w01) <- "Organizacion ecologica o medioambiental (2016)."
-label(data$c12_07_w03) <- "Organizacion ecologica o medioambiental (2018)."
-
-data %>% select (c12_07_w01, c12_07_w03)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
-```
-
-C12_08: Asociaciones o centros de estudiantes (w01 & w03)
-
-```{r}
-label(data$c12_08_w01) <- "Asociaciones o centros de estudiantes (2016)."
-label(data$c12_08_w03) <- "Asociaciones o centros de estudiantes (2018)."
-
-data %>% select (c12_08_w01, c12_08_w03)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
-```
-
-## Participación electoral
-
-C11: Voto en elecciones (w01 & w03)
-
-```{r}
-label(data$c11_w01) <- "Voto en elecciones (2016)."
-label(data$c11_w03) <- "Voto en elecciones (2018)."
-
-data %>% select (c11_w01, c11_w03)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
-```
-
-# Cohesión territorial
-
-## Confianza en vecinos
-
-T01: Confianza en vecinos (w01, w02, w03, w04 & w05)
-
-```{r}
-label(data$t01_w01) <- "Confianza en vecinos (2016)."
-label(data$t01_w02) <- "Confianza en vecinos (2017)."
-label(data$t01_w03) <- "Confianza en vecinos (2018)."
-label(data$t01_w04) <- "Confianza en vecinos (2019)."
-data$t01_w05 <- data$t01
-label(data$t01_w05) <- "Confianza en vecinos (2020)."
-
-data %>% select (t01_w01, t01_w02, t01_w03, t01_w04, t01_w05)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
-```
-
-## Cohesión barrial
-
-T02_01: Este barrio es ideal para mi (w01, w02, w03 & w04)
-
-```{r}
-label(data$t02_01_w01) <- "Este barrio es ideal para mi (2016)."
-label(data$t02_01_w02) <- "Este barrio es ideal para mi (2017)."
-label(data$t02_01_w03) <- "Este barrio es ideal para mi (2018)."
-label(data$t02_01_w04) <- "Este barrio es ideal para mi (2019)."
-
-data %>% select (t02_01_w01, t02_01_w02, t02_01_w03, t02_01_w04)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
-```
-
-T02_02: Me siento integrado/a en este barrio (w01, w02, w03 & w04)
-
-```{r}
-label(data$t02_02_w01) <- "Me siento integrado/a en este barrio (2016)."
-label(data$t02_02_w02) <- "Me siento integrado/a en este barrio (2017)."
-label(data$t02_02_w03) <- "Me siento integrado/a en este barrio (2018)."
-label(data$t02_02_w04) <- "Me siento integrado/a en este barrio (2019)."
-
-data %>% select (t02_02_w01, t02_02_w02, t02_02_w03, t02_02_w04)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
-```
-
-T02_03: Me identifico con la gente de este barrio (w01, w02, w03 & w04)
-
-```{r}
-label(data$t02_03_w01) <- "Me identifico con la gente de este barrio (2016)."
-label(data$t02_03_w02) <- "Me identifico con la gente de este barrio (2017)."
-label(data$t02_03_w03) <- "Me identifico con la gente de este barrio (2018)."
-label(data$t02_03_w04) <- "Me identifico con la gente de este barrio (2019)."
-
-data %>% select (t02_03_w01, t02_03_w02, t02_03_w03, t02_03_w04)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
-```
-
-T02_04: Este barrio es parte de mi (w01, w02, w03 & w04)
-
-```{r}
-label(data$t02_04_w01) <- "Este barrio es parte de mi (2016)."
-label(data$t02_04_w02) <- "Este barrio es parte de mi (2017)."
-label(data$t02_04_w03) <- "Este barrio es parte de mi (2018)."
-label(data$t02_04_w04) <- "Este barrio es parte de mi (2019)."
-
-data %>% select (t02_04_w01, t02_04_w02, t02_04_w03, t02_04_w04)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
-```
-
-## Sociabilidad barrial
-
-T03_01: En este barrio es facil hacer amigos (w01, w02, w03 & w04)
-
-```{r}
-label(data$t03_01_w01) <- "En este barrio es facil hacer amigos (2016)."
-label(data$t03_01_w02) <- "En este barrio es facil hacer amigos (2017)."
-label(data$t03_01_w03) <- "En este barrio es facil hacer amigos (2018)."
-label(data$t03_01_w04) <- "En este barrio es facil hacer amigos (2019)."
-
-data %>% select (t03_01_w01, t03_01_w02, t03_01_w03, t03_01_w04)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
-```
-
-T03_02: La gente en este barrio es sociable (w01, w02, w03 & w04)
-
-```{r}
-label(data$t03_02_w01) <- "La gente en este barrio es sociable (2016)."
-label(data$t03_02_w02) <- "La gente en este barrio es sociable (2017)."
-label(data$t03_02_w03) <- "La gente en este barrio es sociable (2018)."
-label(data$t03_02_w04) <- "La gente en este barrio es sociable (2019)."
-
-data %>% select (t03_02_w01, t03_02_w02, t03_02_w03, t03_02_w04)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
-```
-
-T03_03: La gente en este barrio es cordial (w01, w02, w03 & w04)
-
-```{r}
-label(data$t03_03_w01) <- "La gente en este barrio es cordial (2016)."
-label(data$t03_03_w02) <- "La gente en este barrio es cordial (2017)."
-label(data$t03_03_w03) <- "La gente en este barrio es cordial (2018)."
-label(data$t03_03_w04) <- "La gente en este barrio es cordial (2019)."
-
-data %>% select (t03_03_w01, t03_03_w02, t03_03_w03, t03_03_w04)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
-```
-
-T03_04: La gente en este barrio es colaboradora (w01, w02, w03 & w04)
-
-```{r}
-label(data$t03_04_w01) <- "La gente en este barrio es colaboradora (2016)."
-label(data$t03_04_w02) <- "La gente en este barrio es colaboradora (2017)."
-label(data$t03_04_w03) <- "La gente en este barrio es colaboradora (2018)."
-label(data$t03_04_w04) <- "La gente en este barrio es colaboradora (2019)."
-
-data %>% select (t03_04_w01, t03_04_w02, t03_04_w03, t03_04_w04)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
-```
-
-## Satisfacción barrial
-
-T06_01: Seguridad del barrio (w01, w02, w03 & w04)
-
-```{r}
-label(data$t06_01_w01) <- "Seguridad del barrio (2016)."
-label(data$t06_01_w02) <- "Seguridad del barrio (2017)."
-label(data$t06_01_w03) <- "Seguridad del barrio (2018)."
-label(data$t06_01_w04) <- "Seguridad del barrio (2019)."
-
-data %>% select (t06_01_w01, t06_01_w02, t06_01_w03, t06_01_w04)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
-```
-
-T06_02: Conectividad (w01, w02, w03 & w04)
-
-```{r}
-label(data$t06_02_w01) <- "Conectividad (2016)."
-label(data$t06_02_w02) <- "Conectividad (2017)."
-label(data$t06_02_w03) <- "Conectividad (2018)."
-label(data$t06_02_w04) <- "Conectividad (2019)."
-
-data %>% select (t06_02_w01, t06_02_w02, t06_02_w03, t06_02_w04)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
-```
-
-T06_03: Áreas verdes y de recreación disponibles (w01, w02, w03 & w04)
-
-```{r}
-label(data$t06_03_w01) <- "Areas verdes y de recreacion disponibles (2016)."
-label(data$t06_03_w02) <- "Areas verdes y de recreacion disponibles (2017)."
-label(data$t06_03_w03) <- "Areas verdes y de recreacion disponibles (2018)."
-label(data$t06_03_w04) <- "Areas verdes y de recreacion disponibles (2019)."
-
-data %>% select (t06_03_w01, t06_03_w02, t06_03_w03, t06_03_w04)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
-```
-
-T06_04: Limpieza y belleza del barrio (w01, w02, w03 & w04)
-
-```{r}
-label(data$t06_04_w01) <- "Limpieza y belleza del barrio (2016)."
-label(data$t06_04_w02) <- "Limpieza y belleza del barrio (2017)."
-label(data$t06_04_w03) <- "Limpieza y belleza del barrio (2018)."
-label(data$t06_04_w04) <- "Limpieza y belleza del barrio (2019)."
-
-data %>% select (t06_04_w01, t06_04_w02, t06_04_w03, t06_04_w04)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
-```
-
-T06_05: Proximidad al lugar de actividad principal (w01, w02, w03 & w04)
-
-```{r}
-label(data$t06_05_w01) <- "Proximidad al lugar de actividad principal (2016)."
-label(data$t06_05_w02) <- "Proximidad al lugar de actividad principal (2017)."
-label(data$t06_05_w03) <- "Proximidad al lugar de actividad principal (2018)."
-label(data$t06_05_w04) <- "Proximidad al lugar de actividad principal (2019)."
-
-data %>% select (t06_05_w01, t06_05_w02, t06_05_w03, t06_05_w04)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
-```
-
-T06_06: Proximidad a colegios de buena calidad (w01, w02, w03 & w04)
-
-```{r}
-label(data$t06_06_w01) <- "Proximidad a colegios de buena calidad (2016)."
-label(data$t06_06_w02) <- "Proximidad a colegios de buena calidad (2017)."
-label(data$t06_06_w03) <- "Proximidad a colegios de buena calidad (2018)."
-label(data$t06_06_w04) <- "Proximidad a colegios de buena calidad (2019)."
-
-data %>% select (t06_06_w01, t06_06_w02, t06_06_w03, t06_06_w04)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
-```
-
-T06_07: Proximidad a áreas de comercio (w01, w02, w03 & w04)
-
-```{r}
-label(data$t06_07_w01) <- "Proximidad a areas de comercio (2016)."
-label(data$t06_07_w02) <- "Proximidad a areas de comercio (2017)."
-label(data$t06_07_w03) <- "Proximidad a areas de comercio (2018)."
-label(data$t06_07_w04) <- "Proximidad a areas de comercio (2019)."
-
-data %>% select (t06_07_w01, t06_07_w02, t06_07_w03, t06_07_w04)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
-```
-
-T06_08: Proximidad con familiares y/o amigos cercanos (w01, w02, w03 & w04)
-
-```{r}
-label(data$t06_08_w01) <- "Proximidad con familiares y/o amigos cercanos (2016)."
-label(data$t06_08_w02) <- "Proximidad con familiares y/o amigos cercanos (2017)."
-label(data$t06_08_w03) <- "Proximidad con familiares y/o amigos cercanos (2018)."
-label(data$t06_08_w04) <- "Proximidad con familiares y/o amigos cercanos (2019)."
-
-data %>% select (t06_08_w01, t06_08_w02, t06_08_w03, t06_08_w04)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
-```
-
-# Habilitadores e inhibidores de la cohesión social
-
-## Regiones y comunas
-
-```{r}
-frq(data$region_w01)
-
-label(data$region_w01) <- "Region"
-```
-
-
-```{r}
-frq(data$comuna)
-label(data$comuna) <- "Comuna"
-```
-
-## Edad
-
-```{r}
-data$m0_edad_w05 <- data$m0_edad
-label(data$m0_edad_w01) <- "Edad (2016)"
-label(data$m0_edad_w02) <- "Edad (2017)"
-label(data$m0_edad_w03) <- "Edad (2018)"
-label(data$m0_edad_w04) <- "Edad (2019)"
-label(data$m0_edad_w05) <- "Edad (2020)"
-
-data %>% select (m0_edad_w01, m0_edad_w02, m0_edad_w03, m0_edad_w04, m0_edad_w05)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
+data %>% select (c07_01_w01, c07_01_w02, c07_01_w03, c07_01_w04, c07_01_w05)  %>% sjlabelled::as_label(.)  %>%  dfSummary(graph.col = FALSE)
 ```
 
-## Educacion
+C07_02: Ha asistido a alguna reunión donde se traten temas de interés público o comunitario (w01, w02, w03, w04, w05)
 
 ```{r}
-data$m01_w05 <- data$m01
-
-data$m01_w01 <- car::recode(data$m01_w01, "c(1,2,3,4)=1;c(5)=2;c(6,7)=3;c(8,9,10)=4")
-data$m01_w02 <- car::recode(data$m01_w02, "c(1,2,3,4)=1;c(5)=2;c(6,7)=3;c(8,9,10)=4")
-data$m01_w03 <- car::recode(data$m01_w03, "c(1,2,3,4)=1;c(5)=2;c(6,7)=3;c(8,9,10)=4")
-data$m01_w04 <- car::recode(data$m01_w04, "c(1,2,3,4)=1;c(5)=2;c(6,7)=3;c(8,9,10)=4")
-data$m01_w05 <- car::recode(data$m01_w05, "c(1,2,3,4)=1;c(5)=2;c(6,7)=3;c(8,9,10)=4")
-
-data$m01_w01 <- factor(data$m01_w01, levels = c("1", "2", "3", "4"), labels=c( "Menos que media completa", "Media completa", "Educacion tecnica superior", "Educacion universitaria y Postgrado"))
-data$m01_w02 <- factor(data$m01_w02, levels = c("1", "2", "3", "4"), labels=c( "Menos que media completa", "Media completa", "Educacion tecnica superior", "Educacion universitaria y Postgrado"))
-data$m01_w03 <- factor(data$m01_w03, levels = c("1", "2", "3", "4"), labels=c( "Menos que media completa", "Media completa", "Educacion tecnica superior", "Educacion universitaria y Postgrado"))
-data$m01_w04 <- factor(data$m01_w04, levels = c("1", "2", "3", "4"), labels=c( "Menos que media completa", "Media completa", "Educacion tecnica superior", "Educacion universitaria y Postgrado"))
-data$m01_w05 <- factor(data$m01_w05, levels = c("1", "2", "3", "4"), labels=c( "Menos que media completa", "Media completa", "Educacion tecnica superior", "Educacion universitaria y Postgrado"))
-
-label(data$m01_w01) <- "Nivel educacional (2016)"
-label(data$m01_w02) <- "Nivel educacional (2017)"
-label(data$m01_w03) <- "Nivel educacional (2018)"
-label(data$m01_w04) <- "Nivel educacional (2019)"
-label(data$m01_w05) <- "Nivel educacional (2020)"
-
-data %>% select (m01_w01, m01_w02, m01_w03, m01_w04, m01_w05)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
+data %>% select (c07_02_w01, c07_02_w02, c07_02_w03, c07_02_w04, c07_02_w05)  %>% sjlabelled::as_label(.)  %>%  dfSummary(graph.col = FALSE)
 ```
 
-## Ingresos hogar
+C07_03: Han venido amigos a visitarlo a su casa (w01, w02, w03, w04, w05)
 
 ```{r}
-data$m29_w05 <- data$m29
-
-data %>% select(m29_w01, m29_w02, m29_w03, m29_w04, m29_w05)  %>%  dfSummary(, graph.col = FALSE)
+data %>% select (c07_03_w01, c07_03_w02, c07_03_w03, c07_03_w04, c07_03_w05)  %>% sjlabelled::as_label(.)  %>%  dfSummary(graph.col = FALSE)
 ```
 
-## Ingresos hogar por tramos
+C07_04: Ha hecho voluntariado (w01, w02, w03, w04, w05)
 
 ```{r}
-data$m30_w05 <- data$m30
-
-data %>% select(m30_w01, m30_w02, m30_w03, m30_w04, m30_w05)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
-
+data %>% select (c07_04_w01, c07_04_w02, c07_04_w03, c07_04_w04, c07_04_w05)  %>% sjlabelled::as_label(.)  %>%  dfSummary(graph.col = FALSE)
 ```
-
-## Imputación ingresos
-```{r}
-# 2016
-data$m30_w01[data$m30_w01==1] <-(       220000 )    # [1]  "Menos de $220.000 mensuales liquidos"          
-data$m30_w01[data$m30_w01==2] <-(220001 +280000 )/2 # [2]  "De $220.001 a $280.000 mensuales liquidos"       
-data$m30_w01[data$m30_w01==3] <-(280001 +330000 )/2 # [3]  "De $280.001 a $330.000 mensuales liquidos"       
-data$m30_w01[data$m30_w01==4] <-(330001 +380000 )/2 # [4]  "De $330.001 a $380.000 mensuales liquidos"       
-data$m30_w01[data$m30_w01==5] <-(380001 +420000 )/2 # [5]  "De $380.001 a $420.000 mensuales liquidos"       
-data$m30_w01[data$m30_w01==6] <-(420001 +470000 )/2 # [6]  "De $420.001 a $470.000 mensuales liquidos"       
-data$m30_w01[data$m30_w01==7] <-(470001 +510000 )/2 # [7]  "De $470.001 a $510.000 mensuales liquidos"       
-data$m30_w01[data$m30_w01==8] <-(510001 +560000 )/2 # [8]  "De $510.001 a $560.000 mensuales liquidos"       
-data$m30_w01[data$m30_w01==9] <-(560001 +610000 )/2 # [9]  "De $560.001 a $610.000 mensuales liquidos"       
-data$m30_w01[data$m30_w01==10]<-(610001 +670000 )/2 # [10] "De $610.001 a $670.000 mensuales liquidos"       
-data$m30_w01[data$m30_w01==11]<-(670001 +730000 )/2 # [11] "De $670.001 a $730.000 mensuales liquidos"       
-data$m30_w01[data$m30_w01==12]<-(730001 +800000 )/2 # [12] "De $730.001 a $800.000 mensuales liquidos"       
-data$m30_w01[data$m30_w01==13]<-(800001 +890000 )/2 # [13] "De $800.001 a $890.000 mensuales liquidos"       
-data$m30_w01[data$m30_w01==14]<-(890001 +980000 )/2 # [14] "De $890.001 a $980.000 mensuales liquidos"       
-data$m30_w01[data$m30_w01==15]<-(980001 +1100000)/2 # [15] "De $980.001 a $1.100.000 mensuales liquidos"      
-data$m30_w01[data$m30_w01==16]<-(1100001+1260000)/2 # [16] "De $1.100.001 a $1.260.000 mensuales liquidos"    
-data$m30_w01[data$m30_w01==17]<-(1260001+1490000)/2 # [17] "De $1.260.001 a $1.490.000 mensuales liquidos"    
-data$m30_w01[data$m30_w01==18]<-(1490001+1850000)/2 # [18] "De $1.490.001 a $1.850.000 mensuales liquidos"    
-data$m30_w01[data$m30_w01==19]<-(1850001+2700000)/2 # [19] "De $1.850.001 a $2.700.000 mensuales liquidos"    
-data$m30_w01[data$m30_w01==20]<-(2700000)  
-
-data$m29_w01 <- ifelse((is.na(data$m29_w01)),
-                       data$m30_w01,
-                       data$m29_w01)
-
-# 2017
-data$m30_w02[data$m30_w02==1] <-(       220000 )    # [1]  "Menos de $220.000 mensuales liquidos"          
-data$m30_w02[data$m30_w02==2] <-(220001 +280000 )/2 # [2]  "De $220.001 a $280.000 mensuales liquidos"       
-data$m30_w02[data$m30_w02==3] <-(280001 +330000 )/2 # [3]  "De $280.001 a $330.000 mensuales liquidos"       
-data$m30_w02[data$m30_w02==4] <-(330001 +380000 )/2 # [4]  "De $330.001 a $380.000 mensuales liquidos"       
-data$m30_w02[data$m30_w02==5] <-(380001 +420000 )/2 # [5]  "De $380.001 a $420.000 mensuales liquidos"       
-data$m30_w02[data$m30_w02==6] <-(420001 +470000 )/2 # [6]  "De $420.001 a $470.000 mensuales liquidos"       
-data$m30_w02[data$m30_w02==7] <-(470001 +510000 )/2 # [7]  "De $470.001 a $510.000 mensuales liquidos"       
-data$m30_w02[data$m30_w02==8] <-(510001 +560000 )/2 # [8]  "De $510.001 a $560.000 mensuales liquidos"       
-data$m30_w02[data$m30_w02==9] <-(560001 +610000 )/2 # [9]  "De $560.001 a $610.000 mensuales liquidos"       
-data$m30_w02[data$m30_w02==10]<-(610001 +670000 )/2 # [10] "De $610.001 a $670.000 mensuales liquidos"       
-data$m30_w02[data$m30_w02==11]<-(670001 +730000 )/2 # [11] "De $670.001 a $730.000 mensuales liquidos"       
-data$m30_w02[data$m30_w02==12]<-(730001 +800000 )/2 # [12] "De $730.001 a $800.000 mensuales liquidos"       
-data$m30_w02[data$m30_w02==13]<-(800001 +890000 )/2 # [13] "De $800.001 a $890.000 mensuales liquidos"       
-data$m30_w02[data$m30_w02==14]<-(890001 +980000 )/2 # [14] "De $890.001 a $980.000 mensuales liquidos"       
-data$m30_w02[data$m30_w02==15]<-(980001 +1100000)/2 # [15] "De $980.001 a $1.100.000 mensuales liquidos"      
-data$m30_w02[data$m30_w02==16]<-(1100001+1260000)/2 # [16] "De $1.100.001 a $1.260.000 mensuales liquidos"    
-data$m30_w02[data$m30_w02==17]<-(1260001+1490000)/2 # [17] "De $1.260.001 a $1.490.000 mensuales liquidos"    
-data$m30_w02[data$m30_w02==18]<-(1490001+1850000)/2 # [18] "De $1.490.001 a $1.850.000 mensuales liquidos"    
-data$m30_w02[data$m30_w02==19]<-(1850001+2700000)/2 # [19] "De $1.850.001 a $2.700.000 mensuales liquidos"    
-data$m30_w02[data$m30_w02==20]<-(2700000)  
-
-data$m29_w02 <- ifelse((is.na(data$m29_w02)),
-                       data$m30_w02,
-                       data$m29_w02)
-# 2018
-data$m30_w03[data$m30_w03==1] <-(       220000 )    # [1]  "Menos de $220.000 mensuales liquidos"          
-data$m30_w03[data$m30_w03==2] <-(220001 +280000 )/2 # [2]  "De $220.001 a $280.000 mensuales liquidos"       
-data$m30_w03[data$m30_w03==3] <-(280001 +330000 )/2 # [3]  "De $280.001 a $330.000 mensuales liquidos"       
-data$m30_w03[data$m30_w03==4] <-(330001 +380000 )/2 # [4]  "De $330.001 a $380.000 mensuales liquidos"       
-data$m30_w03[data$m30_w03==5] <-(380001 +420000 )/2 # [5]  "De $380.001 a $420.000 mensuales liquidos"       
-data$m30_w03[data$m30_w03==6] <-(420001 +470000 )/2 # [6]  "De $420.001 a $470.000 mensuales liquidos"       
-data$m30_w03[data$m30_w03==7] <-(470001 +510000 )/2 # [7]  "De $470.001 a $510.000 mensuales liquidos"       
-data$m30_w03[data$m30_w03==8] <-(510001 +560000 )/2 # [8]  "De $510.001 a $560.000 mensuales liquidos"       
-data$m30_w03[data$m30_w03==9] <-(560001 +610000 )/2 # [9]  "De $560.001 a $610.000 mensuales liquidos"       
-data$m30_w03[data$m30_w03==10]<-(610001 +670000 )/2 # [10] "De $610.001 a $670.000 mensuales liquidos"       
-data$m30_w03[data$m30_w03==11]<-(670001 +730000 )/2 # [11] "De $670.001 a $730.000 mensuales liquidos"       
-data$m30_w03[data$m30_w03==12]<-(730001 +800000 )/2 # [12] "De $730.001 a $800.000 mensuales liquidos"       
-data$m30_w03[data$m30_w03==13]<-(800001 +890000 )/2 # [13] "De $800.001 a $890.000 mensuales liquidos"       
-data$m30_w03[data$m30_w03==14]<-(890001 +980000 )/2 # [14] "De $890.001 a $980.000 mensuales liquidos"       
-data$m30_w03[data$m30_w03==15]<-(980001 +1100000)/2 # [15] "De $980.001 a $1.100.000 mensuales liquidos"      
-data$m30_w03[data$m30_w03==16]<-(1100001+1260000)/2 # [16] "De $1.100.001 a $1.260.000 mensuales liquidos"    
-data$m30_w03[data$m30_w03==17]<-(1260001+1490000)/2 # [17] "De $1.260.001 a $1.490.000 mensuales liquidos"    
-data$m30_w03[data$m30_w03==18]<-(1490001+1850000)/2 # [18] "De $1.490.001 a $1.850.000 mensuales liquidos"    
-data$m30_w03[data$m30_w03==19]<-(1850001+2700000)/2 # [19] "De $1.850.001 a $2.700.000 mensuales liquidos"    
-data$m30_w03[data$m30_w03==20]<-(2700000)  
-
-data$m29_w03 <- ifelse((is.na(data$m29_w03)),
-                       data$m30_w03,
-                       data$m29_w03)
-# 2019
-data$m30_w04[data$m30_w04==1] <-(       220000 )    # [1]  "Menos de $220.000 mensuales liquidos"          
-data$m30_w04[data$m30_w04==2] <-(220001 +280000 )/2 # [2]  "De $220.001 a $280.000 mensuales liquidos"       
-data$m30_w04[data$m30_w04==3] <-(280001 +330000 )/2 # [3]  "De $280.001 a $330.000 mensuales liquidos"       
-data$m30_w04[data$m30_w04==4] <-(330001 +380000 )/2 # [4]  "De $330.001 a $380.000 mensuales liquidos"       
-data$m30_w04[data$m30_w04==5] <-(380001 +420000 )/2 # [5]  "De $380.001 a $420.000 mensuales liquidos"       
-data$m30_w04[data$m30_w04==6] <-(420001 +470000 )/2 # [6]  "De $420.001 a $470.000 mensuales liquidos"       
-data$m30_w04[data$m30_w04==7] <-(470001 +510000 )/2 # [7]  "De $470.001 a $510.000 mensuales liquidos"       
-data$m30_w04[data$m30_w04==8] <-(510001 +560000 )/2 # [8]  "De $510.001 a $560.000 mensuales liquidos"       
-data$m30_w04[data$m30_w04==9] <-(560001 +610000 )/2 # [9]  "De $560.001 a $610.000 mensuales liquidos"       
-data$m30_w04[data$m30_w04==10]<-(610001 +670000 )/2 # [10] "De $610.001 a $670.000 mensuales liquidos"       
-data$m30_w04[data$m30_w04==11]<-(670001 +730000 )/2 # [11] "De $670.001 a $730.000 mensuales liquidos"       
-data$m30_w04[data$m30_w04==12]<-(730001 +800000 )/2 # [12] "De $730.001 a $800.000 mensuales liquidos"       
-data$m30_w04[data$m30_w04==13]<-(800001 +890000 )/2 # [13] "De $800.001 a $890.000 mensuales liquidos"       
-data$m30_w04[data$m30_w04==14]<-(890001 +980000 )/2 # [14] "De $890.001 a $980.000 mensuales liquidos"       
-data$m30_w04[data$m30_w04==15]<-(980001 +1100000)/2 # [15] "De $980.001 a $1.100.000 mensuales liquidos"      
-data$m30_w04[data$m30_w04==16]<-(1100001+1260000)/2 # [16] "De $1.100.001 a $1.260.000 mensuales liquidos"    
-data$m30_w04[data$m30_w04==17]<-(1260001+1490000)/2 # [17] "De $1.260.001 a $1.490.000 mensuales liquidos"    
-data$m30_w04[data$m30_w04==18]<-(1490001+1850000)/2 # [18] "De $1.490.001 a $1.850.000 mensuales liquidos"    
-data$m30_w04[data$m30_w04==19]<-(1850001+2700000)/2 # [19] "De $1.850.001 a $2.700.000 mensuales liquidos"    
-data$m30_w04[data$m30_w04==20]<-(2700000)  
-
-data$m29_w04 <- ifelse((is.na(data$m29_w04)),
-                       data$m30_w04,
-                       data$m29_w04)
 
-label(data$m29_w01) <- "Ingresos del hogar (2016)"
-label(data$m29_w02) <- "Ingresos del hogar (2017)"
-label(data$m29_w03) <- "Ingresos del hogar (2018)"
-label(data$m29_w04) <- "Ingresos del hogar (2019)"
-label(data$m29_w05) <- "Ingresos del hogar (2020)"
+C07_05: Ha donado dinero a una obra social (w01, w02, w03, w04, w05)
 
-data %>% select (m29_w01, m29_w02, m29_w03, m29_w04, m29_w05)  %>% sjlabelled::as_label(.)  %>%  dfSummary(, graph.col = FALSE)
-```
-
-## Ingresos en quintiles
 ```{r}
-data <- data %>% dplyr::mutate(quintiles_ingresos_w01 = ntile(m29_w01, 5))
-data <- data %>% mutate(quintiles_ingresos_w02 = ntile(m29_w02, 5))
-data <- data %>% mutate(quintiles_ingresos_w03 = ntile(m29_w03, 5))
-data <- data %>% mutate(quintiles_ingresos_w04 = ntile(m29_w04, 5))
-data <- data %>% mutate(quintiles_ingresos_w05 = ntile(m29_w05, 5))
-
-# Construcción ingresos quintiles factor
-data$quintiles_ingresos_w01 <- factor(data$quintiles_ingresos_w01, levels = c(1,2,3,4,5), labels = c("Quintil 1", "Quintil 2", "Quintil 3", "Quintil 4", "Quintil 5"))
-data$quintiles_ingresos_w02 <- factor(data$quintiles_ingresos_w02, levels = c(1,2,3,4,5), labels = c("Quintil 1", "Quintil 2", "Quintil 3", "Quintil 4", "Quintil 5"))
-data$quintiles_ingresos_w03 <- factor(data$quintiles_ingresos_w03, levels = c(1,2,3,4,5), labels = c("Quintil 1", "Quintil 2", "Quintil 3", "Quintil 4", "Quintil 5"))
-data$quintiles_ingresos_w04 <- factor(data$quintiles_ingresos_w04, levels = c(1,2,3,4,5), labels = c("Quintil 1", "Quintil 2", "Quintil 3", "Quintil 4", "Quintil 5"))
-data$quintiles_ingresos_w05 <- factor(data$quintiles_ingresos_w05, levels = c(1,2,3,4,5), labels = c("Quintil 1", "Quintil 2", "Quintil 3", "Quintil 4", "Quintil 5"))
-
-data %>% select(quintiles_ingresos_w01, quintiles_ingresos_w02, quintiles_ingresos_w03, quintiles_ingresos_w04, quintiles_ingresos_w05) %>% sjlabelled::as_label(.) %>% summarytools::dfSummary(, graph.col = FALSE)
+data %>% select (c07_05_w01, c07_05_w02, c07_05_w03, c07_05_w04, c07_05_w05)  %>% sjlabelled::as_label(.)  %>%  dfSummary(graph.col = FALSE)
 ```
 
+C07_06: Ha prestado una suma de dinero de 10.000.- o más (w01, w02, w03, w04, w05)
 
-## Nación
 ```{r}
-frq(data$m45_w01)
-data$nacion_rec <- car::recode(data$m45_w01, "1=1 ;c(2,3,4,5,6,7,8)=2")
-data$nacion_rec <- factor(data$nacion_rec, levels = c("1", "2"), labels=c( "Nacionalidad chilena", "Otra nacionalidad"))
-label(data$nacion_rec) <- "Nacionalidad"
-
-frq(data$nacion_rec)
+data %>% select (c07_06_w01, c07_06_w02, c07_06_w03, c07_06_w04, c07_06_w05)  %>% sjlabelled::as_label(.)  %>%  dfSummary(graph.col = FALSE)
 ```
 
-## Etnia
-```{r}
-frq(data$m53_w02)
-data$etnia_rec <- car::recode(data$m53_w02, "c(1,2,3,4,5,6,7,8,9)=2 ;10=1")
-data$etnia_rec <- factor(data$etnia_rec, levels = c("1", "2"), labels=c( "Ninguna", "Pertenece a una etnia"))
-label(data$etnia_rec) <- "Etnia"
-
-frq(data$etnia_rec)
-```
-## Sector informal
+C07_07: Ha conversado con una persona en problemas o deprimida (w01, w02, w03, w04, w05)
 
 ```{r}
-### 2016 ###
-data$sin.contrato_w01 <- rep(0, length(data[,1]))
-data$sin.contrato_w01 <- ifelse((data$m07_w01==1 | data$m07_w01==2 | data$m07_w01==3 | data$m07_w01==7) & data$m10_w01==3, 1, data$sin.contrato_w01) # asalariados y personal doméstico sin contrato escrito
-table(data$sin.contrato_w01)
-
-data$sin.inicio_w01<- rep(0, length(data[, 1]))
-data$sin.inicio_w01<-ifelse((data$m07_w01==4 | data$m07_w01==5) & data$m11_w01==3, 1, data$sin.inicio_w01) # empleadores y TCP que no dan factura ni boleta
-table(data$sin.inicio_w01)
-
-data$sin.cotizar_w01<- rep(0, length(data[, 1]))
-data$sin.cotizar_w01<-ifelse((data$m07_w01==1 | data$m07_w01==2 | data$m07_w01==3 | data$m07_w01==7) & data$m18_w01==4, 1, data$sin.cotizar_w01) # asalariados y personal doméstico sin cotización previsional
-table(data$sin.cotizar_w01)
-
-data$fnr_w01<- rep(0, length(data[, 1]))
-data$fnr_w01<-ifelse(data$m07_w01==6, 1, data$fnr_w01) # familiar no remunerado
-table(data$fnr_w01)
-
-informales<- data[, c('idencuesta', 'sin.contrato_w01', 'sin.cotizar_w01', 'sin.inicio_w01', 'fnr_w01')]
-
-informales<-informales[order(informales$idencuesta),]
-
-## Informales. cumple cualquiera de las siguientes condiciones
-## catocup 1, 2, 3 o 7 + m10==3 sin contrato escrito
-## FNR catocup== 6
-## catocup 4, 5 + m11 = 3 no da boleta ni factura
-## catocup 1, 2, 3 o 7 + m18==4 no cotiza
-
-informal<- rep(0, length(data[, 1]))
-length(informal)
-informal<- ifelse((data$m07_w01==1 | data$m07_w01==2 | data$m07_w01==3 | data$m07_w01==7) & data$m10_w01==3, 1, informal) # asalariados y personal doméstico sin contrato escrito
-
-informal <- ifelse((data$m07_w01==4 | data$m07_w01==5) & data$m11_w01==3, 1, informal) # empleadores y TCP que no dan factura ni boleta
-
-informal <- ifelse((data$m07_w01==1 | data$m07_w01==2 | data$m07_w01==3 | data$m07_w01==7) & data$m18_w01==4, 1, informal) # asalariados y personal doméstico sin cotización previsional
-
-informal<-ifelse(data$m07_w01==6, 1, informal) # familiar no remunerado
-
-data$informal_w01<-informal
-table(data$informal_w01)
-
-
-### 2018 ####
-data$sin.contrato_w03 <- rep(0, length(data[,1]))
-data$sin.contrato_w03 <- ifelse((data$m07_w03==1 | data$m07_w03==2 | data$m07_w03==3 | data$m07_w03==7) & data$m10_w03==3, 1, data$sin.contrato_w03) # asalariados y personal doméstico sin contrato escrito
-table(data$sin.contrato_w03)
-
-data$sin.inicio_w03<- rep(0, length(data[, 1]))
-data$sin.inicio_w03<-ifelse((data$m07_w03==4 | data$m07_w03==5) & data$m11_w03==3, 1, data$sin.inicio_w03) # empleadores y TCP que no dan factura ni boleta
-table(data$sin.inicio_w03)
-
-data$sin.cotizar_w03<- rep(0, length(data[, 1]))
-data$sin.cotizar_w03<-ifelse((data$m07_w03==1 | data$m07_w03==2 | data$m07_w03==3 | data$m07_w03==7) & data$m18_w03==4, 1, data$sin.cotizar_w03) # asalariados y personal doméstico sin cotización previsional
-table(data$sin.cotizar_w03)
-
-data$fnr_w03<- rep(0, length(data[, 1]))
-data$fnr_w03<-ifelse(data$m07_w03==6, 1, data$fnr_w03) # familiar no remunerado
-table(data$fnr_w03)
-
-informales<- data[, c('idencuesta', 'sin.contrato_w03', 'sin.cotizar_w03', 'sin.inicio_w03', 'fnr_w03')]
-
-informales<-informales[order(informales$idencuesta),]
-
-## Informales. cumple cualquiera de las siguientes condiciones
-## catocup 1, 2, 3 o 7 + m10==3 sin contrato escrito
-## FNR catocup== 6
-## catocup 4, 5 + m11 = 3 no da boleta ni factura
-## catocup 1, 2, 3 o 7 + m18==4 no cotiza
-
-informal<- rep(0, length(data[, 1]))
-length(informal)
-informal<- ifelse((data$m07_w03==1 | data$m07_w03==2 | data$m07_w03==3 | data$m07_w03==7) & data$m10_w03==3, 1, informal) # asalariados y personal doméstico sin contrato escrito
-
-informal <- ifelse((data$m07_w03==4 | data$m07_w03==5) & data$m11_w03==3, 1, informal) # empleadores y TCP que no dan factura ni boleta
-
-informal <- ifelse((data$m07_w03==1 | data$m07_w03==2 | data$m07_w03==3 | data$m07_w03==7) & data$m18_w03==4, 1, informal) # asalariados y personal doméstico sin cotización previsional
-
-informal<-ifelse(data$m07_w03==6, 1, informal) # familiar no remunerado
-
-data$informal_w03<-informal
-table(data$informal_w03)
+data %>% select (c07_07_w01, c07_07_w02, c07_07_w03, c07_07_w04, c07_07_w05)  %>% sjlabelled::as_label(.)  %>%  dfSummary(graph.col = FALSE)
 ```
 
-### Habilitadores territoriales
+C07_08: Ha ayudado a alguien a conseguir trabajo (w01, w02, w03, w04, w05)
 
-
 ```{r}
-# Se recodifican a quintiles y se dicotomizan en cuartil 4
-data <- data %>% dplyr::mutate(percent_sded = ntile(jh_esc_sd, 4))
-data <- data %>% dplyr::mutate(percent_trabaja = ntile(trabaja, 4))
-data <- data %>% dplyr::mutate(percent_cesante = ntile(cesante, 4))
-data <- data %>% dplyr::mutate(percent_inactivo = ntile(inactivo, 4))
-data <- data %>% dplyr::mutate(percent_acver = ntile(acver_mnz, 4))
-data <- data %>% dplyr::mutate(percent_aced = ntile(aced_mnz, 4))
-data <- data %>% dplyr::mutate(percent_accs = ntile(accs_mnz, 4))
-data$percent_sded <- car::recode(data$percent_sded, "c(1,2,3)=1; 4=2")
-data$percent_trabaja <- car::recode(data$percent_trabaja, "c(1,2,3)=1; 4=2")
-data$percent_cesante <- car::recode(data$percent_cesante, "c(1,2,3)=1; 4=2")
-data$percent_inactivo <- car::recode(data$percent_inactivo, "c(1,2,3)=1; 4=2")
-data$percent_acver<- car::recode(data$percent_acver, "c(1,2,3)=1; 4=2")
-data$percent_aced <- car::recode(data$percent_aced, "c(1,2,3)=1; 4=2")
-data$percent_accs <- car::recode(data$percent_accs, "c(1,2,3)=1; 4=2")
+data %>% select (c07_08_w01, c07_08_w02, c07_08_w03, c07_08_w04, c07_08_w05)  %>% sjlabelled::as_label(.)  %>%  dfSummary(graph.col = FALSE)
 ```
-
 
 # Guardar base
 ```{r}

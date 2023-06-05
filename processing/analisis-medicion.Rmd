@@ -1,6 +1,6 @@
 ---
-title: "Análisis datos capítulo medicion"
-author: "Equipo CEPAL-ELSOC"
+title: "Análisis datos y medicion"
+author: "Equipo ocs"
 date: "10-07-2021"
 output:
   html_document:
@@ -15,315 +15,35 @@ knitr::opts_chunk$set(echo = TRUE, warning=F, message=F)
 ```{r include=FALSE}
 # Cargar paquetes
 pacman::p_load(dplyr, car, summarytools, webshot, knitr, kableExtra, corrplot, ggplot2, sjPlot, sjmisc, semPlot, semTools, psych, svglite, writexl)
-```
 
-
-```{r include=FALSE}
-# Cargar base elsoc longitudinal (2016-2020) creada en "preparacion"
+# Cargar base elsoc longitudinal (2016-2022) creada en "preparacion"
 load("input/data/proc/data.RData")
-
 ```
 
-## Relaciones sociales de igualdad
-
-### Lazos
-
-```{r echo=FALSE}
-windowsFonts("Arial" = windowsFont("Arial"))
-lazos <-  plot_stackfrq(select(data, r15_w02, r13_nredes_w02, vol.red_w01), geom.size = 0.33) +
-  theme(text=element_text(family="Arial", size=12),
-        legend.position="bottom")
-lazos
-# Los gráficos son exportados en png para bookdown y en svg según requerimiento de CEPAL
-ggsave(lazos, file = "bookdown-files/output/graphs/lazos.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
-ggsave(lazos, file = "bookdown-files/output/figuras-svg-cepal/Grafico 6 Item subdimension Lazos.svg",device = "svg",width = 25,height = 13,dpi = "retina",units = "cm")
-```
-
-```{r}
-lazos_cor<-
-  data %>%
-  dplyr::select(r15_w02, r13_nredes_w02, vol.red_w01) %>%
-  lavaan::lavCor(., ordered=names(.))
-diag(lazos_cor) = NA
-rownames(lazos_cor) <- c("A. Cantidad de amigos/as cercanos",
-                                  "B. Tamaño de red cercana",
-                                  "C. Variedad de la red")
-colnames(lazos_cor) <-c("(A)", "(B)","(C)")
-
-
-
-png("bookdown-files/output/graphs/lazos_cor.png",width=600,height=300, pointsize = 10)
-par(family="Arial", size= 10)
-corrplot::corrplot(lazos_cor,
-  method = "color",
-  addCoef.col = "#000390",
-  type = "upper",
-  tl.col = "black",
-  col=colorRampPalette(c("white","#0068DC"))(12),
-  bg = "white",
-  na.label = "-",
-  lower.col = "black")
-dev.off()
-
-svglite("bookdown-files/output/figuras-svg-cepal/Grafico 7 Asociacion de indicadores de subdimension lazos.svg", width = 7, height = 7, pointsize = 10)
-par(family="Arial", size= 10)
-foot<-corrplot::corrplot(lazos_cor,
-  method = "color",
-  addCoef.col = "#000390",
-  type = "upper",
-  tl.col = "black",
-  col=colorRampPalette(c("white","#0068DC"))(12),
-  bg = "white",
-  na.label = "-",
-  lower.col = "black")
-dev.off()
-
-
-ltm::cronbach.alpha(data %>%
-  dplyr::select(r15_w02, r13_nredes_w02, vol.red_w01), na.rm=TRUE)
-```
-
-## Promedio simple Cantidad de amigos/as cercanos y Variedad de la red
-```{r}
-data <- data %>%
-  rowwise() %>%
-  mutate(lazos_w01 =
-           mean(c(r15_w02, vol.red_w01), na.rm = T))
-```
-
-
-
-
-### Confianza interpersonal
-
-```{r echo=FALSE}
-conf_interpersonal <- plot_stackfrq(select(data, c02_rec_w01, c03_rec_w01, c04_rec_w01), geom.colors = "RdBu", geom.size = 0.33) +
-  theme(text=element_text(family="Arial", size=12),
-        legend.position="bottom")
-conf_interpersonal
-
-ggsave(conf_interpersonal, file = "bookdown-files/output/graphs/confianza-interpersonal.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
-
-ggsave(conf_interpersonal, file = "bookdown-files/output/figuras-svg-cepal/Grafico 1 Confianza interpersonal.svg",device = "svg",width = 25,height = 13,dpi = "retina",units = "cm")
-```
-
-```{r echo=FALSE}
-conf_interpersonal_cor<-
-  data %>%
-  dplyr::select(c02_rec_w01, c03_rec_w01, c04_rec_w01) %>%
-  lavaan::lavCor(., ordered=names(.))
-diag(conf_interpersonal_cor) = NA
-rownames(conf_interpersonal_cor) <- c("A. Se puede confiar en la mayoria de las personas",
-                                  "B. La mayoria de las personas trata de ayudar a los demas",
-                                  "C. La mayoria de las personas trata de ser justa")
-colnames(conf_interpersonal_cor) <-c("(A)", "(B)","(C)")
-
-png("bookdown-files/output/graphs/confianza-interpersonal_cor.png", width=600,height=300, pointsize = 10)
-par(family="Arial", size= 10)
-corrplot::corrplot(conf_interpersonal_cor,
-  method = "color",
-  addCoef.col = "#000390",
-  type = "upper",
-  tl.col = "black",
-  col=colorRampPalette(c("white","#0068DC"))(12),
-  bg = "white",
-  na.label = "-",
-  lower.col = "black")
-dev.off()
-
-svglite("bookdown-files/output/figuras-svg-cepal/Grafico 2 Asociacion de indicadores de Confianza interpersonal.svg", width = 7, height = 7, pointsize = 10)
-par(family="Arial", size= 10)
-corrplot::corrplot(conf_interpersonal_cor,
-  method = "color",
-  addCoef.col = "#000390",
-  type = "upper",
-  tl.col = "black",
-  col=colorRampPalette(c("white","#0068DC"))(12),
-  bg = "white",
-  na.label = "-",
-  lower.col = "black")
-dev.off()
-
-ltm::cronbach.alpha(data %>%
-  dplyr::select(c02_rec_w01, c03_rec_w01, c04_rec_w01), na.rm=TRUE)
-
-ltm::cronbach.alpha(data %>%
-  dplyr::select(c02_rec_w01, c03_rec_w01), na.rm=TRUE)
-
-```
-
-```{r}
-# Promedio simple "Se puede confiar en la mayoría de las personas" y "la mayoría de las personas trata de ayudar a los demás".
-
-data <- data %>%
-  rowwise() %>%
-  mutate(conf_interpersonal_w01 =
-           mean(c(c02_rec_w01, c03_rec_w01), na.rm = T))
-```
-
-
-### Reconocimiento y respeto de la diversidad
-
-```{r echo=FALSE}
-prejuicios<- plot_stackfrq(select(data, r12_03_w01, r12_04_w01, c37_01_w03), geom.colors = "RdBu", geom.size = 0.33) +
-  theme(text=element_text(family="Arial", size=12),
-        legend.position="bottom")
-
-prejuicios
-ggsave(prejuicios, file = "bookdown-files/output/graphs/prejuicios.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
-
-ggsave(prejuicios, file = "bookdown-files/output/figuras-svg-cepal/Grafico 3 Prejuicios hacia inmigrantes y adopcion homoparental.svg",device = "svg",width = 25,height = 13,dpi = "retina",units = "cm")
-```
-
-```{r echo=FALSE}
-diversidad <- plot_stackfrq(select(data, c06_04_w01, c06_05_w01, c06_06_w01), geom.size = 0.33) +
-  theme(text=element_text(family="Arial", size=12),
-        legend.position="bottom")
-
-diversidad
-ggsave(diversidad, file = "bookdown-files/output/graphs/diversidad.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
-ggsave(diversidad, file = "bookdown-files/output/figuras-svg-cepal/Grafico 4 Grado de confianza hacia distintos grupos sociales.svg",device = "svg",width = 25,height = 13,dpi = "retina",units = "cm")
-```
-
-```{r echo=FALSE}
-diversidad_cor<-
-  data %>%
-  dplyr::select(r12_03_w01, r12_04_w01, c37_01_w03, c06_04_w01, c06_05_w01, c06_06_w01) %>%
-  lavaan::lavCor(., ordered=names(.))
-diag(diversidad_cor) = NA
-rownames(diversidad_cor) <- c("A. Chile pierde su identidad con la llegada de inmigrantes",
-                          "B. Con la llegada de inmigrantes aumenta el desempleo",
-                          "C. Grado de acuerdo con adopción homoparental",
-                          "D. Grado de confianza con personas homosexuales",
-                          "E. Grado de confianza con personas mapuche",
-                          "F. Grado de confianza con personas inmigrantes")
-colnames(diversidad_cor) <-c("(A)", "(B)","(C)", "(D)", "(E)", "(F)")
-
-png("bookdown-files/output/graphs/diversidad_cor.png", width=600,height=300, pointsize = 10)
-par(family="Arial", size= 10)
-corrplot::corrplot(diversidad_cor,
-  method = "color",
-  addCoef.col = "#000390",
-  type = "upper",
-  tl.col = "black",
-  col=colorRampPalette(c("white","#0068DC"))(12),
-  bg = "white",
-  na.label = "-",
-  lower.col = "black")
-dev.off()
-
-svglite("bookdown-files/output/figuras-svg-cepal/Grafico 5 Asociacion de indicadores de la subdimension Reconocimiento y respeto de la diversidad.svg", width = 7, height = 7, pointsize = 10)
-par(family="Arial", size= 10)
-corrplot::corrplot(diversidad_cor,
-  method = "color",
-  addCoef.col = "#000390",
-  type = "upper",
-  tl.col = "black",
-  col=colorRampPalette(c("white","#0068DC"))(12),
-  bg = "white",
-  na.label = "-",
-  lower.col = "black")
-dev.off()
-```
-
-
-```{r}
-# Análisis Factorial Exploratorio
-diversidad_fa<-
-  data %>%
-  dplyr::select(amenaza_simbolica = r12_03_w01,
-                amenaza_material = r12_04_w01,
-                adopcion_homoparental = c37_01_w03,
-                confianza_homosexuales = c06_04_w01,
-                confianza_mapuche = c06_05_w01,
-                confianza_inmigrantes = c06_06_w01)
-
-
-## reverse coding items sentido inverso:
-
-sjmisc::frq(data$r12_03_w01)
-sjmisc::frq(data$r12_04_w01)
-
-diversidad_fa <- diversidad_fa %>% 
-  mutate(amenaza_simbolica_rev = 6 - amenaza_simbolica,
-         amenaza_material_rev = 6 - amenaza_material)
-
-diversidad_fa <- diversidad_fa %>% select(-amenaza_simbolica,-amenaza_material)
-
-colnames(diversidad_fa) <- c(label(diversidad_fa$adopcion_homoparental), label(diversidad_fa$confianza_homosexuales), label(diversidad_fa$confianza_mapuche), label(diversidad_fa$confianza_inmigrantes), label(data$r12_03_w01), label(data$r12_04_w01))
-
-psych::fa.parallel(diversidad_fa, fa="fa")
-psych::scree(diversidad_fa)
-
-fac_ml <- psych::fa(r = diversidad_fa, nfactors = 3, fm= "ml", rotate = "varimax" )
-
-fac_ml$loadings
-# ver https://www.anthonyschmidt.co/post/2020-09-27-efa-tables-in-r/
-# Busca funcion para crear tablas FA
-source("processing/fa_table.R") 
-
-# Crea la tabla FA
-div_fa <-fa_table(fac_ml, .32)
-# Exportar la tabla en html
-knitr::kable(div_fa, "html") %>%
-  kable_styling(bootstrap_options = c("striped", "hover")) %>%
-  column_spec(column = 1,width = "20 cm") %>%
-  cat(., file = "bookdown-files/output/tables/div_fa.html")
-# convertir tabla html en imagen png
-webshot(url ="bookdown-files/output/tables/div_fa.html", file ="bookdown-files/output/tables/div_fa.png", vheight = 10, vwidth = 600)
-# exportar la tabla en excel segun requerimiento cepal
-write_xlsx(div_fa, path = "bookdown-files/output/tables-excel-cepal/cuadro 2.xlsx")
-```
-
-```{r}
-# Promedio simple indicadores confianza en diversidad
-
-data <- data %>%
-  rowwise() %>%
-  mutate(diversidad_w01 =
-           mean(c(c06_04_w01, c06_05_w01, c06_06_w01), na.rm = T))
-```
-
-### Correlación Relaciones sociales de igualdad
-
-```{r echo=FALSE}
-relaciones_cor<-
-  data %>%
-  dplyr::select(lazos_w01, conf_interpersonal_w01, diversidad_w01) %>%
-  lavaan::lavCor(., ordered=names(.))
-diag(relaciones_cor) = NA
-rownames(relaciones_cor) <- c("A. Lazos",
-                          "B. Confianza interpersonal",
-                          "C. Reconocimiento y respeto de la diversidad")
-colnames(relaciones_cor) <-c("(A)", "(B)","(C)")
-
-png("bookdown-files/output/graphs/relaciones_cor.png", width=600,height=300, pointsize = 10)
-par(family="Arial", size= 10)
-corrplot::corrplot(relaciones_cor,
-  method = "color",
-  addCoef.col = "#000390",
-  type = "upper",
-  tl.col = "black",
-  col=colorRampPalette(c("white","#0068DC"))(12),
-  bg = "white",
-  na.label = "-",
-  lower.col = "black")
-dev.off()
-```
-
+# Horizontal
 
 ## Sentido de pertenencia
 
-### Identificación con el país
+### Orgullo nacional
 
 ```{r echo=FALSE}
-identificacion <-plot_stackfrq(select(data, c32_01_w01,c32_02_w01), geom.colors = "RdBu", geom.size = 0.25) +
+orgullo <-plot_stackfrq(select(data, c32_01_w01), geom.colors = "RdBu", geom.size = 0.25) +
+  theme(text=element_text(family="Arial", size=12),
+        legend.position="bottom")
+
+orgullo
+ggsave(orgullo, file = "output/graphs/1-orgullo.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
+```
+
+### Identidad nacional
+
+```{r echo=FALSE}
+identificacion <-plot_stackfrq(select(data, c32_02_w01), geom.colors = "RdBu", geom.size = 0.25) +
   theme(text=element_text(family="Arial", size=12),
         legend.position="bottom")
 
 identificacion
-ggsave(identificacion, file = "bookdown-files/output/graphs/identificacion.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
-ggsave(identificacion, file = "bookdown-files/output/figuras-svg-cepal/Grafico 8 Identificacion y orgullo con Chile.svg",device = "svg",width = 25,height = 13,dpi = "retina",units = "cm")
+ggsave(identificacion, file = "output/graphs/2-identidad.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
 ```
 
 ```{r echo=FALSE}
@@ -334,511 +54,14 @@ corrplot.mixed(cor(dplyr::select(data, c32_01_w01, c32_02_w01),
 
 ```{r}
 # Promedio simple identificacion con el pais 
-
 data <- data %>%
   rowwise() %>%
-  mutate(identificacion_w01 =
+  mutate(pertenencia_w01 =
            mean(c(c32_01_w01, c32_02_w01), na.rm = T))
 ```
 
-### Percepción de justicia
-
-```{r echo=FALSE}
-justicia <-plot_stackfrq(select(data, c18_09_w01,c18_10_w01), geom.colors = "RdBu", geom.size = 0.25) +
-  theme(text=element_text(family="Arial", size=12),
-        legend.position="bottom")
-
-justicia
-ggsave(justicia, file = "bookdown-files/output/graphs/justicia.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
-ggsave(justicia, file = "bookdown-files/output/figuras-svg-cepal/Grafico 9 Percepcion de recompensa por esfuerzo e inteligencia.svg",device = "svg",width = 25,height = 13,dpi = "retina",units = "cm")
-
-```
-
-```{r echo=FALSE}
-corrplot.mixed(cor(dplyr::select(data, c18_09_w01, c18_10_w01),
-                   use = "na.or.complete"))
-
-```
-
-```{r}
-# Promedio simple percepcion de justicia
-
-data <- data %>%
-  rowwise() %>%
-  mutate(justicia_w01 =
-           mean(c(c18_09_w01, c18_10_w01), na.rm = T))
-```
-
-### Confianza institucional
-
-```{r echo=FALSE}
-confianza_institucional <- plot_stackfrq(select(data,c05_01_w01,
-                         c05_02_w01,
-                         c05_03_w01,
-                         c05_04_w01,
-                         c05_05_w01,
-                         c05_06_w01,
-                         c05_07_w01,
-                         c05_08_w01), geom.size = 0.9) +
-  theme(text=element_text(family="Arial", size=12),
-        legend.position="bottom")
-
-confianza_institucional
-ggsave(confianza_institucional, file = "bookdown-files/output/graphs/confianza-institucional.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
-ggsave(confianza_institucional, file = "bookdown-files/output/figuras-svg-cepal/Grafico 10 Confianza en instituciones.svg",device = "svg",width = 25,height = 13,dpi = "retina",units = "cm")
-
-```
-
-```{r echo=FALSE}
-conf_institucional_cor<-
-  data %>%
-  dplyr::select(c05_01_w01,c05_02_w01,c05_03_w01,c05_04_w01,c05_05_w01,c05_06_w01,c05_07_w01,c05_08_w01) %>%
-  lavaan::lavCor(., ordered=names(.))
-diag(conf_institucional_cor) = NA
-rownames(conf_institucional_cor) <- c("A. Confianza en el gobierno",
-                          "B. Confianza en los partidos políticos",
-                          "C. Confianza en Carabineros",
-                          "D. Confianza en los sindicatos",
-                          "E. Confianza en el poder judicial",
-                          "F. Confianza en las empresas privadas",
-                          "G. Confianza en el congreso nacional",
-                          "H. Confianza en el presidente/a de la república")
-colnames(conf_institucional_cor) <-c("(A)", "(B)","(C)", "(D)", "(E)", "(F)", "(G)", "(H)")
-
-
-png("bookdown-files/output/graphs/confianza-institucional_cor.png", width=600,height=300, pointsize = 10)
-par(family="Arial", size= 10)
-corrplot::corrplot(conf_institucional_cor,
-  method = "color",
-  addCoef.col = "#000390",
-  type = "upper",
-  tl.col = "black",
-  col=colorRampPalette(c("white","#0068DC"))(12),
-  bg = "white",
-  na.label = "-",
-  lower.col = "black")
-dev.off()
-
-svglite("bookdown-files/output/figuras-svg-cepal/Grafico 11 Asociacion de indicadores de confianza institucional.svg", width = 7, height = 7, pointsize = 10)
-par(family="Arial", size= 10)
-corrplot::corrplot(conf_institucional_cor,
-  method = "color",
-  addCoef.col = "#000390",
-  type = "upper",
-  tl.col = "black",
-  col=colorRampPalette(c("white","#0068DC"))(12),
-  bg = "white",
-  na.label = "-",
-  lower.col = "black")
-dev.off()
-```
-
-```{r}
-# Análisis Factorial Exploratorio
-conf_institucional_fa<-
-  data %>%
-  dplyr::select(c05_01_w01,
-                c05_02_w01,
-                c05_03_w01,
-                c05_04_w01,
-                c05_05_w01,
-                c05_06_w01,
-                c05_07_w01,
-                c05_08_w01)
-
-colnames(conf_institucional_fa) <- c(label(conf_institucional_fa$c05_01_w01), label(conf_institucional_fa$c05_02_w01), label(conf_institucional_fa$c05_03_w01), label(conf_institucional_fa$c05_04_w01), label(conf_institucional_fa$c05_05_w01), label(conf_institucional_fa$c05_06_w01), label(conf_institucional_fa$c05_07_w01), label(conf_institucional_fa$c05_08_w01))
-
-psych::fa.parallel(conf_institucional_fa, fa="fa")
-psych::scree(conf_institucional_fa)
-
-fac_ml <- psych::fa(r = conf_institucional_fa, nfactors = 3, fm= "ml", rotate = "varimax" )
-
-fac_ml$loadings
-# ver https://www.anthonyschmidt.co/post/2020-09-27-efa-tables-in-r/
-
-source("processing/fa_table.R") 
-
-inst_fa <-fa_table(fac_ml, .32)
-knitr::kable(inst_fa, "html") %>%
-  kable_styling(bootstrap_options = c("striped", "hover")) %>%
-  cat(., file = "bookdown-files/output/tables/inst_fa.html")
-
-webshot(url ="bookdown-files/output/tables/inst_fa.html", file ="bookdown-files/output/tables/inst_fa.png", vheight = 10, vwidth = 600)
-
-write_xlsx(inst_fa, path = "bookdown-files/output/tables-excel-cepal/cuadro 3.xlsx")
-```
-
-```{r}
-# Promedios simples confianza institucional
-
-data <- data %>%
-  rowwise() %>%
-  mutate(conf_institucional_w01 =
-           mean(c(c05_01_w01, c05_08_w01, c05_02_w01), na.rm = T))
-```
-
-### Correlación Sentido de pertenencia
-
-```{r echo=FALSE}
-pertenencia_cor<-
-  data %>%
-  dplyr::select(identificacion_w01, justicia_w01, conf_institucional_w01) %>%
-  lavaan::lavCor(., ordered=names(.))
-diag(pertenencia_cor) = NA
-rownames(pertenencia_cor) <- c("A. Identificación con el país",
-                          "B. Percepción de justicia",
-                          "C. Confianza en instituciones políticas")
-colnames(pertenencia_cor) <-c("(A)", "(B)","(C)")
-
-png("bookdown-files/output/graphs/pertenencia_cor.png", width=600,height=300, pointsize = 10)
-par(family="Arial", size= 10)
-corrplot::corrplot(pertenencia_cor,
-  method = "color",
-  addCoef.col = "#000390",
-  type = "upper",
-  tl.col = "black",
-  col=colorRampPalette(c("white","#0068DC"))(12),
-  bg = "white",
-  na.label = "-",
-  lower.col = "black")
-dev.off()
-```
-
-
-## Orientación hacia el bien común
-
-### Solidaridad
-
-```{r echo=FALSE}
-solidaridad <- plot_stackfrq(select(data, c07_01_w01,
-                         c07_02_w01,
-                         c07_03_w01,
-                         c07_04_w01,
-                         c07_05_w01,
-                         c07_06_w01,
-                         c07_07_w01,
-                         c07_08_w01), geom.size = 0.9) +
-  theme(text=element_text(family="Arial", size=12),
-        legend.position="bottom")
-
-solidaridad
-ggsave(solidaridad, file = "bookdown-files/output/graphs/solidaridad.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
-ggsave(solidaridad, file = "bookdown-files/output/figuras-svg-cepal/Grafico 12 Acciones de solidaridad.svg",device = "svg",width = 25,height = 13,dpi = "retina",units = "cm")
-
-```
-
-```{r echo=FALSE}
-solidaridad_cor <-
-  data %>%
-  dplyr::select(c07_01_w01,c07_02_w01,c07_03_w01,c07_04_w01,c07_05_w01,c07_06_w01,c07_07_w01,c07_08_w01) %>%
-  lavaan::lavCor(., ordered=names(.))
-diag(solidaridad_cor) = NA
-rownames(solidaridad_cor) <- c("A. Visita la casa de algún vecino",
-                          "B. Asiste a reunión sobre temas de interés publico",
-                          "C. Han venido amigos a visitarlo a su casa",
-                          "D. Hace voluntariado",
-                          "E. Dona dinero a una obra social o de caridad",
-                          "F. Presta una suma de dinero de $10.000.- o más",
-                          "G. Conversa con persona en problemas o deprimida",
-                          "H. Ayuda a alguien a conseguir trabajo")
-colnames(solidaridad_cor) <-c("(A)", "(B)","(C)", "(D)", "(E)", "(F)", "(G)", "(H)")
-
-png("bookdown-files/output/graphs/solidaridad_cor.png", width=600,height=300, pointsize = 10)
-par(family="Arial", size= 10)
-corrplot::corrplot(solidaridad_cor,
-  method = "color",
-  addCoef.col = "#000390",
-  type = "upper",
-  tl.col = "black",
-  col=colorRampPalette(c("white","#0068DC"))(12),
-  bg = "white",
-  na.label = "-",
-  lower.col = "black")
-dev.off()
-
-svglite("bookdown-files/output/figuras-svg-cepal/Grafico 13 Asociacion de indicadores de solidaridad.svg", width = 7, height = 7, pointsize = 10)
-par(family="Arial", size= 10)
-corrplot::corrplot(solidaridad_cor,
-  method = "color",
-  addCoef.col = "#000390",
-  type = "upper",
-  tl.col = "black",
-  col=colorRampPalette(c("white","#0068DC"))(12),
-  bg = "white",
-  na.label = "-",
-  lower.col = "black")
-dev.off()
-```
-
-```{r}
-# Análisis Factorial Exploratorio
-solidaridad_fa<-
-  data %>%
-  dplyr::select(c07_01_w01,
-                c07_02_w01,
-                c07_03_w01,
-                c07_04_w01,
-                c07_05_w01,
-                c07_06_w01,
-                c07_07_w01,
-                c07_08_w01)
-
-colnames(solidaridad_fa) <- c(label(solidaridad_fa$c07_01_w01), label(solidaridad_fa$c07_02_w01), label(solidaridad_fa$c07_03_w01), label(solidaridad_fa$c07_04_w01), label(solidaridad_fa$c07_05_w01), label(solidaridad_fa$c07_06_w01), label(solidaridad_fa$c07_07_w01), label(solidaridad_fa$c07_08_w01))
-
-
-psych::fa.parallel(solidaridad_fa, fa="fa")
-psych::scree(solidaridad_fa)
-
-fac_ml <- psych::fa(r = solidaridad_fa, nfactors = 3, fm= "ml", rotate = "varimax" )
-
-fac_ml$loadings
-# ver https://www.anthonyschmidt.co/post/2020-09-27-efa-tables-in-r/
-
-source("processing/fa_table.R") 
-
-solidaridad_fa <-fa_table(fac_ml, .32)
-knitr::kable(solidaridad_fa, "html") %>%
-  kable_styling(bootstrap_options = c("striped", "hover")) %>%
-  cat(., file = "bookdown-files/output/tables/solidaridad_fa.html")
-
-webshot(url ="bookdown-files/output/tables/solidaridad_fa.html", file ="bookdown-files/output/tables/solidaridad_fa.png", vheight = 10, vwidth = 600)
-
-write_xlsx(solidaridad_fa, path = "bookdown-files/output/tables-excel-cepal/cuadro 4.xlsx")
-```
-
-```{r}
-# Promedios simples solidaridad
-
-data <- data %>%
-  rowwise() %>%
-  mutate(solidaridad_w01 =
-           mean(c(c07_05_w01, c07_06_w01, c07_07_w01, c07_08_w01), na.rm = T))
-```
-
-
-### Participación cívica
-
-```{r echo=FALSE}
-part_civica <- plot_stackfrq(select(data, c08_01_w01,
-                         c08_02_w01,
-                         c08_03_w01,
-                         c08_04_w01), geom.size = 0.45) +
-  theme(text=element_text(family="Arial", size=12),
-        legend.position="bottom")
-
-part_civica
-ggsave(part_civica, file = "bookdown-files/output/graphs/participacion-civica.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
-ggsave(part_civica, file = "bookdown-files/output/figuras-svg-cepal/Grafico 14 Participacion en actividades civicas.svg",device = "svg",width = 25,height = 13,dpi = "retina",units = "cm")
-
-```
-
-```{r echo=FALSE}
-part_civica_cor<-
-  data %>%
-  dplyr::select(c08_01_w01, c08_02_w01, c08_03_w01, c08_04_w01) %>%
-  lavaan::lavCor(., ordered=names(.))
-diag(part_civica_cor) = NA
-rownames(part_civica_cor) <- c("A. Firma una carta o petición",
-                          "B. Asiste a una marcha o manifestación",
-                          "C. Participa en una huelga",
-                          "D. Usa redes sociales para expresar su opinión")
-colnames(part_civica_cor) <-c("(A)", "(B)","(C)", "(D)")
-
-png("bookdown-files/output/graphs/participacion-civica_cor.png", width=600,height=300, pointsize = 10)
-par(family="Arial", size= 10)
-corrplot::corrplot(part_civica_cor,
-  method = "color",
-  addCoef.col = "#000390",
-  type = "upper",
-  tl.col = "black",
-  col=colorRampPalette(c("white","#0068DC"))(12),
-  bg = "white",
-  na.label = "-",
-  lower.col = "black")
-dev.off()
-
-svglite("bookdown-files/output/figuras-svg-cepal/Grafico 15 Asociacion de indicadores de participacion civica.svg", width = 7, height = 7, pointsize = 10)
-par(family="Arial", size= 10)
-corrplot::corrplot(part_civica_cor,
-  method = "color",
-  addCoef.col = "#000390",
-  type = "upper",
-  tl.col = "black",
-  col=colorRampPalette(c("white","#0068DC"))(12),
-  bg = "white",
-  na.label = "-",
-  lower.col = "black")
-dev.off()
-```
-
-### Participacion en organizaciones
-```{r echo=FALSE}
-part_organizaciones <- plot_stackfrq(select(data, c12_01_w01,
-                         c12_02_w01,
-                         c12_03_w01,
-                         c12_04_w01,
-                         c12_05_w01,
-                         c12_06_w01,
-                         c12_07_w01,
-                         c12_08_w01), geom.size = 0.9) +
-  theme(text=element_text(family="Arial", size=12),
-        legend.position="bottom")
-part_organizaciones
-ggsave(part_organizaciones, file = "bookdown-files/output/graphs/participacion-organizaciones.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
-ggsave(part_organizaciones, file = "bookdown-files/output/figuras-svg-cepal/Grafico 16 Participacion en organizaciones sociales.svg",device = "svg",width = 25,height = 13,dpi = "retina",units = "cm")
-
-```
-
-```{r echo=FALSE}
-part_organizaciones_cor <-
-  data %>%
-  dplyr::select(c12_01_w01, c12_02_w01, c12_03_w01, c12_04_w01, c12_05_w01, c12_06_w01, c12_07_w01, c12_08_w01) %>%
-  lavaan::lavCor(., ordered=names(.))
-diag(part_organizaciones_cor) = NA
-rownames(part_organizaciones_cor) <- c("A. Junta de vecinos u otra organización",
-                          "B. Organización religiosa o Iglesia",
-                          "C. Partido o movimiento político",
-                          "D. Sindicato",
-                          "E. Asociación profesional o gremial",
-                          "F. Organización deportiva",
-                          "G. Organización ecológica o medioambiental",
-                          "H. Asociaciones o centros de estudiantes")
-colnames(part_organizaciones_cor) <-c("(A)", "(B)","(C)", "(D)", "(E)", "(F)", "(G)", "(H)")
-
-png("bookdown-files/output/graphs/participacion-organizaciones_cor.png", width=600,height=300, pointsize = 10)
-par(family="Arial", size= 10)
-corrplot::corrplot(part_organizaciones_cor,
-  method = "color",
-  addCoef.col = "#000390",
-  type = "upper",
-  tl.col = "black",
-  col=colorRampPalette(c("white","#0068DC"))(12),
-  bg = "white",
-  na.label = "-",
-  lower.col = "black")
-dev.off()
-
-svglite("bookdown-files/output/figuras-svg-cepal/Grafico 17 Asociacion de indicadores participacion en organizaciones sociales.svg", width = 7, height = 7, pointsize = 10)
-par(family="Arial", size= 10)
-corrplot::corrplot(part_organizaciones_cor,
-  method = "color",
-  addCoef.col = "#000390",
-  type = "upper",
-  tl.col = "black",
-  col=colorRampPalette(c("white","#0068DC"))(12),
-  bg = "white",
-  na.label = "-",
-  lower.col = "black")
-dev.off()
-```
-
-### Participacion electoral
-
-```{r echo=FALSE}
-elecciones = round(prop.table(table(categorias=data$c11_w01)),2)
-elecciones = as.data.frame(elecciones)
-elecciones$categorias <- factor(elecciones$categorias, levels = c(1, 2, 3), labels = c("No", "Si",
-"No tenia edad para hacerlo"))
-
-part_electoral<-ggplot(elecciones,aes(x=2,y=-Freq, fill=categorias))+
-  geom_bar(stat = "identity",
-           color="white")+
-    geom_text(aes(label = scales::percent(Freq)),
-              position=position_stack(vjust=0.5),color="black",size=6)+
-  coord_polar(theta = "y")+
-  scale_fill_brewer(palette = 1)+
-    theme_void()+
-  theme(legend.title = element_blank())+
-  xlim(0.5,2.5)
-part_electoral
-
-ggsave(part_electoral, file = "bookdown-files/output/graphs/participacion-electoral.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
-ggsave(part_electoral, file = "bookdown-files/output/figuras-svg-cepal/Grafico 18 Participacion en elecciones 2013.svg",device = "svg",width = 25,height = 13,dpi = "retina",units = "cm")
-
-```
-
-### Análisis factorial exploratorio participación cívica y participación en organizaciones
-```{r echo=FALSE}
-# Análisis Factorial Exploratorio
-participacion_fa<-
-  data %>%
-  dplyr::select(c08_01_w01, 
-                c08_02_w01, 
-                c08_03_w01, 
-                c08_04_w01,
-                c11_w01,
-                c12_01_w01, 
-                c12_02_w01, 
-                c12_03_w01, 
-                c12_04_w01, 
-                c12_05_w01, 
-                c12_06_w01, 
-                c12_07_w01, 
-                c12_08_w01)
-
-colnames(participacion_fa) <- c(label(participacion_fa$c08_01_w01), label(participacion_fa$c08_02_w01), label(participacion_fa$c08_03_w01), label(participacion_fa$c08_04_w01), label(participacion_fa$c11_w01), label(participacion_fa$c12_01_w01), label(participacion_fa$c12_02_w01), label(participacion_fa$c12_03_w01), label(participacion_fa$c12_04_w01), label(participacion_fa$c12_05_w01), label(participacion_fa$c12_06_w01), label(participacion_fa$c12_07_w01), label(participacion_fa$c12_08_w01))
-
-
-psych::fa.parallel(participacion_fa, fa="fa")
-psych::scree(participacion_fa)
-
-fac_ml <- psych::fa(r = participacion_fa, nfactors = 3, fm= "ml", rotate = "varimax" )
-
-fac_ml$loadings
-# ver https://www.anthonyschmidt.co/post/2020-09-27-efa-tables-in-r/
-
-source("processing/fa_table.R") 
-
-participacion_fa <-fa_table(fac_ml, .32)
-knitr::kable(participacion_fa, "html") %>%
-  kable_styling(bootstrap_options = c("striped", "hover")) %>%
-  cat(., file = "bookdown-files/output/tables/participacion_fa.html")
-
-webshot(url ="bookdown-files/output/tables/participacion_fa.html", file ="bookdown-files/output/tables/participacion_fa.png", vheight = 10, vwidth = 600)
-
-write_xlsx(participacion_fa, path = "bookdown-files/output/tables-excel-cepal/cuadro 5.xlsx")
-```
-
-```{r}
-# Promedios simples participacion civica
-
-data <- data %>%
-  rowwise() %>%
-  mutate(participacion_w01 =
-           mean(c(c08_01_w01, c08_02_w01, c08_03_w01, c08_04_w01), na.rm = T))
-```
-
-### Correlación orientación hacia el bien común
-
-```{r echo=FALSE}
-bien_comun_cor<-
-  data %>%
-  dplyr::select(solidaridad_w01, participacion_w01) %>%
-  lavaan::lavCor(., ordered=names(.))
-diag(bien_comun_cor) = NA
-rownames(bien_comun_cor) <- c("A. Solidaridad",
-                          "B. Participación cívica")
-colnames(bien_comun_cor) <-c("(A)", "(B)")
-
-png("bookdown-files/output/graphs/bien_comun_cor.png", width=600,height=300, pointsize = 10)
-par(family="Arial", size= 10)
-corrplot::corrplot(bien_comun_cor,
-  method = "color",
-  addCoef.col = "#000390",
-  type = "upper",
-  tl.col = "black",
-  col=colorRampPalette(c("white","#0068DC"))(12),
-  bg = "white",
-  na.label = "-",
-  lower.col = "black")
-dev.off()
-```
-
-
-#### No se incluye subdimensión respeto por reglas sociales de la dimensión Orientación hacia el bien comun de informe CEPAL, que posee un indicador de respeto por las instituciones inexistente en ELSOC
-
 ## Calidad de vida en el vecindario
-De manera adicional, se incorpora una dimensión sobre calidad de vida en el vecindario presente en ELSOC. Todos estos indicadores se encuentran presentes en las cuatro olas.
+
 ```{r echo=FALSE}
 vecinos = round(prop.table(table(categorias=data$t01_w01)),2)
 vecinos = as.data.frame(vecinos)
@@ -856,9 +79,7 @@ conf_vecinos<-ggplot(vecinos,aes(x=2,y=-Freq, fill=categorias))+
 conf_vecinos
 
 
-ggsave(conf_vecinos, file = "bookdown-files/output/graphs/confianza-vecinos.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
-ggsave(conf_vecinos, file = "bookdown-files/output/figuras-svg-cepal/Grafico 19 Confianza en vecinos.svg",device = "svg",width = 25,height = 13,dpi = "retina",units = "cm")
-
+ggsave(conf_vecinos, file = "output/graphs/3-confianza-vecinos.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
 ```
 
 ```{r echo=FALSE}
@@ -867,8 +88,7 @@ cohesion_barrial <-plot_stackfrq(select(data, t02_01_w01, t02_02_w01, t02_03_w01
         legend.position="bottom")
 
 cohesion_barrial
-ggsave(cohesion_barrial, file = "bookdown-files/output/graphs/cohesion-barrial.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
-ggsave(cohesion_barrial, file = "bookdown-files/output/figuras-svg-cepal/Grafico 20 Cohesion en el barrio.svg",device = "svg",width = 25,height = 13,dpi = "retina",units = "cm")
+ggsave(cohesion_barrial, file = "output/graphs/4-cohesion-barrial.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
 ```
 
 ```{r echo=FALSE}
@@ -883,20 +103,7 @@ rownames(cohesion_barrial_cor) <- c("A. Este barrio es ideal para mi",
                           "D. Este barrio es parte de mi")
 colnames(cohesion_barrial_cor) <-c("(A)", "(B)","(C)", "(D)")
 
-png("bookdown-files/output/graphs/cohesion-barrial_cor.png", width=600,height=300, pointsize = 10)
-par(family="Arial", size= 10)
-corrplot::corrplot(cohesion_barrial_cor,
-  method = "color",
-  addCoef.col = "#000390",
-  type = "upper",
-  tl.col = "black",
-  col=colorRampPalette(c("white","#0068DC"))(12),
-  bg = "white",
-  na.label = "-",
-  lower.col = "black")
-dev.off()
-
-svglite("bookdown-files/output/figuras-svg-cepal/Grafico 21 Asociacion de indicadores de cohesion barrial.svg", width = 7, height = 7, pointsize = 10)
+png("output/graphs/cohesion-barrial_cor.png", width=600,height=300, pointsize = 10)
 par(family="Arial", size= 10)
 corrplot::corrplot(cohesion_barrial_cor,
   method = "color",
@@ -916,9 +123,7 @@ sociabilidad_barrial <-plot_stackfrq(select(data, t03_01_w01, t03_02_w01, t03_03
         legend.position="bottom")
 
 sociabilidad_barrial
-ggsave(sociabilidad_barrial, file = "bookdown-files/output/graphs/sociabilidad-barrial.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
-ggsave(sociabilidad_barrial, file = "bookdown-files/output/figuras-svg-cepal/Grafico 22 Sociabilidad barrial.svg",device = "svg",width = 25,height = 13,dpi = "retina",units = "cm")
-
+ggsave(sociabilidad_barrial, file = "output/graphs/5-sociabilidad-barrial.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
 ```
 
 ```{r echo=FALSE}
@@ -933,20 +138,7 @@ rownames(sociabilidad_barrial_cor) <- c("A. En este barrio es fácil hacer amigo
                           "D. La gente en este barrio es colaboradora")
 colnames(sociabilidad_barrial_cor) <-c("(A)", "(B)","(C)", "(D)")
 
-png("bookdown-files/output/graphs/sociabilidad-barrial_cor.png", width=600,height=300, pointsize = 10)
-par(family="Arial", size= 10)
-corrplot::corrplot(sociabilidad_barrial_cor,
-  method = "color",
-  addCoef.col = "#000390",
-  type = "upper",
-  tl.col = "black",
-  col=colorRampPalette(c("white","#0068DC"))(12),
-  bg = "white",
-  na.label = "-",
-  lower.col = "black")
-dev.off()
-
-svglite("bookdown-files/output/figuras-svg-cepal/Grafico 23 Asociacion de indicadores de sociabilidad barrial.svg", width = 7, height = 7, pointsize = 10)
+png("output/graphs/sociabilidad-barrial_cor.png", width=600,height=300, pointsize = 10)
 par(family="Arial", size= 10)
 corrplot::corrplot(sociabilidad_barrial_cor,
   method = "color",
@@ -966,9 +158,7 @@ sat_residencial<-plot_stackfrq(select(data, t06_01_w01, t06_02_w01, t06_03_w01, 
         legend.position="bottom")
 
 sat_residencial
-ggsave(sat_residencial, file = "bookdown-files/output/graphs/satisfaccion-residencial.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
-ggsave(sat_residencial, file = "bookdown-files/output/figuras-svg-cepal/Grafico 24 Satisfaccion con el barrio.svg",device = "svg",width = 25,height = 13,dpi = "retina",units = "cm")
-
+ggsave(sat_residencial, file = "output/graphs/6-satisfaccion-residencial.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
 ```
 
 ```{r echo=FALSE}
@@ -987,20 +177,7 @@ rownames(sat_residencial_cor) <- c("A. Seguridad del barrio",
                           "H. Proximidad con familiares y/o amigos")
 colnames(sat_residencial_cor) <-c("(A)", "(B)","(C)", "(D)", "(E)", "(F)", "(G)", "(H)")
 
-png("bookdown-files/output/graphs/satisfaccion-residencial_cor.png", width=600,height=300, pointsize = 10)
-par(family="Arial", size= 10)
-corrplot::corrplot(sat_residencial_cor,
-  method = "color",
-  addCoef.col = "#000390",
-  type = "upper",
-  tl.col = "black",
-  col=colorRampPalette(c("white","#0068DC"))(12),
-  bg = "white",
-  na.label = "-",
-  lower.col = "black")
-dev.off()
-
-svglite("bookdown-files/output/figuras-svg-cepal/Grafico 25 Asociacion de indicadores de satisfaccion residencial.svg", width = 7, height = 7, pointsize = 10)
+png("output/graphs/satisfaccion-residencial_cor.png", width=600,height=300, pointsize = 10)
 par(family="Arial", size= 10)
 corrplot::corrplot(sat_residencial_cor,
   method = "color",
@@ -1051,25 +228,406 @@ source("processing/fa_table.R")
 cohesion_territorial_fa <-fa_table(fac_ml, .32)
 knitr::kable(cohesion_territorial_fa, "html") %>%
   kable_styling(bootstrap_options = c("striped", "hover")) %>%
-  cat(., file = "bookdown-files/output/tables/cohesion_territorial_fa.html")
+  cat(., file = "output/tables/cohesion_territorial_fa.html")
 
-webshot(url ="bookdown-files/output/tables/cohesion_territorial_fa.html", file ="bookdown-files/output/tables/cohesion_territorial_fa.png", vheight = 10, vwidth = 600)
-
-write_xlsx(cohesion_territorial_fa, path = "bookdown-files/output/tables-excel-cepal/cuadro 6.xlsx")
+webshot(url ="output/tables/cohesion_territorial_fa.html", file ="output/tables/cohesion_territorial_fa.png", vheight = 10, vwidth = 600)
 ```
 
 ```{r echo=FALSE}
 # Promedios simples cohesion territorial
-
 data <- data %>%
   rowwise() %>%
   mutate(cohesion_territorial_w01 =
            mean(c(t02_01_w01, t02_02_w01, t02_03_w01, t02_04_w01), na.rm = T))
 ```
 
-# Tabla resumen final
+## Redes sociales
+
+### Confianza interpersonal
 
 ```{r echo=FALSE}
+conf_interpersonal <- plot_stackfrq(select(data, c02_rec_w01, c03_rec_w01, c04_rec_w01), geom.colors = "RdBu", geom.size = 0.33) +
+  theme(text=element_text(family="Arial", size=12),
+        legend.position="bottom")
+conf_interpersonal
+
+ggsave(conf_interpersonal, file = "output/graphs/7-confianza-interpersonal.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
+```
+
+```{r echo=FALSE}
+conf_interpersonal_cor<-
+  data %>%
+  dplyr::select(c02_rec_w01, c03_rec_w01, c04_rec_w01) %>%
+  lavaan::lavCor(., ordered=names(.))
+diag(conf_interpersonal_cor) = NA
+rownames(conf_interpersonal_cor) <- c("A. Se puede confiar en la mayoria de las personas",
+                                  "B. La mayoria de las personas trata de ayudar a los demas",
+                                  "C. La mayoria de las personas trata de ser justa")
+colnames(conf_interpersonal_cor) <-c("(A)", "(B)","(C)")
+
+png("output/graphs/confianza-interpersonal_cor.png", width=600,height=300, pointsize = 10)
+par(family="Arial", size= 10)
+corrplot::corrplot(conf_interpersonal_cor,
+  method = "color",
+  addCoef.col = "#000390",
+  type = "upper",
+  tl.col = "black",
+  col=colorRampPalette(c("white","#0068DC"))(12),
+  bg = "white",
+  na.label = "-",
+  lower.col = "black")
+dev.off()
+
+ltm::cronbach.alpha(data %>%
+  dplyr::select(c02_rec_w01, c03_rec_w01, c04_rec_w01), na.rm=TRUE)
+
+ltm::cronbach.alpha(data %>%
+  dplyr::select(c02_rec_w01, c03_rec_w01), na.rm=TRUE)
+
+```
+
+```{r}
+# Promedio simple "Se puede confiar en la mayoría de las personas" y "la mayoría de las personas trata de ayudar a los demás".
+data <- data %>%
+  rowwise() %>%
+  mutate(conf_interpersonal_w01 =
+           mean(c(c02_rec_w01, c03_rec_w01), na.rm = T))
+```
+
+### Solidaridad
+
+```{r echo=FALSE}
+solidaridad <- plot_stackfrq(select(data, c07_01_w01,
+                         c07_02_w01,
+                         c07_03_w01,
+                         c07_04_w01,
+                         c07_05_w01,
+                         c07_06_w01,
+                         c07_07_w01,
+                         c07_08_w01), geom.size = 0.9) +
+  theme(text=element_text(family="Arial", size=12),
+        legend.position="bottom")
+
+solidaridad
+ggsave(solidaridad, file = "output/graphs/8-solidaridad.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
+
+```
+
+```{r echo=FALSE}
+solidaridad_cor <-
+  data %>%
+  dplyr::select(c07_01_w01,c07_02_w01,c07_03_w01,c07_04_w01,c07_05_w01,c07_06_w01,c07_07_w01,c07_08_w01) %>%
+  lavaan::lavCor(., ordered=names(.))
+diag(solidaridad_cor) = NA
+rownames(solidaridad_cor) <- c("A. Visita la casa de algún vecino",
+                          "B. Asiste a reunión sobre temas de interés publico",
+                          "C. Han venido amigos a visitarlo a su casa",
+                          "D. Hace voluntariado",
+                          "E. Dona dinero a una obra social o de caridad",
+                          "F. Presta una suma de dinero de $10.000.- o más",
+                          "G. Conversa con persona en problemas o deprimida",
+                          "H. Ayuda a alguien a conseguir trabajo")
+colnames(solidaridad_cor) <-c("(A)", "(B)","(C)", "(D)", "(E)", "(F)", "(G)", "(H)")
+
+png("output/graphs/solidaridad_cor.png", width=600,height=300, pointsize = 10)
+par(family="Arial", size= 10)
+corrplot::corrplot(solidaridad_cor,
+  method = "color",
+  addCoef.col = "#000390",
+  type = "upper",
+  tl.col = "black",
+  col=colorRampPalette(c("white","#0068DC"))(12),
+  bg = "white",
+  na.label = "-",
+  lower.col = "black")
+dev.off()
+```
+
+```{r}
+# Análisis Factorial Exploratorio
+solidaridad_fa<-
+  data %>%
+  dplyr::select(c07_01_w01,
+                c07_02_w01,
+                c07_03_w01,
+                c07_04_w01,
+                c07_05_w01,
+                c07_06_w01,
+                c07_07_w01,
+                c07_08_w01)
+
+colnames(solidaridad_fa) <- c(label(solidaridad_fa$c07_01_w01), label(solidaridad_fa$c07_02_w01), label(solidaridad_fa$c07_03_w01), label(solidaridad_fa$c07_04_w01), label(solidaridad_fa$c07_05_w01), label(solidaridad_fa$c07_06_w01), label(solidaridad_fa$c07_07_w01), label(solidaridad_fa$c07_08_w01))
+
+
+psych::fa.parallel(solidaridad_fa, fa="fa")
+psych::scree(solidaridad_fa)
+
+fac_ml <- psych::fa(r = solidaridad_fa, nfactors = 3, fm= "ml", rotate = "varimax" )
+
+fac_ml$loadings
+# ver https://www.anthonyschmidt.co/post/2020-09-27-efa-tables-in-r/
+
+source("processing/fa_table.R") 
+
+solidaridad_fa <-fa_table(fac_ml, .32)
+knitr::kable(solidaridad_fa, "html") %>%
+  kable_styling(bootstrap_options = c("striped", "hover")) %>%
+  cat(., file = "output/tables/solidaridad_fa.html")
+
+webshot(url ="output/tables/solidaridad_fa.html", file ="output/tables/solidaridad_fa.png", vheight = 10, vwidth = 600)
+```
+
+```{r}
+# Promedios simples solidaridad
+data <- data %>%
+  rowwise() %>%
+  mutate(solidaridad_w01 =
+           mean(c(c07_05_w01, c07_06_w01, c07_07_w01, c07_08_w01), na.rm = T))
+```
+
+# Vertical
+
+## Confianza en instituciones y democracia
+
+### Confianza en instituciones
+
+```{r echo=FALSE}
+confianza_institucional <- plot_stackfrq(select(data,c05_01_w01,
+                         c05_02_w01,
+                         c05_03_w01,
+                         c05_04_w01,
+                         c05_05_w01,
+                         c05_06_w01,
+                         c05_07_w01,
+                         c05_08_w01), geom.size = 0.9) +
+  theme(text=element_text(family="Arial", size=12),
+        legend.position="bottom")
+
+confianza_institucional
+ggsave(confianza_institucional, file = "output/graphs/confianza-institucional.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
+
+```
+
+### Actitud hacia la democracia
+
+```{r echo=FALSE}
+democracia <-plot_stackfrq(select(data, c01_w01), geom.colors = "RdBu", geom.size = 0.25) +
+  theme(text=element_text(family="Arial", size=12),
+        legend.position="bottom")
+
+democracia
+ggsave(democracia, file = "output/graphs/democracia.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
+```
+
+```{r echo=FALSE}
+conf_institucional_cor<-
+  data %>%
+  dplyr::select(c05_01_w01,c05_02_w01,c05_03_w01,c05_04_w01,c05_05_w01,c05_06_w01,c05_07_w01,c05_08_w01, c01_w01) %>%
+  lavaan::lavCor(., ordered=names(.))
+diag(conf_institucional_cor) = NA
+rownames(conf_institucional_cor) <- c("A. Confianza en el gobierno",
+                          "B. Confianza en los partidos políticos",
+                          "C. Confianza en Carabineros",
+                          "D. Confianza en los sindicatos",
+                          "E. Confianza en el poder judicial",
+                          "F. Confianza en las empresas privadas",
+                          "G. Confianza en el congreso nacional",
+                          "H. Confianza en el presidente/a de la república",
+                          "I. Satisfacción con la Democracia")
+colnames(conf_institucional_cor) <-c("(A)", "(B)","(C)", "(D)", "(E)", "(F)", "(G)", "(H)", "(I)")
+
+
+png("output/graphs/confianza-institucional_cor.png", width=600,height=300, pointsize = 10)
+par(family="Arial", size= 10)
+corrplot::corrplot(conf_institucional_cor,
+  method = "color",
+  addCoef.col = "#000390",
+  type = "upper",
+  tl.col = "black",
+  col=colorRampPalette(c("white","#0068DC"))(12),
+  bg = "white",
+  na.label = "-",
+  lower.col = "black")
+dev.off()
+```
+
+```{r}
+# Análisis Factorial Exploratorio
+conf_institucional_fa<-
+  data %>%
+  dplyr::select(c05_01_w01,
+                c05_02_w01,
+                c05_03_w01,
+                c05_04_w01,
+                c05_05_w01,
+                c05_06_w01,
+                c05_07_w01,
+                c05_08_w01, 
+                c01_w01)
+
+colnames(conf_institucional_fa) <- c(label(conf_institucional_fa$c05_01_w01), label(conf_institucional_fa$c05_02_w01), label(conf_institucional_fa$c05_03_w01), label(conf_institucional_fa$c05_04_w01), label(conf_institucional_fa$c05_05_w01), label(conf_institucional_fa$c05_06_w01), label(conf_institucional_fa$c05_07_w01), label(conf_institucional_fa$c05_08_w01), label(conf_institucional_fa$c01_w01))
+
+psych::fa.parallel(conf_institucional_fa, fa="fa")
+psych::scree(conf_institucional_fa)
+
+fac_ml <- psych::fa(r = conf_institucional_fa, nfactors = 3, fm= "ml", rotate = "varimax" )
+
+fac_ml$loadings
+# ver https://www.anthonyschmidt.co/post/2020-09-27-efa-tables-in-r/
+
+source("processing/fa_table.R") 
+
+inst_fa <-fa_table(fac_ml, .32)
+knitr::kable(inst_fa, "html") %>%
+  kable_styling(bootstrap_options = c("striped", "hover")) %>%
+  cat(., file = "output/tables/inst_fa.html")
+
+webshot(url ="output/tables/inst_fa.html", file ="output/tables/inst_fa.png", vheight = 10, vwidth = 600)
+```
+
+```{r}
+# Promedios simples confianza institucional
+data <- data %>%
+  rowwise() %>%
+  mutate(conf_institucional_w01 =
+           mean(c(c05_01_w01, c05_08_w01, c05_02_w01), na.rm = T))
+```
+
+
+
+
+## Participación política
+
+### Participación cívica
+
+```{r echo=FALSE}
+part_civica <- plot_stackfrq(select(data, c08_01_w01,
+                         c08_02_w01,
+                         c08_03_w01,
+                         c08_04_w01), geom.size = 0.45) +
+  theme(text=element_text(family="Arial", size=12),
+        legend.position="bottom")
+
+part_civica
+ggsave(part_civica, file = "output/graphs/participacion-civica.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
+```
+
+```{r echo=FALSE}
+part_civica_cor<-
+  data %>%
+  dplyr::select(c08_01_w01, c08_02_w01, c08_03_w01, c08_04_w01) %>%
+  lavaan::lavCor(., ordered=names(.))
+diag(part_civica_cor) = NA
+rownames(part_civica_cor) <- c("A. Firma una carta o petición",
+                          "B. Asiste a una marcha o manifestación",
+                          "C. Participa en una huelga",
+                          "D. Usa redes sociales para expresar su opinión")
+colnames(part_civica_cor) <-c("(A)", "(B)","(C)", "(D)")
+
+png("output/graphs/participacion-civica_cor.png", width=600,height=300, pointsize = 10)
+par(family="Arial", size= 10)
+corrplot::corrplot(part_civica_cor,
+  method = "color",
+  addCoef.col = "#000390",
+  type = "upper",
+  tl.col = "black",
+  col=colorRampPalette(c("white","#0068DC"))(12),
+  bg = "white",
+  na.label = "-",
+  lower.col = "black")
+dev.off()
+```
+
+### Interés político
+```{r echo=FALSE}
+interes <- plot_stackfrq(select(data, c13_w01, c14_01_w01, c14_02_w01), geom.size = 0.45) +
+  theme(text=element_text(family="Arial", size=12),
+        legend.position="bottom")
+
+interes
+ggsave(interes, file = "output/graphs/interes.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
+```
+
+```{r echo=FALSE}
+part_civica_cor<-
+  data %>%
+  dplyr::select(c13_w01, c14_01_w01, c14_02_w01) %>%
+  lavaan::lavCor(., ordered=names(.))
+diag(part_civica_cor) = NA
+rownames(part_civica_cor) <- c("A. Interés en la política",
+                          "B. Habla de política con familiares o amigos",
+                          "C. Se informa sobre política en medios de comunicación")
+colnames(part_civica_cor) <-c("(A)", "(B)","(C)")
+
+png("output/graphs/participacion-civica_cor.png", width=600,height=300, pointsize = 10)
+par(family="Arial", size= 10)
+corrplot::corrplot(part_civica_cor,
+  method = "color",
+  addCoef.col = "#000390",
+  type = "upper",
+  tl.col = "black",
+  col=colorRampPalette(c("white","#0068DC"))(12),
+  bg = "white",
+  na.label = "-",
+  lower.col = "black")
+dev.off()
+```
+
+## Percepción de justicia
+
+```{r echo=FALSE}
+justicia <-plot_stackfrq(select(data, c18_09_w01,c18_10_w01), geom.colors = "RdBu", geom.size = 0.25) +
+  theme(text=element_text(family="Arial", size=12),
+        legend.position="bottom")
+
+justicia
+ggsave(justicia, file = "output/graphs/justicia.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
+```
+
+```{r echo=FALSE}
+corrplot.mixed(cor(dplyr::select(data, c18_09_w01, c18_10_w01),
+                   use = "na.or.complete"))
+
+```
+
+```{r}
+# Promedio simple percepcion de justicia
+data <- data %>%
+  rowwise() %>%
+  mutate(justicia_w01 =
+           mean(c(c18_09_w01, c18_10_w01), na.rm = T))
+```
+
+### Movilidad social
+
+```{r echo=FALSE}
+movilidad <-plot_stackfrq(select(data, d05_01_w01,d05_02_w01,d05_03_w01,d05_04_w01), geom.colors = "RdBu", geom.size = 0.25) +
+  theme(text=element_text(family="Arial", size=12),
+        legend.position="bottom")
+
+movilidad
+ggsave(movilidad, file = "output/graphs/movilidad.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
+```
+
+```{r echo=FALSE}
+corrplot.mixed(cor(dplyr::select(data, d05_01_w01,d05_02_w01,d05_03_w01,d05_04_w01),
+                   use = "na.or.complete"))
+
+```
+
+```{r}
+# Promedio simple percepcion de justicia
+data <- data %>%
+  rowwise() %>%
+  mutate(justicia_w01 =
+           mean(c(c18_09_w01, c18_10_w01), na.rm = T))
+```
+
+
+
+# Tabla resumen final
+
+```{r echo=FALSE, eval=FALSE}
 # -------------------------------------------------------------------------
 label(data$lazos_w01) <- "Cantidad de personas que se conocen con diferentes ocupaciones"
 
@@ -1121,7 +679,7 @@ cohesion.mean =
     rep(paste0(round(mean(as.numeric(data$cohesion_territorial_w01), na.rm = T),3), " (", round(sd(as.numeric(data$cohesion_territorial_w01), na.rm = T),3), ")"),4))
 ```
 
-```{r echo=FALSE}
+```{r echo=FALSE, eval=FALSE}
 collapse_rows_cohesion <-
     data.frame(vars = c(rep("Lazos", 1),
            rep("Confianza interpersonal", 2),
@@ -1135,7 +693,7 @@ collapse_rows_cohesion <-
            cohesion.item,cohesion.min,cohesion.mean)
 ```
 
-```{r echo=FALSE}
+```{r echo=FALSE, eval=FALSE}
 knitr::kable(collapse_rows_cohesion, "html",
              col.names =  c("Subdimensión",
                             "Indicadores",
@@ -1144,19 +702,19 @@ knitr::kable(collapse_rows_cohesion, "html",
   column_spec(1, bold = T) %>%
   collapse_rows(columns = 1:4, valign = "middle") %>%
   kable_styling(bootstrap_options = c("striped", "hover")) %>%
-  cat(., file = "bookdown-files/output/tables/descriptivos_cohesion.html")
+  cat(., file = "output/tables/descriptivos_cohesion.html")
 
 colnames(collapse_rows_cohesion) <- c("Subdimensión",
                             "Indicadores",
                             "Min - max",
                             "Mean (sd)")
 
-write_xlsx(collapse_rows_cohesion, path = "bookdown-files/output/tables-excel-cepal/cuadro 1.xlsx")
+write_xlsx(collapse_rows_cohesion, path = "output/tables-excel-cepal/cuadro 1.xlsx")
 ```
 
 # Matriz de correlaciones final
 
-```{r echo=FALSE}
+```{r echo=FALSE, eval=FALSE}
 cohesion_social_cor <-
   data %>%
   dplyr::select(lazos_w01, conf_interpersonal_w01, diversidad_w01, identificacion_w01, justicia_w01, conf_institucional_w01, solidaridad_w01,participacion_w01, cohesion_territorial_w01) %>%
@@ -1173,7 +731,7 @@ rownames(cohesion_social_cor) <- c("A. Lazos",
                           "I. Cohesión territorial")
 colnames(cohesion_social_cor) <-c("(A)", "(B)","(C)", "(D)", "(E)", "(F)", "(G)", "(H)", "(I)")
 
-png("bookdown-files/output/graphs/cohesion_social_cor.png", width=600,height=300, pointsize = 10)
+png("output/graphs/cohesion_social_cor.png", width=600,height=300, pointsize = 10)
 par(family="Arial", size= 10)
 corrplot::corrplot(cohesion_social_cor,
   method = "color",
@@ -1186,7 +744,7 @@ corrplot::corrplot(cohesion_social_cor,
   lower.col = "black")
 dev.off()
 
-svglite("bookdown-files/output/figuras-svg-cepal/Grafico 26 Asociacion de las subdimensiones de cohesion social.svg", width = 7, height = 7, pointsize = 10)
+svglite("output/figuras-svg-cepal/Grafico 26 Asociacion de las subdimensiones de cohesion social.svg", width = 7, height = 7, pointsize = 10)
 par(family="Arial", size= 10)
 corrplot::corrplot(cohesion_social_cor,
   method = "color",
@@ -1202,7 +760,7 @@ dev.off()
 
 # Análisis factorial exploratorio final
 
-```{r echo=FALSE}
+```{r echo=FALSE, eval=FALSE}
 cohesion_social_fa <-
   data %>%
   dplyr::select(lazos_w01, conf_interpersonal_w01, diversidad_w01, identificacion_w01, justicia_w01, conf_institucional_w01, solidaridad_w01,participacion_w01, cohesion_territorial_w01)
@@ -1220,9 +778,9 @@ source("processing/fa_table.R")
 cohesion_social_fa <-fa_table(fac_ml, .32)
 knitr::kable(cohesion_social_fa, "html") %>%
   kable_styling(bootstrap_options = c("striped", "hover")) %>%
-  cat(., file = "bookdown-files/output/tables/cohesion_social_fa.html")
+  cat(., file = "output/tables/cohesion_social_fa.html")
 
-webshot(url ="bookdown-files/output/tables/cohesion_social_fa.html", file ="bookdown-files/output/tables/cohesion_social_fa.png", vheight = 10, vwidth = 600)
+webshot(url ="output/tables/cohesion_social_fa.html", file ="output/tables/cohesion_social_fa.png", vheight = 10, vwidth = 600)
 
 ```
 
