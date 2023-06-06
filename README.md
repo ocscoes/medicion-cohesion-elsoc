@@ -1,13 +1,11 @@
-# [Cambios en la Cohesión Social en Chile](https://cohesion-cepal.netlify.app/)
+Este reporte de investigación consiste en un análisis de medición de la cohesión social en Chile en base a indicadores de la Encuesta Longitudinal Social de Chile - [ELSOC](https://coes.cl/encuesta-panel/), producida por [COES](https://coes.cl/).
 
-Web: [https://cohesion-cepal.netlify.app/](https://cohesion-cepal.netlify.app/)
+La propuesta de medición está disponible [acá](https://ocscoes.github.io/cohesion-elsoc/)
 
-Este reporte de investigación consiste en un análisis de medición y cambios en la cohesión social en Chile en base a indicadores de la Encuesta Longitudinal Social de Chile - [ELSOC](https://coes.cl/encuesta-panel/), producida por [COES](https://coes.cl/)
+El código de elaboración de la medición de cohesión social se puede visualizar [acá](https://ocscoes.github.io/medicion-cohesion-elsoc/processing/analisis-medicion.html)
 
 **Autores**:
 
 - [Juan Carlos Castillo](http://jc-castillo.com/)
-- Emmanuelle Barozet
-- Vicente Espinoza
-
-**Ayudante de investigación**: Kevin Carrasco.
+- Ignacio Cáceres
+- Kevin Carrasco.
