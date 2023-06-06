@@ -14,7 +14,7 @@ knitr::opts_chunk$set(echo = TRUE, warning=F, message=F)
 
 ```{r include=FALSE}
 # Cargar paquetes
-pacman::p_load(dplyr, car, summarytools, webshot, knitr, kableExtra, corrplot, ggplot2, sjPlot, sjmisc, semPlot, semTools, psych, svglite, writexl)
+pacman::p_load(dplyr, car, summarytools, webshot, knitr, kableExtra, corrplot, ggplot2, sjPlot, sjmisc, semPlot, semTools, psych, stargazer, xtable, Hmisc, psy, nFactors, GPArotation)
 
 # Cargar base elsoc longitudinal (2016-2022) creada en "preparacion"
 load("input/data/proc/data.RData")
@@ -191,46 +191,78 @@ corrplot::corrplot(sat_residencial_cor,
 dev.off()
 ```
 
-```{r echo=FALSE}
-# Análisis Factorial Exploratorio
-cohesion_territorial_fa<-
-  data %>%
-  dplyr::select(t01_w01,
-                t02_01_w01,
-                t02_02_w01, 
-                t02_03_w01, 
-                t02_04_w01,
-                t03_01_w01, 
-                t03_02_w01, 
-                t03_03_w01, 
-                t03_04_w01,
-                t06_01_w01, 
-                t06_02_w01, 
-                t06_03_w01, 
-                t06_04_w01, 
-                t06_05_w01, 
-                t06_06_w01, 
-                t06_07_w01, 
-                t06_08_w01)
+#### Análisis factorial confirmatorio
 
-colnames(cohesion_territorial_fa) <- c(label(cohesion_territorial_fa$t01_w01), label(cohesion_territorial_fa$t02_01_w01), label(cohesion_territorial_fa$t02_02_w01), label(cohesion_territorial_fa$t02_03_w01), label(cohesion_territorial_fa$t02_04_w01), label(cohesion_territorial_fa$t03_01_w01), label(cohesion_territorial_fa$t03_02_w01), label(cohesion_territorial_fa$t03_03_w01), label(cohesion_territorial_fa$t03_04_w01), label(cohesion_territorial_fa$t06_01_w01), label(cohesion_territorial_fa$t06_02_w01), label(cohesion_territorial_fa$t06_03_w01), label(cohesion_territorial_fa$t06_04_w01), label(cohesion_territorial_fa$t06_05_w01), label(cohesion_territorial_fa$t06_06_w01), label(cohesion_territorial_fa$t06_07_w01), label(cohesion_territorial_fa$t06_08_w01))
+* Primero explorar correlación
 
-psych::fa.parallel(cohesion_territorial_fa, fa="fa")
-psych::scree(cohesion_territorial_fa)
+```{r}
+cohesion_barrial_afc <- data %>% dplyr::select(t01_w01, t02_01_w01, t02_02_w01, t02_03_w01, t02_04_w01, t03_01_w01, t03_02_w01, t03_03_w01, t03_04_w01, t06_01_w01, t06_02_w01, t06_03_w01, t06_04_w01, t06_05_w01, t06_06_w01, t06_07_w01, t06_08_w01)
 
-fac_ml <- psych::fa(r = cohesion_territorial_fa, nfactors = 3, fm= "ml", rotate = "varimax" )
+corMat  <- cor(cohesion_barrial_afc, use = "complete.obs")
+options(digits=2)
+corMat # muestra matriz
+corrplot(corMat, type="lower") # lower x bajo diagonal
+```
 
-fac_ml$loadings
-# ver https://www.anthonyschmidt.co/post/2020-09-27-efa-tables-in-r/
+* Análisis factorial
+```{r}
+KMO(corMat)
+cortest.bartlett(corMat, n = 1300)
+scree.plot(cohesion_barrial_afc)
+```
+```{r}
+fa.parallel(corMat, n.obs=300)
+```
+```{r}
+ev <- eigen(corMat) # get eigenvalues
+ap <- parallel(subject=1300,var=17,
+  rep=100,cent=.05)
+nS <- nScree(x=ev$values, aparallel=ap$eigen$qevpea)
+plotnScree(nS)
+```
 
-source("processing/fa_table.R") 
+Extracción
 
-cohesion_territorial_fa <-fa_table(fac_ml, .32)
-knitr::kable(cohesion_territorial_fa, "html") %>%
-  kable_styling(bootstrap_options = c("striped", "hover")) %>%
-  cat(., file = "output/tables/cohesion_territorial_fa.html")
+```{r}
+fac_pa <- fa(r = cohesion_barrial_afc, nfactors = 4, fm= "pa")
+#summary(fac_pa)
+fac_pa
+```
 
-webshot(url ="output/tables/cohesion_territorial_fa.html", file ="output/tables/cohesion_territorial_fa.png", vheight = 10, vwidth = 600)
+Maximum likelihood
+
+```{r}
+fac_ml <- fa(r = cohesion_barrial_afc, nfactors = 4, fm= "ml")
+summary(fac_ml)
+```
+
+Plot de cargas factoriales ml
+```{r}
+factor.plot(fac_ml, labels=rownames(fac_ml$loadings))
+```
+Obtención de Puntajes factoriales
+```{r}
+fac_ml <- fa(r = cohesion_barrial_afc, nfactors = 4, fm= "ml", scores="regression")
+data2=cohesion_barrial_afc
+data3 <- cbind(data2, fac_ml$scores)
+head(data3)
+```
+Rotación
+Varimax (ortogonal)
+
+```{r}
+fac_ml_var <- fa(r = cohesion_barrial_afc, nfactors = 4, fm= "ml", rotate="varimax") # ortogonal
+fac_ml_var
+```
+Promax (oblicua)
+```{r}
+fac_ml_pro <- fa(r = cohesion_barrial_afc, nfactors = 4, fm= "ml", rotate="promax")
+fac_ml_pro
+```
+Reporte: Tabla análisis factorial
+
+```{r}
+tab_fa(cohesion_barrial_afc, rotation = "varimax",show.comm = TRUE, title = "Análisis factorial cohesion")
 ```
 
 ```{r echo=FALSE}
@@ -343,38 +375,88 @@ corrplot::corrplot(solidaridad_cor,
 dev.off()
 ```
 
+#### Análisis factorial confirmatorio
+
+* Primero explorar correlación
+
 ```{r}
-# Análisis Factorial Exploratorio
-solidaridad_fa<-
-  data %>%
-  dplyr::select(c07_01_w01,
-                c07_02_w01,
-                c07_03_w01,
-                c07_04_w01,
-                c07_05_w01,
-                c07_06_w01,
-                c07_07_w01,
-                c07_08_w01)
+solidaridad_fa <- data %>% dplyr::select(c02_rec_w01, c03_rec_w01, c04_rec_w01, c07_01_w01,
+                         c07_02_w01,
+                         c07_03_w01,
+                         c07_04_w01,
+                         c07_05_w01,
+                         c07_06_w01,
+                         c07_07_w01,
+                         c07_08_w01)
+solidaridad_fa$c02_rec_w01 <- as.numeric(solidaridad_fa$c02_rec_w01)
+solidaridad_fa$c03_rec_w01 <- as.numeric(solidaridad_fa$c03_rec_w01)
+solidaridad_fa$c04_rec_w01 <- as.numeric(solidaridad_fa$c04_rec_w01)
 
-colnames(solidaridad_fa) <- c(label(solidaridad_fa$c07_01_w01), label(solidaridad_fa$c07_02_w01), label(solidaridad_fa$c07_03_w01), label(solidaridad_fa$c07_04_w01), label(solidaridad_fa$c07_05_w01), label(solidaridad_fa$c07_06_w01), label(solidaridad_fa$c07_07_w01), label(solidaridad_fa$c07_08_w01))
+corMat  <- cor(solidaridad_fa, use = "complete.obs")
+options(digits=2)
+corMat # muestra matriz
+corrplot(corMat, type="lower") # lower x bajo diagonal
+```
 
+* Análisis factorial
+```{r}
+KMO(corMat)
+cortest.bartlett(corMat, n = 1300)
+scree.plot(solidaridad_fa)
+```
+```{r}
+fa.parallel(corMat, n.obs=300)
+```
+```{r}
+ev <- eigen(corMat) # get eigenvalues
+ap <- parallel(subject=1300,var=11,
+  rep=100,cent=.05)
+nS <- nScree(x=ev$values, aparallel=ap$eigen$qevpea)
+plotnScree(nS)
+```
 
-psych::fa.parallel(solidaridad_fa, fa="fa")
-psych::scree(solidaridad_fa)
+Extracción
 
-fac_ml <- psych::fa(r = solidaridad_fa, nfactors = 3, fm= "ml", rotate = "varimax" )
+```{r}
+fac_pa <- fa(r = solidaridad_fa, nfactors = 3, fm= "pa")
+#summary(fac_pa)
+fac_pa
+```
 
-fac_ml$loadings
-# ver https://www.anthonyschmidt.co/post/2020-09-27-efa-tables-in-r/
+Maximum likelihood
 
-source("processing/fa_table.R") 
+```{r}
+fac_ml <- fa(r = solidaridad_fa, nfactors = 3, fm= "ml")
+summary(fac_ml)
+```
 
-solidaridad_fa <-fa_table(fac_ml, .32)
-knitr::kable(solidaridad_fa, "html") %>%
-  kable_styling(bootstrap_options = c("striped", "hover")) %>%
-  cat(., file = "output/tables/solidaridad_fa.html")
+Plot de cargas factoriales ml
+```{r}
+factor.plot(fac_ml, labels=rownames(fac_ml$loadings))
+```
+Obtención de Puntajes factoriales
+```{r}
+fac_ml <- fa(r = cohesion_barrial_afc, nfactors = 3, fm= "ml", scores="regression")
+data2=solidaridad_fa
+data3 <- cbind(data2, fac_ml$scores)
+head(data3)
+```
+Rotación
+Varimax (ortogonal)
 
-webshot(url ="output/tables/solidaridad_fa.html", file ="output/tables/solidaridad_fa.png", vheight = 10, vwidth = 600)
+```{r}
+fac_ml_var <- fa(r = solidaridad_fa, nfactors = 3, fm= "ml", rotate="varimax") # ortogonal
+fac_ml_var
+```
+Promax (oblicua)
+```{r}
+fac_ml_pro <- fa(r = solidaridad_fa, nfactors = 3, fm= "ml", rotate="promax")
+fac_ml_pro
+```
+Reporte: Tabla análisis factorial
+
+```{r}
+tab_fa(solidaridad_fa, rotation = "varimax",show.comm = TRUE, title = "Análisis factorial cohesion")
 ```
 
 ```{r}
@@ -451,40 +533,79 @@ corrplot::corrplot(conf_institucional_cor,
 dev.off()
 ```
 
+#### Análisis factorial confirmatorio
+
+* Primero explorar correlación
+
 ```{r}
-# Análisis Factorial Exploratorio
-conf_institucional_fa<-
-  data %>%
-  dplyr::select(c05_01_w01,
-                c05_02_w01,
-                c05_03_w01,
-                c05_04_w01,
-                c05_05_w01,
-                c05_06_w01,
-                c05_07_w01,
-                c05_08_w01, 
-                c01_w01)
+democracia_fa <- data %>% dplyr::select(c05_01_w01,c05_02_w01,c05_03_w01,c05_04_w01,c05_05_w01,c05_06_w01,c05_07_w01,c05_08_w01, c01_w01)
 
-colnames(conf_institucional_fa) <- c(label(conf_institucional_fa$c05_01_w01), label(conf_institucional_fa$c05_02_w01), label(conf_institucional_fa$c05_03_w01), label(conf_institucional_fa$c05_04_w01), label(conf_institucional_fa$c05_05_w01), label(conf_institucional_fa$c05_06_w01), label(conf_institucional_fa$c05_07_w01), label(conf_institucional_fa$c05_08_w01), label(conf_institucional_fa$c01_w01))
-
-psych::fa.parallel(conf_institucional_fa, fa="fa")
-psych::scree(conf_institucional_fa)
-
-fac_ml <- psych::fa(r = conf_institucional_fa, nfactors = 3, fm= "ml", rotate = "varimax" )
-
-fac_ml$loadings
-# ver https://www.anthonyschmidt.co/post/2020-09-27-efa-tables-in-r/
-
-source("processing/fa_table.R") 
-
-inst_fa <-fa_table(fac_ml, .32)
-knitr::kable(inst_fa, "html") %>%
-  kable_styling(bootstrap_options = c("striped", "hover")) %>%
-  cat(., file = "output/tables/inst_fa.html")
-
-webshot(url ="output/tables/inst_fa.html", file ="output/tables/inst_fa.png", vheight = 10, vwidth = 600)
+corMat  <- cor(democracia_fa, use = "complete.obs")
+options(digits=2)
+corMat # muestra matriz
+corrplot(corMat, type="lower") # lower x bajo diagonal
 ```
 
+* Análisis factorial
+```{r}
+KMO(corMat)
+cortest.bartlett(corMat, n = 1300)
+scree.plot(democracia_fa)
+```
+```{r}
+fa.parallel(corMat, n.obs=1300)
+```
+```{r}
+ev <- eigen(corMat) # get eigenvalues
+ap <- parallel(subject=1300,var=9,
+  rep=100,cent=.05)
+nS <- nScree(x=ev$values, aparallel=ap$eigen$qevpea)
+plotnScree(nS)
+```
+
+Extracción
+
+```{r}
+fac_pa <- fa(r = democracia_fa, nfactors = 3, fm= "pa")
+#summary(fac_pa)
+fac_pa
+```
+
+Maximum likelihood
+
+```{r}
+fac_ml <- fa(r = democracia_fa, nfactors = 3, fm= "ml")
+summary(fac_ml)
+```
+
+Plot de cargas factoriales ml
+```{r}
+factor.plot(fac_ml, labels=rownames(fac_ml$loadings))
+```
+Obtención de Puntajes factoriales
+```{r}
+fac_ml <- fa(r = democracia_fa, nfactors = 3, fm= "ml", scores="regression")
+data2=democracia_fa
+data3 <- cbind(data2, fac_ml$scores)
+head(data3)
+```
+Rotación
+Varimax (ortogonal)
+
+```{r}
+fac_ml_var <- fa(r = democracia_fa, nfactors = 3, fm= "ml", rotate="varimax") # ortogonal
+fac_ml_var
+```
+Promax (oblicua)
+```{r}
+fac_ml_pro <- fa(r = democracia_fa, nfactors = 3, fm= "ml", rotate="promax")
+fac_ml_pro
+```
+Reporte: Tabla análisis factorial
+
+```{r}
+tab_fa(democracia_fa, rotation = "varimax",show.comm = TRUE, title = "Análisis factorial confianza en instituciones y democracia")
+```
 ```{r}
 # Promedios simples confianza institucional
 data <- data %>%
@@ -492,9 +613,6 @@ data <- data %>%
   mutate(conf_institucional_w01 =
            mean(c(c05_01_w01, c05_08_w01, c05_02_w01), na.rm = T))
 ```
-
-
-
 
 ## Participación política
 
@@ -573,6 +691,81 @@ corrplot::corrplot(part_civica_cor,
 dev.off()
 ```
 
+#### Análisis factorial confirmatorio
+
+* Primero explorar correlación
+
+```{r}
+participacion_fa <- data %>% dplyr::select(c08_01_w01, c08_02_w01, c08_03_w01, c08_04_w01, c13_w01, c14_01_w01, c14_02_w01)
+
+corMat  <- cor(participacion_fa, use = "complete.obs")
+options(digits=2)
+corMat # muestra matriz
+corrplot(corMat, type="lower") # lower x bajo diagonal
+```
+
+* Análisis factorial
+```{r}
+KMO(corMat)
+cortest.bartlett(corMat, n = 1300)
+scree.plot(democracia_fa)
+```
+```{r}
+fa.parallel(corMat, n.obs=1300)
+```
+```{r}
+ev <- eigen(corMat) # get eigenvalues
+ap <- parallel(subject=1300,var=7,
+  rep=100,cent=.05)
+nS <- nScree(x=ev$values, aparallel=ap$eigen$qevpea)
+plotnScree(nS)
+```
+
+Extracción
+
+```{r}
+fac_pa <- fa(r = participacion_fa, nfactors = 2, fm= "pa")
+#summary(fac_pa)
+fac_pa
+```
+
+Maximum likelihood
+
+```{r}
+fac_ml <- fa(r = participacion_fa, nfactors = 2, fm= "ml")
+summary(fac_ml)
+```
+
+Plot de cargas factoriales ml
+```{r}
+factor.plot(fac_ml, labels=rownames(fac_ml$loadings))
+```
+Obtención de Puntajes factoriales
+```{r}
+fac_ml <- fa(r = participacion_fa, nfactors = 2, fm= "ml", scores="regression")
+data2=participacion_fa
+data3 <- cbind(data2, fac_ml$scores)
+head(data3)
+```
+Rotación
+Varimax (ortogonal)
+
+```{r}
+fac_ml_var <- fa(r = participacion_fa, nfactors = 2, fm= "ml", rotate="varimax") # ortogonal
+fac_ml_var
+```
+Promax (oblicua)
+```{r}
+fac_ml_pro <- fa(r = participacion_fa, nfactors = 2, fm= "ml", rotate="promax")
+fac_ml_pro
+```
+Reporte: Tabla análisis factorial
+
+```{r}
+tab_fa(participacion_fa, rotation = "varimax",show.comm = TRUE, title = "Análisis factorial Participación política")
+```
+
+
 ## Percepción de justicia
 
 ```{r echo=FALSE}
@@ -623,7 +816,79 @@ data <- data %>%
            mean(c(c18_09_w01, c18_10_w01), na.rm = T))
 ```
 
+#### Análisis factorial confirmatorio
 
+* Primero explorar correlación
+
+```{r}
+justicia_fa <- data %>% dplyr::select(c18_09_w01, c18_10_w01, d05_01_w01,d05_02_w01,d05_03_w01,d05_04_w01)
+
+corMat  <- cor(justicia_fa, use = "complete.obs")
+options(digits=2)
+corMat # muestra matriz
+corrplot(corMat, type="lower") # lower x bajo diagonal
+```
+
+* Análisis factorial
+```{r}
+KMO(corMat)
+cortest.bartlett(corMat, n = 1300)
+scree.plot(justicia_fa)
+```
+```{r}
+fa.parallel(corMat, n.obs=1300)
+```
+```{r}
+ev <- eigen(corMat) # get eigenvalues
+ap <- parallel(subject=1300,var=6,
+  rep=100,cent=.05)
+nS <- nScree(x=ev$values, aparallel=ap$eigen$qevpea)
+plotnScree(nS)
+```
+
+Extracción
+
+```{r}
+fac_pa <- fa(r = justicia_fa, nfactors = 2, fm= "pa")
+#summary(fac_pa)
+fac_pa
+```
+
+Maximum likelihood
+
+```{r}
+fac_ml <- fa(r = justicia_fa, nfactors = 2, fm= "ml")
+summary(fac_ml)
+```
+
+Plot de cargas factoriales ml
+```{r}
+factor.plot(fac_ml, labels=rownames(fac_ml$loadings))
+```
+Obtención de Puntajes factoriales
+```{r}
+fac_ml <- fa(r = justicia_fa, nfactors = 2, fm= "ml", scores="regression")
+data2=justicia_fa
+data3 <- cbind(data2, fac_ml$scores)
+head(data3)
+```
+Rotación
+Varimax (ortogonal)
+
+```{r}
+fac_ml_var <- fa(r = justicia_fa, nfactors = 2, fm= "ml", rotate="varimax") # ortogonal
+fac_ml_var
+```
+Promax (oblicua)
+```{r}
+fac_ml_pro <- fa(r = justicia_fa, nfactors = 2, fm= "ml", rotate="promax")
+fac_ml_pro
+```
+Reporte: Tabla análisis factorial
+
+```{r}
+tab_fa(justicia_fa, rotation = "varimax",show.comm = TRUE, title = "Análisis factorial Participación política")
+```
 
 # Tabla resumen final
 
