@@ -205,61 +205,6 @@ corrplot(corMat, type="lower") # lower x bajo diagonal
 ```
 
 * Análisis factorial
-```{r}
-KMO(corMat)
-cortest.bartlett(corMat, n = 1300)
-scree.plot(cohesion_barrial_afc)
-```
-```{r}
-fa.parallel(corMat, n.obs=300)
-```
-```{r}
-ev <- eigen(corMat) # get eigenvalues
-ap <- parallel(subject=1300,var=17,
-  rep=100,cent=.05)
-nS <- nScree(x=ev$values, aparallel=ap$eigen$qevpea)
-plotnScree(nS)
-```
-
-Extracción
-
-```{r}
-fac_pa <- fa(r = cohesion_barrial_afc, nfactors = 4, fm= "pa")
-#summary(fac_pa)
-fac_pa
-```
-
-Maximum likelihood
-
-```{r}
-fac_ml <- fa(r = cohesion_barrial_afc, nfactors = 4, fm= "ml")
-summary(fac_ml)
-```
-
-Plot de cargas factoriales ml
-```{r}
-factor.plot(fac_ml, labels=rownames(fac_ml$loadings))
-```
-Obtención de Puntajes factoriales
-```{r}
-fac_ml <- fa(r = cohesion_barrial_afc, nfactors = 4, fm= "ml", scores="regression")
-data2=cohesion_barrial_afc
-data3 <- cbind(data2, fac_ml$scores)
-head(data3)
-```
-Rotación
-Varimax (ortogonal)
-
-```{r}
-fac_ml_var <- fa(r = cohesion_barrial_afc, nfactors = 4, fm= "ml", rotate="varimax") # ortogonal
-fac_ml_var
-```
-Promax (oblicua)
-```{r}
-fac_ml_pro <- fa(r = cohesion_barrial_afc, nfactors = 4, fm= "ml", rotate="promax")
-fac_ml_pro
-```
-Reporte: Tabla análisis factorial
 
 ```{r}
 tab_fa(cohesion_barrial_afc, rotation = "varimax",show.comm = TRUE, title = "Análisis factorial cohesion")
@@ -399,61 +344,6 @@ corrplot(corMat, type="lower") # lower x bajo diagonal
 ```
 
 * Análisis factorial
-```{r}
-KMO(corMat)
-cortest.bartlett(corMat, n = 1300)
-scree.plot(solidaridad_fa)
-```
-```{r}
-fa.parallel(corMat, n.obs=300)
-```
-```{r}
-ev <- eigen(corMat) # get eigenvalues
-ap <- parallel(subject=1300,var=11,
-  rep=100,cent=.05)
-nS <- nScree(x=ev$values, aparallel=ap$eigen$qevpea)
-plotnScree(nS)
-```
-
-Extracción
-
-```{r}
-fac_pa <- fa(r = solidaridad_fa, nfactors = 3, fm= "pa")
-#summary(fac_pa)
-fac_pa
-```
-
-Maximum likelihood
-
-```{r}
-fac_ml <- fa(r = solidaridad_fa, nfactors = 3, fm= "ml")
-summary(fac_ml)
-```
-
-Plot de cargas factoriales ml
-```{r}
-factor.plot(fac_ml, labels=rownames(fac_ml$loadings))
-```
-Obtención de Puntajes factoriales
-```{r}
-fac_ml <- fa(r = cohesion_barrial_afc, nfactors = 3, fm= "ml", scores="regression")
-data2=solidaridad_fa
-data3 <- cbind(data2, fac_ml$scores)
-head(data3)
-```
-Rotación
-Varimax (ortogonal)
-
-```{r}
-fac_ml_var <- fa(r = solidaridad_fa, nfactors = 3, fm= "ml", rotate="varimax") # ortogonal
-fac_ml_var
-```
-Promax (oblicua)
-```{r}
-fac_ml_pro <- fa(r = solidaridad_fa, nfactors = 3, fm= "ml", rotate="promax")
-fac_ml_pro
-```
-Reporte: Tabla análisis factorial
 
 ```{r}
 tab_fa(solidaridad_fa, rotation = "varimax",show.comm = TRUE, title = "Análisis factorial cohesion")
@@ -547,61 +437,6 @@ corrplot(corMat, type="lower") # lower x bajo diagonal
 ```
 
 * Análisis factorial
-```{r}
-KMO(corMat)
-cortest.bartlett(corMat, n = 1300)
-scree.plot(democracia_fa)
-```
-```{r}
-fa.parallel(corMat, n.obs=1300)
-```
-```{r}
-ev <- eigen(corMat) # get eigenvalues
-ap <- parallel(subject=1300,var=9,
-  rep=100,cent=.05)
-nS <- nScree(x=ev$values, aparallel=ap$eigen$qevpea)
-plotnScree(nS)
-```
-
-Extracción
-
-```{r}
-fac_pa <- fa(r = democracia_fa, nfactors = 3, fm= "pa")
-#summary(fac_pa)
-fac_pa
-```
-
-Maximum likelihood
-
-```{r}
-fac_ml <- fa(r = democracia_fa, nfactors = 3, fm= "ml")
-summary(fac_ml)
-```
-
-Plot de cargas factoriales ml
-```{r}
-factor.plot(fac_ml, labels=rownames(fac_ml$loadings))
-```
-Obtención de Puntajes factoriales
-```{r}
-fac_ml <- fa(r = democracia_fa, nfactors = 3, fm= "ml", scores="regression")
-data2=democracia_fa
-data3 <- cbind(data2, fac_ml$scores)
-head(data3)
-```
-Rotación
-Varimax (ortogonal)
-
-```{r}
-fac_ml_var <- fa(r = democracia_fa, nfactors = 3, fm= "ml", rotate="varimax") # ortogonal
-fac_ml_var
-```
-Promax (oblicua)
-```{r}
-fac_ml_pro <- fa(r = democracia_fa, nfactors = 3, fm= "ml", rotate="promax")
-fac_ml_pro
-```
-Reporte: Tabla análisis factorial
 
 ```{r}
 tab_fa(democracia_fa, rotation = "varimax",show.comm = TRUE, title = "Análisis factorial confianza en instituciones y democracia")
@@ -705,61 +540,6 @@ corrplot(corMat, type="lower") # lower x bajo diagonal
 ```
 
 * Análisis factorial
-```{r}
-KMO(corMat)
-cortest.bartlett(corMat, n = 1300)
-scree.plot(democracia_fa)
-```
-```{r}
-fa.parallel(corMat, n.obs=1300)
-```
-```{r}
-ev <- eigen(corMat) # get eigenvalues
-ap <- parallel(subject=1300,var=7,
-  rep=100,cent=.05)
-nS <- nScree(x=ev$values, aparallel=ap$eigen$qevpea)
-plotnScree(nS)
-```
-
-Extracción
-
-```{r}
-fac_pa <- fa(r = participacion_fa, nfactors = 2, fm= "pa")
-#summary(fac_pa)
-fac_pa
-```
-
-Maximum likelihood
-
-```{r}
-fac_ml <- fa(r = participacion_fa, nfactors = 2, fm= "ml")
-summary(fac_ml)
-```
-
-Plot de cargas factoriales ml
-```{r}
-factor.plot(fac_ml, labels=rownames(fac_ml$loadings))
-```
-Obtención de Puntajes factoriales
-```{r}
-fac_ml <- fa(r = participacion_fa, nfactors = 2, fm= "ml", scores="regression")
-data2=participacion_fa
-data3 <- cbind(data2, fac_ml$scores)
-head(data3)
-```
-Rotación
-Varimax (ortogonal)
-
-```{r}
-fac_ml_var <- fa(r = participacion_fa, nfactors = 2, fm= "ml", rotate="varimax") # ortogonal
-fac_ml_var
-```
-Promax (oblicua)
-```{r}
-fac_ml_pro <- fa(r = participacion_fa, nfactors = 2, fm= "ml", rotate="promax")
-fac_ml_pro
-```
-Reporte: Tabla análisis factorial
 
 ```{r}
 tab_fa(participacion_fa, rotation = "varimax",show.comm = TRUE, title = "Análisis factorial Participación política")
@@ -830,61 +610,6 @@ corrplot(corMat, type="lower") # lower x bajo diagonal
 ```
 
 * Análisis factorial
-```{r}
-KMO(corMat)
-cortest.bartlett(corMat, n = 1300)
-scree.plot(justicia_fa)
-```
-```{r}
-fa.parallel(corMat, n.obs=1300)
-```
-```{r}
-ev <- eigen(corMat) # get eigenvalues
-ap <- parallel(subject=1300,var=6,
-  rep=100,cent=.05)
-nS <- nScree(x=ev$values, aparallel=ap$eigen$qevpea)
-plotnScree(nS)
-```
-
-Extracción
-
-```{r}
-fac_pa <- fa(r = justicia_fa, nfactors = 2, fm= "pa")
-#summary(fac_pa)
-fac_pa
-```
-
-Maximum likelihood
-
-```{r}
-fac_ml <- fa(r = justicia_fa, nfactors = 2, fm= "ml")
-summary(fac_ml)
-```
-
-Plot de cargas factoriales ml
-```{r}
-factor.plot(fac_ml, labels=rownames(fac_ml$loadings))
-```
-Obtención de Puntajes factoriales
-```{r}
-fac_ml <- fa(r = justicia_fa, nfactors = 2, fm= "ml", scores="regression")
-data2=justicia_fa
-data3 <- cbind(data2, fac_ml$scores)
-head(data3)
-```
-Rotación
-Varimax (ortogonal)
-
-```{r}
-fac_ml_var <- fa(r = justicia_fa, nfactors = 2, fm= "ml", rotate="varimax") # ortogonal
-fac_ml_var
-```
-Promax (oblicua)
-```{r}
-fac_ml_pro <- fa(r = justicia_fa, nfactors = 2, fm= "ml", rotate="promax")
-fac_ml_pro
-```
-Reporte: Tabla análisis factorial
 
 ```{r}
 tab_fa(justicia_fa, rotation = "varimax",show.comm = TRUE, title = "Análisis factorial Participación política")
