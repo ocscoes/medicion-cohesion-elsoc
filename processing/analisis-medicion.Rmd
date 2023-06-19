@@ -20,310 +20,34 @@ pacman::p_load(dplyr, car, summarytools, webshot, knitr, kableExtra, corrplot, g
 load("input/data/proc/data.RData")
 ```
 
-# Horizontal
+La estructura de este código es la siguiente: 
 
-## Sentido de pertenencia
+Primero se prueba un modelo factorial exploratorio por cada subdimensión.
+A partir de estos resultados se estiman: 
+- modelos factoriales confirmatorios por cada subdimensión 
+- modelos factoriales confirmatorias para las dimensiones horizontal y vertical (3 subdimensiones cada una)
+- 1 modelo factorial confirmatorio con las dos dimensiones horizontal y vertical
 
-### Orgullo nacional
+# Análisis factorial Exploratorio
 
-```{r echo=FALSE}
-orgullo <-plot_stackfrq(select(data, c32_01_w01), geom.colors = "RdBu", geom.size = 0.25) +
-  theme(text=element_text(family="Arial", size=12),
-        legend.position="bottom")
+## Horizontal
 
-orgullo
-ggsave(orgullo, file = "output/graphs/1-orgullo.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
-```
-
-### Identidad nacional
-
-```{r echo=FALSE}
-identificacion <-plot_stackfrq(select(data, c32_02_w01), geom.colors = "RdBu", geom.size = 0.25) +
-  theme(text=element_text(family="Arial", size=12),
-        legend.position="bottom")
-
-identificacion
-ggsave(identificacion, file = "output/graphs/2-identidad.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
-```
-
+### Pertenencia nacional
 ```{r echo=FALSE}
 corrplot.mixed(cor(dplyr::select(data, c32_01_w01, c32_02_w01),
                             use = "na.or.complete"))
 
 ```
 
-```{r}
-# Promedio simple identificacion con el pais 
-data <- data %>%
-  rowwise() %>%
-  mutate(pertenencia_w01 =
-           mean(c(c32_01_w01, c32_02_w01), na.rm = T))
-```
-
-## Calidad de vida en el vecindario
-
-```{r echo=FALSE}
-vecinos = round(prop.table(table(categorias=data$t01_w01)),2)
-vecinos = as.data.frame(vecinos)
-vecinos$categorias <- factor(vecinos$categorias, levels = c(1, 2, 3, 4, 5), labels = c("Muy poco", "Poco", "Algo", "Bastante", "Mucho"))
-conf_vecinos<-ggplot(vecinos,aes(x=2,y=-Freq, fill=categorias))+
-  geom_bar(stat = "identity",
-           color="white")+
-    geom_text(aes(label = scales::percent(Freq)),
-              position=position_stack(vjust=0.5),color="black",size=6)+
-  coord_polar(theta = "y")+
-  scale_fill_brewer(palette = 1)+
-    theme_void()+
-  theme(legend.title = element_blank())+
-  xlim(0.5,2.5)
-conf_vecinos
-
-
-ggsave(conf_vecinos, file = "output/graphs/3-confianza-vecinos.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
-```
-
-```{r echo=FALSE}
-cohesion_barrial <-plot_stackfrq(select(data, t02_01_w01, t02_02_w01, t02_03_w01, t02_04_w01), geom.colors = "RdBu", geom.size = 0.45) +
-  theme(text=element_text(family="Arial", size=12),
-        legend.position="bottom")
-
-cohesion_barrial
-ggsave(cohesion_barrial, file = "output/graphs/4-cohesion-barrial.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
-```
-
-```{r echo=FALSE}
-cohesion_barrial_cor <-
-  data %>%
-  dplyr::select(t02_01_w01, t02_02_w01, t02_03_w01, t02_04_w01) %>%
-  lavaan::lavCor(., ordered=names(.))
-diag(cohesion_barrial_cor) = NA
-rownames(cohesion_barrial_cor) <- c("A. Este barrio es ideal para mi",
-                          "B. Me siento integrado/a en este barrio",
-                          "C. Me identifico con la gente de este barrio",
-                          "D. Este barrio es parte de mi")
-colnames(cohesion_barrial_cor) <-c("(A)", "(B)","(C)", "(D)")
-
-png("output/graphs/cohesion-barrial_cor.png", width=600,height=300, pointsize = 10)
-par(family="Arial", size= 10)
-corrplot::corrplot(cohesion_barrial_cor,
-  method = "color",
-  addCoef.col = "#000390",
-  type = "upper",
-  tl.col = "black",
-  col=colorRampPalette(c("white","#0068DC"))(12),
-  bg = "white",
-  na.label = "-",
-  lower.col = "black")
-dev.off()
-```
-
-```{r echo=FALSE}
-sociabilidad_barrial <-plot_stackfrq(select(data, t03_01_w01, t03_02_w01, t03_03_w01, t03_04_w01), geom.colors = "RdBu", geom.size = 0.45) +
-  theme(text=element_text(family="Arial", size=12),
-        legend.position="bottom")
-
-sociabilidad_barrial
-ggsave(sociabilidad_barrial, file = "output/graphs/5-sociabilidad-barrial.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
-```
-
-```{r echo=FALSE}
-sociabilidad_barrial_cor <-
-  data %>%
-  dplyr::select(t03_01_w01, t03_02_w01, t03_03_w01, t03_04_w01) %>%
-  lavaan::lavCor(., ordered=names(.))
-diag(sociabilidad_barrial_cor) = NA
-rownames(sociabilidad_barrial_cor) <- c("A. En este barrio es fácil hacer amigos",
-                          "B. La gente en este barrio es sociable",
-                          "C. La gente en este barrio es cordial",
-                          "D. La gente en este barrio es colaboradora")
-colnames(sociabilidad_barrial_cor) <-c("(A)", "(B)","(C)", "(D)")
-
-png("output/graphs/sociabilidad-barrial_cor.png", width=600,height=300, pointsize = 10)
-par(family="Arial", size= 10)
-corrplot::corrplot(sociabilidad_barrial_cor,
-  method = "color",
-  addCoef.col = "#000390",
-  type = "upper",
-  tl.col = "black",
-  col=colorRampPalette(c("white","#0068DC"))(12),
-  bg = "white",
-  na.label = "-",
-  lower.col = "black")
-dev.off()
-```
-
-```{r echo=FALSE}
-sat_residencial<-plot_stackfrq(select(data, t06_01_w01, t06_02_w01, t06_03_w01, t06_04_w01, t06_05_w01, t06_06_w01, t06_07_w01, t06_08_w01), geom.colors = "RdBu", geom.size = 0.9) +
-  theme(text=element_text(family="Arial", size=12),
-        legend.position="bottom")
-
-sat_residencial
-ggsave(sat_residencial, file = "output/graphs/6-satisfaccion-residencial.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
-```
-
-```{r echo=FALSE}
-sat_residencial_cor <-
-  data %>%
-  dplyr::select(t06_01_w01, t06_02_w01, t06_03_w01, t06_04_w01, t06_05_w01, t06_06_w01, t06_07_w01, t06_08_w01) %>%
-  lavaan::lavCor(., ordered=names(.))
-diag(sat_residencial_cor) = NA
-rownames(sat_residencial_cor) <- c("A. Seguridad del barrio",
-                          "B. Conectividad",
-                          "C. Areas verdes y de recreacion disponibles",
-                          "D. Limpieza y belleza del barrio",
-                          "E. Proximidad al lugar de actividad principal",
-                          "F. Proximidad a colegios de buena calidad",
-                          "G. Proximidad a areas de comercio",
-                          "H. Proximidad con familiares y/o amigos")
-colnames(sat_residencial_cor) <-c("(A)", "(B)","(C)", "(D)", "(E)", "(F)", "(G)", "(H)")
-
-png("output/graphs/satisfaccion-residencial_cor.png", width=600,height=300, pointsize = 10)
-par(family="Arial", size= 10)
-corrplot::corrplot(sat_residencial_cor,
-  method = "color",
-  addCoef.col = "#000390",
-  type = "upper",
-  tl.col = "black",
-  col=colorRampPalette(c("white","#0068DC"))(12),
-  bg = "white",
-  na.label = "-",
-  lower.col = "black")
-dev.off()
-```
-
-#### Análisis factorial confirmatorio
-
-* Primero explorar correlación
+### Vecindario
 
 ```{r}
 cohesion_barrial_afc <- data %>% dplyr::select(t01_w01, t02_01_w01, t02_02_w01, t02_03_w01, t02_04_w01, t03_01_w01, t03_02_w01, t03_03_w01, t03_04_w01, t06_01_w01, t06_02_w01, t06_03_w01, t06_04_w01, t06_05_w01, t06_06_w01, t06_07_w01, t06_08_w01)
 
-corMat  <- cor(cohesion_barrial_afc, use = "complete.obs")
-options(digits=2)
-corMat # muestra matriz
-corrplot(corMat, type="lower") # lower x bajo diagonal
+tab_fa(cohesion_barrial_afc, rotation = "varimax",show.comm = TRUE, title = "Análisis factorial vecindario")
 ```
 
-* Análisis factorial
-
-```{r}
-tab_fa(cohesion_barrial_afc, rotation = "varimax",show.comm = TRUE, title = "Análisis factorial cohesion")
-```
-
-```{r echo=FALSE}
-# Promedios simples cohesion territorial
-data <- data %>%
-  rowwise() %>%
-  mutate(cohesion_territorial_w01 =
-           mean(c(t02_01_w01, t02_02_w01, t02_03_w01, t02_04_w01), na.rm = T))
-```
-
-## Redes sociales
-
-### Confianza interpersonal
-
-```{r echo=FALSE}
-conf_interpersonal <- plot_stackfrq(select(data, c02_rec_w01, c03_rec_w01, c04_rec_w01), geom.colors = "RdBu", geom.size = 0.33) +
-  theme(text=element_text(family="Arial", size=12),
-        legend.position="bottom")
-conf_interpersonal
-
-ggsave(conf_interpersonal, file = "output/graphs/7-confianza-interpersonal.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
-```
-
-```{r echo=FALSE}
-conf_interpersonal_cor<-
-  data %>%
-  dplyr::select(c02_rec_w01, c03_rec_w01, c04_rec_w01) %>%
-  lavaan::lavCor(., ordered=names(.))
-diag(conf_interpersonal_cor) = NA
-rownames(conf_interpersonal_cor) <- c("A. Se puede confiar en la mayoria de las personas",
-                                  "B. La mayoria de las personas trata de ayudar a los demas",
-                                  "C. La mayoria de las personas trata de ser justa")
-colnames(conf_interpersonal_cor) <-c("(A)", "(B)","(C)")
-
-png("output/graphs/confianza-interpersonal_cor.png", width=600,height=300, pointsize = 10)
-par(family="Arial", size= 10)
-corrplot::corrplot(conf_interpersonal_cor,
-  method = "color",
-  addCoef.col = "#000390",
-  type = "upper",
-  tl.col = "black",
-  col=colorRampPalette(c("white","#0068DC"))(12),
-  bg = "white",
-  na.label = "-",
-  lower.col = "black")
-dev.off()
-
-ltm::cronbach.alpha(data %>%
-  dplyr::select(c02_rec_w01, c03_rec_w01, c04_rec_w01), na.rm=TRUE)
-
-ltm::cronbach.alpha(data %>%
-  dplyr::select(c02_rec_w01, c03_rec_w01), na.rm=TRUE)
-
-```
-
-```{r}
-# Promedio simple "Se puede confiar en la mayoría de las personas" y "la mayoría de las personas trata de ayudar a los demás".
-data <- data %>%
-  rowwise() %>%
-  mutate(conf_interpersonal_w01 =
-           mean(c(c02_rec_w01, c03_rec_w01), na.rm = T))
-```
-
-### Solidaridad
-
-```{r echo=FALSE}
-solidaridad <- plot_stackfrq(select(data, c07_01_w01,
-                         c07_02_w01,
-                         c07_03_w01,
-                         c07_04_w01,
-                         c07_05_w01,
-                         c07_06_w01,
-                         c07_07_w01,
-                         c07_08_w01), geom.size = 0.9) +
-  theme(text=element_text(family="Arial", size=12),
-        legend.position="bottom")
-
-solidaridad
-ggsave(solidaridad, file = "output/graphs/8-solidaridad.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
-
-```
-
-```{r echo=FALSE}
-solidaridad_cor <-
-  data %>%
-  dplyr::select(c07_01_w01,c07_02_w01,c07_03_w01,c07_04_w01,c07_05_w01,c07_06_w01,c07_07_w01,c07_08_w01) %>%
-  lavaan::lavCor(., ordered=names(.))
-diag(solidaridad_cor) = NA
-rownames(solidaridad_cor) <- c("A. Visita la casa de algún vecino",
-                          "B. Asiste a reunión sobre temas de interés publico",
-                          "C. Han venido amigos a visitarlo a su casa",
-                          "D. Hace voluntariado",
-                          "E. Dona dinero a una obra social o de caridad",
-                          "F. Presta una suma de dinero de $10.000.- o más",
-                          "G. Conversa con persona en problemas o deprimida",
-                          "H. Ayuda a alguien a conseguir trabajo")
-colnames(solidaridad_cor) <-c("(A)", "(B)","(C)", "(D)", "(E)", "(F)", "(G)", "(H)")
-
-png("output/graphs/solidaridad_cor.png", width=600,height=300, pointsize = 10)
-par(family="Arial", size= 10)
-corrplot::corrplot(solidaridad_cor,
-  method = "color",
-  addCoef.col = "#000390",
-  type = "upper",
-  tl.col = "black",
-  col=colorRampPalette(c("white","#0068DC"))(12),
-  bg = "white",
-  na.label = "-",
-  lower.col = "black")
-dev.off()
-```
-
-#### Análisis factorial confirmatorio
-
-* Primero explorar correlación
-
+### Redes sociales
 ```{r}
 solidaridad_fa <- data %>% dplyr::select(c02_rec_w01, c03_rec_w01, c04_rec_w01, c07_01_w01,
                          c07_02_w01,
@@ -336,442 +60,485 @@ solidaridad_fa <- data %>% dplyr::select(c02_rec_w01, c03_rec_w01, c04_rec_w01, 
 solidaridad_fa$c02_rec_w01 <- as.numeric(solidaridad_fa$c02_rec_w01)
 solidaridad_fa$c03_rec_w01 <- as.numeric(solidaridad_fa$c03_rec_w01)
 solidaridad_fa$c04_rec_w01 <- as.numeric(solidaridad_fa$c04_rec_w01)
+label(solidaridad_fa$c02_rec_w01) <- "Se puede confiar en la mayoria de las personas (2016)."
+label(solidaridad_fa$c03_rec_w01) <- "La mayoria de las personas tratan de ayudar a las demas (2016)."
+label(solidaridad_fa$c04_rec_w01) <- "La mayoria de las personas tratan de ser justas (2016)."
 
-corMat  <- cor(solidaridad_fa, use = "complete.obs")
-options(digits=2)
-corMat # muestra matriz
-corrplot(corMat, type="lower") # lower x bajo diagonal
+tab_fa(solidaridad_fa, rotation = "varimax",show.comm = TRUE, title = "Análisis factorial redes sociales")
 ```
 
-* Análisis factorial
+### Redes sociales 2
 
 ```{r}
-tab_fa(solidaridad_fa, rotation = "varimax",show.comm = TRUE, title = "Análisis factorial cohesion")
+solidaridad_fa2 <- data %>% dplyr::select(c02_rec_w01, c03_rec_w01, c04_rec_w01, c07_01_w01,
+                         c07_02_w01,
+                         c07_03_w01,
+                         c07_05_w01)
+solidaridad_fa2$c02_rec_w01 <- as.numeric(solidaridad_fa2$c02_rec_w01)
+solidaridad_fa2$c03_rec_w01 <- as.numeric(solidaridad_fa2$c03_rec_w01)
+solidaridad_fa2$c04_rec_w01 <- as.numeric(solidaridad_fa2$c04_rec_w01)
+label(solidaridad_fa2$c02_rec_w01) <- "Se puede confiar en la mayoria de las personas (2016)."
+label(solidaridad_fa2$c03_rec_w01) <- "La mayoria de las personas tratan de ayudar a las demas (2016)."
+label(solidaridad_fa2$c04_rec_w01) <- "La mayoria de las personas tratan de ser justas (2016)."
+
+tab_fa(solidaridad_fa2, rotation = "varimax",show.comm = TRUE, title = "Análisis factorial redes sociales")
 ```
+
+## Vertical 
+
+### confianza institucional
 
 ```{r}
-# Promedios simples solidaridad
-data <- data %>%
-  rowwise() %>%
-  mutate(solidaridad_w01 =
-           mean(c(c07_05_w01, c07_06_w01, c07_07_w01, c07_08_w01), na.rm = T))
-```
+democracia_fa <- data %>% dplyr::select(c05_01_w01,c05_02_w01,c05_03_w01,c05_04_w01,c05_05_w01,c05_06_w01,c05_07_w01, c01_w01)
 
-# Vertical
-
-## Confianza en instituciones y democracia
-
-### Confianza en instituciones
-
-```{r echo=FALSE}
-confianza_institucional <- plot_stackfrq(select(data,c05_01_w01,
-                         c05_02_w01,
-                         c05_03_w01,
-                         c05_04_w01,
-                         c05_05_w01,
-                         c05_06_w01,
-                         c05_07_w01,
-                         c05_08_w01), geom.size = 0.9) +
-  theme(text=element_text(family="Arial", size=12),
-        legend.position="bottom")
-
-confianza_institucional
-ggsave(confianza_institucional, file = "output/graphs/confianza-institucional.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
-
-```
-
-### Actitud hacia la democracia
-
-```{r echo=FALSE}
-democracia <-plot_stackfrq(select(data, c01_w01), geom.colors = "RdBu", geom.size = 0.25) +
-  theme(text=element_text(family="Arial", size=12),
-        legend.position="bottom")
-
-democracia
-ggsave(democracia, file = "output/graphs/democracia.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
-```
-
-```{r echo=FALSE}
-conf_institucional_cor<-
-  data %>%
-  dplyr::select(c05_01_w01,c05_02_w01,c05_03_w01,c05_04_w01,c05_05_w01,c05_06_w01,c05_07_w01,c05_08_w01, c01_w01) %>%
-  lavaan::lavCor(., ordered=names(.))
-diag(conf_institucional_cor) = NA
-rownames(conf_institucional_cor) <- c("A. Confianza en el gobierno",
-                          "B. Confianza en los partidos políticos",
-                          "C. Confianza en Carabineros",
-                          "D. Confianza en los sindicatos",
-                          "E. Confianza en el poder judicial",
-                          "F. Confianza en las empresas privadas",
-                          "G. Confianza en el congreso nacional",
-                          "H. Confianza en el presidente/a de la república",
-                          "I. Satisfacción con la Democracia")
-colnames(conf_institucional_cor) <-c("(A)", "(B)","(C)", "(D)", "(E)", "(F)", "(G)", "(H)", "(I)")
-
-
-png("output/graphs/confianza-institucional_cor.png", width=600,height=300, pointsize = 10)
-par(family="Arial", size= 10)
-corrplot::corrplot(conf_institucional_cor,
-  method = "color",
-  addCoef.col = "#000390",
-  type = "upper",
-  tl.col = "black",
-  col=colorRampPalette(c("white","#0068DC"))(12),
-  bg = "white",
-  na.label = "-",
-  lower.col = "black")
-dev.off()
-```
-
-#### Análisis factorial confirmatorio
-
-* Primero explorar correlación
-
-```{r}
-democracia_fa <- data %>% dplyr::select(c05_01_w01,c05_02_w01,c05_03_w01,c05_04_w01,c05_05_w01,c05_06_w01,c05_07_w01,c05_08_w01, c01_w01)
-
-corMat  <- cor(democracia_fa, use = "complete.obs")
-options(digits=2)
-corMat # muestra matriz
-corrplot(corMat, type="lower") # lower x bajo diagonal
-```
-
-* Análisis factorial
-
-```{r}
 tab_fa(democracia_fa, rotation = "varimax",show.comm = TRUE, title = "Análisis factorial confianza en instituciones y democracia")
 ```
+
+### confianza institucional 2
+
 ```{r}
-# Promedios simples confianza institucional
-data <- data %>%
-  rowwise() %>%
-  mutate(conf_institucional_w01 =
-           mean(c(c05_01_w01, c05_08_w01, c05_02_w01), na.rm = T))
+democracia_fa2 <- data %>% dplyr::select(c05_01_w01,c05_02_w01,c05_03_w01,c05_04_w01,c05_05_w01,c05_06_w01,c05_07_w01)
+
+tab_fa(democracia_fa2, rotation = "varimax",show.comm = TRUE, title = "Análisis factorial confianza en instituciones")
 ```
 
-## Participación política
-
-### Participación cívica
-
-```{r echo=FALSE}
-part_civica <- plot_stackfrq(select(data, c08_01_w01,
-                         c08_02_w01,
-                         c08_03_w01,
-                         c08_04_w01), geom.size = 0.45) +
-  theme(text=element_text(family="Arial", size=12),
-        legend.position="bottom")
-
-part_civica
-ggsave(part_civica, file = "output/graphs/participacion-civica.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
-```
-
-```{r echo=FALSE}
-part_civica_cor<-
-  data %>%
-  dplyr::select(c08_01_w01, c08_02_w01, c08_03_w01, c08_04_w01) %>%
-  lavaan::lavCor(., ordered=names(.))
-diag(part_civica_cor) = NA
-rownames(part_civica_cor) <- c("A. Firma una carta o petición",
-                          "B. Asiste a una marcha o manifestación",
-                          "C. Participa en una huelga",
-                          "D. Usa redes sociales para expresar su opinión")
-colnames(part_civica_cor) <-c("(A)", "(B)","(C)", "(D)")
-
-png("output/graphs/participacion-civica_cor.png", width=600,height=300, pointsize = 10)
-par(family="Arial", size= 10)
-corrplot::corrplot(part_civica_cor,
-  method = "color",
-  addCoef.col = "#000390",
-  type = "upper",
-  tl.col = "black",
-  col=colorRampPalette(c("white","#0068DC"))(12),
-  bg = "white",
-  na.label = "-",
-  lower.col = "black")
-dev.off()
-```
-
-### Interés político
-```{r echo=FALSE}
-interes <- plot_stackfrq(select(data, c13_w01, c14_01_w01, c14_02_w01), geom.size = 0.45) +
-  theme(text=element_text(family="Arial", size=12),
-        legend.position="bottom")
-
-interes
-ggsave(interes, file = "output/graphs/interes.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
-```
-
-```{r echo=FALSE}
-part_civica_cor<-
-  data %>%
-  dplyr::select(c13_w01, c14_01_w01, c14_02_w01) %>%
-  lavaan::lavCor(., ordered=names(.))
-diag(part_civica_cor) = NA
-rownames(part_civica_cor) <- c("A. Interés en la política",
-                          "B. Habla de política con familiares o amigos",
-                          "C. Se informa sobre política en medios de comunicación")
-colnames(part_civica_cor) <-c("(A)", "(B)","(C)")
-
-png("output/graphs/participacion-civica_cor.png", width=600,height=300, pointsize = 10)
-par(family="Arial", size= 10)
-corrplot::corrplot(part_civica_cor,
-  method = "color",
-  addCoef.col = "#000390",
-  type = "upper",
-  tl.col = "black",
-  col=colorRampPalette(c("white","#0068DC"))(12),
-  bg = "white",
-  na.label = "-",
-  lower.col = "black")
-dev.off()
-```
-
-#### Análisis factorial confirmatorio
-
-* Primero explorar correlación
+### Participación política
 
 ```{r}
 participacion_fa <- data %>% dplyr::select(c08_01_w01, c08_02_w01, c08_03_w01, c08_04_w01, c13_w01, c14_01_w01, c14_02_w01)
 
-corMat  <- cor(participacion_fa, use = "complete.obs")
-options(digits=2)
-corMat # muestra matriz
-corrplot(corMat, type="lower") # lower x bajo diagonal
-```
-
-* Análisis factorial
-
-```{r}
 tab_fa(participacion_fa, rotation = "varimax",show.comm = TRUE, title = "Análisis factorial Participación política")
 ```
 
-
-## Percepción de justicia
-
-```{r echo=FALSE}
-justicia <-plot_stackfrq(select(data, c18_09_w01,c18_10_w01), geom.colors = "RdBu", geom.size = 0.25) +
-  theme(text=element_text(family="Arial", size=12),
-        legend.position="bottom")
-
-justicia
-ggsave(justicia, file = "output/graphs/justicia.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
-```
-
-```{r echo=FALSE}
-corrplot.mixed(cor(dplyr::select(data, c18_09_w01, c18_10_w01),
-                   use = "na.or.complete"))
-
-```
-
-```{r}
-# Promedio simple percepcion de justicia
-data <- data %>%
-  rowwise() %>%
-  mutate(justicia_w01 =
-           mean(c(c18_09_w01, c18_10_w01), na.rm = T))
-```
-
-### Movilidad social
-
-```{r echo=FALSE}
-movilidad <-plot_stackfrq(select(data, d05_01_w01,d05_02_w01,d05_03_w01,d05_04_w01), geom.colors = "RdBu", geom.size = 0.25) +
-  theme(text=element_text(family="Arial", size=12),
-        legend.position="bottom")
-
-movilidad
-ggsave(movilidad, file = "output/graphs/movilidad.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
-```
-
-```{r echo=FALSE}
-corrplot.mixed(cor(dplyr::select(data, d05_01_w01,d05_02_w01,d05_03_w01,d05_04_w01),
-                   use = "na.or.complete"))
-
-```
-
-```{r}
-# Promedio simple percepcion de justicia
-data <- data %>%
-  rowwise() %>%
-  mutate(justicia_w01 =
-           mean(c(c18_09_w01, c18_10_w01), na.rm = T))
-```
-
-#### Análisis factorial confirmatorio
-
-* Primero explorar correlación
+### Percepción justicia
 
 ```{r}
 justicia_fa <- data %>% dplyr::select(c18_09_w01, c18_10_w01, d05_01_w01,d05_02_w01,d05_03_w01,d05_04_w01)
 
-corMat  <- cor(justicia_fa, use = "complete.obs")
-options(digits=2)
-corMat # muestra matriz
-corrplot(corMat, type="lower") # lower x bajo diagonal
+tab_fa(justicia_fa, rotation = "varimax",show.comm = TRUE, title = "Análisis factorial Percepción justicia")
 ```
 
-* Análisis factorial
+# Análisis factorial confirmatorio
+
+## 6 modelos
+### Horizontal
+
+#### Sentido de pertenencia
+
+* Orgullo nacional
+* Identidad nacional
 
 ```{r}
-tab_fa(justicia_fa, rotation = "varimax",show.comm = TRUE, title = "Análisis factorial Participación política")
+pertenencia_nacional_afc <- data %>% dplyr::select(c32_01_w01, c32_02_w01)
+
+cfa_pertenencia <- '
+Pertenencia =~ c32_01_w01 + c32_02_w01
+'
+
+fit_pertenencia <- cfa(cfa_pertenencia, data = pertenencia_nacional_afc)
+
+fitmeasures(fit_pertenencia,
+            fit.measures = c("chisq", "df", "pvalue", 
+                             "cfi", "rmsea"))
+
+semPaths(fit_pertenencia, # modelo ajustado
+         what = "std",  # mostrar cargas estandarizadas
+         label.cex = 1, edge.label.cex = 1, # tamaño flechas y caracteres
+         residuals = FALSE, # no mostrar residuos
+         edge.color = "black", # color flechas
+         nCharNodes = 0,
+         label.prop=0)
 ```
 
-# Tabla resumen final
+#### Calidad de vida en el vecindario
 
-```{r echo=FALSE, eval=FALSE}
-# -------------------------------------------------------------------------
-label(data$lazos_w01) <- "Cantidad de personas que se conocen con diferentes ocupaciones"
+* Análisis factorial confirmatorio
 
-cohesion.item=
-  c(label(data$lazos_w01),
-    label(data$c02_rec_w01),
-    label(data$c03_rec_w01),
-    label(data$c06_04_w01),
-    label(data$c06_05_w01),
-    label(data$c06_06_w01),
-    label(data$c32_01_w01),
-    label(data$c32_02_w01),
-    label(data$c18_09_w01),
-    label(data$c18_10_w01),
-    label(data$c05_01_w01),
-    label(data$c05_08_w01), 
-    label(data$c05_02_w01),
-    label(data$c07_05_w01),
-    label(data$c07_06_w01),
-    label(data$c07_07_w01),
-    label(data$c07_08_w01),
-    label(data$c08_01_w01),
-    label(data$c08_02_w01),
-    label(data$c08_03_w01),
-    label(data$c08_04_w01),
-    label(data$t02_01_w01),
-    label(data$t02_02_w01),
-    label(data$t02_03_w01),
-    label(data$t02_04_w01))
-cohesion.min = 
-  c(paste0(min(as.numeric(data$lazos_w01)), " - ", max(as.numeric(data$lazos_w01))),
-    rep(paste0(min(as.numeric(data$conf_interpersonal_w01), na.rm = T), " - ", max(as.numeric(data$conf_interpersonal_w01), na.rm = T)),2),
-    rep(paste0(min(as.numeric(data$diversidad_w01), na.rm = T), " - ", max(as.numeric(data$diversidad_w01), na.rm = T)),3),
-    rep(paste0(min(as.numeric(data$identificacion_w01), na.rm = T), " - ", max(as.numeric(data$identificacion_w01), na.rm = T)),2),
-    rep(paste0(min(as.numeric(data$justicia_w01), na.rm = T), " - ", max(as.numeric(data$justicia_w01), na.rm = T)),2),
-    rep(paste0(min(as.numeric(data$conf_institucional_w01), na.rm = T), " - ", max(as.numeric(data$conf_institucional_w01), na.rm = T)),3),
-    rep(paste0(min(as.numeric(data$solidaridad_w01), na.rm = T), " - ", max(as.numeric(data$solidaridad_w01), na.rm = T)),4),
-    rep(paste0(min(as.numeric(data$participacion_w01), na.rm = T), " - ", max(as.numeric(data$participacion_w01), na.rm = T)),4),
-    rep(paste0(min(as.numeric(data$cohesion_territorial_w01), na.rm = T), " - ", max(as.numeric(data$cohesion_territorial_w01), na.rm = T)),4))
-cohesion.mean = 
-  c(paste0(round(mean(as.numeric(data$lazos_w01)),3), " (", round(sd(as.numeric(data$lazos_w01)),3), ")"),
-    rep(paste0(round(mean(as.numeric(data$conf_interpersonal_w01), na.rm = T),3), " (", round(sd(as.numeric(data$conf_interpersonal_w01), na.rm = T),3), ")"),2),
-    rep(paste0(round(mean(as.numeric(data$diversidad_w01), na.rm = T),3), " (", round(sd(as.numeric(data$diversidad_w01), na.rm = T),3), ")"),3),
-    rep(paste0(round(mean(as.numeric(data$identificacion_w01), na.rm = T),3), " (", round(sd(as.numeric(data$identificacion_w01), na.rm = T),3), ")"),2),
-    rep(paste0(round(mean(as.numeric(data$justicia_w01), na.rm = T),3), " (", round(sd(as.numeric(data$justicia_w01), na.rm = T),3), ")"),2),
-    rep(paste0(round(mean(as.numeric(data$conf_institucional_w01), na.rm = T),3), " (", round(sd(as.numeric(data$conf_institucional_w01), na.rm = T),3), ")"),3),
-    rep(paste0(round(mean(as.numeric(data$solidaridad_w01), na.rm = T),3), " (", round(sd(as.numeric(data$solidaridad_w01), na.rm = T),3), ")"),4),
-    rep(paste0(round(mean(as.numeric(data$participacion_w01), na.rm = T),3), " (", round(sd(as.numeric(data$participacion_w01), na.rm = T),3), ")"),4),
-    rep(paste0(round(mean(as.numeric(data$cohesion_territorial_w01), na.rm = T),3), " (", round(sd(as.numeric(data$cohesion_territorial_w01), na.rm = T),3), ")"),4))
+```{r}
+# probar cuatro dimensiones
+cfa_barrial <- '
+Apego =~ t02_01_w01 + t02_02_w01 + t02_03_w01 + t02_04_w01
+'
+fit_barrial <- cfa(cfa_barrial, data=cohesion_barrial_afc)
+
+fitmeasures(fit_barrial,
+            fit.measures = c("chisq", "df", "pvalue", 
+                             "cfi", "rmsea"))
+
+semPaths(fit_barrial, # modelo ajustado
+         what = "std",  # mostrar cargas estandarizadas
+         label.cex = 1, edge.label.cex = 1, # tamaño flechas y caracteres
+         residuals = FALSE, # no mostrar residuos
+         edge.color = "black", # color flechas
+         nCharNodes = 0,
+         label.prop=0)
 ```
 
-```{r echo=FALSE, eval=FALSE}
-collapse_rows_cohesion <-
-    data.frame(vars = c(rep("Lazos", 1),
-           rep("Confianza interpersonal", 2),
-           rep("Reconocimiento y respeto de la diversidad", 3),
-           rep("Identificación con el país", 2),
-           rep("Percepción de justicia", 2),
-           rep("Confianza institucional", 3),
-           rep("Solidaridad", 4),
-           rep("Participación cívica", 4),
-           rep("Cohesión territorial", 4)),
-           cohesion.item,cohesion.min,cohesion.mean)
+### Redes sociales
+
+* Confianza interpersonal
+* solidaridad
+
+* Análisis factorial confirmatorio
+```{r}
+# probar dos dimensiones
+cfa_redes <- '
+confianza =~ c02_rec_w01 + c03_rec_w01 + c04_rec_w01
+solidaridad =~ c07_01_w01 + c07_02_w01 + c07_03_w01
+'
+fit_redes <- cfa(cfa_redes, data=solidaridad_fa)
+
+fitmeasures(fit_redes,
+            fit.measures = c("chisq", "df", "pvalue", 
+                             "cfi", "rmsea"))
+
+semPaths(fit_redes, # modelo ajustado
+         what = "std",  # mostrar cargas estandarizadas
+         label.cex = 1, edge.label.cex = 1, # tamaño flechas y caracteres
+         residuals = FALSE, # no mostrar residuos
+         edge.color = "black", # color flechas
+         nCharNodes = 0,
+         label.prop=0)
 ```
 
-```{r echo=FALSE, eval=FALSE}
-knitr::kable(collapse_rows_cohesion, "html",
-             col.names =  c("Subdimensión",
-                            "Indicadores",
-                            "Min - max",
-                            "Mean (sd)")) %>%
-  column_spec(1, bold = T) %>%
-  collapse_rows(columns = 1:4, valign = "middle") %>%
-  kable_styling(bootstrap_options = c("striped", "hover")) %>%
-  cat(., file = "output/tables/descriptivos_cohesion.html")
 
-colnames(collapse_rows_cohesion) <- c("Subdimensión",
-                            "Indicadores",
-                            "Min - max",
-                            "Mean (sd)")
+### Vertical
 
-write_xlsx(collapse_rows_cohesion, path = "output/tables-excel-cepal/cuadro 1.xlsx")
+#### Confianza en instituciones y democracia
+
+* Confianza en instituciones
+
+* Actitud hacia la democracia
+
+* Análisis factorial confirmatorio
+```{r}
+# probar dos dimensiones
+cfa_democracia <- '
+gob_part =~ c05_01_w01 + c05_02_w01
+cong_jud_emp =~ c05_05_w01 + c05_06_w01 + c05_07_w01
+'
+fit_democracia <- cfa(cfa_democracia, data=democracia_fa)
+
+fitmeasures(fit_democracia,
+            fit.measures = c("chisq", "df", "pvalue", 
+                             "cfi", "rmsea"))
+
+semPaths(fit_democracia, # modelo ajustado
+         what = "std",  # mostrar cargas estandarizadas
+         label.cex = 1, edge.label.cex = 1, # tamaño flechas y caracteres
+         residuals = FALSE, # no mostrar residuos
+         edge.color = "black", # color flechas
+         nCharNodes = 0,
+         label.prop=0)
 ```
 
-# Matriz de correlaciones final
+#### Participación política
 
-```{r echo=FALSE, eval=FALSE}
-cohesion_social_cor <-
-  data %>%
-  dplyr::select(lazos_w01, conf_interpersonal_w01, diversidad_w01, identificacion_w01, justicia_w01, conf_institucional_w01, solidaridad_w01,participacion_w01, cohesion_territorial_w01) %>%
-  lavaan::lavCor(., ordered=names(.))
-diag(cohesion_social_cor) = NA
-rownames(cohesion_social_cor) <- c("A. Lazos",
-                          "B. Confianza interpersonal",
-                          "C. Reconocimiento y respeto de la diversidad",
-                          "D. Identificación con el país",
-                          "E. Percepción de justicia",
-                          "F. Confianza institucional",
-                          "G. Solidaridad",
-                          "H. Participación cívica",
-                          "I. Cohesión territorial")
-colnames(cohesion_social_cor) <-c("(A)", "(B)","(C)", "(D)", "(E)", "(F)", "(G)", "(H)", "(I)")
+* Participación cívica
 
-png("output/graphs/cohesion_social_cor.png", width=600,height=300, pointsize = 10)
-par(family="Arial", size= 10)
-corrplot::corrplot(cohesion_social_cor,
-  method = "color",
-  addCoef.col = "#000390",
-  type = "upper",
-  tl.col = "black",
-  col=colorRampPalette(c("white","#0068DC"))(12),
-  bg = "white",
-  na.label = "-",
-  lower.col = "black")
-dev.off()
+* Interés político
 
-svglite("output/figuras-svg-cepal/Grafico 26 Asociacion de las subdimensiones de cohesion social.svg", width = 7, height = 7, pointsize = 10)
-par(family="Arial", size= 10)
-corrplot::corrplot(cohesion_social_cor,
-  method = "color",
-  addCoef.col = "#000390",
-  type = "upper",
-  tl.col = "black",
-  col=colorRampPalette(c("white","#0068DC"))(12),
-  bg = "white",
-  na.label = "-",
-  lower.col = "black")
-dev.off()
+* Análisis factorial confirmatorio
+```{r}
+# probar dos dimensiones
+cfa_politico <- '
+participacion =~ c08_01_w01 + c08_02_w01 + c08_03_w01 + c08_04_w01
+interes =~ c13_w01 + c14_01_w01 + c14_02_w01
+'
+fit_politico <- cfa(cfa_politico, data=participacion_fa)
+
+fitmeasures(fit_politico,
+            fit.measures = c("chisq", "df", "pvalue", 
+                             "cfi", "rmsea"))
+
+semPaths(fit_politico, # modelo ajustado
+         what = "std",  # mostrar cargas estandarizadas
+         label.cex = 1, edge.label.cex = 1, # tamaño flechas y caracteres
+         residuals = FALSE, # no mostrar residuos
+         edge.color = "black", # color flechas
+         nCharNodes = 0,
+         label.prop=0)
 ```
 
-# Análisis factorial exploratorio final
+#### Percepción de justicia
 
-```{r echo=FALSE, eval=FALSE}
-cohesion_social_fa <-
-  data %>%
-  dplyr::select(lazos_w01, conf_interpersonal_w01, diversidad_w01, identificacion_w01, justicia_w01, conf_institucional_w01, solidaridad_w01,participacion_w01, cohesion_territorial_w01)
+* Meritocracia
 
-psych::fa.parallel(cohesion_social_fa, fa="fa")
-psych::scree(cohesion_social_fa)
+* Análisis factorial confirmatorio
+```{r}
+# probar cuatro dimensiones
+cfa_justicia <- '
+meritocracia =~ c18_09_w01 + c18_10_w01
+'
+fit_justicia <- cfa(cfa_justicia, data=justicia_fa)
 
-fac_ml <- psych::fa(r = cohesion_social_fa, nfactors = 3, fm= "ml", rotate = "varimax" )
+fitmeasures(fit_justicia,
+            fit.measures = c("chisq", "df", "pvalue", 
+                             "cfi", "rmsea"))
 
-fac_ml$loadings
-# ver https://www.anthonyschmidt.co/post/2020-09-27-efa-tables-in-r/
+semPaths(fit_justicia, # modelo ajustado
+         what = "std",  # mostrar cargas estandarizadas
+         label.cex = 1, edge.label.cex = 1, # tamaño flechas y caracteres
+         residuals = FALSE, # no mostrar residuos
+         edge.color = "black", # color flechas
+         nCharNodes = 0,
+         label.prop=0)
+```
 
-source("processing/fa_table.R") 
+## Dos modelos, tres dimensiones cada uno
 
-cohesion_social_fa <-fa_table(fac_ml, .32)
-knitr::kable(cohesion_social_fa, "html") %>%
-  kable_styling(bootstrap_options = c("striped", "hover")) %>%
-  cat(., file = "output/tables/cohesion_social_fa.html")
+### Horizontal
 
-webshot(url ="output/tables/cohesion_social_fa.html", file ="output/tables/cohesion_social_fa.png", vheight = 10, vwidth = 600)
+```{r}
+horizontal_afc <- data %>% dplyr::select(c32_01_w01, c32_02_w01, t02_01_w01, t02_02_w01, t02_03_w01, t02_04_w01, c02_rec_w01, c03_rec_w01, c04_rec_w01, c07_01_w01, c07_02_w01, c07_03_w01)
+
+horizontal_afc$c02_rec_w01 <- as.numeric(horizontal_afc$c02_rec_w01)
+horizontal_afc$c03_rec_w01 <- as.numeric(horizontal_afc$c03_rec_w01)
+horizontal_afc$c04_rec_w01 <- as.numeric(horizontal_afc$c04_rec_w01)
+```
+
+* Análisis factorial confirmatorio
+```{r}
+# probar tres dimensiones
+cfa_horizontal <- '
+pertenencia =~ c32_01_w01 + c32_02_w01
+barrial =~ t02_01_w01 + t02_02_w01 + t02_03_w01 + t02_04_w01
+redes  =~ c02_rec_w01 + c03_rec_w01 + c04_rec_w01 + c07_01_w01 + c07_02_w01 + c07_03_w01
+'
+fit_horizontal <- cfa(cfa_horizontal, data=horizontal_afc)
+
+fitmeasures(fit_horizontal,
+            fit.measures = c("chisq", "df", "pvalue", 
+                             "cfi", "rmsea"))
+
+semPaths(fit_horizontal, # modelo ajustado
+         what = "std",  # mostrar cargas estandarizadas
+         label.cex = 1, edge.label.cex = 1, # tamaño flechas y caracteres
+         residuals = FALSE, # no mostrar residuos
+         edge.color = "black", # color flechas
+         nCharNodes = 0,
+         label.prop=0)
+```
+
+```{r}
+# Índices de modificación
+## Crear objeto con mi
+mod.ind <- modificationindices(fit_horizontal)
+## Mostrar mi en orden decreciente
+head(mod.ind[order(mod.ind$mi, decreasing=TRUE), ], 10) 
+```
+
+### Horizontal 2
+ 
+* Análisis factorial confirmatorio
+```{r}
+# probar tres dimensiones
+cfa_horizontal <- '
+pertenencia =~ c32_01_w01 + c32_02_w01
+barrial =~ t02_01_w01 + t02_02_w01 + t02_03_w01 + t02_04_w01
+redes  =~ c02_rec_w01 + c03_rec_w01 + c04_rec_w01 + c07_02_w01 + c07_03_w01
+'
+fit_horizontal <- cfa(cfa_horizontal, data=horizontal_afc)
+
+fitmeasures(fit_horizontal,
+            fit.measures = c("chisq", "df", "pvalue", 
+                             "cfi", "rmsea"))
+
+semPaths(fit_horizontal, # modelo ajustado
+         what = "std",  # mostrar cargas estandarizadas
+         label.cex = 1, edge.label.cex = 1, # tamaño flechas y caracteres
+         residuals = FALSE, # no mostrar residuos
+         edge.color = "black", # color flechas
+         nCharNodes = 0,
+         label.prop=0)
+```
+
+### Vertical 1
+
+```{r}
+vertical_afc <- data %>% dplyr::select(c05_01_w01, c05_02_w01, c05_05_w01, c05_06_w01, c05_07_w01, c08_01_w01, c08_02_w01, c08_03_w01, c08_04_w01, c13_w01, c14_01_w01, c14_02_w01, c18_09_w01, c18_10_w01)
 
 ```
 
-<div style="text-align: justify">
+* Análisis factorial confirmatorio
+```{r}
+# probar tres dimensiones
+cfa_vertical <- '
+instituciones =~ c05_01_w01 + c05_02_w01 + c05_05_w01 + c05_06_w01 + c05_07_w01
+participacion =~ c08_01_w01 + c08_02_w01 + c08_03_w01 + c08_04_w01 + c13_w01 + c14_01_w01 + c14_02_w01
+meritocracia =~ c18_09_w01 + c18_10_w01
+'
+fit_vertical <- cfa(cfa_vertical, data=vertical_afc)
+
+fitmeasures(fit_vertical,
+            fit.measures = c("chisq", "df", "pvalue", 
+                             "cfi", "rmsea"))
+
+semPaths(fit_vertical, # modelo ajustado
+         what = "std",  # mostrar cargas estandarizadas
+         label.cex = 1, edge.label.cex = 1, # tamaño flechas y caracteres
+         residuals = FALSE, # no mostrar residuos
+         edge.color = "black", # color flechas
+         nCharNodes = 0,
+         label.prop=0)
+```
+
+```{r}
+# Índices de modificación
+## Crear objeto con mi
+mod.ind <- modificationindices(fit_vertical)
+## Mostrar mi en orden decreciente
+head(mod.ind[order(mod.ind$mi, decreasing=TRUE), ], 10) 
+```
+
+### Vertical 2
+
+* Análisis factorial confirmatorio
+```{r}
+# probar tres dimensiones
+cfa_vertical <- '
+instituciones =~ c05_01_w01 + c05_02_w01 + c05_05_w01 + c05_06_w01 + c05_07_w01
+participacion =~ c08_03_w01 + c08_04_w01 + c13_w01 + c14_01_w01 + c14_02_w01
+c14_01_w01	~~	c14_02_w01
+meritocracia =~ c18_09_w01 + c18_10_w01
+'
+fit_vertical <- cfa(cfa_vertical, data=vertical_afc)
+
+fitmeasures(fit_vertical,
+            fit.measures = c("chisq", "df", "pvalue", 
+                             "cfi", "rmsea"))
+
+semPaths(fit_vertical, # modelo ajustado
+         what = "std",  # mostrar cargas estandarizadas
+         label.cex = 1, edge.label.cex = 1, # tamaño flechas y caracteres
+         residuals = FALSE, # no mostrar residuos
+         edge.color = "black", # color flechas
+         nCharNodes = 0,
+         label.prop=0)
+```
+
+```{r}
+# Índices de modificación
+## Crear objeto con mi
+mod.ind <- modificationindices(fit_vertical)
+## Mostrar mi en orden decreciente
+head(mod.ind[order(mod.ind$mi, decreasing=TRUE), ], 10) 
+```
+
+### Vertical 3
+
+* Análisis factorial confirmatorio
+```{r}
+# probar tres dimensiones
+cfa_vertical <- '
+instituciones =~ c05_01_w01 + c05_02_w01 + c05_05_w01 + c05_06_w01 + c05_07_w01
+c05_01_w01	~~	c05_02_w01
+participacion =~ c08_03_w01 + c08_04_w01 + c13_w01 + c14_01_w01 + c14_02_w01
+c14_01_w01	~~	c14_02_w01
+c08_03_w01	~~	c08_04_w01
+meritocracia =~ c18_09_w01 + c18_10_w01
+'
+fit_vertical <- cfa(cfa_vertical, data=vertical_afc)
+
+fitmeasures(fit_vertical,
+            fit.measures = c("chisq", "df", "pvalue", 
+                             "cfi", "rmsea"))
+
+semPaths(fit_vertical, # modelo ajustado
+         what = "std",  # mostrar cargas estandarizadas
+         label.cex = 1, edge.label.cex = 1, # tamaño flechas y caracteres
+         residuals = FALSE, # no mostrar residuos
+         edge.color = "black", # color flechas
+         nCharNodes = 0,
+         label.prop=0)
+```
+
+## Un modelo, dos dimensiones
+
+```{r}
+cohesion_afc <- data %>% dplyr::select(c32_01_w01, c32_02_w01, t02_01_w01, t02_02_w01, t02_03_w01, t02_04_w01, c02_rec_w01, c03_rec_w01, c04_rec_w01, c07_01_w01, c07_02_w01, c07_03_w01, c05_01_w01, c05_02_w01, c05_05_w01, c05_06_w01, c05_07_w01, c08_01_w01, c08_02_w01, c08_03_w01, c08_04_w01, c13_w01, c14_01_w01, c14_02_w01, c18_09_w01, c18_10_w01)
+
+cohesion_afc$c02_rec_w01 <- as.numeric(cohesion_afc$c02_rec_w01)
+cohesion_afc$c03_rec_w01 <- as.numeric(cohesion_afc$c03_rec_w01)
+cohesion_afc$c04_rec_w01 <- as.numeric(cohesion_afc$c04_rec_w01)
+```
+
+* Análisis factorial confirmatorio
+```{r}
+# probar tres dimensiones
+cfa_cohesion <- '
+Horizontal =~ c32_01_w01+ c32_02_w01+ t02_01_w01+ t02_02_w01+ t02_03_w01+ t02_04_w01+ c02_rec_w01+ c03_rec_w01+ c04_rec_w01+ c07_01_w01+ c07_02_w01+ c07_03_w01
+Vertical =~ c05_01_w01+ c05_02_w01+ c05_05_w01+ c05_06_w01+ c05_07_w01+ c08_01_w01+ c08_02_w01+ c08_03_w01+ c08_04_w01+ c13_w01+ c14_01_w01+ c14_02_w01+ c18_09_w01+ c18_10_w01
+'
+fit_cohesion <- cfa(cfa_cohesion, data=cohesion_afc)
+
+fitmeasures(fit_cohesion,
+            fit.measures = c("chisq", "df", "pvalue", 
+                             "cfi", "rmsea"))
+
+semPaths(fit_cohesion, # modelo ajustado
+         what = "std",  # mostrar cargas estandarizadas
+         label.cex = 1, edge.label.cex = 1, # tamaño flechas y caracteres
+         residuals = FALSE, # no mostrar residuos
+         edge.color = "black") # color flechas)
+```
+
+```{r}
+# Índices de modificación
+## Crear objeto con mi
+mod.ind <- modificationindices(fit_cohesion)
+## Mostrar mi en orden decreciente
+head(mod.ind[order(mod.ind$mi, decreasing=TRUE), ], 10) 
+```
+
+```{r}
+# probar tres dimensiones
+cfa_cohesion <- '
+Horizontal =~ c32_01_w01+ c32_02_w01+ t02_03_w01+ t02_04_w01+ c02_rec_w01+ c03_rec_w01+ c04_rec_w01+ c07_01_w01+ c07_02_w01+ c07_03_w01
+c32_01_w01 ~~ c32_02_w01
+Vertical =~ c05_01_w01+ c05_02_w01+ c05_05_w01+ c05_06_w01+ c05_07_w01+ c08_01_w01+ c08_02_w01+ c08_03_w01+ c08_04_w01+ c13_w01+ c14_01_w01+ c14_02_w01+ c18_09_w01+ c18_10_w01
+c18_09_w01	~~	c18_10_w01
+'
+fit_cohesion <- cfa(cfa_cohesion, data=cohesion_afc)
+
+fitmeasures(fit_cohesion,
+            fit.measures = c("chisq", "df", "pvalue", 
+                             "cfi", "rmsea"))
+
+semPaths(fit_cohesion, # modelo ajustado
+         what = "std",  # mostrar cargas estandarizadas
+         label.cex = 1, edge.label.cex = 1, # tamaño flechas y caracteres
+         residuals = FALSE, # no mostrar residuos
+         edge.color = "black") # color flechas)
+```
+
+```{r}
+# Índices de modificación
+## Crear objeto con mi
+mod.ind <- modificationindices(fit_cohesion)
+## Mostrar mi en orden decreciente
+head(mod.ind[order(mod.ind$mi, decreasing=TRUE), ], 10) 
+```
+
+```{r}
+# probar tres dimensiones
+cfa_cohesion <- '
+Horizontal =~ c32_01_w01+ c32_02_w01+ t02_03_w01+ t02_04_w01+ c02_rec_w01+ c03_rec_w01+ c04_rec_w01+ c07_01_w01+ c07_02_w01+ c07_03_w01
+c32_01_w01 ~~ c32_02_w01
+c07_01_w01 ~~	c07_03_w01
+Vertical =~ c05_01_w01+ c05_02_w01+ c05_05_w01+ c05_06_w01+ c05_07_w01+ c08_01_w01+ c08_03_w01+ c08_04_w01+ c13_w01+ c14_02_w01+ c18_09_w01+ c18_10_w01
+c18_09_w01	~~	c18_10_w01
+c13_w01	~~ c14_02_w01
+'
+fit_cohesion <- cfa(cfa_cohesion, data=cohesion_afc)
+
+fitmeasures(fit_cohesion,
+            fit.measures = c("chisq", "df", "pvalue", 
+                             "cfi", "rmsea"))
+
+semPaths(fit_cohesion, # modelo ajustado
+         what = "std",  # mostrar cargas estandarizadas
+         label.cex = 1, edge.label.cex = 1, # tamaño flechas y caracteres
+         residuals = FALSE, # no mostrar residuos
+         edge.color = "black") # color flechas)
+```

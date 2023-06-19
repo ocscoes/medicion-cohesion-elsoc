@@ -30,7 +30,7 @@ data <- data %>% car::recode(., "c(-888,-999)=NA") # recode missings de no respu
 data <- data %>% sjlabelled::remove_labels(labels = c('No Responde','No Sabe', "Valor perdido por error tecnico", "Valor perdido por encuesta incompleta")) # elimina value labels de missings de no respuesta para no interferir en descriptivos posteriores
 
 # Filtrar base por casos participantes en cinco olas
-data <- data %>% dplyr::filter(tipo_atricion==1 & ola_w01==1)
+#data <- data %>% dplyr::filter(tipo_atricion==1 & ola_w01==1)
 ```
 
 # Vertical
