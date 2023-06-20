@@ -214,8 +214,7 @@ semPaths(fit_redes, # modelo ajustado
 ```{r}
 # probar dos dimensiones
 cfa_democracia <- '
-gob_part =~ c05_01_w01 + c05_02_w01
-cong_jud_emp =~ c05_05_w01 + c05_06_w01 + c05_07_w01
+instituciones =~ c05_01_w01 + c05_02_w01 + c05_05_w01  + c05_07_w01
 '
 fit_democracia <- cfa(cfa_democracia, data=democracia_fa)
 
@@ -357,7 +356,6 @@ semPaths(fit_horizontal, # modelo ajustado
 
 ```{r}
 vertical_afc <- data %>% dplyr::select(c05_01_w01, c05_02_w01, c05_05_w01, c05_06_w01, c05_07_w01, c08_01_w01, c08_02_w01, c08_03_w01, c08_04_w01, c13_w01, c14_01_w01, c14_02_w01, c18_09_w01, c18_10_w01)
-
 ```
 
 * Análisis factorial confirmatorio
@@ -397,9 +395,8 @@ head(mod.ind[order(mod.ind$mi, decreasing=TRUE), ], 10)
 ```{r}
 # probar tres dimensiones
 cfa_vertical <- '
-instituciones =~ c05_01_w01 + c05_02_w01 + c05_05_w01 + c05_06_w01 + c05_07_w01
+instituciones =~ c05_01_w01 + c05_02_w01 + c05_05_w01 + c05_07_w01
 participacion =~ c08_03_w01 + c08_04_w01 + c13_w01 + c14_01_w01 + c14_02_w01
-c14_01_w01	~~	c14_02_w01
 meritocracia =~ c18_09_w01 + c18_10_w01
 '
 fit_vertical <- cfa(cfa_vertical, data=vertical_afc)
@@ -431,11 +428,8 @@ head(mod.ind[order(mod.ind$mi, decreasing=TRUE), ], 10)
 ```{r}
 # probar tres dimensiones
 cfa_vertical <- '
-instituciones =~ c05_01_w01 + c05_02_w01 + c05_05_w01 + c05_06_w01 + c05_07_w01
-c05_01_w01	~~	c05_02_w01
-participacion =~ c08_03_w01 + c08_04_w01 + c13_w01 + c14_01_w01 + c14_02_w01
-c14_01_w01	~~	c14_02_w01
-c08_03_w01	~~	c08_04_w01
+instituciones =~ c05_01_w01 + c05_02_w01 + c05_05_w01 + c05_07_w01
+participacion =~ c08_04_w01 + c13_w01 + c14_01_w01 + c14_02_w01
 meritocracia =~ c18_09_w01 + c18_10_w01
 '
 fit_vertical <- cfa(cfa_vertical, data=vertical_afc)
@@ -453,6 +447,14 @@ semPaths(fit_vertical, # modelo ajustado
          label.prop=0)
 ```
 
+```{r}
+# Índices de modificación
+## Crear objeto con mi
+mod.ind <- modificationindices(fit_vertical)
+## Mostrar mi en orden decreciente
+head(mod.ind[order(mod.ind$mi, decreasing=TRUE), ], 10) 
+```
+
 ## Un modelo, dos dimensiones
 
 ```{r}
@@ -463,12 +465,18 @@ cohesion_afc$c03_rec_w01 <- as.numeric(cohesion_afc$c03_rec_w01)
 cohesion_afc$c04_rec_w01 <- as.numeric(cohesion_afc$c04_rec_w01)
 ```
 
-* Análisis factorial confirmatorio
+* Análisis factorial confirmatorio de segundo orden cohesion
 ```{r}
 # probar tres dimensiones
 cfa_cohesion <- '
-Horizontal =~ c32_01_w01+ c32_02_w01+ t02_01_w01+ t02_02_w01+ t02_03_w01+ t02_04_w01+ c02_rec_w01+ c03_rec_w01+ c04_rec_w01+ c07_01_w01+ c07_02_w01+ c07_03_w01
-Vertical =~ c05_01_w01+ c05_02_w01+ c05_05_w01+ c05_06_w01+ c05_07_w01+ c08_01_w01+ c08_02_w01+ c08_03_w01+ c08_04_w01+ c13_w01+ c14_01_w01+ c14_02_w01+ c18_09_w01+ c18_10_w01
+vertical =~ instituciones + participacion + meritocracia
+instituciones =~ c05_01_w01 + c05_02_w01 + c05_05_w01 + c05_07_w01
+participacion =~ c08_04_w01 + c13_w01 + c14_01_w01 + c14_02_w01
+meritocracia =~ c18_09_w01 + c18_10_w01
+horizontal =~ pertenencia + barrial + redes
+pertenencia =~ c32_01_w01 + c32_02_w01
+barrial =~ t02_01_w01 + t02_02_w01 + t02_03_w01 + t02_04_w01
+redes  =~ c02_rec_w01 + c03_rec_w01 + c04_rec_w01 + c07_02_w01 + c07_03_w01
 '
 fit_cohesion <- cfa(cfa_cohesion, data=cohesion_afc)
 
@@ -480,65 +488,7 @@ semPaths(fit_cohesion, # modelo ajustado
          what = "std",  # mostrar cargas estandarizadas
          label.cex = 1, edge.label.cex = 1, # tamaño flechas y caracteres
          residuals = FALSE, # no mostrar residuos
-         edge.color = "black") # color flechas)
-```
-
-```{r}
-# Índices de modificación
-## Crear objeto con mi
-mod.ind <- modificationindices(fit_cohesion)
-## Mostrar mi en orden decreciente
-head(mod.ind[order(mod.ind$mi, decreasing=TRUE), ], 10) 
-```
-
-```{r}
-# probar tres dimensiones
-cfa_cohesion <- '
-Horizontal =~ c32_01_w01+ c32_02_w01+ t02_03_w01+ t02_04_w01+ c02_rec_w01+ c03_rec_w01+ c04_rec_w01+ c07_01_w01+ c07_02_w01+ c07_03_w01
-c32_01_w01 ~~ c32_02_w01
-Vertical =~ c05_01_w01+ c05_02_w01+ c05_05_w01+ c05_06_w01+ c05_07_w01+ c08_01_w01+ c08_02_w01+ c08_03_w01+ c08_04_w01+ c13_w01+ c14_01_w01+ c14_02_w01+ c18_09_w01+ c18_10_w01
-c18_09_w01	~~	c18_10_w01
-'
-fit_cohesion <- cfa(cfa_cohesion, data=cohesion_afc)
-
-fitmeasures(fit_cohesion,
-            fit.measures = c("chisq", "df", "pvalue", 
-                             "cfi", "rmsea"))
-
-semPaths(fit_cohesion, # modelo ajustado
-         what = "std",  # mostrar cargas estandarizadas
-         label.cex = 1, edge.label.cex = 1, # tamaño flechas y caracteres
-         residuals = FALSE, # no mostrar residuos
-         edge.color = "black") # color flechas)
-```
-
-```{r}
-# Índices de modificación
-## Crear objeto con mi
-mod.ind <- modificationindices(fit_cohesion)
-## Mostrar mi en orden decreciente
-head(mod.ind[order(mod.ind$mi, decreasing=TRUE), ], 10) 
-```
-
-```{r}
-# probar tres dimensiones
-cfa_cohesion <- '
-Horizontal =~ c32_01_w01+ c32_02_w01+ t02_03_w01+ t02_04_w01+ c02_rec_w01+ c03_rec_w01+ c04_rec_w01+ c07_01_w01+ c07_02_w01+ c07_03_w01
-c32_01_w01 ~~ c32_02_w01
-c07_01_w01 ~~	c07_03_w01
-Vertical =~ c05_01_w01+ c05_02_w01+ c05_05_w01+ c05_06_w01+ c05_07_w01+ c08_01_w01+ c08_03_w01+ c08_04_w01+ c13_w01+ c14_02_w01+ c18_09_w01+ c18_10_w01
-c18_09_w01	~~	c18_10_w01
-c13_w01	~~ c14_02_w01
-'
-fit_cohesion <- cfa(cfa_cohesion, data=cohesion_afc)
-
-fitmeasures(fit_cohesion,
-            fit.measures = c("chisq", "df", "pvalue", 
-                             "cfi", "rmsea"))
-
-semPaths(fit_cohesion, # modelo ajustado
-         what = "std",  # mostrar cargas estandarizadas
-         label.cex = 1, edge.label.cex = 1, # tamaño flechas y caracteres
-         residuals = FALSE, # no mostrar residuos
-         edge.color = "black") # color flechas)
+         edge.color = "black", # color flechas
+         nCharNodes = 0,
+         label.prop=0)
 ```
