@@ -1316,7 +1316,7 @@ belonging",
   facet_wrap(~educ)
 
 plot_horizontal_educ_rec
-ggsave(plot_horizontal_educ, file="output/graphs/plot_horizontal_educ_rec.png")
+ggsave(plot_horizontal_educ_rec, file="output/graphs/plot_horizontal_educ_rec.png")
 ```
 
 ## Vertical x educacion 2 categorias
@@ -1424,7 +1424,7 @@ participation"))+
 
 plot_vertical_educ_rec
 
-ggsave(plot_vertical_educ, file="output/graphs/plot_vertical_educ_rec.png")
+ggsave(plot_vertical_educ_rec, file="output/graphs/plot_vertical_educ_rec.png")
 ```
 
 ## Horizontal x edad
