@@ -57,13 +57,14 @@ data$c04_rec_w06 <- as.numeric(data$c04_rec_w06)
 
 * Análisis factorial confirmatorio
 ```{r}
-# probar tres dimensiones
+data_horizontal_w01 <- data %>% select(idencuesta, c32_01_w01, c32_02_w01, t02_01_w01, t02_02_w01, t02_03_w01, t02_04_w01, c02_rec_w01, c03_rec_w01, c04_rec_w01, c07_02_w01, c07_03_w01) %>% na.omit()
+
 cfa_horizontal_w01 <- '
 pertenencia =~ c32_01_w01 + c32_02_w01
 barrial =~ t02_01_w01 + t02_02_w01 + t02_03_w01 + t02_04_w01
 redes  =~ c02_rec_w01 + c03_rec_w01 + c04_rec_w01 + c07_02_w01 + c07_03_w01
 '
-fit_horizontal_w01 <- cfa(cfa_horizontal_w01, data=data)
+fit_horizontal_w01 <- cfa(cfa_horizontal_w01, data=data_horizontal_w01)
 
 fitmeasures(fit_horizontal_w01,
             fit.measures = c("chisq", "df", "pvalue", 
@@ -82,13 +83,14 @@ semPaths(fit_horizontal_w01, # modelo ajustado
 
 * Análisis factorial confirmatorio
 ```{r}
-# probar tres dimensiones
+data_horizontal_w02 <- data %>% select(idencuesta, c32_01_w02, c32_02_w02, t02_01_w02, t02_02_w02, t02_03_w02, t02_04_w02, c02_rec_w02, c03_rec_w02, c04_rec_w02, c07_02_w02, c07_03_w02) %>% na.omit()
+
 cfa_horizontal_w02 <- '
 pertenencia =~ c32_01_w02 + c32_02_w02
 barrial =~ t02_01_w02 + t02_02_w02 + t02_03_w02 + t02_04_w02
 redes  =~ c02_rec_w02 + c03_rec_w02 + c04_rec_w02 + c07_02_w02 + c07_03_w02
 '
-fit_horizontal_w02 <- cfa(cfa_horizontal_w02, data=data)
+fit_horizontal_w02 <- cfa(cfa_horizontal_w02, data=data_horizontal_w02)
 
 fitmeasures(fit_horizontal_w02,
             fit.measures = c("chisq", "df", "pvalue", 
@@ -107,13 +109,14 @@ semPaths(fit_horizontal_w02, # modelo ajustado
 
 * Análisis factorial confirmatorio
 ```{r}
-# probar tres dimensiones
+data_horizontal_w03 <- data %>% select(idencuesta, c32_01_w03, c32_02_w03, t02_01_w03, t02_02_w03, t02_03_w03, t02_04_w03, c02_rec_w03, c03_rec_w03, c04_rec_w03, c07_02_w03, c07_03_w03) %>% na.omit()
+
 cfa_horizontal_w03 <- '
 pertenencia =~ c32_01_w03 + c32_02_w03
 barrial =~ t02_01_w03 + t02_02_w03 + t02_03_w03 + t02_04_w03
 redes  =~ c02_rec_w03 + c03_rec_w03 + c04_rec_w03 + c07_02_w03 + c07_03_w03
 '
-fit_horizontal_w03 <- cfa(cfa_horizontal_w03, data=data)
+fit_horizontal_w03 <- cfa(cfa_horizontal_w03, data=data_horizontal_w03)
 
 fitmeasures(fit_horizontal_w03,
             fit.measures = c("chisq", "df", "pvalue", 
@@ -132,13 +135,14 @@ semPaths(fit_horizontal_w03, # modelo ajustado
 
 * Análisis factorial confirmatorio
 ```{r}
-# probar tres dimensiones
+data_horizontal_w04 <- data %>% select(idencuesta, c32_01_w04, c32_02_w04, t02_01_w04, t02_02_w04, t02_03_w04, t02_04_w04, c02_rec_w04, c03_rec_w04, c04_rec_w04, c07_02_w04, c07_03_w04) %>% na.omit()
+
 cfa_horizontal_w04 <- '
 pertenencia =~ c32_01_w04 + c32_02_w04
 barrial =~ t02_01_w04 + t02_02_w04 + t02_03_w04 + t02_04_w04
 redes  =~ c02_rec_w04 + c03_rec_w04 + c04_rec_w04 + c07_02_w04 + c07_03_w04
 '
-fit_horizontal_w04 <- cfa(cfa_horizontal_w04, data=data)
+fit_horizontal_w04 <- cfa(cfa_horizontal_w04, data=data_horizontal_w04)
 
 fitmeasures(fit_horizontal_w04,
             fit.measures = c("chisq", "df", "pvalue", 
@@ -157,12 +161,13 @@ semPaths(fit_horizontal_w04, # modelo ajustado
 
 * Análisis factorial confirmatorio
 ```{r}
-# probar tres dimensiones
+data_horizontal_w05 <- data %>% select(idencuesta, c32_01_w05, c32_02_w05, c02_rec_w05, c03_rec_w05, c04_rec_w05, c07_02_w05, c07_03_w05) %>% na.omit()
+
 cfa_horizontal_w05 <- '
 pertenencia =~ c32_01_w05 + c32_02_w05
 redes  =~ c02_rec_w05 + c03_rec_w05 + c04_rec_w05 + c07_02_w05 + c07_03_w05
 '
-fit_horizontal_w05 <- cfa(cfa_horizontal_w05, data=data)
+fit_horizontal_w05 <- cfa(cfa_horizontal_w05, data=data_horizontal_w05)
 
 fitmeasures(fit_horizontal_w05,
             fit.measures = c("chisq", "df", "pvalue", 
@@ -181,12 +186,13 @@ semPaths(fit_horizontal_w05, # modelo ajustado
 
 * Análisis factorial confirmatorio
 ```{r}
-# probar tres dimensiones
+data_horizontal_w06 <- data %>% select(idencuesta, c32_01_w06, c32_02_w06, t02_01_w06, t02_02_w06, t02_03_w06, t02_04_w06) %>% na.omit()
+
 cfa_horizontal_w06 <- '
 pertenencia =~ c32_01_w06 + c32_02_w06
 barrial =~ t02_01_w06 + t02_02_w06 + t02_03_w06 + t02_04_w06
 '
-fit_horizontal_w06 <- cfa(cfa_horizontal_w06, data=data)
+fit_horizontal_w06 <- cfa(cfa_horizontal_w06, data=data_horizontal_w06)
 
 fitmeasures(fit_horizontal_w06,
             fit.measures = c("chisq", "df", "pvalue", 
@@ -263,13 +269,14 @@ horizontal_anio <- scores_horizontal %>% group_by(anio) %>%
 
 * Análisis factorial confirmatorio
 ```{r}
-# probar tres dimensiones
+data_vertical_w01 <- data %>% select(idencuesta, c05_01_w01, c05_02_w01, c05_05_w01, c05_07_w01, c08_04_w01, c13_w01, c14_01_w01, c14_02_w01, c18_09_w01, c18_10_w01) %>% na.omit()
+
 cfa_vertical_w01 <- '
 instituciones =~ c05_01_w01 + c05_02_w01 + c05_05_w01 + c05_07_w01
 participacion =~ c08_04_w01 + c13_w01 + c14_01_w01 + c14_02_w01
 meritocracia =~ c18_09_w01 + c18_10_w01
 '
-fit_vertical_w01 <- cfa(cfa_vertical_w01 , data=data)
+fit_vertical_w01 <- cfa(cfa_vertical_w01 , data=data_vertical_w01)
 
 fitmeasures(fit_vertical_w01,
             fit.measures = c("chisq", "df", "pvalue", 
@@ -288,13 +295,14 @@ semPaths(fit_vertical_w01, # modelo ajustado
 
 * Análisis factorial confirmatorio
 ```{r}
-# probar tres dimensiones
+data_vertical_w02 <- data %>% select(idencuesta, c05_01_w02, c05_02_w02, c05_05_w02, c05_07_w02, c08_04_w02, c13_w02, c14_01_w02, c14_02_w02, c18_09_w02, c18_10_w02) %>% na.omit()
+
 cfa_vertical_w02 <- '
 instituciones =~ c05_01_w02 + c05_02_w02 + c05_05_w02 + c05_07_w02
 participacion =~ c08_04_w02 + c13_w02 + c14_01_w02 + c14_02_w02
 meritocracia =~ c18_09_w02 + c18_10_w02
 '
-fit_vertical_w02 <- cfa(cfa_vertical_w02 , data=data)
+fit_vertical_w02 <- cfa(cfa_vertical_w02 , data=data_vertical_w02)
 
 fitmeasures(fit_vertical_w02,
             fit.measures = c("chisq", "df", "pvalue", 
@@ -313,13 +321,14 @@ semPaths(fit_vertical_w02, # modelo ajustado
 
 * Análisis factorial confirmatorio
 ```{r}
-# probar tres dimensiones
+data_vertical_w03 <- data %>% select(idencuesta, c05_01_w03, c05_02_w03, c05_05_w03, c05_07_w03, c08_04_w03, c13_w03, c14_01_w03, c14_02_w03, c18_09_w03, c18_10_w03) %>% na.omit()
+
 cfa_vertical_w03 <- '
 instituciones =~ c05_01_w03 + c05_02_w03 + c05_05_w03 + c05_07_w03
 participacion =~ c08_04_w03 + c13_w03 + c14_01_w03 + c14_02_w03
 meritocracia =~ c18_09_w03 + c18_10_w03
 '
-fit_vertical_w03 <- cfa(cfa_vertical_w03 , data=data)
+fit_vertical_w03 <- cfa(cfa_vertical_w03 , data=data_vertical_w03)
 
 fitmeasures(fit_vertical_w03,
             fit.measures = c("chisq", "df", "pvalue", 
@@ -338,13 +347,14 @@ semPaths(fit_vertical_w03, # modelo ajustado
 
 * Análisis factorial confirmatorio
 ```{r}
-# probar tres dimensiones
+data_vertical_w04 <- data %>% select(idencuesta, c05_01_w04, c05_02_w04, c05_05_w04, c05_07_w04, c08_04_w04, c13_w04, c14_01_w04, c14_02_w04, c18_09_w04, c18_10_w04) %>% na.omit()
+
 cfa_vertical_w04 <- '
 instituciones =~ c05_01_w04 + c05_02_w04 + c05_05_w04 + c05_07_w04
 participacion =~ c08_04_w04 + c13_w04 + c14_01_w04 + c14_02_w04
 meritocracia =~ c18_09_w04 + c18_10_w04
 '
-fit_vertical_w04 <- cfa(cfa_vertical_w04 , data=data)
+fit_vertical_w04 <- cfa(cfa_vertical_w04 , data=data_vertical_w04)
 
 fitmeasures(fit_vertical_w04,
             fit.measures = c("chisq", "df", "pvalue", 
@@ -363,13 +373,14 @@ semPaths(fit_vertical_w04, # modelo ajustado
 
 * Análisis factorial confirmatorio
 ```{r}
-# probar tres dimensiones
+data_vertical_w05 <- data %>% select(idencuesta, c05_01_w05, c05_02_w05, c05_05_w05, c05_07_w05, c08_04_w05, c13_w05, c14_01_w05, c14_02_w05, c18_09_w05, c18_10_w05) %>% na.omit()
+
 cfa_vertical_w05 <- '
 instituciones =~ c05_01_w05 + c05_02_w05 + c05_05_w05 + c05_07_w05
 participacion =~ c08_04_w05 + c13_w05 + c14_01_w05 + c14_02_w05
 meritocracia =~ c18_09_w05 + c18_10_w05
 '
-fit_vertical_w05 <- cfa(cfa_vertical_w05 , data=data)
+fit_vertical_w05 <- cfa(cfa_vertical_w05 , data=data_vertical_w05)
 
 fitmeasures(fit_vertical_w05,
             fit.measures = c("chisq", "df", "pvalue", 
@@ -388,13 +399,14 @@ semPaths(fit_vertical_w05, # modelo ajustado
 
 * Análisis factorial confirmatorio
 ```{r}
-# probar tres dimensiones
+data_vertical_w06 <- data %>% select(idencuesta, c05_01_w06, c05_02_w06, c05_05_w06, c05_07_w06, c08_04_w06, c13_w06, c14_01_w06, c14_02_w06, c18_09_w06, c18_10_w06) %>% na.omit()
+
 cfa_vertical_w06 <- '
 instituciones =~ c05_01_w06 + c05_02_w06 + c05_05_w06 + c05_07_w06
 participacion =~ c08_04_w06 + c13_w06 + c14_01_w06 + c14_02_w06
 meritocracia =~ c18_09_w06 + c18_10_w06
 '
-fit_vertical_w06 <- cfa(cfa_vertical_w06 , data=data)
+fit_vertical_w06 <- cfa(cfa_vertical_w06 , data=data_vertical_w06)
 
 fitmeasures(fit_vertical_w06,
             fit.measures = c("chisq", "df", "pvalue", 
@@ -429,7 +441,8 @@ scores_vertical_w04 = as.data.frame(pvw04)%>%
   cbind(anio=c("2019"))
 scores_vertical_w05 = as.data.frame(pvw05)%>% 
   cbind(anio=c("2021"))
-scores_vertical_w05 <- scores_vertical_w05 %>% filter(instituciones>0 | participacion>0)
+data_vertical_w05 <- cbind(data_vertical_w05, scores_vertical_w05)
+data_vertical_w05 <- data_vertical_w05 %>% filter(instituciones>0 | participacion>0)
 scores_vertical_w06 = as.data.frame(pvw06)%>% 
   cbind(anio=c("2022"))
 
@@ -449,21 +462,113 @@ scores_vertical_w04$instituciones <- scales::rescale(scores_vertical_w04$institu
 scores_vertical_w04$participacion <- scales::rescale(scores_vertical_w04$participacion, to=c(1, 5))
 scores_vertical_w04$meritocracia <- scales::rescale(scores_vertical_w04$meritocracia, to=c(1, 5))
 
-scores_vertical_w05$instituciones <- scales::rescale(scores_vertical_w05$instituciones, to=c(1, 5))
-scores_vertical_w05$participacion <- scales::rescale(scores_vertical_w05$participacion, to=c(1, 5))
-scores_vertical_w05$meritocracia <- scales::rescale(scores_vertical_w05$meritocracia, to=c(1, 5))
+data_vertical_w05$instituciones <- scales::rescale(data_vertical_w05$instituciones, to=c(1, 5))
+data_vertical_w05$participacion <- scales::rescale(data_vertical_w05$participacion, to=c(1, 5))
+data_vertical_w05$meritocracia <- scales::rescale(data_vertical_w05$meritocracia, to=c(1, 5))
 
 scores_vertical_w06$instituciones <- scales::rescale(scores_vertical_w06$instituciones, to=c(1, 5))
 scores_vertical_w06$participacion <- scales::rescale(scores_vertical_w06$participacion, to=c(1, 5))
 scores_vertical_w06$meritocracia <- scales::rescale(scores_vertical_w06$meritocracia, to=c(1, 5))
 
 # Merge with factor scores
+scores_vertical_w05 <- data_vertical_w05 %>% select(instituciones, participacion, meritocracia,anio)
 scores_vertical <- rbind(scores_vertical_w01, scores_vertical_w02, scores_vertical_w03, scores_vertical_w04, scores_vertical_w05, scores_vertical_w06)
 
 vertical_anio <- scores_vertical %>% group_by(anio) %>% 
   summarise(instituciones=mean(instituciones, na.rm=TRUE),
             participacion=mean(participacion, na.rm=TRUE),
             meritocracia=mean(meritocracia, na.rm=TRUE))
+```
+
+## Unir con base elsoc
+
+```{r}
+data_horizontal_w01 <- cbind(data_horizontal_w01, scores_horizontal_w01)
+data_horizontal_w02 <- cbind(data_horizontal_w02, scores_horizontal_w02)
+data_horizontal_w03 <- cbind(data_horizontal_w03, scores_horizontal_w03)
+data_horizontal_w04 <- cbind(data_horizontal_w04, scores_horizontal_w04)
+data_horizontal_w05 <- cbind(data_horizontal_w05, scores_horizontal_w05)
+data_horizontal_w06 <- cbind(data_horizontal_w06, scores_horizontal_w06)
+
+data_vertical_w01 <- cbind(data_vertical_w01, scores_vertical_w01)
+data_vertical_w02 <- cbind(data_vertical_w02, scores_vertical_w02)
+data_vertical_w03 <- cbind(data_vertical_w03, scores_vertical_w03)
+data_vertical_w04 <- cbind(data_vertical_w04, scores_vertical_w04)
+#data_vertical_w05
+data_vertical_w06 <- cbind(data_vertical_w06, scores_vertical_w06)
+
+## Seleccionar solo variables de puntajes factoriales
+data_horizontal_w01 <- data_horizontal_w01 %>% select(idencuesta,
+                                                      pertenencia_w01=pertenencia,
+                                                      barrial_w01=barrial,
+                                                      redes_w01=redes,
+                                                      anio_w01=anio)
+data_horizontal_w02 <- data_horizontal_w02 %>% select(idencuesta,
+                                                      pertenencia_w02=pertenencia,
+                                                      barrial_w02=barrial,
+                                                      redes_w02=redes,
+                                                      anio_w02=anio)
+data_horizontal_w03 <- data_horizontal_w03 %>% select(idencuesta,
+                                                      pertenencia_w03=pertenencia,
+                                                      barrial_w03=barrial,
+                                                      redes_w03=redes,
+                                                      anio_w03=anio)
+data_horizontal_w04 <- data_horizontal_w04 %>% select(idencuesta,
+                                                      pertenencia_w04=pertenencia,
+                                                      barrial_w04=barrial,
+                                                      redes_w04=redes,
+                                                      anio_w04=anio)
+data_horizontal_w05 <- data_horizontal_w05 %>% select(idencuesta,
+                                                      pertenencia_w05=pertenencia,
+                                                      barrial_05=barrial,
+                                                      redes_w05=redes,
+                                                      anio_w05=anio)
+data_horizontal_w06 <- data_horizontal_w06 %>% select(idencuesta,
+                                                      pertenencia_w06=pertenencia,
+                                                      barrial_w06=barrial,
+                                                      redes_w06=redes,
+                                                      anio_w06=anio)
+
+data_vertical_w01 <- data_vertical_w01 %>% select(idencuesta,
+                                                  instituciones_w01=instituciones,
+                                                  participacion_w01=participacion,
+                                                  meritocracia_w01=meritocracia)
+data_vertical_w02 <- data_vertical_w02 %>% select(idencuesta,
+                                                  instituciones_w02=instituciones,
+                                                  participacion_w02=participacion,
+                                                  meritocracia_w02=meritocracia)
+data_vertical_w03 <- data_vertical_w03 %>% select(idencuesta,
+                                                  instituciones_w03=instituciones,
+                                                  participacion_w03=participacion,
+                                                  meritocracia_w03=meritocracia)
+data_vertical_w04 <- data_vertical_w04 %>% select(idencuesta,
+                                                  instituciones_w04=instituciones,
+                                                  participacion_w04=participacion,
+                                                  meritocracia_w04=meritocracia)
+data_vertical_w05 <- data_vertical_w05 %>% select(idencuesta,
+                                                  instituciones_w05=instituciones,
+                                                  participacion_w05=participacion,
+                                                  meritocracia_w05=meritocracia)
+data_vertical_w06 <- data_vertical_w06 %>% select(idencuesta,
+                                                  instituciones_w06=instituciones,
+                                                  participacion_w06=participacion,
+                                                  meritocracia_w06=meritocracia)
+
+
+# left join to elsoc
+data <- left_join(data, data_horizontal_w01, by="idencuesta")
+data <- left_join(data, data_horizontal_w02, by="idencuesta")
+data <- left_join(data, data_horizontal_w03, by="idencuesta")
+data <- left_join(data, data_horizontal_w04, by="idencuesta")
+data <- left_join(data, data_horizontal_w05, by="idencuesta")
+data <- left_join(data, data_horizontal_w06, by="idencuesta")
+
+data <- left_join(data, data_vertical_w01, by="idencuesta")
+data <- left_join(data, data_vertical_w02, by="idencuesta")
+data <- left_join(data, data_vertical_w03, by="idencuesta")
+data <- left_join(data, data_vertical_w04, by="idencuesta")
+data <- left_join(data, data_vertical_w05, by="idencuesta")
+data <- left_join(data, data_vertical_w06, by="idencuesta")
 ```
 
 # Graficar
@@ -476,14 +581,24 @@ horizontal_anio_long <- horizontal_anio %>% tidyr::pivot_longer(cols=c("pertenen
                                                     values_to="values")
 horizontal_anio_long$values <- ifelse(horizontal_anio_long$values=="NaN", NA, horizontal_anio_long$values)
 
-plot_horizontal <- ggplot(data = horizontal_anio_long, aes(x=anio, y=values, group=tipo, shape=tipo)) +
+plot_horizontal <- ggplot(data = horizontal_anio_long[!is.na(horizontal_anio_long$values), ], aes(x=anio, y=values, group=tipo, shape=tipo)) +
   geom_line(aes(color=tipo)) + 
   geom_point(aes(colour=tipo),size = 3)+
   theme_bw() + 
   xlab("Year") +
   ylab("Mean") + 
-  guides(color=guide_legend(title="Horizontal"),
-         shape=guide_legend(title="Horizontal"))+
+  scale_color_discrete(name= "Horizontal",
+                   label = c("Neighbourhood 
+attachment",
+                             "Sense of 
+belonging",
+                             "Social trust"))+
+    scale_shape_discrete(name= "Horizontal",
+                   label = c("Neighbourhood 
+attachment",
+                             "Sense of 
+belonging",
+                             "Social trust"))+
   scale_y_continuous(breaks = seq(1, 5, by = 1), limits = c(1,5))
 
 plot_horizontal
@@ -503,11 +618,1047 @@ plot_vertical <- ggplot(data = vertical_anio_long, aes(x=anio, y=values, group=t
   theme_bw() + 
   xlab("Year") +
   ylab("Mean") + 
-  guides(color=guide_legend(title="Vertical"),
-         shape=guide_legend(title="Vertical"))+
+  scale_color_discrete(name= "Vertical",
+                   label = c("Institutional 
+trust",
+                             "Meritocratic 
+distribution",
+                             "Political
+participation"))+
+    scale_shape_discrete(name= "Vertical",
+                   label = c("Institutional 
+trust",
+                             "Meritocratic 
+distribution",
+                             "Political
+participation"))+
   scale_y_continuous(breaks = seq(1, 5, by = 1), limits = c(1,5))
 
 plot_vertical
 
 ggsave(plot_vertical, file="output/graphs/plot_vertical.png")
+```
+
+## Horizontal x sexo
+
+```{r}
+horizontal_sexo_w01 <- data %>% filter(anio_w01==2016) %>% 
+  group_by(anio_w01, m0_sexo_w01) %>% 
+  summarise(pertenencia=mean(pertenencia_w01, na.rm=TRUE),
+            barrial=mean(barrial_w01, na.rm=TRUE),
+            redes=mean(redes_w01, na.rm=TRUE))
+
+horizontal_sexo_w02 <- data %>% filter(anio_w02==2017) %>% 
+  group_by(anio_w02, m0_sexo_w02) %>% 
+  summarise(pertenencia=mean(pertenencia_w02, na.rm=TRUE),
+            barrial=mean(barrial_w02, na.rm=TRUE),
+            redes=mean(redes_w02, na.rm=TRUE))
+
+horizontal_sexo_w03 <- data %>% filter(anio_w03==2018) %>% 
+  group_by(anio_w03, m0_sexo_w03) %>% 
+  summarise(pertenencia=mean(pertenencia_w03, na.rm=TRUE),
+            barrial=mean(barrial_w03, na.rm=TRUE),
+            redes=mean(redes_w03, na.rm=TRUE))
+
+horizontal_sexo_w04 <- data %>% filter(anio_w04==2019) %>% 
+  group_by(anio_w04, m0_sexo_w04) %>% 
+  summarise(pertenencia=mean(pertenencia_w04, na.rm=TRUE),
+            barrial=mean(barrial_w04, na.rm=TRUE),
+            redes=mean(redes_w04, na.rm=TRUE))
+
+horizontal_sexo_w05 <- data %>% filter(anio_w05==2021) %>% 
+  group_by(anio_w05, m0_sexo_w05) %>% 
+  summarise(pertenencia=mean(pertenencia_w05, na.rm=TRUE),
+            barrial=mean(barrial_05, na.rm=TRUE),
+            redes=mean(redes_w05, na.rm=TRUE))
+
+horizontal_sexo_w06 <- data %>% filter(anio_w06==2022) %>% 
+  group_by(anio_w06, m0_sexo_w06) %>% 
+  summarise(pertenencia=mean(pertenencia_w06, na.rm=TRUE),
+            barrial=mean(barrial_w06, na.rm=TRUE),
+            redes=mean(redes_w06, na.rm=TRUE))
+```
+
+```{r}
+horizontal_sexo_long_w01 <- horizontal_sexo_w01 %>% 
+  tidyr::pivot_longer(cols=c("pertenencia", "barrial", "redes"),
+                      names_to="tipo",
+                      values_to="values") %>% 
+  rename(anio=anio_w01,
+         sexo=m0_sexo_w01)
+horizontal_sexo_long_w02 <- horizontal_sexo_w02 %>% 
+  tidyr::pivot_longer(cols=c("pertenencia", "barrial", "redes"),
+                      names_to="tipo",
+                      values_to="values") %>% 
+  rename(anio=anio_w02,
+         sexo=m0_sexo_w02)
+horizontal_sexo_long_w03 <- horizontal_sexo_w03 %>% 
+  tidyr::pivot_longer(cols=c("pertenencia", "barrial", "redes"),
+                      names_to="tipo",
+                      values_to="values") %>% 
+  rename(anio=anio_w03,
+         sexo=m0_sexo_w03)
+horizontal_sexo_long_w04 <- horizontal_sexo_w04 %>% 
+  tidyr::pivot_longer(cols=c("pertenencia", "barrial", "redes"),
+                      names_to="tipo",
+                      values_to="values") %>% 
+  rename(anio=anio_w04,
+         sexo=m0_sexo_w04)
+horizontal_sexo_long_w05 <- horizontal_sexo_w05 %>% 
+  tidyr::pivot_longer(cols=c("pertenencia", "barrial", "redes"),
+                      names_to="tipo",
+                      values_to="values") %>% 
+  rename(anio=anio_w05,
+         sexo=m0_sexo_w05)
+horizontal_sexo_long_w05$values <- ifelse(horizontal_sexo_long_w05$values=="NaN", NA, horizontal_sexo_long_w05$values)
+horizontal_sexo_long_w06 <- horizontal_sexo_w06 %>% 
+  tidyr::pivot_longer(cols=c("pertenencia", "barrial", "redes"),
+                      names_to="tipo",
+                      values_to="values") %>% 
+  rename(anio=anio_w06,
+         sexo=m0_sexo_w06)
+horizontal_sexo_long_w06$values <- ifelse(horizontal_sexo_long_w06$values=="NaN", NA, horizontal_sexo_long_w06$values)
+
+horizontal_sexo <- rbind(horizontal_sexo_long_w01, horizontal_sexo_long_w02, horizontal_sexo_long_w03, horizontal_sexo_long_w04, horizontal_sexo_long_w05, horizontal_sexo_long_w06)
+```
+
+```{r}
+horizontal_sexo$sexo <- factor(horizontal_sexo$sexo, labels = c("Men", "Women"))
+plot_horizontal_sexo <- ggplot(data = horizontal_sexo[!is.na(horizontal_sexo$values), ] , aes(x=anio, y=values, group=tipo, shape=tipo)) +
+  geom_line(aes(color=tipo)) + 
+  geom_point(aes(colour=tipo),size = 3)+
+  theme_bw() + 
+  xlab("Year") +
+  ylab("Mean") + 
+  scale_color_discrete(name= "Horizontal",
+                   label = c("Neighbourhood 
+attachment",
+                             "Sense of 
+belonging",
+                             "Social trust"))+
+    scale_shape_discrete(name= "Horizontal",
+                   label = c("Neighbourhood 
+attachment",
+                             "Sense of 
+belonging",
+                             "Social trust"))+
+  scale_y_continuous(breaks = seq(1, 5, by = 1), limits = c(1,5)) +
+  facet_wrap(~sexo)
+
+plot_horizontal_sexo
+ggsave(plot_horizontal_sexo, file="output/graphs/plot_horizontal_sexo.png")
+```
+
+## Vertical x sexo
+
+```{r}
+vertical_sexo_w01 <- data %>% filter(anio_w01==2016) %>% 
+  group_by(anio_w01, m0_sexo_w01) %>% 
+  summarise(instituciones=mean(instituciones_w01, na.rm=TRUE),
+            participacion=mean(participacion_w01, na.rm=TRUE),
+            meritocracia=mean(meritocracia_w01, na.rm=TRUE))
+
+vertical_sexo_w02 <- data %>% filter(anio_w02==2017) %>% 
+  group_by(anio_w02, m0_sexo_w02) %>% 
+  summarise(instituciones=mean(instituciones_w02, na.rm=TRUE),
+            participacion=mean(participacion_w02, na.rm=TRUE),
+            meritocracia=mean(meritocracia_w02, na.rm=TRUE))
+
+vertical_sexo_w03 <- data %>% filter(anio_w03==2018) %>% 
+  group_by(anio_w03, m0_sexo_w03) %>% 
+  summarise(instituciones=mean(instituciones_w03, na.rm=TRUE),
+            participacion=mean(participacion_w03, na.rm=TRUE),
+            meritocracia=mean(meritocracia_w03, na.rm=TRUE))
+
+vertical_sexo_w04 <- data %>% filter(anio_w04==2019) %>% 
+  group_by(anio_w04, m0_sexo_w04) %>% 
+  summarise(instituciones=mean(instituciones_w04, na.rm=TRUE),
+            participacion=mean(participacion_w04, na.rm=TRUE),
+            meritocracia=mean(meritocracia_w04, na.rm=TRUE))
+
+vertical_sexo_w05 <- data %>% filter(anio_w05==2021) %>% 
+  group_by(anio_w05, m0_sexo_w05) %>% 
+  summarise(instituciones=mean(instituciones_w05, na.rm=TRUE),
+            participacion=mean(participacion_w05, na.rm=TRUE),
+            meritocracia=mean(meritocracia_w05, na.rm=TRUE))
+
+vertical_sexo_w06 <- data %>% filter(anio_w06==2022) %>% 
+  group_by(anio_w06, m0_sexo_w06) %>% 
+  summarise(instituciones=mean(instituciones_w06, na.rm=TRUE),
+            participacion=mean(participacion_w06, na.rm=TRUE),
+            meritocracia=mean(meritocracia_w06, na.rm=TRUE))
+
+vertical_sexo_long_w01 <- vertical_sexo_w01 %>% 
+  tidyr::pivot_longer(cols=c("instituciones", "participacion", "meritocracia"),
+                      names_to="tipo",
+                      values_to="values") %>% 
+  rename(anio=anio_w01,
+         sexo=m0_sexo_w01)
+vertical_sexo_long_w02 <- vertical_sexo_w02 %>% 
+  tidyr::pivot_longer(cols=c("instituciones", "participacion", "meritocracia"),
+                      names_to="tipo",
+                      values_to="values") %>% 
+  rename(anio=anio_w02,
+         sexo=m0_sexo_w02)
+vertical_sexo_long_w03 <- vertical_sexo_w03 %>% 
+  tidyr::pivot_longer(cols=c("instituciones", "participacion", "meritocracia"),
+                      names_to="tipo",
+                      values_to="values") %>% 
+  rename(anio=anio_w03,
+         sexo=m0_sexo_w03)
+vertical_sexo_long_w04 <- vertical_sexo_w04 %>% 
+  tidyr::pivot_longer(cols=c("instituciones", "participacion", "meritocracia"),
+                      names_to="tipo",
+                      values_to="values") %>% 
+  rename(anio=anio_w04,
+         sexo=m0_sexo_w04)
+vertical_sexo_long_w05 <- vertical_sexo_w05 %>% 
+  tidyr::pivot_longer(cols=c("instituciones", "participacion", "meritocracia"),
+                      names_to="tipo",
+                      values_to="values") %>% 
+  rename(anio=anio_w05,
+         sexo=m0_sexo_w05)
+vertical_sexo_long_w06 <- vertical_sexo_w06 %>% 
+  tidyr::pivot_longer(cols=c("instituciones", "participacion", "meritocracia"),
+                      names_to="tipo",
+                      values_to="values") %>% 
+  rename(anio=anio_w06,
+         sexo=m0_sexo_w06)
+
+vertical_sexo <- rbind(vertical_sexo_long_w01,vertical_sexo_long_w02, vertical_sexo_long_w03, vertical_sexo_long_w04, vertical_sexo_long_w05, vertical_sexo_long_w06)
+```
+
+```{r}
+vertical_sexo$sexo <- factor(vertical_sexo$sexo, labels = c("Men", "Women"))
+plot_vertical_sexo <- ggplot(data = vertical_sexo, aes(x=anio, y=values, group=tipo, shape=tipo)) +
+  geom_line(aes(color=tipo)) + 
+  geom_point(aes(colour=tipo),size = 3)+
+  theme_bw() + 
+  xlab("Year") +
+  ylab("Mean") + 
+  scale_color_discrete(name= "Vertical",
+                   label = c("Institutional 
+trust",
+                             "Meritocratic 
+distribution",
+                             "Political
+participation"))+
+    scale_shape_discrete(name= "Vertical",
+                   label = c("Institutional 
+trust",
+                             "Meritocratic 
+distribution",
+                             "Political
+participation"))+
+  scale_y_continuous(breaks = seq(1, 5, by = 1), limits = c(1,5))+
+  facet_wrap(~sexo)
+
+plot_vertical_sexo
+
+ggsave(plot_vertical_sexo, file="output/graphs/plot_vertical_sexo.png")
+```
+
+## Horizontal x educacion
+
+```{r}
+data <- data %>% rowwise() %>%  mutate(educacion_w01 = case_when(m01_w01==1~"Primary or less",
+                                                 m01_w01==2~"Primary or less",
+                                                 m01_w01==3~"Primary or less",
+                                                 m01_w01==4~"Secondary or less",
+                                                 m01_w01==5~"Secondary or less",
+                                                 m01_w01==6~"Technical superior",
+                                                 m01_w01==7~"Technical superior",
+                                                 m01_w01==8~"University or postgraduate",
+                                                 m01_w01==9~"University or postgraduate",
+                                                 m01_w01==10~"University or postgraduate"
+                                                 ))
+data <- data %>% rowwise() %>%  mutate(educacion_w02 = case_when(m01_w02==1~"Primary or less",
+                                                 m01_w02==2~"Primary or less",
+                                                 m01_w02==3~"Primary or less",
+                                                 m01_w02==4~"Secondary or less",
+                                                 m01_w02==5~"Secondary or less",
+                                                 m01_w02==6~"Technical superior",
+                                                 m01_w02==7~"Technical superior",
+                                                 m01_w02==8~"University or postgraduate",
+                                                 m01_w02==9~"University or postgraduate",
+                                                 m01_w02==10~"University or postgraduate"
+                                                 ))
+data <- data %>% rowwise() %>%  mutate(educacion_w03 = case_when(m01_w03==1~"Primary or less",
+                                                 m01_w03==2~"Primary or less",
+                                                 m01_w03==3~"Primary or less",
+                                                 m01_w03==4~"Secondary or less",
+                                                 m01_w03==5~"Secondary or less",
+                                                 m01_w03==6~"Technical superior",
+                                                 m01_w03==7~"Technical superior",
+                                                 m01_w03==8~"University or postgraduate",
+                                                 m01_w03==9~"University or postgraduate",
+                                                 m01_w03==10~"University or postgraduate"
+                                                 ))
+data <- data %>% rowwise() %>%  mutate(educacion_w04 = case_when(m01_w04==1~"Primary or less",
+                                                 m01_w04==2~"Primary or less",
+                                                 m01_w04==3~"Primary or less",
+                                                 m01_w04==4~"Secondary or less",
+                                                 m01_w04==5~"Secondary or less",
+                                                 m01_w04==6~"Technical superior",
+                                                 m01_w04==7~"Technical superior",
+                                                 m01_w04==8~"University or postgraduate",
+                                                 m01_w04==9~"University or postgraduate",
+                                                 m01_w04==10~"University or postgraduate"
+                                                 ))
+data <- data %>% rowwise() %>%  mutate(educacion_w05 = case_when(m01_w05==1~"Primary or less",
+                                                 m01_w05==2~"Primary or less",
+                                                 m01_w05==3~"Primary or less",
+                                                 m01_w05==4~"Secondary or less",
+                                                 m01_w05==5~"Secondary or less",
+                                                 m01_w05==6~"Technical superior",
+                                                 m01_w05==7~"Technical superior",
+                                                 m01_w05==8~"University or postgraduate",
+                                                 m01_w05==9~"University or postgraduate",
+                                                 m01_w05==10~"University or postgraduate"
+                                                 ))
+data <- data %>% rowwise() %>%  mutate(educacion_w06 = case_when(m01_w06==1~"Primary or less",
+                                                 m01_w06==2~"Primary or less",
+                                                 m01_w06==3~"Primary or less",
+                                                 m01_w06==4~"Secondary or less",
+                                                 m01_w06==5~"Secondary or less",
+                                                 m01_w06==6~"Technical superior",
+                                                 m01_w06==7~"Technical superior",
+                                                 m01_w06==8~"University or postgraduate",
+                                                 m01_w06==9~"University or postgraduate",
+                                                 m01_w06==10~"University or postgraduate"
+                                                 ))
+
+horizontal_educ_w01 <- data %>% filter(anio_w01==2016 & !is.na(educacion_w01)) %>% 
+  group_by(anio_w01, educacion_w01) %>% 
+  summarise(pertenencia=mean(pertenencia_w01, na.rm=TRUE),
+            barrial=mean(barrial_w01, na.rm=TRUE),
+            redes=mean(redes_w01, na.rm=TRUE))
+
+horizontal_educ_w02 <- data %>% filter(anio_w02==2017 & !is.na(educacion_w02)) %>% 
+  group_by(anio_w02, educacion_w02) %>% 
+  summarise(pertenencia=mean(pertenencia_w02, na.rm=TRUE),
+            barrial=mean(barrial_w02, na.rm=TRUE),
+            redes=mean(redes_w02, na.rm=TRUE))
+
+horizontal_educ_w03 <- data %>% filter(anio_w03==2018 & !is.na(educacion_w03)) %>% 
+  group_by(anio_w03, educacion_w03) %>% 
+  summarise(pertenencia=mean(pertenencia_w03, na.rm=TRUE),
+            barrial=mean(barrial_w03, na.rm=TRUE),
+            redes=mean(redes_w03, na.rm=TRUE))
+
+horizontal_educ_w04 <- data %>% filter(anio_w04==2019 & !is.na(educacion_w04)) %>% 
+  group_by(anio_w04, educacion_w04) %>% 
+  summarise(pertenencia=mean(pertenencia_w04, na.rm=TRUE),
+            barrial=mean(barrial_w04, na.rm=TRUE),
+            redes=mean(redes_w04, na.rm=TRUE))
+
+horizontal_educ_w05 <- data %>% filter(anio_w05==2021 & !is.na(educacion_w05)) %>% 
+  group_by(anio_w05, educacion_w05) %>% 
+  summarise(pertenencia=mean(pertenencia_w05, na.rm=TRUE),
+            barrial=mean(barrial_05, na.rm=TRUE),
+            redes=mean(redes_w05, na.rm=TRUE))
+
+horizontal_educ_w06 <- data %>% filter(anio_w06==2022 & !is.na(educacion_w06)) %>% 
+  group_by(anio_w06, educacion_w06) %>% 
+  summarise(pertenencia=mean(pertenencia_w06, na.rm=TRUE),
+            barrial=mean(barrial_w06, na.rm=TRUE),
+            redes=mean(redes_w06, na.rm=TRUE))
+```
+
+```{r}
+horizontal_educ_long_w01 <- horizontal_educ_w01 %>% 
+  tidyr::pivot_longer(cols=c("pertenencia", "barrial", "redes"),
+                      names_to="tipo",
+                      values_to="values") %>% 
+  rename(anio=anio_w01,
+         educ=educacion_w01)
+horizontal_educ_long_w02 <- horizontal_educ_w02 %>% 
+  tidyr::pivot_longer(cols=c("pertenencia", "barrial", "redes"),
+                      names_to="tipo",
+                      values_to="values") %>% 
+  rename(anio=anio_w02,
+         educ=educacion_w02)
+horizontal_educ_long_w03 <- horizontal_educ_w03 %>% 
+  tidyr::pivot_longer(cols=c("pertenencia", "barrial", "redes"),
+                      names_to="tipo",
+                      values_to="values") %>% 
+  rename(anio=anio_w03,
+         educ=educacion_w03)
+horizontal_educ_long_w04 <- horizontal_educ_w04 %>% 
+  tidyr::pivot_longer(cols=c("pertenencia", "barrial", "redes"),
+                      names_to="tipo",
+                      values_to="values") %>% 
+  rename(anio=anio_w04,
+         educ=educacion_w04)
+horizontal_educ_long_w05 <- horizontal_educ_w05 %>% 
+  tidyr::pivot_longer(cols=c("pertenencia", "barrial", "redes"),
+                      names_to="tipo",
+                      values_to="values") %>% 
+  rename(anio=anio_w05,
+         educ=educacion_w05)
+horizontal_educ_long_w05$values <- ifelse(horizontal_educ_long_w05$values=="NaN", NA, horizontal_educ_long_w05$values)
+horizontal_educ_long_w06 <- horizontal_educ_w06 %>% 
+  tidyr::pivot_longer(cols=c("pertenencia", "barrial", "redes"),
+                      names_to="tipo",
+                      values_to="values") %>% 
+  rename(anio=anio_w06,
+         educ=educacion_w06)
+horizontal_educ_long_w06$values <- ifelse(horizontal_educ_long_w06$values=="NaN", NA, horizontal_educ_long_w06$values)
+
+horizontal_educ <- rbind(horizontal_educ_long_w01, horizontal_educ_long_w02, horizontal_educ_long_w03, horizontal_educ_long_w04, horizontal_educ_long_w05, horizontal_educ_long_w06)
+```
+
+
+```{r}
+plot_horizontal_educ <- ggplot(data = horizontal_educ[!is.na(horizontal_educ$values), ] , aes(x=anio, y=values, group=tipo, shape=tipo)) +
+  geom_line(aes(color=tipo)) + 
+  geom_point(aes(colour=tipo),size = 3)+
+  theme_bw() + 
+  xlab("Year") +
+  ylab("Mean") + 
+  scale_color_discrete(name= "Horizontal",
+                   label = c("Neighbourhood 
+attachment",
+                             "Sense of 
+belonging",
+                             "Social trust"))+
+    scale_shape_discrete(name= "Horizontal",
+                   label = c("Neighbourhood 
+attachment",
+                             "Sense of 
+belonging",
+                             "Social trust"))+
+  scale_y_continuous(breaks = seq(1, 5, by = 1), limits = c(1,5)) +
+  facet_wrap(~educ)
+
+plot_horizontal_educ
+ggsave(plot_horizontal_educ, file="output/graphs/plot_horizontal_educ.png")
+```
+
+## Vertical x educacion
+
+```{r}
+vertical_educ_w01 <- data %>% filter(anio_w01==2016 & !is.na(educacion_w01)) %>% 
+  group_by(anio_w01, educacion_w01) %>% 
+  summarise(instituciones=mean(instituciones_w01, na.rm=TRUE),
+            participacion=mean(participacion_w01, na.rm=TRUE),
+            meritocracia=mean(meritocracia_w01, na.rm=TRUE))
+
+vertical_educ_w02 <- data %>% filter(anio_w02==2017 & !is.na(educacion_w02)) %>% 
+  group_by(anio_w02, educacion_w02) %>% 
+  summarise(instituciones=mean(instituciones_w02, na.rm=TRUE),
+            participacion=mean(participacion_w02, na.rm=TRUE),
+            meritocracia=mean(meritocracia_w02, na.rm=TRUE))
+
+vertical_educ_w03 <- data %>% filter(anio_w03==2018 & !is.na(educacion_w03)) %>% 
+  group_by(anio_w03, educacion_w03) %>% 
+  summarise(instituciones=mean(instituciones_w03, na.rm=TRUE),
+            participacion=mean(participacion_w03, na.rm=TRUE),
+            meritocracia=mean(meritocracia_w03, na.rm=TRUE))
+
+vertical_educ_w04 <- data %>% filter(anio_w04==2019 & !is.na(educacion_w04)) %>% 
+  group_by(anio_w04, educacion_w04) %>% 
+  summarise(instituciones=mean(instituciones_w04, na.rm=TRUE),
+            participacion=mean(participacion_w04, na.rm=TRUE),
+            meritocracia=mean(meritocracia_w04, na.rm=TRUE))
+
+vertical_educ_w05 <- data %>% filter(anio_w05==2021 & !is.na(educacion_w05)) %>% 
+  group_by(anio_w05, educacion_w05) %>% 
+  summarise(instituciones=mean(instituciones_w05, na.rm=TRUE),
+            participacion=mean(participacion_w05, na.rm=TRUE),
+            meritocracia=mean(meritocracia_w05, na.rm=TRUE))
+
+vertical_educ_w06 <- data %>% filter(anio_w06==2022 & !is.na(educacion_w06)) %>% 
+  group_by(anio_w06, educacion_w06) %>% 
+  summarise(instituciones=mean(instituciones_w06, na.rm=TRUE),
+            participacion=mean(participacion_w06, na.rm=TRUE),
+            meritocracia=mean(meritocracia_w06, na.rm=TRUE))
+
+vertical_educ_long_w01 <- vertical_educ_w01 %>% 
+  tidyr::pivot_longer(cols=c("instituciones", "participacion", "meritocracia"),
+                      names_to="tipo",
+                      values_to="values") %>% 
+  rename(anio=anio_w01,
+         educ=educacion_w01)
+vertical_educ_long_w02 <- vertical_educ_w02 %>% 
+  tidyr::pivot_longer(cols=c("instituciones", "participacion", "meritocracia"),
+                      names_to="tipo",
+                      values_to="values") %>% 
+  rename(anio=anio_w02,
+         educ=educacion_w02)
+vertical_educ_long_w03 <- vertical_educ_w03 %>% 
+  tidyr::pivot_longer(cols=c("instituciones", "participacion", "meritocracia"),
+                      names_to="tipo",
+                      values_to="values") %>% 
+  rename(anio=anio_w03,
+         educ=educacion_w03)
+vertical_educ_long_w04 <- vertical_educ_w04 %>% 
+  tidyr::pivot_longer(cols=c("instituciones", "participacion", "meritocracia"),
+                      names_to="tipo",
+                      values_to="values") %>% 
+  rename(anio=anio_w04,
+         educ=educacion_w04)
+vertical_educ_long_w05 <- vertical_educ_w05 %>% 
+  tidyr::pivot_longer(cols=c("instituciones", "participacion", "meritocracia"),
+                      names_to="tipo",
+                      values_to="values") %>% 
+  rename(anio=anio_w05,
+         educ=educacion_w05)
+vertical_educ_long_w06 <- vertical_educ_w06 %>% 
+  tidyr::pivot_longer(cols=c("instituciones", "participacion", "meritocracia"),
+                      names_to="tipo",
+                      values_to="values") %>% 
+  rename(anio=anio_w06,
+         educ=educacion_w06)
+
+vertical_educ <- rbind(vertical_educ_long_w01,vertical_educ_long_w02, vertical_educ_long_w03, vertical_educ_long_w04, vertical_educ_long_w05, vertical_educ_long_w06)
+```
+
+```{r}
+plot_vertical_educ <- ggplot(data = vertical_educ, aes(x=anio, y=values, group=tipo, shape=tipo)) +
+  geom_line(aes(color=tipo)) + 
+  geom_point(aes(colour=tipo),size = 3)+
+  theme_bw() + 
+  xlab("Year") +
+  ylab("Mean") + 
+  scale_color_discrete(name= "Vertical",
+                   label = c("Institutional 
+trust",
+                             "Meritocratic 
+distribution",
+                             "Political
+participation"))+
+    scale_shape_discrete(name= "Vertical",
+                   label = c("Institutional 
+trust",
+                             "Meritocratic 
+distribution",
+                             "Political
+participation"))+
+  scale_y_continuous(breaks = seq(1, 5, by = 1), limits = c(1,5))+
+  facet_wrap(~educ)
+
+plot_vertical_educ
+
+ggsave(plot_vertical_educ, file="output/graphs/plot_vertical_educ.png")
+```
+
+## Horizontal x educacion 2 categorias
+
+```{r}
+data <- data %>% rowwise() %>%  mutate(educacion_rec_w01 = case_when(m01_w01==1~"Secondary or less",
+                                                 m01_w01==2~"Secondary or less",
+                                                 m01_w01==3~"Secondary or less",
+                                                 m01_w01==4~"Secondary or less",
+                                                 m01_w01==5~"Secondary or less",
+                                                 m01_w01==6~"University or postgraduate",
+                                                 m01_w01==7~"University or postgraduate",
+                                                 m01_w01==8~"University or postgraduate",
+                                                 m01_w01==9~"University or postgraduate",
+                                                 m01_w01==10~"University or postgraduate"
+                                                 ))
+data <- data %>% rowwise() %>%  mutate(educacion_rec_w02 = case_when(m01_w02==1~"Secondary or less",
+                                                 m01_w02==2~"Secondary or less",
+                                                 m01_w02==3~"Secondary or less",
+                                                 m01_w02==4~"Secondary or less",
+                                                 m01_w02==5~"Secondary or less",
+                                                 m01_w02==6~"University or postgraduate",
+                                                 m01_w02==7~"University or postgraduate",
+                                                 m01_w02==8~"University or postgraduate",
+                                                 m01_w02==9~"University or postgraduate",
+                                                 m01_w02==10~"University or postgraduate"
+                                                 ))
+data <- data %>% rowwise() %>%  mutate(educacion_rec_w03 = case_when(m01_w03==1~"Secondary or less",
+                                                 m01_w03==2~"Secondary or less",
+                                                 m01_w03==3~"Secondary or less",
+                                                 m01_w03==4~"Secondary or less",
+                                                 m01_w03==5~"Secondary or less",
+                                                 m01_w03==6~"University or postgraduate",
+                                                 m01_w03==7~"University or postgraduate",
+                                                 m01_w03==8~"University or postgraduate",
+                                                 m01_w03==9~"University or postgraduate",
+                                                 m01_w03==10~"University or postgraduate"
+                                                 ))
+data <- data %>% rowwise() %>%  mutate(educacion_rec_w04 = case_when(m01_w04==1~"Secondary or less",
+                                                 m01_w04==2~"Secondary or less",
+                                                 m01_w04==3~"Secondary or less",
+                                                 m01_w04==4~"Secondary or less",
+                                                 m01_w04==5~"Secondary or less",
+                                                 m01_w04==6~"University or postgraduate",
+                                                 m01_w04==7~"University or postgraduate",
+                                                 m01_w04==8~"University or postgraduate",
+                                                 m01_w04==9~"University or postgraduate",
+                                                 m01_w04==10~"University or postgraduate"
+                                                 ))
+data <- data %>% rowwise() %>%  mutate(educacion_rec_w05 = case_when(m01_w05==1~"Secondary or less",
+                                                 m01_w05==2~"Secondary or less",
+                                                 m01_w05==3~"Secondary or less",
+                                                 m01_w05==4~"Secondary or less",
+                                                 m01_w05==5~"Secondary or less",
+                                                 m01_w05==6~"University or postgraduate",
+                                                 m01_w05==7~"University or postgraduate",
+                                                 m01_w05==8~"University or postgraduate",
+                                                 m01_w05==9~"University or postgraduate",
+                                                 m01_w05==10~"University or postgraduate"
+                                                 ))
+data <- data %>% rowwise() %>%  mutate(educacion_rec_w06 = case_when(m01_w06==1~"Secondary or less",
+                                                 m01_w06==2~"Secondary or less",
+                                                 m01_w06==3~"Secondary or less",
+                                                 m01_w06==4~"Secondary or less",
+                                                 m01_w06==5~"Secondary or less",
+                                                 m01_w06==6~"University or postgraduate",
+                                                 m01_w06==7~"University or postgraduate",
+                                                 m01_w06==8~"University or postgraduate",
+                                                 m01_w06==9~"University or postgraduate",
+                                                 m01_w06==10~"University or postgraduate"
+                                                 ))
+
+horizontal_educ_w01 <- data %>% filter(anio_w01==2016 & !is.na(educacion_rec_w01)) %>% 
+  group_by(anio_w01, educacion_rec_w01) %>% 
+  summarise(pertenencia=mean(pertenencia_w01, na.rm=TRUE),
+            barrial=mean(barrial_w01, na.rm=TRUE),
+            redes=mean(redes_w01, na.rm=TRUE))
+
+horizontal_educ_w02 <- data %>% filter(anio_w02==2017 & !is.na(educacion_rec_w02)) %>% 
+  group_by(anio_w02, educacion_rec_w02) %>% 
+  summarise(pertenencia=mean(pertenencia_w02, na.rm=TRUE),
+            barrial=mean(barrial_w02, na.rm=TRUE),
+            redes=mean(redes_w02, na.rm=TRUE))
+
+horizontal_educ_w03 <- data %>% filter(anio_w03==2018 & !is.na(educacion_rec_w03)) %>% 
+  group_by(anio_w03, educacion_rec_w03) %>% 
+  summarise(pertenencia=mean(pertenencia_w03, na.rm=TRUE),
+            barrial=mean(barrial_w03, na.rm=TRUE),
+            redes=mean(redes_w03, na.rm=TRUE))
+
+horizontal_educ_w04 <- data %>% filter(anio_w04==2019 & !is.na(educacion_rec_w04)) %>% 
+  group_by(anio_w04, educacion_rec_w04) %>% 
+  summarise(pertenencia=mean(pertenencia_w04, na.rm=TRUE),
+            barrial=mean(barrial_w04, na.rm=TRUE),
+            redes=mean(redes_w04, na.rm=TRUE))
+
+horizontal_educ_w05 <- data %>% filter(anio_w05==2021 & !is.na(educacion_rec_w05)) %>% 
+  group_by(anio_w05, educacion_rec_w05) %>% 
+  summarise(pertenencia=mean(pertenencia_w05, na.rm=TRUE),
+            barrial=mean(barrial_05, na.rm=TRUE),
+            redes=mean(redes_w05, na.rm=TRUE))
+
+horizontal_educ_w06 <- data %>% filter(anio_w06==2022 & !is.na(educacion_rec_w06)) %>% 
+  group_by(anio_w06, educacion_rec_w06) %>% 
+  summarise(pertenencia=mean(pertenencia_w06, na.rm=TRUE),
+            barrial=mean(barrial_w06, na.rm=TRUE),
+            redes=mean(redes_w06, na.rm=TRUE))
+```
+
+```{r}
+horizontal_educ_long_w01 <- horizontal_educ_w01 %>% 
+  tidyr::pivot_longer(cols=c("pertenencia", "barrial", "redes"),
+                      names_to="tipo",
+                      values_to="values") %>% 
+  rename(anio=anio_w01,
+         educ=educacion_rec_w01)
+horizontal_educ_long_w02 <- horizontal_educ_w02 %>% 
+  tidyr::pivot_longer(cols=c("pertenencia", "barrial", "redes"),
+                      names_to="tipo",
+                      values_to="values") %>% 
+  rename(anio=anio_w02,
+         educ=educacion_rec_w02)
+horizontal_educ_long_w03 <- horizontal_educ_w03 %>% 
+  tidyr::pivot_longer(cols=c("pertenencia", "barrial", "redes"),
+                      names_to="tipo",
+                      values_to="values") %>% 
+  rename(anio=anio_w03,
+         educ=educacion_rec_w03)
+horizontal_educ_long_w04 <- horizontal_educ_w04 %>% 
+  tidyr::pivot_longer(cols=c("pertenencia", "barrial", "redes"),
+                      names_to="tipo",
+                      values_to="values") %>% 
+  rename(anio=anio_w04,
+         educ=educacion_rec_w04)
+horizontal_educ_long_w05 <- horizontal_educ_w05 %>% 
+  tidyr::pivot_longer(cols=c("pertenencia", "barrial", "redes"),
+                      names_to="tipo",
+                      values_to="values") %>% 
+  rename(anio=anio_w05,
+         educ=educacion_rec_w05)
+horizontal_educ_long_w05$values <- ifelse(horizontal_educ_long_w05$values=="NaN", NA, horizontal_educ_long_w05$values)
+horizontal_educ_long_w06 <- horizontal_educ_w06 %>% 
+  tidyr::pivot_longer(cols=c("pertenencia", "barrial", "redes"),
+                      names_to="tipo",
+                      values_to="values") %>% 
+  rename(anio=anio_w06,
+         educ=educacion_rec_w06)
+horizontal_educ_long_w06$values <- ifelse(horizontal_educ_long_w06$values=="NaN", NA, horizontal_educ_long_w06$values)
+
+horizontal_educ <- rbind(horizontal_educ_long_w01, horizontal_educ_long_w02, horizontal_educ_long_w03, horizontal_educ_long_w04, horizontal_educ_long_w05, horizontal_educ_long_w06)
+```
+
+```{r}
+plot_horizontal_educ_rec <- ggplot(data = horizontal_educ[!is.na(horizontal_educ$values), ] , aes(x=anio, y=values, group=tipo, shape=tipo)) +
+  geom_line(aes(color=tipo)) + 
+  geom_point(aes(colour=tipo),size = 3)+
+  theme_bw() + 
+  xlab("Year") +
+  ylab("Mean") + 
+  scale_color_discrete(name= "Horizontal",
+                   label = c("Neighbourhood 
+attachment",
+                             "Sense of 
+belonging",
+                             "Social trust"))+
+    scale_shape_discrete(name= "Horizontal",
+                   label = c("Neighbourhood 
+attachment",
+                             "Sense of 
+belonging",
+                             "Social trust"))+
+  scale_y_continuous(breaks = seq(1, 5, by = 1), limits = c(1,5)) +
+  facet_wrap(~educ)
+
+plot_horizontal_educ_rec
+ggsave(plot_horizontal_educ, file="output/graphs/plot_horizontal_educ_rec.png")
+```
+
+## Vertical x educacion 2 categorias
+
+```{r}
+vertical_educ_w01 <- data %>% filter(anio_w01==2016 & !is.na(educacion_rec_w01)) %>% 
+  group_by(anio_w01, educacion_rec_w01) %>% 
+  summarise(instituciones=mean(instituciones_w01, na.rm=TRUE),
+            participacion=mean(participacion_w01, na.rm=TRUE),
+            meritocracia=mean(meritocracia_w01, na.rm=TRUE))
+
+vertical_educ_w02 <- data %>% filter(anio_w02==2017 & !is.na(educacion_rec_w02)) %>% 
+  group_by(anio_w02, educacion_rec_w02) %>% 
+  summarise(instituciones=mean(instituciones_w02, na.rm=TRUE),
+            participacion=mean(participacion_w02, na.rm=TRUE),
+            meritocracia=mean(meritocracia_w02, na.rm=TRUE))
+
+vertical_educ_w03 <- data %>% filter(anio_w03==2018 & !is.na(educacion_rec_w03)) %>% 
+  group_by(anio_w03, educacion_rec_w03) %>% 
+  summarise(instituciones=mean(instituciones_w03, na.rm=TRUE),
+            participacion=mean(participacion_w03, na.rm=TRUE),
+            meritocracia=mean(meritocracia_w03, na.rm=TRUE))
+
+vertical_educ_w04 <- data %>% filter(anio_w04==2019 & !is.na(educacion_rec_w04)) %>% 
+  group_by(anio_w04, educacion_rec_w04) %>% 
+  summarise(instituciones=mean(instituciones_w04, na.rm=TRUE),
+            participacion=mean(participacion_w04, na.rm=TRUE),
+            meritocracia=mean(meritocracia_w04, na.rm=TRUE))
+
+vertical_educ_w05 <- data %>% filter(anio_w05==2021 & !is.na(educacion_rec_w05)) %>% 
+  group_by(anio_w05, educacion_rec_w05) %>% 
+  summarise(instituciones=mean(instituciones_w05, na.rm=TRUE),
+            participacion=mean(participacion_w05, na.rm=TRUE),
+            meritocracia=mean(meritocracia_w05, na.rm=TRUE))
+
+vertical_educ_w06 <- data %>% filter(anio_w06==2022 & !is.na(educacion_rec_w06)) %>% 
+  group_by(anio_w06, educacion_rec_w06) %>% 
+  summarise(instituciones=mean(instituciones_w06, na.rm=TRUE),
+            participacion=mean(participacion_w06, na.rm=TRUE),
+            meritocracia=mean(meritocracia_w06, na.rm=TRUE))
+
+vertical_educ_long_w01 <- vertical_educ_w01 %>% 
+  tidyr::pivot_longer(cols=c("instituciones", "participacion", "meritocracia"),
+                      names_to="tipo",
+                      values_to="values") %>% 
+  rename(anio=anio_w01,
+         educ=educacion_rec_w01)
+vertical_educ_long_w02 <- vertical_educ_w02 %>% 
+  tidyr::pivot_longer(cols=c("instituciones", "participacion", "meritocracia"),
+                      names_to="tipo",
+                      values_to="values") %>% 
+  rename(anio=anio_w02,
+         educ=educacion_rec_w02)
+vertical_educ_long_w03 <- vertical_educ_w03 %>% 
+  tidyr::pivot_longer(cols=c("instituciones", "participacion", "meritocracia"),
+                      names_to="tipo",
+                      values_to="values") %>% 
+  rename(anio=anio_w03,
+         educ=educacion_rec_w03)
+vertical_educ_long_w04 <- vertical_educ_w04 %>% 
+  tidyr::pivot_longer(cols=c("instituciones", "participacion", "meritocracia"),
+                      names_to="tipo",
+                      values_to="values") %>% 
+  rename(anio=anio_w04,
+         educ=educacion_rec_w04)
+vertical_educ_long_w05 <- vertical_educ_w05 %>% 
+  tidyr::pivot_longer(cols=c("instituciones", "participacion", "meritocracia"),
+                      names_to="tipo",
+                      values_to="values") %>% 
+  rename(anio=anio_w05,
+         educ=educacion_rec_w05)
+vertical_educ_long_w06 <- vertical_educ_w06 %>% 
+  tidyr::pivot_longer(cols=c("instituciones", "participacion", "meritocracia"),
+                      names_to="tipo",
+                      values_to="values") %>% 
+  rename(anio=anio_w06,
+         educ=educacion_rec_w06)
+
+vertical_educ <- rbind(vertical_educ_long_w01,vertical_educ_long_w02, vertical_educ_long_w03, vertical_educ_long_w04, vertical_educ_long_w05, vertical_educ_long_w06)
+```
+
+```{r}
+plot_vertical_educ_rec <- ggplot(data = vertical_educ, aes(x=anio, y=values, group=tipo, shape=tipo)) +
+  geom_line(aes(color=tipo)) + 
+  geom_point(aes(colour=tipo),size = 3)+
+  theme_bw() + 
+  xlab("Year") +
+  ylab("Mean") + 
+  scale_color_discrete(name= "Vertical",
+                   label = c("Institutional 
+trust",
+                             "Meritocratic 
+distribution",
+                             "Political
+participation"))+
+    scale_shape_discrete(name= "Vertical",
+                   label = c("Institutional 
+trust",
+                             "Meritocratic 
+distribution",
+                             "Political
+participation"))+
+  scale_y_continuous(breaks = seq(1, 5, by = 1), limits = c(1,5))+
+  facet_wrap(~educ)
+
+plot_vertical_educ_rec
+
+ggsave(plot_vertical_educ, file="output/graphs/plot_vertical_educ_rec.png")
+```
+
+## Horizontal x edad
+
+```{r}
+data <- data %>% rowwise() %>%  mutate(edad_w01 = case_when(m0_edad_w01<=50~"50 or less",
+                                                 m0_edad_w01>50~"More than 50"
+                                                 ))
+data <- data %>% rowwise() %>%  mutate(edad_w02 = case_when(m0_edad_w02<=50~"50 or less",
+                                                 m0_edad_w02>50~"More than 50"
+                                                 ))
+data <- data %>% rowwise() %>%  mutate(edad_w03 = case_when(m0_edad_w03<=50~"50 or less",
+                                                 m0_edad_w03>50~"More than 50"
+                                                 ))
+data <- data %>% rowwise() %>%  mutate(edad_w04 = case_when(m0_edad_w04<=50~"50 or less",
+                                                 m0_edad_w04>50~"More than 50"
+                                                 ))
+data <- data %>% rowwise() %>%  mutate(edad_w05 = case_when(m0_edad_w05<=50~"50 or less",
+                                                 m0_edad_w05>50~"More than 50"
+                                                 ))
+data <- data %>% rowwise() %>%  mutate(edad_w06 = case_when(m0_edad_w06<=50~"50 or less",
+                                                 m0_edad_w06>50~"More than 50"
+                                                 ))
+
+horizontal_edad_w01 <- data %>% filter(anio_w01==2016) %>% 
+  group_by(anio_w01, edad_w01) %>% 
+  summarise(pertenencia=mean(pertenencia_w01, na.rm=TRUE),
+            barrial=mean(barrial_w01, na.rm=TRUE),
+            redes=mean(redes_w01, na.rm=TRUE))
+
+horizontal_edad_w02 <- data %>% filter(anio_w02==2017) %>% 
+  group_by(anio_w02, edad_w02) %>% 
+  summarise(pertenencia=mean(pertenencia_w02, na.rm=TRUE),
+            barrial=mean(barrial_w02, na.rm=TRUE),
+            redes=mean(redes_w02, na.rm=TRUE))
+
+horizontal_edad_w03 <- data %>% filter(anio_w03==2018) %>% 
+  group_by(anio_w03, edad_w03) %>% 
+  summarise(pertenencia=mean(pertenencia_w03, na.rm=TRUE),
+            barrial=mean(barrial_w03, na.rm=TRUE),
+            redes=mean(redes_w03, na.rm=TRUE))
+
+horizontal_edad_w04 <- data %>% filter(anio_w04==2019) %>% 
+  group_by(anio_w04, edad_w04) %>% 
+  summarise(pertenencia=mean(pertenencia_w04, na.rm=TRUE),
+            barrial=mean(barrial_w04, na.rm=TRUE),
+            redes=mean(redes_w04, na.rm=TRUE))
+
+horizontal_edad_w05 <- data %>% filter(anio_w05==2021) %>% 
+  group_by(anio_w05, edad_w05) %>% 
+  summarise(pertenencia=mean(pertenencia_w05, na.rm=TRUE),
+            barrial=mean(barrial_05, na.rm=TRUE),
+            redes=mean(redes_w05, na.rm=TRUE))
+
+horizontal_edad_w06 <- data %>% filter(anio_w06==2022) %>% 
+  group_by(anio_w06, edad_w06) %>% 
+  summarise(pertenencia=mean(pertenencia_w06, na.rm=TRUE),
+            barrial=mean(barrial_w06, na.rm=TRUE),
+            redes=mean(redes_w06, na.rm=TRUE))
+```
+
+```{r}
+horizontal_edad_long_w01 <- horizontal_edad_w01 %>% 
+  tidyr::pivot_longer(cols=c("pertenencia", "barrial", "redes"),
+                      names_to="tipo",
+                      values_to="values") %>% 
+  rename(anio=anio_w01,
+         educ=edad_w01)
+horizontal_edad_long_w02 <- horizontal_edad_w02 %>% 
+  tidyr::pivot_longer(cols=c("pertenencia", "barrial", "redes"),
+                      names_to="tipo",
+                      values_to="values") %>% 
+  rename(anio=anio_w02,
+         educ=edad_w02)
+horizontal_edad_long_w03 <- horizontal_edad_w03 %>% 
+  tidyr::pivot_longer(cols=c("pertenencia", "barrial", "redes"),
+                      names_to="tipo",
+                      values_to="values") %>% 
+  rename(anio=anio_w03,
+         educ=edad_w03)
+horizontal_edad_long_w04 <- horizontal_edad_w04 %>% 
+  tidyr::pivot_longer(cols=c("pertenencia", "barrial", "redes"),
+                      names_to="tipo",
+                      values_to="values") %>% 
+  rename(anio=anio_w04,
+         educ=edad_w04)
+horizontal_edad_long_w05 <- horizontal_edad_w05 %>% 
+  tidyr::pivot_longer(cols=c("pertenencia", "barrial", "redes"),
+                      names_to="tipo",
+                      values_to="values") %>% 
+  rename(anio=anio_w05,
+         educ=edad_w05)
+horizontal_edad_long_w05$values <- ifelse(horizontal_edad_long_w05$values=="NaN", NA, horizontal_edad_long_w05$values)
+horizontal_edad_long_w06 <- horizontal_edad_w06 %>% 
+  tidyr::pivot_longer(cols=c("pertenencia", "barrial", "redes"),
+                      names_to="tipo",
+                      values_to="values") %>% 
+  rename(anio=anio_w06,
+         educ=edad_w06)
+horizontal_edad_long_w06$values <- ifelse(horizontal_edad_long_w06$values=="NaN", NA, horizontal_edad_long_w06$values)
+
+horizontal_edad <- rbind(horizontal_edad_long_w01, horizontal_edad_long_w02, horizontal_edad_long_w03, horizontal_edad_long_w04, horizontal_edad_long_w05, horizontal_edad_long_w06)
+```
+
+```{r}
+plot_horizontal_edad <- ggplot(data = horizontal_edad[!is.na(horizontal_edad$values), ] , aes(x=anio, y=values, group=tipo, shape=tipo)) +
+  geom_line(aes(color=tipo)) + 
+  geom_point(aes(colour=tipo),size = 3)+
+  theme_bw() + 
+  xlab("Year") +
+  ylab("Mean") + 
+  scale_color_discrete(name= "Horizontal",
+                   label = c("Neighbourhood 
+attachment",
+                             "Sense of 
+belonging",
+                             "Social trust"))+
+    scale_shape_discrete(name= "Horizontal",
+                   label = c("Neighbourhood 
+attachment",
+                             "Sense of 
+belonging",
+                             "Social trust"))+
+  scale_y_continuous(breaks = seq(1, 5, by = 1), limits = c(1,5)) +
+  facet_wrap(~educ)
+
+plot_horizontal_edad
+ggsave(plot_horizontal_edad, file="output/graphs/plot_horizontal_edad.png")
+```
+
+## Vertical x edad
+
+```{r}
+vertical_edad_w01 <- data %>% filter(anio_w01==2016) %>% 
+  group_by(anio_w01, edad_w01) %>% 
+  summarise(instituciones=mean(instituciones_w01, na.rm=TRUE),
+            participacion=mean(participacion_w01, na.rm=TRUE),
+            meritocracia=mean(meritocracia_w01, na.rm=TRUE))
+
+vertical_edad_w02 <- data %>% filter(anio_w02==2017) %>% 
+  group_by(anio_w02, edad_w02) %>% 
+  summarise(instituciones=mean(instituciones_w02, na.rm=TRUE),
+            participacion=mean(participacion_w02, na.rm=TRUE),
+            meritocracia=mean(meritocracia_w02, na.rm=TRUE))
+
+vertical_edad_w03 <- data %>% filter(anio_w03==2018) %>% 
+  group_by(anio_w03, edad_w03) %>% 
+  summarise(instituciones=mean(instituciones_w03, na.rm=TRUE),
+            participacion=mean(participacion_w03, na.rm=TRUE),
+            meritocracia=mean(meritocracia_w03, na.rm=TRUE))
+
+vertical_edad_w04 <- data %>% filter(anio_w04==2019) %>% 
+  group_by(anio_w04, edad_w04) %>% 
+  summarise(instituciones=mean(instituciones_w04, na.rm=TRUE),
+            participacion=mean(participacion_w04, na.rm=TRUE),
+            meritocracia=mean(meritocracia_w04, na.rm=TRUE))
+
+vertical_edad_w05 <- data %>% filter(anio_w05==2021) %>% 
+  group_by(anio_w05, edad_w05) %>% 
+  summarise(instituciones=mean(instituciones_w05, na.rm=TRUE),
+            participacion=mean(participacion_w05, na.rm=TRUE),
+            meritocracia=mean(meritocracia_w05, na.rm=TRUE))
+
+vertical_edad_w06 <- data %>% filter(anio_w06==2022) %>% 
+  group_by(anio_w06, edad_w06) %>% 
+  summarise(instituciones=mean(instituciones_w06, na.rm=TRUE),
+            participacion=mean(participacion_w06, na.rm=TRUE),
+            meritocracia=mean(meritocracia_w06, na.rm=TRUE))
+
+vertical_edad_long_w01 <- vertical_edad_w01 %>% 
+  tidyr::pivot_longer(cols=c("instituciones", "participacion", "meritocracia"),
+                      names_to="tipo",
+                      values_to="values") %>% 
+  rename(anio=anio_w01,
+         educ=edad_w01)
+vertical_edad_long_w02 <- vertical_edad_w02 %>% 
+  tidyr::pivot_longer(cols=c("instituciones", "participacion", "meritocracia"),
+                      names_to="tipo",
+                      values_to="values") %>% 
+  rename(anio=anio_w02,
+         educ=edad_w02)
+vertical_edad_long_w03 <- vertical_edad_w03 %>% 
+  tidyr::pivot_longer(cols=c("instituciones", "participacion", "meritocracia"),
+                      names_to="tipo",
+                      values_to="values") %>% 
+  rename(anio=anio_w03,
+         educ=edad_w03)
+vertical_edad_long_w04 <- vertical_edad_w04 %>% 
+  tidyr::pivot_longer(cols=c("instituciones", "participacion", "meritocracia"),
+                      names_to="tipo",
+                      values_to="values") %>% 
+  rename(anio=anio_w04,
+         educ=edad_w04)
+vertical_edad_long_w05 <- vertical_edad_w05 %>% 
+  tidyr::pivot_longer(cols=c("instituciones", "participacion", "meritocracia"),
+                      names_to="tipo",
+                      values_to="values") %>% 
+  rename(anio=anio_w05,
+         educ=edad_w05)
+vertical_edad_long_w06 <- vertical_edad_w06 %>% 
+  tidyr::pivot_longer(cols=c("instituciones", "participacion", "meritocracia"),
+                      names_to="tipo",
+                      values_to="values") %>% 
+  rename(anio=anio_w06,
+         educ=edad_w06)
+
+vertical_edad <- rbind(vertical_edad_long_w01,vertical_edad_long_w02, vertical_edad_long_w03, vertical_edad_long_w04, vertical_edad_long_w05, vertical_edad_long_w06)
+```
+
+```{r}
+plot_vertical_edad <- ggplot(data = vertical_edad, aes(x=anio, y=values, group=tipo, shape=tipo)) +
+  geom_line(aes(color=tipo)) + 
+  geom_point(aes(colour=tipo),size = 3)+
+  theme_bw() + 
+  xlab("Year") +
+  ylab("Mean") + 
+  scale_color_discrete(name= "Vertical",
+                   label = c("Institutional 
+trust",
+                             "Meritocratic 
+distribution",
+                             "Political
+participation"))+
+    scale_shape_discrete(name= "Vertical",
+                   label = c("Institutional 
+trust",
+                             "Meritocratic 
+distribution",
+                             "Political
+participation"))+
+  scale_y_continuous(breaks = seq(1, 5, by = 1), limits = c(1,5))+
+  facet_wrap(~educ)
+
+plot_vertical_edad
+
+ggsave(plot_vertical_edad, file="output/graphs/plot_vertical_edad.png")
 ```
