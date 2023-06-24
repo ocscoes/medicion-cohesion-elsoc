@@ -19,7 +19,7 @@ knitr::opts_chunk$set(echo = TRUE, warning=F, message=F)
 
 ```{r include=FALSE}
 # Cargar paquetes
-pacman::p_load(dplyr, panelr, survey, ggplot2, summarytools, shadowtext, semTools, psych, semPlot)
+pacman::p_load(dplyr, panelr, survey, ggplot2, summarytools, shadowtext, semTools, psych, semPlot, semTable)
 ```
 
 ```{r include=FALSE}
@@ -442,7 +442,7 @@ scores_vertical_w04 = as.data.frame(pvw04)%>%
 scores_vertical_w05 = as.data.frame(pvw05)%>% 
   cbind(anio=c("2021"))
 data_vertical_w05 <- cbind(data_vertical_w05, scores_vertical_w05)
-data_vertical_w05 <- data_vertical_w05 %>% filter(instituciones>0 | participacion>0)
+data_vertical_w05 <- data_vertical_w05 %>% filter(instituciones>0 | participacion>0) # Eliminar 6 demasiado outliers
 scores_vertical_w06 = as.data.frame(pvw06)%>% 
   cbind(anio=c("2022"))
 
@@ -573,7 +573,7 @@ data <- left_join(data, data_vertical_w06, by="idencuesta")
 
 # Graficar
 
-## Horizontal
+## Horizontal colores original
 
 ```{r}
 horizontal_anio_long <- horizontal_anio %>% tidyr::pivot_longer(cols=c("pertenencia", "apego", "redes"),
@@ -603,6 +603,34 @@ belonging",
 
 plot_horizontal
 ggsave(plot_horizontal, file="output/graphs/plot_horizontal.png")
+```
+
+## Horizontal colores V2
+
+```{r}
+plot_horizontal_v2 <- ggplot(data = horizontal_anio_long[!is.na(horizontal_anio_long$values), ], aes(x=anio, y=values, group=tipo, shape=tipo)) +
+  geom_line(aes(color=tipo)) + 
+  geom_point(aes(colour=tipo),size = 3)+
+  theme_bw() + 
+  xlab("Year") +
+  ylab("Mean") + 
+  scale_shape_discrete(name= "Horizontal",
+                   label = c("Neighbourhood 
+attachment",
+                             "Sense of 
+belonging",
+                             "Social trust"))+
+  scale_y_continuous(breaks = seq(1, 5, by = 1), limits = c(1,5)) +
+  scale_color_manual(name= "Horizontal", values=c("#00CD00","#0000EE", "#CDCD00"),
+  label = c("Neighbourhood 
+attachment",
+                             "Sense of 
+belonging",
+                             "Social trust"))
+
+
+plot_horizontal_v2
+ggsave(plot_horizontal_v2, file="output/graphs/plot_horizontal_v2.png")
 ```
 
 ## Vertical
@@ -639,7 +667,37 @@ plot_vertical
 ggsave(plot_vertical, file="output/graphs/plot_vertical.png")
 ```
 
-## Horizontal x sexo
+## Vertical V2
+
+```{r}
+plot_vertical_v2 <- ggplot(data = vertical_anio_long, aes(x=anio, y=values, group=tipo, shape=tipo)) +
+  geom_line(aes(color=tipo)) + 
+  geom_point(aes(colour=tipo),size = 3)+
+  theme_bw() + 
+  xlab("Year") +
+  ylab("Mean") + 
+  scale_color_manual(name= "Vertical", values=c("#8B008B","#607B8B","#8B3626"),
+  label = c("Institutional 
+trust",
+                             "Meritocratic 
+distribution",
+                             "Political
+participation")) +
+    scale_shape_discrete(name= "Vertical",
+                   label = c("Institutional 
+trust",
+                             "Meritocratic 
+distribution",
+                             "Political
+participation"))+
+  scale_y_continuous(breaks = seq(1, 5, by = 1), limits = c(1,5))
+
+plot_vertical_v2
+
+ggsave(plot_vertical_v2, file="output/graphs/plot_vertical_v2.png")
+```
+
+## Horizontal x sexo colores original
 
 ```{r}
 horizontal_sexo_w01 <- data %>% filter(anio_w01==2016) %>% 
@@ -747,6 +805,33 @@ belonging",
 
 plot_horizontal_sexo
 ggsave(plot_horizontal_sexo, file="output/graphs/plot_horizontal_sexo.png")
+```
+
+## Horizontal x sexo colores v2
+```{r}
+plot_horizontal_sexo_v2 <- ggplot(data = horizontal_sexo[!is.na(horizontal_sexo$values), ] , aes(x=anio, y=values, group=tipo, shape=tipo)) +
+  geom_line(aes(color=tipo)) + 
+  geom_point(aes(colour=tipo),size = 3)+
+  theme_bw() + 
+  xlab("Year") +
+  ylab("Mean") +
+  scale_color_manual(name= "Horizontal", values=c("#00CD00","#0000EE", "#CDCD00"),
+  label = c("Neighbourhood 
+attachment",
+                             "Sense of 
+belonging",
+                             "Social trust")) + 
+    scale_shape_discrete(name= "Horizontal",
+                   label = c("Neighbourhood 
+attachment",
+                             "Sense of 
+belonging",
+                             "Social trust"))+
+  scale_y_continuous(breaks = seq(1, 5, by = 1), limits = c(1,5)) +
+  facet_wrap(~sexo)
+
+plot_horizontal_sexo_v2
+ggsave(plot_horizontal_sexo_v2, file="output/graphs/plot_horizontal_sexo_v2.png")
 ```
 
 ## Vertical x sexo
@@ -858,7 +943,38 @@ plot_vertical_sexo
 ggsave(plot_vertical_sexo, file="output/graphs/plot_vertical_sexo.png")
 ```
 
-## Horizontal x educacion
+## Vertical x sexo color v2
+
+```{r}
+plot_vertical_sexo_v2 <- ggplot(data = vertical_sexo, aes(x=anio, y=values, group=tipo, shape=tipo)) +
+  geom_line(aes(color=tipo)) + 
+  geom_point(aes(colour=tipo),size = 3)+
+  theme_bw() + 
+  xlab("Year") +
+  ylab("Mean") + 
+  scale_color_manual(name= "Vertical", values=c("#8B008B","#607B8B","#8B3626"),
+  label = c("Institutional 
+trust",
+                             "Meritocratic 
+distribution",
+                             "Political
+participation")) +
+    scale_shape_discrete(name= "Vertical",
+                   label = c("Institutional 
+trust",
+                             "Meritocratic 
+distribution",
+                             "Political
+participation"))+
+  scale_y_continuous(breaks = seq(1, 5, by = 1), limits = c(1,5))+
+  facet_wrap(~sexo)
+
+plot_vertical_sexo_v2
+
+ggsave(plot_vertical_sexo_v2, file="output/graphs/plot_vertical_sexo_v2.png")
+```
+
+## Horizontal x educacion colores original
 
 ```{r}
 data <- data %>% rowwise() %>%  mutate(educacion_w01 = case_when(m01_w01==1~"Primary or less",
@@ -1008,7 +1124,6 @@ horizontal_educ_long_w06$values <- ifelse(horizontal_educ_long_w06$values=="NaN"
 horizontal_educ <- rbind(horizontal_educ_long_w01, horizontal_educ_long_w02, horizontal_educ_long_w03, horizontal_educ_long_w04, horizontal_educ_long_w05, horizontal_educ_long_w06)
 ```
 
-
 ```{r}
 plot_horizontal_educ <- ggplot(data = horizontal_educ[!is.na(horizontal_educ$values), ] , aes(x=anio, y=values, group=tipo, shape=tipo)) +
   geom_line(aes(color=tipo)) + 
@@ -1033,6 +1148,34 @@ belonging",
 
 plot_horizontal_educ
 ggsave(plot_horizontal_educ, file="output/graphs/plot_horizontal_educ.png")
+```
+
+## Horizontal x educacion colores v2
+
+```{r}
+plot_horizontal_educ_v2 <- ggplot(data = horizontal_educ[!is.na(horizontal_educ$values), ] , aes(x=anio, y=values, group=tipo, shape=tipo)) +
+  geom_line(aes(color=tipo)) + 
+  geom_point(aes(colour=tipo),size = 3)+
+  theme_bw() + 
+  xlab("Year") +
+  ylab("Mean") + 
+  scale_color_manual(name= "Horizontal", values=c("#00CD00","#0000EE", "#CDCD00"),
+  label = c("Neighbourhood 
+attachment",
+                             "Sense of 
+belonging",
+                             "Social trust")) + 
+    scale_shape_discrete(name= "Horizontal",
+                   label = c("Neighbourhood 
+attachment",
+                             "Sense of 
+belonging",
+                             "Social trust"))+
+  scale_y_continuous(breaks = seq(1, 5, by = 1), limits = c(1,5)) +
+  facet_wrap(~educ)
+
+plot_horizontal_educ_v2
+ggsave(plot_horizontal_educ_v2, file="output/graphs/plot_horizontal_educ_v2.png")
 ```
 
 ## Vertical x educacion
@@ -1143,8 +1286,39 @@ plot_vertical_educ
 ggsave(plot_vertical_educ, file="output/graphs/plot_vertical_educ.png")
 ```
 
-## Horizontal x educacion 2 categorias
+## Vertical x educacion color v2
 
+```{r}
+plot_vertical_educ_v2 <- ggplot(data = vertical_educ, aes(x=anio, y=values, group=tipo, shape=tipo)) +
+  geom_line(aes(color=tipo)) + 
+  geom_point(aes(colour=tipo),size = 3)+
+  theme_bw() + 
+  xlab("Year") +
+  ylab("Mean") + 
+  scale_color_manual(name= "Vertical", values=c("#8B008B","#607B8B","#8B3626"),
+  label = c("Institutional 
+trust",
+                             "Meritocratic 
+distribution",
+                             "Political
+participation")) +
+    scale_shape_discrete(name= "Vertical",
+                   label = c("Institutional 
+trust",
+                             "Meritocratic 
+distribution",
+                             "Political
+participation"))+
+  scale_y_continuous(breaks = seq(1, 5, by = 1), limits = c(1,5))+
+  facet_wrap(~educ)
+
+plot_vertical_educ_v2
+
+ggsave(plot_vertical_educ_v2, file="output/graphs/plot_vertical_educ_v2.png")
+```
+
+## Horizontal x educacion 2 categorias colores original
+ 
 ```{r}
 data <- data %>% rowwise() %>%  mutate(educacion_rec_w01 = case_when(m01_w01==1~"Secondary or less",
                                                  m01_w01==2~"Secondary or less",
@@ -1319,6 +1493,34 @@ plot_horizontal_educ_rec
 ggsave(plot_horizontal_educ_rec, file="output/graphs/plot_horizontal_educ_rec.png")
 ```
 
+## Horizontal x educacion 2 categorías colores v2
+
+```{r}
+plot_horizontal_educ_rec_v2 <- ggplot(data = horizontal_educ[!is.na(horizontal_educ$values), ] , aes(x=anio, y=values, group=tipo, shape=tipo)) +
+  geom_line(aes(color=tipo)) + 
+  geom_point(aes(colour=tipo),size = 3)+
+  theme_bw() + 
+  xlab("Year") +
+  ylab("Mean") + 
+  scale_color_manual(name= "Horizontal", values=c("#00CD00","#0000EE", "#CDCD00"),
+  label = c("Neighbourhood 
+attachment",
+                             "Sense of 
+belonging",
+                             "Social trust")) + 
+    scale_shape_discrete(name= "Horizontal",
+                   label = c("Neighbourhood 
+attachment",
+                             "Sense of 
+belonging",
+                             "Social trust"))+
+  scale_y_continuous(breaks = seq(1, 5, by = 1), limits = c(1,5)) +
+  facet_wrap(~educ)
+
+plot_horizontal_educ_rec_v2
+ggsave(plot_horizontal_educ_rec_v2, file="output/graphs/plot_horizontal_educ_rec_v2.png")
+```
+
 ## Vertical x educacion 2 categorias
 
 ```{r}
@@ -1427,7 +1629,38 @@ plot_vertical_educ_rec
 ggsave(plot_vertical_educ_rec, file="output/graphs/plot_vertical_educ_rec.png")
 ```
 
-## Horizontal x edad
+## Vertical x educacion 2 categorías color v2
+
+```{r}
+plot_vertical_educ_rec_v2 <- ggplot(data = vertical_educ, aes(x=anio, y=values, group=tipo, shape=tipo)) +
+  geom_line(aes(color=tipo)) + 
+  geom_point(aes(colour=tipo),size = 3)+
+  theme_bw() + 
+  xlab("Year") +
+  ylab("Mean") + 
+  scale_color_manual(name= "Vertical", values=c("#8B008B","#607B8B","#8B3626"),
+  label = c("Institutional 
+trust",
+                             "Meritocratic 
+distribution",
+                             "Political
+participation")) +
+    scale_shape_discrete(name= "Vertical",
+                   label = c("Institutional 
+trust",
+                             "Meritocratic 
+distribution",
+                             "Political
+participation"))+
+  scale_y_continuous(breaks = seq(1, 5, by = 1), limits = c(1,5))+
+  facet_wrap(~educ)
+
+plot_vertical_educ_rec_v2
+
+ggsave(plot_vertical_educ_rec_v2, file="output/graphs/plot_vertical_educ_rec_v2.png")
+```
+
+## Horizontal x edad colores original
 
 ```{r}
 data <- data %>% rowwise() %>%  mutate(edad_w01 = case_when(m0_edad_w01<=50~"50 or less",
@@ -1555,6 +1788,34 @@ plot_horizontal_edad
 ggsave(plot_horizontal_edad, file="output/graphs/plot_horizontal_edad.png")
 ```
 
+## Horizontal x edad colores V2
+
+```{r}
+plot_horizontal_edad_v2 <- ggplot(data = horizontal_edad[!is.na(horizontal_edad$values), ] , aes(x=anio, y=values, group=tipo, shape=tipo)) +
+  geom_line(aes(color=tipo)) + 
+  geom_point(aes(colour=tipo),size = 3)+
+  theme_bw() + 
+  xlab("Year") +
+  ylab("Mean") + 
+  scale_color_manual(name= "Horizontal", values=c("#00CD00","#0000EE", "#CDCD00"),
+  label = c("Neighbourhood 
+attachment",
+                             "Sense of 
+belonging",
+                             "Social trust")) + 
+    scale_shape_discrete(name= "Horizontal",
+                   label = c("Neighbourhood 
+attachment",
+                             "Sense of 
+belonging",
+                             "Social trust"))+
+  scale_y_continuous(breaks = seq(1, 5, by = 1), limits = c(1,5)) +
+  facet_wrap(~educ)
+
+plot_horizontal_edad_v2
+ggsave(plot_horizontal_edad_v2, file="output/graphs/plot_horizontal_edad_v2.png")
+```
+
 ## Vertical x edad
 
 ```{r}
@@ -1662,3 +1923,35 @@ plot_vertical_edad
 
 ggsave(plot_vertical_edad, file="output/graphs/plot_vertical_edad.png")
 ```
+
+Vertical x edad color v2
+
+```{r}
+plot_vertical_edad_v2 <- ggplot(data = vertical_edad, aes(x=anio, y=values, group=tipo, shape=tipo)) +
+  geom_line(aes(color=tipo)) + 
+  geom_point(aes(colour=tipo),size = 3)+
+  theme_bw() + 
+  xlab("Year") +
+  ylab("Mean") + 
+  scale_color_manual(name= "Vertical", values=c("#8B008B","#607B8B","#8B3626"),
+  label = c("Institutional 
+trust",
+                             "Meritocratic 
+distribution",
+                             "Political
+participation")) +
+    scale_shape_discrete(name= "Vertical",
+                   label = c("Institutional 
+trust",
+                             "Meritocratic 
+distribution",
+                             "Political
+participation"))+
+  scale_y_continuous(breaks = seq(1, 5, by = 1), limits = c(1,5))+
+  facet_wrap(~educ)
+
+plot_vertical_edad_v2
+
+ggsave(plot_vertical_edad_v2, file="output/graphs/plot_vertical_edad_v2.png")
+```
+
