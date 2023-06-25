@@ -19,7 +19,7 @@ knitr::opts_chunk$set(echo = TRUE, warning=F, message=F)
 
 ```{r include=FALSE}
 # Cargar paquetes
-pacman::p_load(dplyr, panelr, survey, ggplot2, summarytools, shadowtext, semTools, psych, semPlot, semTable)
+pacman::p_load(dplyr, panelr, survey, ggplot2, summarytools, shadowtext, semTools, psych, semPlot, semTable, sjmisc, kableExtra)
 ```
 
 ```{r include=FALSE}
@@ -59,6 +59,35 @@ data$c04_rec_w06 <- as.numeric(data$c04_rec_w06)
 ```{r}
 data_horizontal_w01 <- data %>% select(idencuesta, c32_01_w01, c32_02_w01, t02_01_w01, t02_02_w01, t02_03_w01, t02_04_w01, c02_rec_w01, c03_rec_w01, c04_rec_w01, c07_02_w01, c07_03_w01) %>% na.omit()
 
+options(digits=2)
+desc_hor <- data_horizontal_w01 %>% select(c32_01_w01, c32_02_w01, t02_01_w01, t02_02_w01, t02_03_w01, t02_04_w01, c02_rec_w01, c03_rec_w01, c04_rec_w01, c07_02_w01, c07_03_w01) 
+
+label(desc_hor$c32_01_w01) <- "Proud of the country"
+label(desc_hor$c32_02_w01) <- "Identification with country"
+label(desc_hor$t02_01_w01) <- "This is the ideal neighborhood for me"
+label(desc_hor$t02_02_w01) <- "I feel integrated in this neighborhood"
+label(desc_hor$t02_03_w01) <- "Identification with the people of this neighborhood"
+label(desc_hor$t02_04_w01) <- "This neighborhood is part of me"
+label(desc_hor$c02_rec_w01) <- "Can be trusted most people"
+label(desc_hor$c03_rec_w01) <- "People, most of the time, try to help others"
+label(desc_hor$c04_rec_w01) <- "Most people try to be fair"
+label(desc_hor$c07_02_w01) <- "Meet when dealing with issues of public or community interest"
+label(desc_hor$c07_03_w01) <- "Friends have come to visit him at his house"
+
+desc_hor<- desc_hor %>% 
+  sjmisc::descr(
+      show = c("label","range", "mean", "sd", "n")) %>% as.data.frame(.)
+
+desc_hor$var <- c(rep("Sense of belonging",2), rep("Neighbourhood attachment", 4), rep("Social trust", 5))
+desc_hor <- desc_hor %>% rename("Dimension"=var)
+desc_hor %>%
+      kable(.,"html") %>% 
+  collapse_rows(columns = 1:2) %>% 
+  kable_styling() %>% save_kable(file="output/tables/desc_hor.png")
+```
+
+
+```{r}
 cfa_horizontal_w01 <- '
 pertenencia =~ c32_01_w01 + c32_02_w01
 barrial =~ t02_01_w01 + t02_02_w01 + t02_03_w01 + t02_04_w01
@@ -271,6 +300,33 @@ horizontal_anio <- scores_horizontal %>% group_by(anio) %>%
 ```{r}
 data_vertical_w01 <- data %>% select(idencuesta, c05_01_w01, c05_02_w01, c05_05_w01, c05_07_w01, c08_04_w01, c13_w01, c14_01_w01, c14_02_w01, c18_09_w01, c18_10_w01) %>% na.omit()
 
+desc_ver <- data_vertical_w01 %>% select(c05_01_w01, c05_02_w01, c05_05_w01, c05_07_w01, c08_04_w01, c13_w01, c14_01_w01, c14_02_w01, c18_09_w01, c18_10_w01) 
+
+label(desc_ver$c05_01_w01) <- "Trust in Government"
+label(desc_ver$c05_02_w01) <- "Trust in Political Parties"
+label(desc_ver$c05_05_w01) <- "Trust in judiciary"
+label(desc_ver$c05_07_w01) <- "Trust in parliament"
+label(desc_ver$c08_04_w01) <- "Used social media to express your opinion on public issues"
+label(desc_ver$c13_w01) <- "Political interest"
+label(desc_ver$c14_01_w01) <- "Discuss politics with family or friends"
+label(desc_ver$c14_02_w01) <- "Learn about politics in media"
+label(desc_ver$c18_09_w01) <- "People are rewarded fo their efforts"
+label(desc_ver$c18_10_w01) <- "People are rewarded fo their intelligence"
+
+desc_ver<- desc_ver %>% 
+  sjmisc::descr(
+      show = c("label","range", "mean", "sd", "n")) %>% as.data.frame(.)
+
+desc_ver$var <- c(rep("Institutional trust",4), rep("Political participation", 4), rep("Meritocratic distribution", 2))
+desc_ver <- desc_ver %>% rename("Dimension"=var)
+desc_ver %>%
+      kable(.,"html") %>% 
+  collapse_rows(columns = 1:2) %>% 
+  kable_styling() %>% save_kable(file="output/tables/desc_ver.png")
+```
+
+
+```{r}
 cfa_vertical_w01 <- '
 instituciones =~ c05_01_w01 + c05_02_w01 + c05_05_w01 + c05_07_w01
 participacion =~ c08_04_w01 + c13_w01 + c14_01_w01 + c14_02_w01
